@@ -1,0 +1,36 @@
+classifier_code;written;usage_fr;register;kind;frequency_level;example_vi;example_fr;note
+con;con;animaux , certains objets;neutral;classifier;very_high;hai con mèo;deux chats;emploi « con trai » (fils) : nom de parenté, pas classificateur
+cai;cái;objets inanimés en général (le plus courant);neutral;classifier;very_high;một cái bàn;une table;
+nguoi;người;personnes (respectueux);formal;classifier;very_high;một người bạn;un ami;
+chiec;chiếc;véhicules, objets individuels , un objet d’une paire;neutral;classifier;high;một chiếc xe;un véhicule;fusion de deux lignes des archives
+cuon;cuốn;livres, cahiers;neutral;classifier;high;ba cuốn sách;trois livres;
+quyen;quyển;livres (plus soutenu que cuốn);formal;classifier;medium;một quyển từ điển;un dictionnaire;code archivé « quyển » corrigé
+qua;quả;fruits, objets ronds (Nord);neutral;classifier;high;hai quả táo;deux pommes;
+trai;trái;fruits (Sud, équivalent de quả);neutral;classifier;medium;một trái cam;une orange;variante du Sud
+to;tờ;papiers, feuilles;neutral;classifier;high;một tờ báo;un journal;
+dua;đứa;enfants (familier, affectueux);informal;classifier;high;hai đứa trẻ;deux enfants;
+thang-pers;thằng;garçons, hommes (familier ou péjoratif);informal;classifier;medium;thằng bé;le petit garçon;code distinct de tháng (mois)
+cay;cây;plantes , objets longs (crayons…);neutral;classifier;high;hai cây bút;deux stylos;
+bong;bông;fleurs;neutral;classifier;medium;một bông hoa;une fleur;
+canh;cành;branches;neutral;classifier;low;một cành hoa;une branche fleurie;
+can;căn;maisons, appartements;neutral;classifier;high;một căn nhà;une maison;
+toa;tòa;grands bâtiments;formal;classifier;medium;một tòa nhà;un immeuble;graphie archivée « toà » : les deux existent
+gian;gian;pièces, compartiments;neutral;classifier;low;một gian phòng;une pièce;
+bo;bộ;ensembles complets;neutral;classifier;medium;một bộ quần áo;une tenue;
+doi;đôi;paires;neutral;classifier;high;một đôi giày;une paire de chaussures;
+bat;bát;bol (contenant);neutral;measure;high;một bát phở;un bol de phở;contenant employé comme mesure
+dia;đĩa;assiette (contenant);neutral;measure;high;một đĩa rau;une assiette de légumes;
+ly;ly;verre (contenant);neutral;measure;very_high;một ly nước;un verre d’eau;
+coc;cốc;verre, gobelet (contenant);neutral;measure;high;một cốc trà;une tasse de thé;
+tach;tách;tasse (contenant);neutral;measure;medium;một tách cà phê;une tasse de café;
+chai;chai;bouteille (contenant);neutral;measure;high;hai chai nước;deux bouteilles d’eau;
+tang;tầng;étage;neutral;measure;medium;nhà hai tầng;une maison à deux étages;
+anh;anh;homme un peu plus âgé (terme de parenté);neutral;kinship;very_high;hai anh em;deux frères;terme de parenté
+chi;chị;femme un peu plus âgée (terme de parenté);neutral;kinship;very_high;hai chị em;deux sœurs;terme de parenté
+em;em;personne plus jeune (terme de parenté);neutral;kinship;very_high;một em bé;un bébé;terme de parenté
+ong;ông;homme âgé, monsieur;formal;kinship;very_high;một ông già;un vieil homme;terme de parenté
+ba;bà;femme âgée, madame;formal;kinship;very_high;một bà già;une vieille dame;terme de parenté
+cau;cậu;jeune garçon;informal;kinship;medium;một cậu bé;un petit garçon;terme de parenté
+co;cô;jeune femme, enseignante;neutral;kinship;high;một cô giáo;une enseignante;terme de parenté
+chu;chú;homme d’âge moyen;neutral;kinship;medium;một chú bộ đội;un soldat;terme de parenté , exemple archivé « chú lính » remplacé — à vérifier
+bac;bác;personne plus âgée que ses parents;formal;kinship;high;hai bác;deux oncles (ou tantes) aînés;exemple archivé « bác sĩ » (médecin) retiré : ce n’est pas un emploi de classificateur
