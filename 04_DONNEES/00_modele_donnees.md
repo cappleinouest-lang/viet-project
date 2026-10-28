@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.6
+version: 0.8
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -20,7 +20,7 @@ sources:
 
 ## Résumé
 
-Onze fichiers CSV. Chaque ligne est identifiée par un **code** lisible et
+Douze fichiers CSV. Chaque ligne est identifiée par un **code** lisible et
 stable (par exemple `ngang`, `PH-VO-uw`, `W0042`, `M0-L06`), jamais par un
 numéro technique. Les fichiers se citent entre eux par ces codes.
 
@@ -114,6 +114,7 @@ erDiagram
 | `frequency_source` | liste de fréquence utilisée (R-LEX-07) | | `wordfreq-opensubtitles` |
 | `etymology` | origine | `native`, `sino`, `french`, `english`, vide | `native` |
 | `category` | catégorie grammaticale | codes de FOND-02 § 7 | `NUM` |
+| `imageable` | facile à représenter par une image (estimation, DEC-0024) | `true` / `false` | `true` |
 | `note` | remarque | | |
 
 > Le nombre de syllabes et les tons ne sont **pas** dans ce fichier : ils
@@ -132,20 +133,22 @@ erDiagram
 | `final` | son final | `sound_code` ou vide | |
 | `tone` | ton | `tone_code` | `ngang` |
 
-### 3.7 `paires_minimales.csv`
+### 3.7 `paires_minimales.csv` — séries minimales de 2 à 4 termes (DEC-0025)
+
+Une **série** regroupe 2 à 4 mots ou pseudo-mots qui ne diffèrent que par un
+seul élément (son ou ton). Une ligne = un terme de la série.
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
-| `pair_code` | code | `P0001` … | `P0012` |
-| `lesson_code` | leçon | `lesson_code` | `M0-L06` |
-| `contrast_type` | ce qui oppose les deux termes | `sound`, `tone` | `sound` |
-| `term1_written` | premier terme | | `mát` |
-| `term1_word` | mot du premier terme | `word_code` (obligatoire) | `W0110` |
-| `term2_written` | second terme | | `mác` |
-| `term2_word` | mot du second terme | `word_code`, vide si inventé | |
-| `term2_invented` | second terme inventé (DEC-0013) | `true` / `false` | `true` |
-| `element1` / `element2` | élément opposé dans chaque terme | `sound_code` ou `tone_code` | `PH-FI-t` / `PH-FI-c` |
-| `validated` | paire relue et validée | `true` / `false` | `false` |
+| `series_code` | code de la série | `S0001` … | `S0012` |
+| `lesson_code` | leçon | `lesson_code` | `M0-L03` |
+| `contrast_type` | ce qui oppose les termes | `sound`, `tone` | `tone` |
+| `position` | rang du terme ; 1 = mot support de la leçon | 1 à 4 | `2` |
+| `written` | terme écrit | | `bàn` |
+| `word_code` | mot correspondant | `word_code` ; vide si hors corpus | `W0004` |
+| `invented` | syllabe inventée (DEC-0013) | `true` / `false` | `false` |
+| `element` | élément porté par ce terme | `sound_code` ou `tone_code` | `huyen` |
+| `validated` | série relue et validée | `true` / `false` | `false` |
 | `note` | remarque | | |
 
 ### 3.8 `audios.csv` — les fichiers audio
@@ -163,13 +166,16 @@ erDiagram
 
 ### 3.9 `classificateurs.csv` (pour A1)
 
-| Colonne | Contenu | Exemple |
-|---|---|---|
-| `classifier_code` | code | `con` |
-| `written` | écriture | `con` |
-| `usage_fr` | emploi | `animaux, certains objets` |
-| `register` | registre | `neutral`, `formal`, `informal` |
-| `example_vi` / `example_fr` | exemple | `hai con mèo` / `deux chats` |
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `classifier_code` | code | lettres sans accent, `-` | `thang-pers` |
+| `written` | écriture | | `thằng` |
+| `usage_fr` | emploi | | `garçons, hommes (familier)` |
+| `register` | registre | `neutral`, `formal`, `informal` | `informal` |
+| `kind` | nature | `classifier` (classificateur), `measure` (contenant, mesure), `kinship` (terme de parenté employé devant un nom de personne) | `classifier` |
+| `frequency_level` | fréquence d'usage | `very_high`, `high`, `medium`, `low` | `medium` |
+| `example_vi` / `example_fr` | exemple | | `hai con mèo` / `deux chats` |
+| `note` | remarque | | |
 
 ### 3.10 `mots_lecons.csv` — mots supports de chaque leçon (DEC-0020)
 
@@ -195,6 +201,19 @@ erDiagram
 | `status` | état | `active`, `planned` | `active` |
 | `note` | remarque | | |
 
+### 3.12 `images.csv` — images des mots (DEC-0024)
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `image_code` | code | | `I-W0042` |
+| `word_code` | mot illustré | `word_code` | `W0042` |
+| `file` | chemin relatif, dans `04_DONNEES/images/` | | `images/W0042.svg` |
+| `style` | style | `pictogram`, `drawing` | `pictogram` |
+| `source` | origine | `openmoji`, `own`, autre | `openmoji` |
+| `license` | licence | | `CC BY-SA 4.0` |
+| `validated` | image vérifiée | `true` / `false` | `false` |
+| `note` | remarque | | |
+
 ## 4. Ce qui n'est pas un fichier source
 
 **Transcription phonétique des mots** : non utilisée (DEC-0021). Seule la
@@ -215,9 +234,9 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | Chaque syllabe a un noyau et un ton | FOND-02 § 2 |
 | Chaque son et ton a ses deux leçons d'ouverture ; l'écoute n'est pas après la production | R-ATOM-06, R-VOL-03 |
 | Un mot de la leçon N ne contient que des éléments ouverts en N ou avant, dans le volet concerné | R-ATOM-03, R-ATOM-04 |
-| Les deux termes d'une paire ne diffèrent que par l'élément opposé | R-PARC-05 |
+| Les termes d'une série (2 à 4) ne diffèrent que par l'élément opposé | R-PARC-05 |
 | Pas de paire d'écoute sur tr/ch, s/x, d/gi/r | R-PHON-02 |
-| Terme inventé seulement en paire minimale | R-LEX-05 |
+| Terme inventé seulement dans une série minimale, jamais affiché | R-LEX-05, R-LEX-06 |
 | Au moins 2 voix par item d'écoute | R-AUD-02 |
 | Micro-lexique M0 ≤ 100 mots (`mots_lecons.csv`) | R-LEX-02 |
 | Chaque mot support respecte les critères de choix dans sa leçon | R-LEX-03, R-ATOM-05 |
@@ -233,6 +252,8 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.4 | 2026-10-28 | Pas de transcription des mots ; seule la notation des sons est utilisée (DEC-0021). |
 | 0.5 | 2026-10-28 | `tons.csv` : lettres de ton, pictogramme, couleur (DEC-0022). |
 | 0.6 | 2026-10-28 | Ajout de `voix.csv` ; débit `fast` ; audios dans `04_DONNEES/audio/` (DEC-0023). |
+| 0.7 | 2026-10-28 | `classificateurs.csv` : colonnes `kind`, `frequency_level`, `note`. |
+| 0.8 | 2026-10-28 | Colonne `imageable`, fichier `images.csv` (DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). |
 
 ## Liens
 

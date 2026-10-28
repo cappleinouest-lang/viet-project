@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.17
+version: 1.18
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -480,6 +480,42 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : `04_DONNEES` (`voix.csv`, `audios.csv`, `audio/`),
   R-AUD-02, R-AUD-04, `00_modele_donnees.md`.
 
+### DEC-0024 — Images à la place de l'écrit au début
+
+- **Date** : 2026-10-28
+- **Question** : comment donner du sens et des choix de réponse sans écrit
+  aux étapes d'écoute ?
+- **Décision** :
+  1. Les mots faciles à imager reçoivent une **image** (pictogramme ou
+     dessin, style homogène), utilisable dès E1 ; en E2–E3 les choix de
+     réponse sont des images.
+  2. Mots sans image et syllabes inventées : **boutons sonores** A / B ou
+     **pictogrammes de ton** (DEC-0022).
+  3. Sélection des mots supports refaite (option « combiner ») : à
+     couverture égale des sons nouveaux, le mot **imageable** est préféré —
+     **79 mots imageables sur 98** (contre 48), validée par Christophe ;
+     remplace la liste de DEC-0020.
+  4. `mots.csv` reçoit une colonne `imageable` (estimation, à corriger) ;
+     nouveau fichier `images.csv`, images dans `04_DONNEES/images/`.
+  5. Source : licence compatible avec le partage ; **OpenMoji** (CC BY-SA 4.0,
+     usage commercial permis) privilégié ; ARASAAC (CC BY-NC-SA, usage
+     commercial interdit) à éviter si la formation est un jour vendue.
+- **Impacte** : `mots_lecons.csv`, `mots.csv`, `images.csv`, R-PARC-04,
+  R-IMG-01/02, FOND-04 (à revalider).
+
+### DEC-0025 — Séries minimales de 2 à 4 termes
+
+- **Date** : 2026-10-28
+- **Question** : les « paires » minimales doivent-elles avoir exactement
+  2 termes ?
+- **Décision** : **2 termes au minimum, 4 au maximum** (mots ou pseudo-mots).
+  `paires_minimales.csv` passe au format « une ligne par terme »
+  (`series_code`, `position`…). Séries recalculées sur les nouveaux mots
+  supports : **79 séries** (35 de 2 termes, 21 de 3, 23 de 4), **225 termes** ;
+  hors corpus et hors listes de fréquence → traités comme syllabes
+  inventées (DEC-0013), à confirmer. Le terme 1 est toujours le mot support.
+- **Impacte** : `paires_minimales.csv`, R-PARC-05, R-LEX-05, FOND-04.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -502,6 +538,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.15 | 2026-10-28 | Ajout de DEC-0021 (pas de transcription des mots). |
 | 1.16 | 2026-10-28 | Ajout de DEC-0022 (symboles des tons). |
 | 1.17 | 2026-10-28 | Ajout de DEC-0023 (audio : stockage, régénération, variété des voix). |
+| 1.18 | 2026-10-28 | Ajout de DEC-0024 (images) et DEC-0025 (séries minimales de 2 à 4 termes). |
 
 ## Liens
 
