@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.9
+version: 0.10
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -95,6 +95,10 @@ erDiagram
 | `is_recycling` | leçon de recyclage (L12) | `true` / `false` | `false` |
 
 ### 3.4 `ouvertures.csv` — quand chaque son et ton s'ouvre (DEC-0007)
+
+Seuls les sons et tons **enseignés** y figurent ; un son reporté à un module
+suivant n'y a pas de ligne et porte « reporté » dans la colonne `note` de
+`sons.csv` (DEC-0031).
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
@@ -232,7 +236,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 |---|---|
 | Chaque code cité existe dans le fichier de référence | intégrité des liens |
 | Chaque syllabe a un noyau et un ton | FOND-02 § 2 |
-| Chaque son et ton a ses deux leçons d'ouverture ; l'écoute n'est pas après la production | R-ATOM-06, R-VOL-03 |
+| Chaque son et ton enseigné a ses deux leçons d'ouverture ; l'écoute n'est pas après la production ; un son absent de `ouvertures.csv` porte « reporté » dans `sons.csv` | R-ATOM-06, R-VOL-03 |
 | Un mot de la leçon N ne contient que des éléments ouverts en N ou avant, dans le volet concerné | R-ATOM-03, R-ATOM-04 |
 | Les termes d'une série (2 à 4) ne diffèrent que par l'élément opposé | R-PARC-05 |
 | Pas de paire d'écoute sur tr/ch, s/x, d/gi/r | R-PHON-02 |
@@ -255,6 +259,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.7 | 2026-10-28 | `classificateurs.csv` : colonnes `kind`, `frequency_level`, `note`. |
 | 0.8 | 2026-10-28 | Colonne `imageable`, fichier `images.csv` (DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). |
 | 0.9 | 2026-10-28 | Définition de `invented` précisée (DEC-0027). |
+| 0.10 | 2026-10-28 | `ouvertures.csv` : seuls les sons enseignés ; sons reportés signalés dans `sons.csv` (DEC-0031). |
 
 ## Liens
 

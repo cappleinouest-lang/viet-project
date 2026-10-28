@@ -39,8 +39,8 @@ PH-CO-qu;q(u);;/kw/;kw;initial;consonant;
 PH-CO-th;th;;/tʰ/;tʰ;initial;consonant;
 PH-VO-ee;ê;;/e/;e;nucleus;vowel;
 PH-DP-eeu;êu;;/ew/;ew;nucleus;diphthong;
-PH-DP-owu;ơu;;/əw/;əw;nucleus;diphthong;
-PH-DP-uwi;ưi;;/ɨj/;ɨj;nucleus;diphthong;
+PH-DP-owu;ơu;;/əw/;əw;nucleus;diphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
+PH-DP-uwi;ưi;;/ɨj/;ɨj;nucleus;diphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
 PH-DP-uwu;ưu;;/ɨw/;ɨw;nucleus;diphthong;
 PH-FI-p;-p;;/p̚/;p̚;final;consonant;
 PH-FI-t;-t;;/t̚/;t̚;final;consonant;
@@ -61,17 +61,17 @@ PH-GL-oa;oa;;/wa/;wa;nucleus;diphthong;
 PH-GL-oaw;oă;;/wă/;wă;nucleus;diphthong;
 PH-GL-oe;oe;;/wɛ/;wɛ;nucleus;diphthong;
 PH-GL-uaa;uâ;;/wə̆/;wə̆;nucleus;diphthong;
-PH-GL-uee;uê;;/we/;we;nucleus;diphthong;
+PH-GL-uee;uê;;/we/;we;nucleus;diphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
 PH-GL-uoo;uô;uô|ua;/uə̯/;uə̯;nucleus;diphthong;
-PH-GL-uow;uơ;;/wə/;wə;nucleus;diphthong;
+PH-GL-uow;uơ;;/wə/;wə;nucleus;diphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
 PH-GL-uwow;ươ;ươ|ưa;/ɨə̯/;ɨə̯;nucleus;diphthong;
 PH-GL-uyee;uyê;;/wiə̯/;wiə̯;nucleus;diphthong;
 PH-TR-oai;oai;;/waj/;waj;nucleus;triphthong;
-PH-TR-oao;oao;;/waw/;waw;nucleus;triphthong;
-PH-TR-oay;oay;;/wăj/;wăj;nucleus;triphthong;
-PH-TR-oeo;oeo;;/wɛw/;wɛw;nucleus;triphthong;
-PH-TR-uaay;uây;;/wə̆j/;wə̆j;nucleus;triphthong;
+PH-TR-oao;oao;;/waw/;waw;nucleus;triphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
+PH-TR-oay;oay;;/wăj/;wăj;nucleus;triphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
+PH-TR-oeo;oeo;;/wɛw/;wɛw;nucleus;triphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
+PH-TR-uaay;uây;;/wə̆j/;wə̆j;nucleus;triphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)
 PH-TR-uooi;uôi;;/uə̯j/;uə̯j;nucleus;triphthong;
 PH-TR-uwowi;ươi;;/ɨə̯j/;ɨə̯j;nucleus;triphthong;
 PH-TR-uwowu;ươu;;/ɨə̯w/;ɨə̯w;nucleus;triphthong;
-PH-TR-uyu;uyu;;/wiw/;wiw;nucleus;triphthong;
+PH-TR-uyu;uyu;;/wiw/;wiw;nucleus;triphthong;non enseigné en M0, reporté en A1–A2 (DEC-0031)

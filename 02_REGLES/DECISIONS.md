@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.23
+version: 1.24
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -647,6 +647,36 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : PROD-ARCH, `05_PRODUCTION` ;
   `05_PRODUCTION/comparaison_wordpress_application_web_2026-10-28.md`.
 
+### DEC-0031 — Sons sans mot support : 2 gardés, 9 reportés en A1–A2
+
+- **Date** : 2026-10-28
+- **Question** : 11 sons ouverts en Module 0 n'avaient ni mot support ni
+  série minimale ; or E1 et E4 exigent des mots réels (R-LEX-05). Que
+  faire ? (point P1 de PROG-M0)
+- **Options** : A — tout reporter en A1–A2 ; B — garder **uy** et **uyê**
+  avec un mot fréquent, reporter les 9 autres ; C — comme B, avec *chuyên*
+  (rang 626) au lieu de *chuyện*.
+- **Décision** : **B**.
+  1. **uy** (L04) : mot support *tuy* (« bien que », rang 359, déjà dans
+     `mots.csv`) ; série S0096 *tuy / tu*.
+  2. **uyê** (L12) : mot support ***chuyện*** (« histoire, affaire »),
+     ajouté à `mots.csv` (W0339) et `syllabes.csv` ; série S0097
+     *chuyện / chiện\** (syllabe inventée présumée, à vérifier).
+  3. **Reportés en A1–A2** : ơu, ưi (L06) ; uê, uơ (L12) ; oao, oay, oeo,
+     uây, uyu (L13). Retirés de `ouvertures.csv` ; marqués « reporté en
+     A1–A2 » dans la colonne `note` de `sons.csv`. Leur leçon d'ouverture
+     sera fixée dans la progression de A1 ou A2.
+- **Résultat** : 100 mots supports (limite de R-LEX-02), 97 séries,
+  264 termes ; 67 sons et 6 tons enseignés en M0 ; contrôle d'atomicité
+  sans violation ; tous les éléments ouverts ont un mot ou une série.
+- **À vérifier** : fréquence de *chuyện* (R-LEX-03, liste de R-LEX-07) ;
+  statut de *chiện* dans les 3 dictionnaires (DEC-0027).
+- **Raison** : *tuy* et *chuyện* sont utiles pour la suite ; les 9 sons
+  reportés sont rares et seront mieux appris dans des mots qui servent.
+- **Impacte** : `mots.csv`, `syllabes.csv`, `mots_lecons.csv`,
+  `paires_minimales.csv`, `ouvertures.csv`, `sons.csv` ; R-ATOM-06 ;
+  DATA-MODELE ; PROG-M0.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -675,6 +705,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.21 | 2026-10-28 | Ajout de DEC-0028 (étiquettes de réponse : images, puis symboles). |
 | 1.22 | 2026-10-28 | Ajout de DEC-0029 (symbole des sons : `ipa_main` du son contrasté ; pictogrammes de ton dès E1). |
 | 1.23 | 2026-10-28 | Ajout de DEC-0030 (lecteur développé d'abord en site statique ; enveloppe WordPress ou Firebase choisie ensuite). |
+| 1.24 | 2026-10-28 | Ajout de DEC-0031 (uy et uyê gardés avec *tuy* et *chuyện* ; 9 sons rares reportés en A1–A2). |
 
 ## Liens
 

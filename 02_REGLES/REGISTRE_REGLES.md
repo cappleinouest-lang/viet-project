@@ -2,7 +2,7 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.9
+version: 0.10
 date: 2026-10-28
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
@@ -88,7 +88,7 @@ de l'élève.
 | **R-ATOM-03** | Dans le **volet écoute** de la leçon N, un item ne contient que des sons et tons dont l'**écoute** est ouverte en N ou avant. | auto | FOND-04 § 6 ; règle d'atomicité v1.1 (archives), étendue |
 | **R-ATOM-04** | Dans le **volet production** de la leçon N, un item ne contient que des sons et tons dont la **production** est ouverte en N ou avant. | auto | FOND-04 § 6 |
 | **R-ATOM-05** | De E1 à E4, chaque item de la leçon N contient **l'élément cible de la leçon N**. Seule E5 (et la leçon de recyclage L14) peut contenir des items sans élément nouveau, au titre du recyclage. | auto | Règle d'atomicité v1.1 (archives), § 4.2 |
-| **R-ATOM-06** | Chaque son et chaque ton possède **deux leçons d'ouverture** : une pour l'écoute, une pour la production. | auto : deux champs renseignés dans les données | DEC-0007 |
+| **R-ATOM-06** | Chaque son et chaque ton **enseigné dans le module** possède **deux leçons d'ouverture** : une pour l'écoute, une pour la production. Un son reporté à un module suivant n'a pas de ligne dans `ouvertures.csv` et porte la mention « reporté » dans `sons.csv`. | auto : deux champs renseignés dans les données | DEC-0007 ; DEC-0031 |
 
 ## R-PHON — Sons, tons, notation, accent
 
@@ -181,6 +181,7 @@ de l'élève.
 | 0.7 | 2026-10-28 | R-LEX-05 : syllabe inventée permise en E2 et E3 (DEC-0027). |
 | 0.8 | 2026-10-28 | R-PARC-04 : images, puis symboles (DEC-0028). |
 | 0.9 | 2026-10-28 | R-PARC-04 et R-ECR-04 : symbole des sons = `ipa_main` du son contrasté (DEC-0029). |
+| 0.10 | 2026-10-28 | R-ATOM-06 : sons reportés à un module suivant (DEC-0031). |
 
 ## Liens
 

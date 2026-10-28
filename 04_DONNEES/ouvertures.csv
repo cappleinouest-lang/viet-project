@@ -45,8 +45,6 @@ sound;PH-CO-qu;M0-L05;M0-L05
 sound;PH-CO-th;M0-L05;M0-L05
 sound;PH-VO-ee;M0-L01;M0-L01
 sound;PH-DP-eeu;M0-L06;M0-L06
-sound;PH-DP-owu;M0-L06;M0-L06
-sound;PH-DP-uwi;M0-L06;M0-L06
 sound;PH-DP-uwu;M0-L06;M0-L06
 sound;PH-FI-p;M0-L08;M0-L08
 sound;PH-FI-t;M0-L08;M0-L08
@@ -67,17 +65,10 @@ sound;PH-GL-oa;M0-L12;M0-L12
 sound;PH-GL-oaw;M0-L12;M0-L12
 sound;PH-GL-oe;M0-L12;M0-L12
 sound;PH-GL-uaa;M0-L12;M0-L12
-sound;PH-GL-uee;M0-L12;M0-L12
 sound;PH-GL-uoo;M0-L12;M0-L12
-sound;PH-GL-uow;M0-L12;M0-L12
 sound;PH-GL-uwow;M0-L12;M0-L12
 sound;PH-GL-uyee;M0-L12;M0-L12
 sound;PH-TR-oai;M0-L13;M0-L13
-sound;PH-TR-oao;M0-L13;M0-L13
-sound;PH-TR-oay;M0-L13;M0-L13
-sound;PH-TR-oeo;M0-L13;M0-L13
-sound;PH-TR-uaay;M0-L13;M0-L13
 sound;PH-TR-uooi;M0-L13;M0-L13
 sound;PH-TR-uwowi;M0-L13;M0-L13
 sound;PH-TR-uwowu;M0-L13;M0-L13
-sound;PH-TR-uyu;M0-L13;M0-L13

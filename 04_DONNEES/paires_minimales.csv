@@ -95,6 +95,8 @@ S0035;M0-L04;sound;2;á;;false;PH-VS-a;false;mot réel attesté dans une liste d
 S0035;M0-L04;sound;3;ó;;false;PH-VS-o;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0036;M0-L04;sound;1;dịu;W0327;false;PH-DP-iu;false;
 S0036;M0-L04;sound;2;dị;;false;PH-VS-i;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0096;M0-L04;sound;1;tuy;W0328;false;PH-DP-uy;false;ajout du 2026-10-28 (DEC-0031)
+S0096;M0-L04;sound;2;tu;W0338;false;PH-VS-u;false;
 S0037;M0-L05;sound;1;con;W0015;false;PH-CO-c;false;
 S0037;M0-L05;sound;2;hon;;true;PH-IN-h;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0038;M0-L05;sound;1;pha;W0335;false;PH-CO-ph;false;
@@ -251,6 +253,8 @@ S0090;M0-L12;sound;1;viết;W0235;false;PH-GL-iee;false;
 S0090;M0-L12;sound;2;vít;;false;PH-VS-i;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0091;M0-L12;sound;1;uống;W0243;false;PH-GL-uoo;false;
 S0091;M0-L12;sound;2;úng;;false;PH-VS-u;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0097;M0-L12;sound;1;chuyện;W0339;false;PH-GL-uyee;false;ajout du 2026-10-28 (DEC-0031)
+S0097;M0-L12;sound;2;chiện;;true;PH-GL-iee;false;syllabe inventée présumée, à vérifier dans les 3 dictionnaires (DEC-0027)
 S0092;M0-L13;sound;1;người;W0228;false;PH-TR-uwowi;false;
 S0092;M0-L13;sound;2;nguồi;;true;PH-TR-uooi;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0093;M0-L13;sound;1;muối;W0145;false;PH-TR-uooi;false;
