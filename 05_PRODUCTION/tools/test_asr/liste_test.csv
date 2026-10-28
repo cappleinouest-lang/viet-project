@@ -1,0 +1,16 @@
+item;mot_vise;ton_vise;mot_faux;ton_faux;serie;remarque
+01;bàn;huyen;bán;sac;S0018;ton faux = autre mot réel
+02;bé;sac;be;ngang;S0019;
+03;làm;huyen;lam;ngang;S0020;
+04;giá;sac;già;huyen;S0022;
+05;họ;nang;ho;ngang;S0023;
+06;mẹ;nang;me;ngang;S0025;
+07;lạ;nang;là;huyen;S0027;nặng / huyền : confusion fréquente
+08;bạn;nang;bàn;huyen;S0024;nặng / huyền : confusion fréquente
+09;hỏi;hoi;hoi;ngang;S0053;
+10;mở;hoi;mơ;ngang;S0054;
+11;phở;hoi;phợ;nang;S0055;ton faux = syllabe inventée
+12;phải;hoi;phại;nang;S0058;ton faux = syllabe inventée
+13;mũi;nga;mùi;huyen;S0081;
+14;nghĩ;nga;nghỉ;hoi;S0085;hỏi / ngã : se confondent à Hanoï
+15;cũng;nga;cùng;huyen;S0084;

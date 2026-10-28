@@ -6,9 +6,9 @@ import yaml
 
 root = sys.argv[1] if len(sys.argv) > 1 else '.'
 docs = {}
-for d, _, files in os.walk(root):
-    if '_ARCHIVES' in d or '.git' in d:
-        continue
+for d, dirs, files in os.walk(root):
+    # Ignore archives and hidden folders (.git, .venv-asr...): no project document there.
+    dirs[:] = [x for x in dirs if x != '_ARCHIVES' and not x.startswith('.')]
     for f in files:
         if not f.endswith('.md') or f == 'CARTE_DOCUMENTAIRE.md':
             continue

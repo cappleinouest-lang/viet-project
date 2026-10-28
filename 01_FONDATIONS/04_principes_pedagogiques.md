@@ -2,7 +2,7 @@
 id: FOND-04
 titre: Principes pédagogiques
 statut: VALIDE
-version: 1.4
+version: 1.5
 date: 2026-10-28
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
@@ -136,9 +136,13 @@ Volet production  L01 ─ L02 ─ …          (au plus 3 leçons de retard)
 - Les mots faciles à imager sont représentés par un **pictogramme ou un
   dessin**, de style homogène ; l'image n'est pas de l'écrit et peut
   apparaître dès E1.
-- En E2 et E3, les choix de réponse sont des **images** ; pour les mots sans
-  image et les syllabes inventées, des **boutons sonores** ou les
-  **pictogrammes de ton** (DEC-0022).
+- En E2 et E3, les choix de réponse sont d'abord des **images avec leur
+  symbole** (débit lent), puis le **symbole seul** (débit normal) ; l'image
+  reste visible en petit pour le sens (DEC-0028). Symbole des tons :
+  pictogramme et couleur (DEC-0022) ; symbole des sons : notation phonétique
+  courte du son contrasté, par ex. /ə/ (DEC-0029). Ces symboles sont
+  présentés dès E1, avec leur audio ; ce ne sont pas de l'écrit. Mots sans
+  image, syllabes inventées : symbole ou **bouton sonore**.
 
 ## 8. L'audio
 
@@ -194,8 +198,9 @@ Voir FOND-01 § 7. S'y ajoutent :
 | 1.1 | 2026-10-28 | Numéros de leçon mis à jour (14 leçons, DEC-0019). Revalidé par Christophe. |
 | 1.2 | 2026-10-28 | § 7 : pas de transcription des mots, seulement des sons (DEC-0021). Revalidé par Christophe. |
 | 1.3 | 2026-10-28 | Images (§ 7 bis, DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). Revalidé par Christophe. |
-| 1.4 | 2026-10-28 | E2 = paire minimale tirée de la série d'E3 ; contraste de ton ou de son (DEC-0026). Syllabe inventée permise en E2 (DEC-0027). |
+| 1.4 | 2026-10-28 | E2 = paire minimale tirée de la série d'E3 ; contraste de ton ou de son (DEC-0026). Syllabe inventée permise en E2 (DEC-0027). Images, puis symboles (DEC-0028). |
 | — | 2026-10-28 | Mise en cohérence des liens `sorties` (exception DOC-21, statut inchangé). |
+| 1.5 | 2026-10-28 | § 7 bis : symbole des sons, symboles dès E1 (DEC-0029). |
 
 ## Liens
 

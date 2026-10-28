@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.20
+version: 1.22
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -556,6 +556,63 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : `paires_minimales.csv`, R-LEX-05, FOND-04 § 9,
   DATA-MODELE, QUAL-VERIF-HORS-CORPUS-20261028.
 
+### DEC-0028 — Étiquettes de réponse en E2–E3 : images, puis symboles
+
+- **Date** : 2026-10-28
+- **Question** : en E2–E3, l'élève répond-il en touchant des images ou des
+  symboles ?
+- **Options** : a) images ; b) symboles ; c) images, puis symboles.
+- **Décision** : **c**. Au **débit lent**, chaque choix montre l'**image et
+  le symbole** ; au **débit normal** (là où se mesure le verrou), le choix
+  est le **symbole seul**, l'image restant visible en petit pour le sens.
+  Le passage se fait au même moment que celui du débit (seuil atteint au
+  débit lent).
+- **Symboles** : tons → pictogramme et couleur de `tons.csv` (DEC-0022) ;
+  sons → *à préciser*.
+- **Raison** : méta-analyse de Uchihara, Karas et Thomson (2025) : effet
+  plus faible avec des images comme étiquettes (g = 0,47) qu'avec des
+  symboles ou l'écrit (0,90 à 1,03). Comparaison indirecte, donc indice.
+- **Complète** : DEC-0024 (les images restent pour le sens).
+- **Impacte** : PROG-ACT, R-PARC-04, FOND-04 § 7 bis.
+
+### DEC-0029 — Symbole des sons en E1–E3 ; pictogrammes de ton dès E1
+
+- **Date** : 2026-10-28
+- **Question** : quel symbole sert d'étiquette de réponse pour les sons
+  (DEC-0028, « à préciser ») ? Et que devient la règle de DEC-0022, qui
+  limitait les symboles de ton aux étapes où l'écrit est autorisé ?
+- **Options** : 1) symbole phonétique (`ipa`) ; 1 restreinte) symbole
+  phonétique **court** (`ipa_main`) du seul son mis en contraste ;
+  2) pictogramme maison ; 3) lettre vietnamienne ; 4) pas de symbole.
+- **Décision** : **1 restreinte**.
+  1. L'étiquette d'un son est la valeur `ipa_main` de `sons.csv`, entre
+     barres obliques (ex. /ə/ contre /o/ pour ơ / ô). La notation complète
+     (`ipa`) n'est pas utilisée comme étiquette.
+  2. Seul le **son mis en contraste** dans la série est affiché, pas le mot
+     entier : ce n'est pas une transcription de mot (DEC-0021 tient).
+  3. Le symbole est **présenté en E1, avec son audio** (Découverte, Écoute
+     contrastée), pour être appris comme une étiquette sonore et non lu.
+  4. Les symboles qui ressemblent à une lettre française (/u/, /e/, /o/,
+     /i/, /a/…) reçoivent une **mise en garde** à leur première apparition
+     (ex. /u/ se dit « ou », pas le « u » de *lune*).
+  5. **Pictogrammes et couleurs de ton** (DEC-0022) autorisés **dès E1** ;
+     les **signes de l'écriture** (◌́, ◌̀…) restent réservés aux étapes où
+     l'écrit est permis (DEC-0011).
+- **Raison** : une seule notation de E2 à E5 ; pas de symboles arbitraires à
+  inventer ; respecte « pas d'écrit en E1–E2 ». Charge acceptée : quelques
+  symboles nouveaux (ə, ɨ, ɛ, ɔ, ŋ, ɲ, ɗ, ɓ…). Le risque de lecture à la
+  française subsiste pour les symboles identiques à des lettres françaises,
+  d'où la mise en garde.
+- **Remplace** : dans DEC-0021, la phrase « pas de colonne `ipa_main` »
+  (la colonne existe dans `sons.csv` et sert désormais d'étiquette) et la
+  limite « en production » pour la notation des sons ; dans DEC-0022, la
+  règle « symboles affichés seulement là où l'écrit est autorisé ».
+- **Complète** : DEC-0028.
+- **Point à vérifier** : quelles étiquettes la méta-analyse range sous
+  « symboles » (alphabet phonétique ou autre) ; à relire dans l'article.
+- **Impacte** : PROG-ACT, R-PARC-04, R-ECR-04, FOND-04 § 7 bis,
+  `sons.csv` (colonne `ipa_main` à relire, triphtongues comprises).
+
 ## Historique
 
 | Version | Date | Changement |
@@ -581,6 +638,8 @@ qui indique « remplace DEC-NNNN ».
 | 1.18 | 2026-10-28 | Ajout de DEC-0024 (images) et DEC-0025 (séries minimales de 2 à 4 termes). |
 | 1.19 | 2026-10-28 | Ajout de DEC-0026 (E2 et E3 sur la même série minimale). |
 | 1.20 | 2026-10-28 | Ajout de DEC-0027 (termes hors corpus vérifiés ; syllabe inventée permise en E2). |
+| 1.21 | 2026-10-28 | Ajout de DEC-0028 (étiquettes de réponse : images, puis symboles). |
+| 1.22 | 2026-10-28 | Ajout de DEC-0029 (symbole des sons : `ipa_main` du son contrasté ; pictogrammes de ton dès E1). |
 
 ## Liens
 

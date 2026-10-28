@@ -2,7 +2,7 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.1
+version: 0.3
 date: 2026-10-28
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
@@ -42,7 +42,7 @@ sources:
 | Point | Règle |
 |---|---|
 | Entend | l'élément nouveau dans les mots supports, **≥ 2 voix**, débit **lent** |
-| Voit | image du mot ou pictogramme du ton ; **aucun écrit** (R-ECR-01) |
+| Voit | image du mot ; **symbole** de l'élément nouveau (pictogramme du ton, ou `ipa_main` du son), présenté avec son audio (DEC-0029) ; **aucun écrit** (R-ECR-01) |
 | Répond | rien ; peut **réécouter** autant qu'il veut, puis « suivant » |
 | Fin | chaque item écouté au moins une fois avec chaque voix |
 
@@ -51,7 +51,7 @@ sources:
 | Point | Règle |
 |---|---|
 | Entend | les termes de la paire E2, l'un après l'autre, puis dans l'ordre inverse ; plusieurs voix |
-| Voit | les deux images (ou pictogrammes) côte à côte ; celle qui sonne s'éclaire |
+| Voit | les deux images (ou pictogrammes), chacune avec son **symbole**, côte à côte ; celle qui sonne s'éclaire (DEC-0029) |
 | Répond | rien ; il peut toucher chaque image pour réentendre |
 | But | préparer E2 : l'élève sait **ce qu'on va lui demander de distinguer** |
 
@@ -60,7 +60,7 @@ sources:
 | Point | Règle |
 |---|---|
 | Entend | **un** terme de la paire minimale (DEC-0026), voix tirée au hasard parmi ≥ 2 |
-| Voit | **deux** choix : images ; sinon pictogrammes de ton (leçons de tons) ; sinon boutons sonores (mot sans image, syllabe inventée : DEC-0027) |
+| Voit | **deux** choix : au débit lent, **image + symbole** ; au débit normal, **symbole seul**, l'image restant en petit (DEC-0028). Symbole : pictogramme et couleur du ton, ou `ipa_main` du son contrasté (ex. /ə/ – /o/) (DEC-0029). Sans image : symbole ou bouton sonore (syllabe inventée : DEC-0027) |
 | Répond | touche un choix ; peut réécouter le terme avant de répondre |
 | Correction | **immédiate** : juste → le terme est rejoué ; faux → la bonne réponse s'éclaire, puis les deux termes sont rejoués |
 | Débit | **lent**, puis **normal** quand le seuil est atteint au débit lent |
@@ -137,16 +137,12 @@ calibrés.
 | Les progrès se **transfèrent** à de nouveaux mots et de nouvelles voix | les voix variées (DEC-0023) sont utiles |
 | Les gains plafonnent après environ **400 minutes** d'entraînement au total | il est inutile d'allonger E2–E3 sans fin ; le verrou suffit |
 | Les tons et les voyelles comptent parmi les cibles qui progressent le plus (g = 1,00) | cohérent avec le Module 0 |
-| Des **images** comme étiquettes de réponse donnent un effet plus faible (g = 0,47) que des **mots écrits, l'orthographe ou des symboles** (0,90 à 1,03) | **point à décider** : voir § 6 |
+| Des **images** comme étiquettes de réponse donnent un effet plus faible (g = 0,47) que des **mots écrits, l'orthographe ou des symboles** (0,90 à 1,03) | images, puis symboles (DEC-0028) |
 
 ## 6. Points à décider
 
-1. **Étiquettes de réponse en E2–E3.** La recherche indique un effet plus
-   faible avec des images. Cette comparaison est indirecte (études
-   différentes), mais elle remet en question DEC-0024. Pistes : garder les
-   images ; ou utiliser des **symboles** (pictogramme de ton, symbole de
-   son) comme étiquettes, l'image donnant seulement le sens ; ou mêler les
-   deux.
+1. ~~Étiquettes de réponse en E2–E3~~ → **décidé** : images, puis symboles
+   (DEC-0028) ; symbole des sons = `ipa_main` du son contrasté (DEC-0029).
 2. **Mesure du verrou de production** : proposition provisoire du § 3.
 3. **Valeurs** : 20 dernières réponses, 3 essais en E4, 1 item sur 3
    d'anciennes leçons en E5.
@@ -156,6 +152,8 @@ calibrés.
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Création. |
+| 0.2 | 2026-10-28 | Étiquettes E2–E3 : images, puis symboles (DEC-0028). |
+| 0.3 | 2026-10-28 | Symbole des sons et symboles présentés dès E1 (DEC-0029). |
 
 ## Liens
 

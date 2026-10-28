@@ -2,7 +2,7 @@
 id: PROD-ARCH
 titre: Architecture des outils de formation
 statut: BROUILLON
-version: 0.1
+version: 0.2
 date: 2026-10-28
 resume: >
   Décrit, sans code, les composants qui délivrent la formation : site
@@ -86,7 +86,7 @@ graph LR
 | N° | Point | Quand |
 |---|---|---|
 | 1 | **Seuils** « juste / faux » de la courbe mélodique, par ton, à calibrer sur voix natives | Après la fin du test (paires 2 à 5) |
-| 2 | **Reconnaissance vocale** en complément (FPT.AI ou PhoWhisper) | Plus tard |
+| 2 | **Reconnaissance vocale** en complément. FPT.AI : service absent de la console et de la Marketplace (constaté le 2026-10-28). **PhoWhisper** (VinAI, local) en test : `tools/test_asr/`, environnement `.venv-asr` | Test en cours |
 | 3 | **Voix de référence** pour les 6 tons (FPT.AI, voix natives enregistrées…) | Avant la production audio |
 | 4 | Format exact des **données** (`04_DONNEES`) attendu par le générateur | Prochaine étape « données » |
 | 5 | **Hébergeur** en ligne | Au moment de la mise en ligne |
@@ -97,6 +97,7 @@ graph LR
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Création, à partir de DEC-0015 et DEC-0016. |
+| 0.2 | 2026-10-28 | Point ouvert 2 : FPT.AI sans reconnaissance vocale publique ; test PhoWhisper. |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.7
+version: 0.9
 date: 2026-10-28
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
@@ -59,7 +59,7 @@ de l'élève.
 | **R-PARC-01** | Chaque leçon se parcourt en **5 étapes**, dans cet ordre : E1 Écouter, E2 Distinguer, E3 Opposer, E4 Répéter, E5 Stabiliser. | auto : chaque activité porte une étape E1–E5 | DEC-0010 |
 | **R-PARC-02** | Une activité appartient à **une seule** étape et **une seule** leçon. | auto | DEC-0010 |
 | **R-PARC-03** | **E1** : l'élève écoute sans répondre ni répéter. | revue | FOND-04 § 3 |
-| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon (mot support + un autre terme) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés par des **images** quand le mot s'image, sinon par des boutons sonores ou des pictogrammes de ton. | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 |
+| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon (mot support + un autre terme) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés au débit lent par l'**image et le symbole**, au débit normal par le **symbole seul** (DEC-0028) ; sans image : symbole ou bouton sonore. Symbole d'un ton : pictogramme et couleur ; symbole d'un son : `ipa_main` du son contrasté, présenté en E1 avec son audio (DEC-0029). | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 ; DEC-0028 ; DEC-0029 |
 | **R-PARC-05** | **E3** : les termes forment une **série minimale** de **2 à 4** mots ou pseudo-mots, qui ne diffèrent que par l'élément cible (ton ou son). E3 reprend la série **complète** dont E2 a utilisé une paire. | auto : comparaison des termes | FOND-04 § 3 ; DEC-0025 ; DEC-0026 |
 | **R-PARC-06** | **E4** : l'élève reproduit après un modèle, d'abord **lent** puis **normal** ; le modèle lent précède toujours le modèle normal. | auto : ordre des audios | FOND-04 § 3 |
 | **R-PARC-07** | **E5** : séries d'enchaînement, débit progressif (lent → normal → un peu plus rapide). | auto | FOND-04 § 3 |
@@ -120,7 +120,7 @@ de l'élève.
 | **R-ECR-01** | **E1, E2** : aucun écrit visible. | auto | DEC-0011 |
 | **R-ECR-02** | **E3** : écrit absent au début, visible **en fin d'étape** (sauf syllabe inventée : R-LEX-06). | auto | DEC-0011 ; DEC-0013 |
 | **R-ECR-03** | **E4, E5** : écrit visible, **à l'appui** de l'audio. | auto | DEC-0011 |
-| **R-ECR-04** | Aucune transcription phonétique des **mots**. La notation phonétique des **sons** (`sons.csv`) peut accompagner l'écrit en production ; elle n'est jamais exigée de l'élève. | revue | FOND-04 § 7 ; DEC-0021 |
+| **R-ECR-04** | Aucune transcription phonétique des **mots**. La notation phonétique des **sons** (`sons.csv`) peut accompagner l'écrit en production ; elle n'est jamais exigée de l'élève. Exception : le symbole court (`ipa_main`) du son contrasté sert d'étiquette de réponse dès E1 (DEC-0029). | revue | FOND-04 § 7 ; DEC-0021 ; DEC-0029 |
 
 ## R-AUD — Audio
 
@@ -179,6 +179,8 @@ de l'élève.
 | 0.5 | 2026-10-28 | R-PARC-04, R-PARC-05, R-LEX-05 ; ajout de R-IMG-01 et R-IMG-02 (DEC-0024, DEC-0025). |
 | 0.6 | 2026-10-28 | R-PARC-04 et R-PARC-05 : même série en E2 (paire) et E3 (série complète) ; contraste de ton ou de son (DEC-0026). |
 | 0.7 | 2026-10-28 | R-LEX-05 : syllabe inventée permise en E2 et E3 (DEC-0027). |
+| 0.8 | 2026-10-28 | R-PARC-04 : images, puis symboles (DEC-0028). |
+| 0.9 | 2026-10-28 | R-PARC-04 et R-ECR-04 : symbole des sons = `ipa_main` du son contrasté (DEC-0029). |
 
 ## Liens
 
