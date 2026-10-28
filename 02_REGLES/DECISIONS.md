@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.7
+version: 1.8
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -246,6 +246,28 @@ qui indique « remplace DEC-NNNN ».
 - **Raison** : les tons sont la difficulté n° 1 (FOND-03).
 - **Impacte** : FOND-04, `03_PROGRAMME`.
 
+### DEC-0013 — Syllabes inventées dans les paires minimales
+
+- **Date** : 2026-10-28
+- **Question** : la règle de choix des mots exige des syllabes réelles, mais
+  20 des 77 paires minimales des archives utilisent des syllabes inventées
+  (notamment pour les tons glottalisés).
+- **Décision** : syllabes inventées **autorisées uniquement à l'étape E3**,
+  comme second terme d'une paire minimale, quand aucune paire de mots réels
+  n'existe. Elles respectent la structure de la syllabe vietnamienne
+  (FOND-02 § 2). Elles sont **seulement entendues, jamais affichées**,
+  y compris en fin d'E3 (exception à DEC-0011).
+- **Raison** : sans elles, plusieurs contrastes (tons en particulier) ne
+  pourraient pas être travaillés ; ne jamais les afficher évite d'ancrer une
+  forme écrite qui n'existe pas.
+- **Impacte** : FOND-04 § 9, paires minimales dans `04_DONNEES`.
+
+### DEC-0014 — Validation des fondations
+
+- **Date** : 2026-10-28
+- **Décision** : FOND-01, FOND-02, FOND-03 et FOND-04 passent au statut
+  **VALIDE** (version 1.0), validés par Christophe.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -258,6 +280,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.5 | 2026-10-28 | Ajout de DEC-0008 (corrections factuelles : prosodie du français, notation de ư et ơ). |
 | 1.6 | 2026-10-28 | Ajout de DEC-0009 (accent courant de Hanoï). |
 | 1.7 | 2026-10-28 | Ajout de DEC-0010 (vocabulaire, étapes E1–E5), DEC-0011 (écrit), DEC-0012 (seuils). |
+| 1.8 | 2026-10-28 | Ajout de DEC-0013 (syllabes inventées) et DEC-0014 (validation des fondations). |
 
 ## Liens
 

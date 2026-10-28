@@ -1,8 +1,8 @@
 ---
 id: FOND-01
 titre: Intention et objectifs de la formation
-statut: BROUILLON
-version: 0.2
+statut: VALIDE
+version: 1.0
 date: 2026-10-28
 resume: >
   Dit pourquoi la formation existe, pour qui, ce qu'elle vise à l'issue de
@@ -169,6 +169,7 @@ La formation est en difficulté si l'on observe :
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion de la note d'intention v2, des objectifs généraux v2.0 et de la stratégie globale v01 ; intégration de DEC-0004 et DEC-0007 ; chiffres non sourcés marqués comme hypothèses. |
 | 0.2 | 2026-10-28 | Place de l'écrit (DEC-0011) ; vocabulaire parcours / volets / étapes (DEC-0010) ; « cartes » remplacé par « activités ». |
+| 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). |
 
 ## Liens
 

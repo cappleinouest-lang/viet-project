@@ -1,8 +1,8 @@
 ---
 id: FOND-04
 titre: Principes pédagogiques
-statut: BROUILLON
-version: 0.1
+statut: VALIDE
+version: 1.0
 date: 2026-10-28
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
@@ -153,10 +153,11 @@ Critères de choix (repris de la règle de choix des mots v1.1) :
 Préférence pour les mots d'**une syllabe** ; pas de mot de 3 syllabes ou plus
 aux étapes d'écoute.
 
-> **À décider** : le critère 4 (« syllabe réelle ») contredit les **20
-> syllabes inventées** utilisées dans les 77 paires minimales des archives
-> (par exemple en L09). Faut-il autoriser des syllabes inventées **uniquement**
-> à l'étape E3, quand aucune paire réelle n'existe ?
+> **Règle** (DEC-0013) : exception au critère 4. Une **syllabe inventée**
+> (mais conforme à la structure du vietnamien) est autorisée **uniquement à
+> l'étape E3**, comme second terme d'une paire minimale, quand aucune paire
+> de mots réels n'existe. Elle est **seulement entendue, jamais affichée**,
+> même en fin d'E3.
 
 ## 10. Recyclage et révision
 
@@ -178,6 +179,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion du paradigme v3, des référentiels R01 et R02, de la règle d'atomicité v1.1, du contrat d'unité v1.9 et de la règle de choix des mots v1.1 ; intégration de DEC-0007 et DEC-0010 à DEC-0012. |
+| 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). Ajout de la règle sur les syllabes inventées (DEC-0013). |
 
 ## Liens
 

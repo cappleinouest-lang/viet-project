@@ -1,8 +1,8 @@
 ---
 id: FOND-03
 titre: Difficultés du vietnamien pour un francophone
-statut: BROUILLON
-version: 0.1
+statut: VALIDE
+version: 1.0
 date: 2026-10-28
 resume: >
   Classe les difficultés que rencontre un francophone, d'abord à l'oral
@@ -111,6 +111,7 @@ Niveaux : **1 critique** · **2 majeur** · **3 intermédiaire** · **4 mineur**
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion de l'analyse P1, de la hiérarchie et du tableau normatif archivés ; un tableau unique pour l'oral, un pour la grammaire et l'usage ; intégration de DEC-0005, DEC-0006, DEC-0009 ; 8 corrections. |
+| 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). |
 
 ## Liens
 

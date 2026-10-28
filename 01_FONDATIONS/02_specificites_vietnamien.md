@@ -1,8 +1,8 @@
 ---
 id: FOND-02
 titre: Spécificités du vietnamien
-statut: BROUILLON
-version: 0.1
+statut: VALIDE
+version: 1.0
 date: 2026-10-28
 resume: >
   Décrit les propriétés du vietnamien du Nord qui déterminent la conception
@@ -15,7 +15,7 @@ sources:
   - _ARCHIVES/OLD/DOCS/00_CADRAGE/P0_CADR_GLOB_01_NORM_Specificites_Langue_Vietnamienne_v3.md
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/Archives/01_synthese_specificites_langue_vietnamienne_.md
   - _ARCHIVES/Projet sous Anki/03_DATA_CSV/language/tones.csv et phonemes.csv
-  - 02_REGLES/DECISIONS.md (DEC-0008)
+  - 02_REGLES/DECISIONS.md (DEC-0005, DEC-0008, DEC-0009)
   - Kirby, J. (2011). Vietnamese (Hanoi Vietnamese). Journal of the International Phonetic Association, 41(3).
   - Brunelle, M. (2009). Tone perception in Northern and Southern Vietnamese. Journal of Phonetics, 37(1).
 ---
@@ -143,13 +143,10 @@ Modèle unique : **[consonne initiale] + noyau vocalique + [consonne finale] + t
 > selon les locuteurs et les sources (Kirby, 2011 ; synthèse Wikipédia,
 > « Vietnamese phonology », dont les tableaux se contredisent en partie).
 
-> **À décider** : quelle norme pour l'audio et les exercices ?
-> La structure de leçons des archives prévoit une discrimination **ch / tr**
-> en L08 : elle n'a de sens que si l'audio **distingue** ces sons. Deux
-> possibilités : (a) prononciation courante de Hanoï (fusions), ch/tr et
-> s/x deviennent une difficulté d'**orthographe** et non d'écoute ;
-> (b) prononciation soignée distinguant ces sons. Décision à prendre avant
-> `progression_M0.md` et avant le choix des voix de synthèse.
+> **Règle** (DEC-0009) : la formation suit l'**accent courant de Hanoï**.
+> tr/ch, s/x et d/gi/r se prononcent pareil ; leur distinction est un point
+> d'**orthographe** à mémoriser, pas un exercice d'écoute. L'audio
+> (voix natives ou de synthèse) suit cet accent.
 
 ## 5. L'écriture (chữ Quốc ngữ)
 
@@ -201,6 +198,8 @@ le Sud, à connaître pour comprendre :
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion de la v3 et de la synthèse archivées ; corrections DEC-0005 et DEC-0008 ; vérifications sur Kirby (2011) et Brunelle (2009) : notation de ngã, hỏi à Hanoï, fusions de consonnes, rythme du français ; ajout des pronoms de parenté et des variétés régionales. |
+| 0.2 | 2026-10-28 | § 4.3 : norme de l'accent courant de Hanoï (DEC-0009). |
+| 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). |
 
 ## Liens
 
