@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.4
+version: 0.5
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -63,6 +63,9 @@ erDiagram
 | `name_vi` | nom vietnamien | | `ngã` |
 | `mark` | signe sur la voyelle | vide pour ngang | `~` |
 | `chao` | chiffres Chao (Hanoï) | | `3ˀ5` |
+| `tone_letters` | lettres de ton de l'alphabet phonétique | | `˧ˀ˥` |
+| `pictogram` | symbole pédagogique du projet (DEC-0022) | | `↗ˀ↗` |
+| `color_hex` / `color_name` | couleur du ton (DEC-0022) ; jamais seule porteuse de l'information | code couleur | `#7C3AED` / `violet` |
 | `contour_fr` | mélodie en français | | `montant, cassé au milieu` |
 | `glottalization` | coup de glotte | `none`, `mid`, `final` | `mid` |
 | `example_word` | exemple | | `mã` |
@@ -74,8 +77,7 @@ erDiagram
 | `sound_code` | code | `PH-…` (repris des archives) | `PH-VO-uw` |
 | `grapheme` | écriture | | `ư` |
 | `spellings` | toutes les écritures du même son (DEC-0018) | liste `|` | `d|gi|r` |
-| `ipa` | notation, avec variantes éventuelles (DEC-0008) | | `/c/ ~ /tɕ/` |
-| `ipa_main` | notation **principale**, sans barres, utilisée pour calculer la transcription des mots | | `c` |
+| `ipa` | notation phonétique du son, avec variantes éventuelles (DEC-0008) | | `/c/ ~ /tɕ/` |
 | `position` | place dans la syllabe | `initial`, `glide`, `nucleus`, `final` | `nucleus` |
 | `kind` | nature | `vowel`, `diphthong`, `triphthong`, `consonant`, `semivowel` | `vowel` |
 | `note` | remarque | | |
@@ -182,11 +184,8 @@ erDiagram
 
 ## 4. Ce qui n'est pas un fichier source
 
-**Transcription phonétique des mots** : calculée par le générateur à partir de
-`syllabes.csv`, de `ipa_main` (`sons.csv`) et des chiffres Chao (`tons.csv`),
-avec un coup de glotte [ʔ] devant une syllabe sans consonne initiale.
-Elle est approximative : les variations selon le contexte (par exemple
-*anh*, *sách* à Hanoï) ne sont pas calculées.
+**Transcription phonétique des mots** : non utilisée (DEC-0021). Seule la
+notation des **sons** (`sons.csv`, colonne `ipa`) est employée.
 
 
 Les **activités** du lecteur (E1 → E5) ne sont pas saisies : le générateur les
@@ -218,7 +217,8 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.1 | 2026-10-28 | Création : 9 fichiers, conventions, liens, contrôles. |
 | 0.2 | 2026-10-28 | `sons.csv` : un code par son, colonne `hanoi_merge` supprimée (DEC-0018). |
 | 0.3 | 2026-10-28 | Ajout de `mots_lecons.csv` ; colonne `m0_vector` supprimée de `mots.csv` (DEC-0020). |
-| 0.4 | 2026-10-28 | `sons.csv` : colonne `ipa_main` ; la transcription d'un mot est **calculée** (§ 4), jamais stockée. |
+| 0.4 | 2026-10-28 | Pas de transcription des mots ; seule la notation des sons est utilisée (DEC-0021). |
+| 0.5 | 2026-10-28 | `tons.csv` : lettres de ton, pictogramme, couleur (DEC-0022). |
 
 ## Liens
 

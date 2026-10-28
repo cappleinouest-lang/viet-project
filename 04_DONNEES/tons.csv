@@ -1,7 +1,7 @@
-tone_code;name_vi;mark;chao;contour_fr;glottalization;example_word
-ngang;ngang;;33;moyen, plat;none;ma
-sac;sắc;◌́;35;montant;none;má
-huyen;huyền;◌̀;21;bas, descendant (voix parfois soufflée);none;mà
-hoi;hỏi;◌̉;313;descend, puis remonte peu ou pas à Hanoï (31);none;mả
-nga;ngã;◌̃;3ˀ5;montant, cassé au milieu;mid;mã
-nang;nặng;◌̣;21ʔ;bas, descendant, court;final;mạ
+tone_code;name_vi;mark;chao;tone_letters;pictogram;color_hex;color_name;contour_fr;glottalization;example_word
+ngang;ngang;;33;˧˧;→;#6B7280;gris;moyen, plat;none;ma
+sac;sắc;◌́;35;˧˥;↗;#DC2626;rouge;montant;none;má
+huyen;huyền;◌̀;21;˨˩;↘;#2563EB;bleu;bas, descendant (voix parfois soufflée);none;mà
+hoi;hỏi;◌̉;313;˧˩˧;↘↗;#16A34A;vert;descend, puis remonte peu ou pas à Hanoï (31);none;mả
+nga;ngã;◌̃;3ˀ5;˧ˀ˥;↗ˀ↗;#7C3AED;violet;montant, cassé au milieu;mid;mã
+nang;nặng;◌̣;21ʔ;˨˩ʔ;↘ʔ;#EA580C;orange;bas, descendant, court;final;mạ

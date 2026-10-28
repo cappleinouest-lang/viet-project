@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.14
+version: 1.15
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -421,6 +421,19 @@ qui indique « remplace DEC-NNNN ».
   *oeo, uyu, oao, uây, oay* — à travailler par syllabes d'exercice.
 - **Source** : `07_QUALITE/proposition_mots_supports_M0.md`.
 
+### DEC-0021 — Pas de transcription phonétique des mots
+
+- **Date** : 2026-10-28
+- **Question** : faut-il calculer et afficher la transcription phonétique des
+  mots (par exemple *một* → [mot̚˨˩ʔ]) ?
+- **Décision** : **non**. Seule la notation phonétique des **sons**
+  (`sons.csv`, colonne `ipa`) est conservée et peut être affichée en
+  production. Pas de colonne `ipa_main`, pas de transcription des mots.
+- **Raison** : la notation des sons suffit à l'élève ; une transcription
+  assemblée serait de plus approximative (variations de contexte à Hanoï,
+  par exemple *anh*, *sách*).
+- **Impacte** : FOND-04 § 7 (à revalider), R-ECR-04, `00_modele_donnees.md`.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -440,6 +453,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.12 | 2026-10-28 | Ajout de DEC-0018 (un seul code par son). |
 | 1.13 | 2026-10-28 | Ajout de DEC-0019 (14 leçons, place de ê, ơi, au, ay). |
 | 1.14 | 2026-10-28 | Ajout de DEC-0020 (98 mots supports du Module 0). |
+| 1.15 | 2026-10-28 | Ajout de DEC-0021 (pas de transcription des mots). |
 
 ## Liens
 
