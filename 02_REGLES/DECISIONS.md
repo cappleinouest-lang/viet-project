@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.0
+version: 1.1
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -55,11 +55,35 @@ qui indique « remplace DEC-NNNN ».
 - **Raison** : supprime les copies `_v1`, `_v2`, permet de revenir en arrière
   et de voir exactement ce qui a changé.
 
+### DEC-0004 — Durée du Module 0
+
+- **Date** : 2026-10-28
+- **Question** : quelle durée retenir pour le Module 0 ? Les archives se
+  contredisent : 40 à 60 h (*Objectifs généraux v2*) contre 240 à 400 h sur
+  6 à 9 mois (*Stratégie pédagogique globale v01*), alors que le rythme prévu
+  est de 15 à 30 min par jour.
+- **Options** : A — garder 40 à 60 h ; B — garder 240 à 400 h ;
+  C — exprimer la durée en rythme et en mois indicatifs.
+- **Décision** : **option C**.
+  - Rythme de référence : 20 à 30 min par jour.
+  - Module 0 : environ 4 à 6 mois, soit 40 à 80 h, **à titre indicatif**.
+  - Le passage d'une étape à l'autre est décidé par les **verrous**, pas par
+    le calendrier.
+  - Le pourcentage « 30 à 40 % du parcours » est supprimé.
+  - Le total A0→A2 reste **ouvert, « à préciser »**, à partir des mesures
+    réelles de progression (statistiques Anki).
+- **Raison** : 240 à 400 h sont incompatibles avec 15 à 30 min par jour ;
+  l'option C est cohérente avec le paradigme (progression pilotée par les
+  verrous, non par le temps).
+- **Impacte** : `01_FONDATIONS/01_intention_et_objectifs.md`,
+  `03_PROGRAMME/progression_M0.md`.
+
 ## Historique
 
 | Version | Date | Changement |
 |---|---|---|
 | 1.0 | 2026-10-28 | Création, DEC-0001 à DEC-0003. |
+| 1.1 | 2026-10-28 | Ajout de DEC-0004 (durée du Module 0). |
 
 ## Liens
 
