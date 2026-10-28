@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.5
+version: 1.6
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -175,6 +175,25 @@ qui indique « remplace DEC-NNNN ».
   notation de la base évite toute reprise des 84 phonèmes.
 - **Impacte** : `01_FONDATIONS/02_specificites_vietnamien.md`.
 
+### DEC-0009 — Norme de prononciation : accent courant de Hanoï
+
+- **Date** : 2026-10-28
+- **Question** : quelle prononciation pour l'audio et les exercices ?
+  À Hanoï, tr/ch, s/x et d/gi/r se confondent dans l'usage courant.
+- **Options** : a — accent courant de Hanoï (avec ces fusions) ;
+  b — prononciation du Nord « soignée » qui les distingue.
+- **Décision** : **option a**, l'accent courant de Hanoï.
+  - L'audio (voix natives ou de synthèse) suit cet accent.
+  - **tr/ch**, **s/x** et **d/gi/r** ne font **pas** l'objet d'exercices
+    d'écoute : ce sont des points d'**orthographe** à mémoriser
+    (association mot ↔ écriture).
+  - La discrimination « ch / tr » prévue en L08 dans les archives est
+    supprimée.
+- **Raison** : c'est l'accent effectivement entendu au quotidien à Hanoï ;
+  cohérent avec l'objectif de compréhension des natifs (FOND-01).
+- **Impacte** : `01_FONDATIONS/02_specificites_vietnamien.md` (§ 4.3),
+  `03_PROGRAMME/progression_M0.md` (L08), choix des voix de synthèse.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -185,6 +204,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.3 | 2026-10-28 | DEC-0006 ouverte (tons glottalisés) ; ajout de DEC-0007 (deux parcours écoute / production). |
 | 1.4 | 2026-10-28 | DEC-0006 prise : nặng → hỏi → ngã, répartis dans le Module 0. |
 | 1.5 | 2026-10-28 | Ajout de DEC-0008 (corrections factuelles : prosodie du français, notation de ư et ơ). |
+| 1.6 | 2026-10-28 | Ajout de DEC-0009 (accent courant de Hanoï). |
 
 ## Liens
 
