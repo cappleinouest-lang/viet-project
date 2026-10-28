@@ -37,6 +37,7 @@ graph LR
   PROD_ARCH["PROD-ARCH<br/>Architecture des outils de formation"]
   PROD_COMP_SUPPORT_20261028["PROD-COMP-SUPPORT-20261028<br/>Comparaison WordPress / application web sur mesure"]
   PROD_DOSSIER_SUPPORT_20261028["PROD-DOSSIER-SUPPORT-20261028<br/>Dossier pour le choix du support de formation"]
+  PROD_LECT["PROD-LECT<br/>Lecteur d'activités — version d'essai"]
   PROG_ACT["PROG-ACT<br/>Types d'activités des étapes E1 à E5"]
   PROG_M0["PROG-M0<br/>Progression du Module 0"]
   QUAL_PROP_MOTS_M0["QUAL-PROP-MOTS-M0<br/>Proposition de mots supports du Module 0"]
@@ -101,7 +102,7 @@ graph LR
 
 | Identifiant | Titre | Statut | Version | Entrées | Sorties | Fichier |
 |---|---|---|---|---|---|---|
-| CTX-IA | Contexte du projet pour une IA | VALIDE | 1.7 | DIR-00 | — | [CONTEXTE_IA.md](CONTEXTE_IA.md) |
+| CTX-IA | Contexte du projet pour une IA | VALIDE | 1.9 | DIR-00 | — | [CONTEXTE_IA.md](CONTEXTE_IA.md) |
 | DATA-MODELE | Modèle des données | BROUILLON | 0.11 | REG-REGLES, REG-DEC, FOND-02 | QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [04_DONNEES/00_modele_donnees.md](04_DONNEES/00_modele_donnees.md) |
 | DIR-00 | Formation vietnamien A0 → A2 pour francophones | BROUILLON | 0.2 | — | DIR-01, DIR-02, DIR-03, DIR-04, DIR-05, DIR-06, DIR-07, CTX-IA | [README.md](README.md) |
 | DIR-01 | 01 — Fondations | BROUILLON | 0.1 | DIR-00 | DIR-02 | [01_FONDATIONS/README.md](01_FONDATIONS/README.md) |
@@ -118,6 +119,7 @@ graph LR
 | PROD-ARCH | Architecture des outils de formation | BROUILLON | 0.3 | REG-REGLES, REG-DEC, FOND-04, PROG-ACT | — | [05_PRODUCTION/01_architecture_outils.md](05_PRODUCTION/01_architecture_outils.md) |
 | PROD-COMP-SUPPORT-20261028 | Comparaison WordPress / application web sur mesure | BROUILLON | 0.1 | — | — | [05_PRODUCTION/comparaison_wordpress_application_web_2026-10-28.md](05_PRODUCTION/comparaison_wordpress_application_web_2026-10-28.md) |
 | PROD-DOSSIER-SUPPORT-20261028 | Dossier pour le choix du support de formation | BROUILLON | 0.1 | — | — | [05_PRODUCTION/dossier_choix_support_2026-10-28.md](05_PRODUCTION/dossier_choix_support_2026-10-28.md) |
+| PROD-LECT | Lecteur d'activités — version d'essai | BROUILLON | 0.1 | — | — | [05_PRODUCTION/02_lecteur_activites.md](05_PRODUCTION/02_lecteur_activites.md) |
 | PROG-ACT | Types d'activités des étapes E1 à E5 | BROUILLON | 0.4 | FOND-04, REG-REGLES, REG-DEC, DATA-MODELE | PROG-M0, PROD-ARCH | [03_PROGRAMME/01_types_activites.md](03_PROGRAMME/01_types_activites.md) |
 | PROG-M0 | Progression du Module 0 | BROUILLON | 0.6 | FOND-01, FOND-03, FOND-04, REG-REGLES, PROG-ACT | — | [03_PROGRAMME/progression_M0.md](03_PROGRAMME/progression_M0.md) |
 | QUAL-PROP-MOTS-M0 | Proposition de mots supports du Module 0 | BROUILLON | 0.1 | DATA-MODELE, REG-REGLES | — | [07_QUALITE/proposition_mots_supports_M0.md](07_QUALITE/proposition_mots_supports_M0.md) |
@@ -131,4 +133,4 @@ graph LR
 
 Aucune.
 
-Documents sans aucun lien : PROD-COMP-SUPPORT-20261028, PROD-DOSSIER-SUPPORT-20261028
+Documents sans aucun lien : PROD-COMP-SUPPORT-20261028, PROD-DOSSIER-SUPPORT-20261028, PROD-LECT

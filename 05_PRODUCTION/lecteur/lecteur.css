@@ -1,0 +1,146 @@
+/* Mise en page : une colonne étroite, centrée, pensée d'abord pour le téléphone ;
+   les choix de réponse sont de grandes tuiles tactiles. */
+:root {
+  --fond: #f6f7f5;
+  --surface: #ffffff;
+  --encre: #1c2421;
+  --encre-douce: #5b6661;
+  --trait: #d9dedb;
+  --accent: #0f6b5c;
+  --accent-doux: #e1efeb;
+  --juste: #1f7a3d;
+  --juste-fond: #e3f3e7;
+  --faux: #b3261e;
+  --faux-fond: #fbe5e3;
+  --surbrillance: #fff2c2;
+  --police-texte: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --police-symbole: "Noto Sans", "Charis SIL", "Segoe UI", "Arial Unicode MS", sans-serif;
+  --rayon: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #121715; --surface: #1b2220; --encre: #e7ecea; --encre-douce: #9eaaa5;
+    --trait: #2e3835; --accent: #4cc2a8; --accent-doux: #1d3530;
+    --juste: #6fd38f; --juste-fond: #18301f; --faux: #ff8a80; --faux-fond: #3a1d1b;
+    --surbrillance: #4a4020; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: #121715; --surface: #1b2220; --encre: #e7ecea; --encre-douce: #9eaaa5;
+  --trait: #2e3835; --accent: #4cc2a8; --accent-doux: #1d3530;
+  --juste: #6fd38f; --juste-fond: #18301f; --faux: #ff8a80; --faux-fond: #3a1d1b;
+  --surbrillance: #4a4020; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--fond);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button { font: inherit; color: inherit; }
+button:focus-visible, .tuile:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.barre {
+  max-width: 640px; margin: 0 auto;
+  display: flex; align-items: center; gap: 12px;
+  padding-block: 14px 8px;
+}
+.barre-titre { font-weight: 600; font-size: 0.95rem; color: var(--encre-douce); letter-spacing: 0.02em; }
+.lien-retour {
+  border: 0; background: none; color: var(--accent); font-weight: 600; padding: 6px 0; cursor: pointer;
+}
+.bandeau {
+  max-width: 640px; margin: 0 auto 8px;
+  background: var(--surbrillance); border-radius: 10px; padding: 10px 14px; font-size: 0.9rem;
+}
+.app { max-width: 640px; margin: 0 auto; padding-block: 4px 32px; display: flex; flex-direction: column; gap: 20px; }
+.pied { max-width: 640px; margin: 0 auto; padding-block: 0 24px; color: var(--encre-douce); font-size: 0.8rem; }
+
+h1 { font-size: 1.6rem; line-height: 1.2; margin: 0; text-wrap: balance; font-weight: 700; }
+h2 { font-size: 1.15rem; margin: 0; font-weight: 600; text-wrap: balance; }
+p { margin: 0; }
+.petit { font-size: 0.85rem; color: var(--encre-douce); }
+.etiquette { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--encre-douce); font-weight: 600; }
+
+/* Liste des leçons */
+.lecons { display: flex; flex-direction: column; gap: 8px; }
+.lecon {
+  display: grid; grid-template-columns: 3.2rem 1fr auto; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--trait); border-radius: var(--rayon);
+  padding: 12px 14px; text-align: left; cursor: pointer; width: 100%;
+}
+.lecon[disabled] { cursor: default; opacity: 0.55; }
+.lecon .num { font-size: 1.3rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.lecon .titre { min-width: 0; }
+.pastille {
+  font-size: 0.75rem; font-weight: 600; border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+  background: var(--accent-doux); color: var(--accent);
+}
+.pastille.ok { background: var(--juste-fond); color: var(--juste); }
+.pastille.ferme { background: transparent; color: var(--encre-douce); border: 1px solid var(--trait); }
+
+/* Étapes d'une leçon */
+.etapes { display: flex; flex-direction: column; gap: 10px; }
+.etape {
+  background: var(--surface); border: 1px solid var(--trait); border-radius: var(--rayon);
+  padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
+}
+.etape-tete { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.jauge { height: 8px; background: var(--trait); border-radius: 999px; overflow: hidden; }
+.jauge > span { display: block; height: 100%; background: var(--accent); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.bouton {
+  border: 0; border-radius: 12px; padding: 12px 18px; font-weight: 600; cursor: pointer;
+  background: var(--accent); color: var(--surface);
+}
+.bouton.second { background: var(--accent-doux); color: var(--accent); }
+.bouton.discret { background: none; color: var(--encre-douce); text-decoration: underline; padding: 8px 4px; }
+.bouton[disabled] { opacity: 0.45; cursor: default; }
+
+/* Tuiles : termes écoutés (E1) et choix de réponse (E2, E3) */
+.tuiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tuiles.trois, .tuiles.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 560px) { .tuiles.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tuiles.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tuile {
+  position: relative; min-height: 132px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: var(--surface); border: 2px solid var(--trait); border-radius: var(--rayon);
+  padding: 12px 8px; cursor: pointer; text-align: center;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.tuile .image { font-size: 2.8rem; line-height: 1; }
+.tuile .symbole { font-family: var(--police-symbole); font-size: 1.7rem; font-weight: 700; line-height: 1.1; }
+.tuile.symbole-seul .symbole { font-size: 2.6rem; }
+.tuile.symbole-seul .image { position: absolute; top: 8px; right: 10px; font-size: 1.2rem; opacity: 0.8; }
+.tuile .ecrit { font-size: 1.5rem; font-weight: 600; }
+.tuile .sens { font-size: 0.8rem; color: var(--encre-douce); }
+.tuile .indication { font-size: 0.75rem; color: var(--encre-douce); line-height: 1.3; }
+.tuile.joue { background: var(--surbrillance); border-color: var(--accent); }
+.tuile.juste { background: var(--juste-fond); border-color: var(--juste); }
+.tuile.faux { background: var(--faux-fond); border-color: var(--faux); }
+
+.consigne { display: flex; flex-direction: column; gap: 6px; }
+.ecoute {
+  align-self: center; display: inline-flex; align-items: center; gap: 10px;
+  border: 0; border-radius: 999px; padding: 14px 26px; font-weight: 700; font-size: 1.05rem; cursor: pointer;
+  background: var(--accent); color: var(--surface);
+}
+.retour-reponse { min-height: 1.5em; text-align: center; font-weight: 600; }
+.retour-reponse.juste { color: var(--juste); }
+.retour-reponse.faux { color: var(--faux); }
+
+.mesures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.mesure { background: var(--surface); border: 1px solid var(--trait); border-radius: 10px; padding: 8px 10px; }
+.mesure b { display: block; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.mesure span { font-size: 0.72rem; color: var(--encre-douce); }
+
+.confirmation { background: var(--faux-fond); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+
+@media (prefers-reduced-motion: reduce) { .tuile { transition: none; } }
