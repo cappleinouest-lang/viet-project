@@ -1,77 +1,77 @@
-sound_code;grapheme;spellings;ipa;position;kind;note
-PH-IN-b;b;;/ɓ/ ~ /b/;initial;consonant;
-PH-VS-a;a;;/a/;nucleus;vowel;
-PH-VS-i;i;i|y;/i/;nucleus;vowel;choix i / y : orthographe (DEC-0018)
-PH-IN-m;m;;/m/;initial;consonant;
-PH-IN-n;n;;/n/;initial;consonant;
-PH-VS-u;u;;/u/;nucleus;vowel;
-PH-DP-ai;ai;;/aj/;nucleus;diphthong;
-PH-VO-ow;ơ;;/ə/;nucleus;vowel;
-PH-VO-uw;ư;;/ɨ/;nucleus;vowel;
-PH-IN-ng;ng;ng|ngh;/ŋ/;initial;consonant;écrit ngh devant i, e, ê (DEC-0018)
-PH-TR-ieeu;iêu;;/iə̯w/;nucleus;triphthong;
-PH-IN-d;d;d|gi|r;/z/;initial;consonant;"Hanoï : d, gi et r se prononcent /z/ ; distinction = orthographe (DEC-0009, DEC-0018)"
-PH-IN-dd;đ;;/ɗ/;initial;consonant;
-PH-VS-e;e;;/ɛ/;nucleus;vowel;
-PH-IN-h;h;;/h/;initial;consonant;
-PH-IN-l;l;;/l/;initial;consonant;
-PH-FI-m;-m;;/m/;final;consonant;
-PH-FI-n;-n;;/n/;final;consonant;
-PH-VS-o;o;;/ɔ/;nucleus;vowel;
-PH-VS-oo;ô;;/o/;nucleus;vowel;
-PH-IN-p;p;;/p/;initial;consonant;rare en début de mot (emprunts : pin)
-PH-CO-t;t;;/t/;initial;consonant;code archivé « CO » malgré une introduction en L01
-PH-IN-v;v;;/v/;initial;consonant;
-PH-IN-x;x;x|s;/s/;initial;consonant;"Hanoï : x et s se prononcent /s/ ; distinction = orthographe (DEC-0009, DEC-0018)"
-PH-DP-ao;ao;;/aw/;nucleus;diphthong;
-PH-DP-au;au;;/ăw/;nucleus;diphthong;
-PH-DP-ay;ay;;/ăj/;nucleus;diphthong;
-PH-DP-eo;eo;;/ɛw/;nucleus;diphthong;
-PH-DP-iu;iu;;/iw/;nucleus;diphthong;
-PH-DP-oi;oi;;/ɔj/;nucleus;diphthong;
-PH-DP-ooi;ôi;;/oj/;nucleus;diphthong;
-PH-DP-owi;ơi;;/əj/;nucleus;diphthong;
-PH-DP-ui;ui;;/uj/;nucleus;diphthong;
-PH-DP-uy;uy;;/wi/;nucleus;diphthong;
-PH-CO-c;c;c|k;/k/;initial;consonant;"écrit k devant i, y, e, ê ; qu = PH-CO-qu (DEC-0018)"
-PH-CO-ph;ph;;/f/;initial;consonant;
-PH-CO-qu;q(u);;/kw/;initial;consonant;
-PH-CO-th;th;;/tʰ/;initial;consonant;
-PH-VO-ee;ê;;/e/;nucleus;vowel;
-PH-DP-eeu;êu;;/ew/;nucleus;diphthong;
-PH-DP-owu;ơu;;/əw/;nucleus;diphthong;
-PH-DP-uwi;ưi;;/ɨj/;nucleus;diphthong;
-PH-DP-uwu;ưu;;/ɨw/;nucleus;diphthong;
-PH-FI-p;-p;;/p̚/;final;consonant;
-PH-FI-t;-t;;/t̚/;final;consonant;
-PH-FI-c;-c;c|ch;/k̚/ ~ /c̚/;final;consonant;-c après a, ă, â, e, o, ô, u, ư…
-PH-FI-ch;-ch;c|ch;/k̚/ ~ /c̚/;final;consonant;variante de -c après i, ê, a (anh/ach)
-PH-VO-aa;â;;/ə̆/;nucleus;vowel;
-PH-VO-aw;ă;;/ă/;nucleus;vowel;
-PH-DI-aau;âu;;/ə̆w/;nucleus;diphthong;
-PH-DI-aay;ây;;/ə̆j/;nucleus;diphthong;
-PH-IN-ch;ch;ch|tr;/c/ ~ /tɕ/;initial;consonant;"Hanoï : ch et tr se prononcent pareil ; distinction = orthographe (DEC-0009, DEC-0018)"
-PH-IN-g;g;g|gh;/ɣ/ ~ /g/;initial;consonant;écrit gh devant i, e, ê (DEC-0018)
-PH-IN-kh;kh;;/x/;initial;consonant;
-PH-IN-nh;nh;;/ɲ/;initial;consonant;
-PH-FI-nh;-nh;ng|nh;/ɲ/;final;consonant;variante de -ng après i, ê, a
-PH-FI-ng;-ng;ng|nh;/ŋ/;final;consonant;
-PH-GL-iee;iê;iê|ia|yê;/iə̯/;nucleus;diphthong;
-PH-GL-oa;oa;;/wa/;nucleus;diphthong;
-PH-GL-oaw;oă;;/wă/;nucleus;diphthong;
-PH-GL-oe;oe;;/wɛ/;nucleus;diphthong;
-PH-GL-uaa;uâ;;/wə̆/;nucleus;diphthong;
-PH-GL-uee;uê;;/we/;nucleus;diphthong;
-PH-GL-uoo;uô;uô|ua;/uə̯/;nucleus;diphthong;
-PH-GL-uow;uơ;;/wə/;nucleus;diphthong;
-PH-GL-uwow;ươ;ươ|ưa;/ɨə̯/;nucleus;diphthong;
-PH-GL-uyee;uyê;;/wiə̯/;nucleus;diphthong;
-PH-TR-oai;oai;;/waj/;nucleus;triphthong;
-PH-TR-oao;oao;;/waw/;nucleus;triphthong;
-PH-TR-oay;oay;;/wăj/;nucleus;triphthong;
-PH-TR-oeo;oeo;;/wɛw/;nucleus;triphthong;
-PH-TR-uaay;uây;;/wə̆j/;nucleus;triphthong;
-PH-TR-uooi;uôi;;/uə̯j/;nucleus;triphthong;
-PH-TR-uwowi;ươi;;/ɨə̯j/;nucleus;triphthong;
-PH-TR-uwowu;ươu;;/ɨə̯w/;nucleus;triphthong;
-PH-TR-uyu;uyu;;/wiw/;nucleus;triphthong;
+sound_code;grapheme;spellings;ipa;ipa_main;position;kind;note
+PH-IN-b;b;;/ɓ/ ~ /b/;ɓ;initial;consonant;
+PH-VS-a;a;;/a/;a;nucleus;vowel;
+PH-VS-i;i;i|y;/i/;i;nucleus;vowel;choix i / y : orthographe (DEC-0018)
+PH-IN-m;m;;/m/;m;initial;consonant;
+PH-IN-n;n;;/n/;n;initial;consonant;
+PH-VS-u;u;;/u/;u;nucleus;vowel;
+PH-DP-ai;ai;;/aj/;aj;nucleus;diphthong;
+PH-VO-ow;ơ;;/ə/;ə;nucleus;vowel;
+PH-VO-uw;ư;;/ɨ/;ɨ;nucleus;vowel;
+PH-IN-ng;ng;ng|ngh;/ŋ/;ŋ;initial;consonant;écrit ngh devant i, e, ê (DEC-0018)
+PH-TR-ieeu;iêu;;/iə̯w/;iə̯w;nucleus;triphthong;
+PH-IN-d;d;d|gi|r;/z/;z;initial;consonant;"Hanoï : d, gi et r se prononcent /z/ ; distinction = orthographe (DEC-0009, DEC-0018)"
+PH-IN-dd;đ;;/ɗ/;ɗ;initial;consonant;
+PH-VS-e;e;;/ɛ/;ɛ;nucleus;vowel;
+PH-IN-h;h;;/h/;h;initial;consonant;
+PH-IN-l;l;;/l/;l;initial;consonant;
+PH-FI-m;-m;;/m/;m;final;consonant;
+PH-FI-n;-n;;/n/;n;final;consonant;
+PH-VS-o;o;;/ɔ/;ɔ;nucleus;vowel;
+PH-VS-oo;ô;;/o/;o;nucleus;vowel;
+PH-IN-p;p;;/p/;p;initial;consonant;rare en début de mot (emprunts : pin)
+PH-CO-t;t;;/t/;t;initial;consonant;code archivé « CO » malgré une introduction en L01
+PH-IN-v;v;;/v/;v;initial;consonant;
+PH-IN-x;x;x|s;/s/;s;initial;consonant;"Hanoï : x et s se prononcent /s/ ; distinction = orthographe (DEC-0009, DEC-0018)"
+PH-DP-ao;ao;;/aw/;aw;nucleus;diphthong;
+PH-DP-au;au;;/ăw/;ăw;nucleus;diphthong;
+PH-DP-ay;ay;;/ăj/;ăj;nucleus;diphthong;
+PH-DP-eo;eo;;/ɛw/;ɛw;nucleus;diphthong;
+PH-DP-iu;iu;;/iw/;iw;nucleus;diphthong;
+PH-DP-oi;oi;;/ɔj/;ɔj;nucleus;diphthong;
+PH-DP-ooi;ôi;;/oj/;oj;nucleus;diphthong;
+PH-DP-owi;ơi;;/əj/;əj;nucleus;diphthong;
+PH-DP-ui;ui;;/uj/;uj;nucleus;diphthong;
+PH-DP-uy;uy;;/wi/;wi;nucleus;diphthong;
+PH-CO-c;c;c|k;/k/;k;initial;consonant;"écrit k devant i, y, e, ê ; qu = PH-CO-qu (DEC-0018)"
+PH-CO-ph;ph;;/f/;f;initial;consonant;
+PH-CO-qu;q(u);;/kw/;kw;initial;consonant;
+PH-CO-th;th;;/tʰ/;tʰ;initial;consonant;
+PH-VO-ee;ê;;/e/;e;nucleus;vowel;
+PH-DP-eeu;êu;;/ew/;ew;nucleus;diphthong;
+PH-DP-owu;ơu;;/əw/;əw;nucleus;diphthong;
+PH-DP-uwi;ưi;;/ɨj/;ɨj;nucleus;diphthong;
+PH-DP-uwu;ưu;;/ɨw/;ɨw;nucleus;diphthong;
+PH-FI-p;-p;;/p̚/;p̚;final;consonant;
+PH-FI-t;-t;;/t̚/;t̚;final;consonant;
+PH-FI-c;-c;c|ch;/k̚/ ~ /c̚/;k̚;final;consonant;-c après a, ă, â, e, o, ô, u, ư…
+PH-FI-ch;-ch;c|ch;/k̚/ ~ /c̚/;c̚;final;consonant;variante de -c après i, ê, a (anh/ach)
+PH-VO-aa;â;;/ə̆/;ə̆;nucleus;vowel;
+PH-VO-aw;ă;;/ă/;ă;nucleus;vowel;
+PH-DI-aau;âu;;/ə̆w/;ə̆w;nucleus;diphthong;
+PH-DI-aay;ây;;/ə̆j/;ə̆j;nucleus;diphthong;
+PH-IN-ch;ch;ch|tr;/c/ ~ /tɕ/;c;initial;consonant;"Hanoï : ch et tr se prononcent pareil ; distinction = orthographe (DEC-0009, DEC-0018)"
+PH-IN-g;g;g|gh;/ɣ/ ~ /g/;ɣ;initial;consonant;écrit gh devant i, e, ê (DEC-0018)
+PH-IN-kh;kh;;/x/;x;initial;consonant;
+PH-IN-nh;nh;;/ɲ/;ɲ;initial;consonant;
+PH-FI-nh;-nh;ng|nh;/ɲ/;ɲ;final;consonant;variante de -ng après i, ê, a
+PH-FI-ng;-ng;ng|nh;/ŋ/;ŋ;final;consonant;
+PH-GL-iee;iê;iê|ia|yê;/iə̯/;iə̯;nucleus;diphthong;
+PH-GL-oa;oa;;/wa/;wa;nucleus;diphthong;
+PH-GL-oaw;oă;;/wă/;wă;nucleus;diphthong;
+PH-GL-oe;oe;;/wɛ/;wɛ;nucleus;diphthong;
+PH-GL-uaa;uâ;;/wə̆/;wə̆;nucleus;diphthong;
+PH-GL-uee;uê;;/we/;we;nucleus;diphthong;
+PH-GL-uoo;uô;uô|ua;/uə̯/;uə̯;nucleus;diphthong;
+PH-GL-uow;uơ;;/wə/;wə;nucleus;diphthong;
+PH-GL-uwow;ươ;ươ|ưa;/ɨə̯/;ɨə̯;nucleus;diphthong;
+PH-GL-uyee;uyê;;/wiə̯/;wiə̯;nucleus;diphthong;
+PH-TR-oai;oai;;/waj/;waj;nucleus;triphthong;
+PH-TR-oao;oao;;/waw/;waw;nucleus;triphthong;
+PH-TR-oay;oay;;/wăj/;wăj;nucleus;triphthong;
+PH-TR-oeo;oeo;;/wɛw/;wɛw;nucleus;triphthong;
+PH-TR-uaay;uây;;/wə̆j/;wə̆j;nucleus;triphthong;
+PH-TR-uooi;uôi;;/uə̯j/;uə̯j;nucleus;triphthong;
+PH-TR-uwowi;ươi;;/ɨə̯j/;ɨə̯j;nucleus;triphthong;
+PH-TR-uwowu;ươu;;/ɨə̯w/;ɨə̯w;nucleus;triphthong;
+PH-TR-uyu;uyu;;/wiw/;wiw;nucleus;triphthong;
