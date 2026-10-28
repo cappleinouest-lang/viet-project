@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.24
+version: 1.28
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -677,6 +677,90 @@ qui indique « remplace DEC-NNNN ».
   `paires_minimales.csv`, `ouvertures.csv`, `sons.csv` ; R-ATOM-06 ;
   DATA-MODELE ; PROG-M0.
 
+### DEC-0032 — Verrou d'écoute : un minimum de réussites par série
+
+- **Date** : 2026-10-28
+- **Question** : le score d'E2 et E3 porte sur les 20 dernières réponses,
+  toutes séries mêlées. Dans une leçon de 16 séries (L01), une série
+  difficile peut n'être jamais vérifiée. Faut-il compléter ce calcul ?
+  (point P2 de PROG-M0)
+- **Options** : A — garder le score mêlé seul ; B — score mêlé **et**
+  minimum de réussites par série ; C — score séparé par série (85 % sur ses
+  10 dernières réponses).
+- **Décision** : **B**. Le verrou d'écoute d'E2 et d'E3 exige, en plus du
+  seuil sur les 20 dernières réponses (R-VOL-05) : **chaque série** de la
+  leçon a été réussie au moins **2 fois** au **débit normal** (paramètre).
+- **Raison** : chaque contraste est vérifié au moins un peu, sans allonger
+  beaucoup le volet écoute ; l'option C demanderait au moins 160 réponses
+  justes en L01, alors que les gains plafonnent vers 400 minutes
+  d'entraînement au total (Uchihara, Karas et Thomson, 2025).
+- **Impacte** : R-VOL-05, PROG-ACT, PROG-M0, lecteur d'activités.
+
+### DEC-0033 — Ordre des termes dans les séries minimales
+
+- **Date** : 2026-10-28
+- **Question** : quel terme sert de second choix en E2 ? (point P3 de
+  PROG-M0)
+- **Décision** :
+  1. **Convention** : position 1 = mot support ; **position 2 = contraste
+     principal** de la leçon. La paire d'E2 est position 1 / position 2.
+     Quand la leçon oppose le nouveau ton à deux tons connus (L07 : huyền
+     puis nặng ; L11 : sắc puis hỏi, DEC-0006), E2 se fait en deux temps :
+     position 1 / 2, puis position 1 / 3.
+  2. **Séries réordonnées** : S0026 (L03 : huyền en position 2) ; S0081,
+     S0082, S0086 (L11 : sắc en position 2, hỏi en position 3).
+  3. **Séries complétées** (4 termes au plus) : S0084 *cũng / cúng / củng /
+     cùng* (*củng*, hỏi, remplace *cung*) ; S0085 *nghĩ / nghí\* / nghỉ /
+     nghị* (*nghí*, syllabe inventée présumée, sắc, remplace *nghi*).
+- **À vérifier** : *củng* et *nghí* dans les 3 dictionnaires (DEC-0027).
+- **Raison** : appliquer l'ordre de DEC-0006 dans le lecteur sans
+  sélection manuelle ; le générateur lit la position.
+- **Impacte** : `paires_minimales.csv`, DATA-MODELE (colonne `position`),
+  R-PARC-04, PROG-M0.
+
+### DEC-0034 — L01 reste une seule leçon
+
+- **Date** : 2026-10-28
+- **Question** : faut-il couper L01 (21 éléments, 16 séries) en deux
+  leçons ? (point P4 de PROG-M0)
+- **Constat** : selon Christophe, les sons et le ton de L01 sont ceux du
+  français. Vérification : vrai pour la plupart ; écarts réels pour **h**
+  (muet en français), **ê / e** et **ô / o** (confondus par beaucoup de
+  francophones du Sud de la France), les finales **-m / -n** (risque de
+  nasaliser la voyelle), les implosives **b, đ** (écart faible) et le ton
+  **ngang** (la hauteur fait partie du mot).
+- **Options** : A — une seule leçon ; B — deux leçons (15 leçons au total,
+  renumérotation).
+- **Décision** : **A**. Ordre interne : voyelles → consonnes → finales.
+  L01 sert aussi de **test d'entrée** : si une série ne se valide pas vite,
+  le contraste est moins évident que prévu.
+- **Réexamen** : couper L01 si l'usage la montre trop longue.
+- **Raison** : sons de difficulté 4 (FOND-03), verrou par série (DEC-0032),
+  pas de renumérotation.
+- **Impacte** : PROG-M0.
+
+### DEC-0035 — Critère de fréquence : « mot courant » en Module 0
+
+- **Date** : 2026-10-28
+- **Question** : R-LEX-03 exige des mots parmi les 500 plus fréquents ; le
+  contrôle du 2026-10-28 montre que **46 mots supports sur 100** ne
+  respectent pas ce critère (26 sans rang dans `mots.csv`, dont *cơm, gà,
+  mười, điện thoại* ; 20 au-delà de 500, dont *uống, bàn, áo, đọc*).
+  (point P5 de PROG-M0)
+- **Options** : A — 500 strict (46 mots à remplacer) ; B — seuil de 2 000
+  sur une liste à fixer ; C — « mot courant » en Module 0, fréquence à
+  partir de A1.
+- **Décision** : **C**. En Module 0, le critère 3 devient « mot **courant**
+  de la vie quotidienne », vérifié par relecture ; le critère de fréquence
+  s'applique à partir de A1, sur la liste de référence à fixer (R-LEX-07).
+  Les rangs restent dans `mots.csv` à titre d'information.
+- **Raison** : en Module 0, le mot est un support sonore, pas du vocabulaire
+  (R-LEX-01) ; la liste importée est incomplète (rangs manquants pour des
+  mots très courants).
+- **À faire** : relire une fois les 100 mots supports (« courant ? ») ;
+  cas douteux signalé : *tu* (« pratiquer une religion »).
+- **Impacte** : R-LEX-03, FOND-04 § 9 (revalidé), PROG-M0.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -706,6 +790,10 @@ qui indique « remplace DEC-NNNN ».
 | 1.22 | 2026-10-28 | Ajout de DEC-0029 (symbole des sons : `ipa_main` du son contrasté ; pictogrammes de ton dès E1). |
 | 1.23 | 2026-10-28 | Ajout de DEC-0030 (lecteur développé d'abord en site statique ; enveloppe WordPress ou Firebase choisie ensuite). |
 | 1.24 | 2026-10-28 | Ajout de DEC-0031 (uy et uyê gardés avec *tuy* et *chuyện* ; 9 sons rares reportés en A1–A2). |
+| 1.25 | 2026-10-28 | Ajout de DEC-0032 (verrou d'écoute : chaque série réussie au moins 2 fois au débit normal). |
+| 1.26 | 2026-10-28 | Ajout de DEC-0033 (position 2 = contraste principal ; séries de L03 et L11 réordonnées). |
+| 1.27 | 2026-10-28 | Ajout de DEC-0034 (L01 reste une seule leçon ; test d'entrée). |
+| 1.28 | 2026-10-28 | Ajout de DEC-0035 (« mot courant » en Module 0 ; fréquence à partir de A1). |
 
 ## Liens
 

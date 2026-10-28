@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.10
+version: 0.11
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -147,7 +147,7 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `series_code` | code de la série | `S0001` … | `S0012` |
 | `lesson_code` | leçon | `lesson_code` | `M0-L03` |
 | `contrast_type` | ce qui oppose les termes | `sound`, `tone` | `tone` |
-| `position` | rang du terme ; 1 = mot support de la leçon | 1 à 4 | `2` |
+| `position` | rang du terme ; 1 = mot support de la leçon ; 2 = contraste principal (paire d'E2) ; 3 = second contraste pour L07 et L11 (DEC-0033) | 1 à 4 | `2` |
 | `written` | terme écrit | | `bàn` |
 | `word_code` | mot correspondant | `word_code` ; vide si hors corpus | `W0004` |
 | `invented` | syllabe inventée : absente de `mots.csv` et de moins de 2 dictionnaires sur 3 (DEC-0013, DEC-0027) | `true` / `false` | `false` |
@@ -260,6 +260,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.8 | 2026-10-28 | Colonne `imageable`, fichier `images.csv` (DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). |
 | 0.9 | 2026-10-28 | Définition de `invented` précisée (DEC-0027). |
 | 0.10 | 2026-10-28 | `ouvertures.csv` : seuls les sons enseignés ; sons reportés signalés dans `sons.csv` (DEC-0031). |
+| 0.11 | 2026-10-28 | Colonne `position` de `paires_minimales.csv` : sens des positions 2 et 3 (DEC-0033). |
 
 ## Liens
 

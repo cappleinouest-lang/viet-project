@@ -65,8 +65,8 @@ S0025;M0-L03;tone;2;mè;;false;huyen;false;hors corpus, attesté dans 3 dictionn
 S0025;M0-L03;tone;3;mé;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0025;M0-L03;tone;4;me;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0026;M0-L03;tone;1;bị;W0333;false;nang;false;
-S0026;M0-L03;tone;2;bí;;false;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0026;M0-L03;tone;3;bì;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0026;M0-L03;tone;2;bì;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0026;M0-L03;tone;3;bí;;false;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0026;M0-L03;tone;4;bi;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0027;M0-L03;tone;1;lạ;W0334;false;nang;false;
 S0027;M0-L03;tone;2;là;W0030;false;huyen;false;
@@ -220,29 +220,29 @@ S0080;M0-L10;sound;1;khéo;W0123;false;PH-IN-kh;false;
 S0080;M0-L10;sound;2;kéo;;false;PH-CO-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0080;M0-L10;sound;3;héo;;false;PH-IN-h;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0081;M0-L11;tone;1;mũi;W0279;false;nga;false;
-S0081;M0-L11;tone;2;mùi;W0144;false;huyen;false;
-S0081;M0-L11;tone;3;múi;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
-S0081;M0-L11;tone;4;mủi;;false;hoi;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0081;M0-L11;tone;2;múi;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0081;M0-L11;tone;3;mủi;;false;hoi;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0081;M0-L11;tone;4;mùi;W0144;false;huyen;false;
 S0082;M0-L11;tone;1;ngã;W0281;false;nga;false;
-S0082;M0-L11;tone;2;nga;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0082;M0-L11;tone;3;ngá;;true;sac;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
-S0082;M0-L11;tone;4;ngả;;false;hoi;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0082;M0-L11;tone;2;ngá;;true;sac;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0082;M0-L11;tone;3;ngả;;false;hoi;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0082;M0-L11;tone;4;nga;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0083;M0-L11;tone;1;mũ;W0309;false;nga;false;
 S0083;M0-L11;tone;2;mú;;true;sac;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
 S0083;M0-L11;tone;3;mủ;;false;hoi;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0083;M0-L11;tone;4;mu;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0084;M0-L11;tone;1;cũng;W0255;false;nga;false;
-S0084;M0-L11;tone;2;cung;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0084;M0-L11;tone;3;cùng;;false;huyen;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0084;M0-L11;tone;4;cúng;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0084;M0-L11;tone;2;cúng;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0084;M0-L11;tone;3;củng;;false;hoi;false;hors corpus, mot réel (củng cố, « consolider ») à confirmer dans les 3 dictionnaires (DEC-0027) ; ajout DEC-0033
+S0084;M0-L11;tone;4;cùng;;false;huyen;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0085;M0-L11;tone;1;nghĩ;W0283;false;nga;false;
-S0085;M0-L11;tone;2;nghỉ;W0156;false;hoi;false;
-S0085;M0-L11;tone;3;nghi;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
+S0085;M0-L11;tone;2;nghí;;true;sac;false;syllabe inventée présumée, à vérifier dans les 3 dictionnaires (DEC-0027) ; ajout DEC-0033
+S0085;M0-L11;tone;3;nghỉ;W0156;false;hoi;false;
 S0085;M0-L11;tone;4;nghị;;false;nang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0086;M0-L11;tone;1;mỗi;W0278;false;nga;false;
 S0086;M0-L11;tone;2;mối;;false;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0086;M0-L11;tone;3;môi;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0086;M0-L11;tone;4;mổi;;true;hoi;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0086;M0-L11;tone;3;mổi;;true;hoi;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0086;M0-L11;tone;4;môi;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0087;M0-L12;sound;1;nước;W0222;false;PH-GL-uwow;false;
 S0087;M0-L12;sound;2;nuốc;;true;PH-GL-uoo;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
 S0088;M0-L12;sound;1;hoa;W0026;false;PH-GL-oa;false;

@@ -2,7 +2,7 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.10
+version: 0.13
 date: 2026-10-28
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
@@ -59,7 +59,7 @@ de l'élève.
 | **R-PARC-01** | Chaque leçon se parcourt en **5 étapes**, dans cet ordre : E1 Écouter, E2 Distinguer, E3 Opposer, E4 Répéter, E5 Stabiliser. | auto : chaque activité porte une étape E1–E5 | DEC-0010 |
 | **R-PARC-02** | Une activité appartient à **une seule** étape et **une seule** leçon. | auto | DEC-0010 |
 | **R-PARC-03** | **E1** : l'élève écoute sans répondre ni répéter. | revue | FOND-04 § 3 |
-| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon (mot support + un autre terme) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés au débit lent par l'**image et le symbole**, au débit normal par le **symbole seul** (DEC-0028) ; sans image : symbole ou bouton sonore. Symbole d'un ton : pictogramme et couleur ; symbole d'un son : `ipa_main` du son contrasté, présenté en E1 avec son audio (DEC-0029). | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 ; DEC-0028 ; DEC-0029 |
+| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon : terme en **position 1** (mot support) et terme en **position 2** (contraste principal) ; pour L07 et L11, puis position 1 / position 3 (DEC-0033) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés au débit lent par l'**image et le symbole**, au débit normal par le **symbole seul** (DEC-0028) ; sans image : symbole ou bouton sonore. Symbole d'un ton : pictogramme et couleur ; symbole d'un son : `ipa_main` du son contrasté, présenté en E1 avec son audio (DEC-0029). | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 ; DEC-0028 ; DEC-0029 |
 | **R-PARC-05** | **E3** : les termes forment une **série minimale** de **2 à 4** mots ou pseudo-mots, qui ne diffèrent que par l'élément cible (ton ou son). E3 reprend la série **complète** dont E2 a utilisé une paire. | auto : comparaison des termes | FOND-04 § 3 ; DEC-0025 ; DEC-0026 |
 | **R-PARC-06** | **E4** : l'élève reproduit après un modèle, d'abord **lent** puis **normal** ; le modèle lent précède toujours le modèle normal. | auto : ordre des audios | FOND-04 § 3 |
 | **R-PARC-07** | **E5** : séries d'enchaînement, débit progressif (lent → normal → un peu plus rapide). | auto | FOND-04 § 3 |
@@ -72,7 +72,7 @@ de l'élève.
 | **R-VOL-02** | Valider l'écoute de la leçon N **ouvre** l'écoute de la leçon N+1, sans attendre la production de N. | mesure | DEC-0007 |
 | **R-VOL-03** | La production d'un élément ne commence qu'**après** validation de son écoute. | mesure | DEC-0007 |
 | **R-VOL-04** | L'écoute a **au plus 3 leçons d'avance** sur la production (paramètre). Au-delà, l'écoute est mise en pause jusqu'à rattrapage. | mesure | DEC-0007 |
-| **R-VOL-05** | **Verrou d'écoute** : E2 et E3 réussis à **≥ 85 %** (paramètre), mesurés sur **au moins 2 voix**. | mesure | DEC-0012 |
+| **R-VOL-05** | **Verrou d'écoute** : E2 et E3 réussis à **≥ 85 %** (paramètre) sur les 20 dernières réponses (paramètre), mesurés sur **au moins 2 voix** ; **et chaque série** de la leçon réussie au moins **2 fois** au débit normal (paramètre). | mesure | DEC-0012 ; DEC-0032 |
 | **R-VOL-06** | **Verrou d'écoute des leçons de tons** : **≥ 90 %** (paramètre). | mesure | DEC-0012 |
 | **R-VOL-07** | Le verrou d'écoute exige aussi la reconnaissance à **débit normal** et l'absence de confusion majeure avec la leçon précédente. | mesure | FOND-04 § 5 |
 | **R-VOL-08** | **Verrou de production** : production **intelligible**, pas parfaite. *Méthode de mesure à définir avec l'outil.* | à définir | FOND-04 § 5 |
@@ -107,7 +107,7 @@ de l'élève.
 |---|---|---|---|
 | **R-LEX-01** | En Module 0, le mot est un **support sonore**, pas un vocabulaire à apprendre. | revue | FOND-04 § 9 |
 | **R-LEX-02** | **Micro-lexique** du Module 0 : **50 à 100 mots** au plus. | auto : comptage | FOND-01 § 4 |
-| **R-LEX-03** | Un mot utilisé satisfait les **5 critères** : sons de l'inventaire ; sons et tons déjà ouverts dans le volet ; parmi les **500 plus fréquents** ; **syllabe réelle** ; **une seule** cible nouvelle. | auto (fréquence : sur la liste de référence) | Règle de choix des mots v1.1 (archives) |
+| **R-LEX-03** | Un mot utilisé satisfait les **5 critères** : sons de l'inventaire ; sons et tons déjà ouverts dans le volet ; **en Module 0, mot courant** de la vie quotidienne (relecture), **à partir de A1, mot fréquent** selon la liste de référence (R-LEX-07) ; **syllabe réelle** ; **une seule** cible nouvelle. Le rang de fréquence reste noté dans `mots.csv` à titre d'information. | auto, sauf « mot courant » (revue) | Règle de choix des mots v1.1 (archives) ; DEC-0035 |
 | **R-LEX-04** | Préférence pour les mots d'**une syllabe** ; **pas** de mot de 3 syllabes ou plus aux étapes d'écoute. | auto | Règle de choix des mots v1.1, R-MOT-01/02 |
 | **R-LEX-05** | **Exception** : une **syllabe inventée**, conforme à la structure du vietnamien, est autorisée **uniquement en E2 et E3**, comme terme d'une série minimale, quand aucun mot réel ne convient (moins de 2 dictionnaires sur 3). En E2, elle est présentée par un **bouton sonore**. | auto : `invented` + étape E2 ou E3 | DEC-0013 ; DEC-0025 ; DEC-0027 |
 | **R-LEX-06** | Une syllabe inventée n'est **jamais affichée**. | auto | DEC-0013 |
@@ -182,6 +182,9 @@ de l'élève.
 | 0.8 | 2026-10-28 | R-PARC-04 : images, puis symboles (DEC-0028). |
 | 0.9 | 2026-10-28 | R-PARC-04 et R-ECR-04 : symbole des sons = `ipa_main` du son contrasté (DEC-0029). |
 | 0.10 | 2026-10-28 | R-ATOM-06 : sons reportés à un module suivant (DEC-0031). |
+| 0.11 | 2026-10-28 | R-VOL-05 : minimum de réussites par série (DEC-0032). |
+| 0.12 | 2026-10-28 | R-PARC-04 : paire d'E2 = positions 1 et 2 (DEC-0033). |
+| 0.13 | 2026-10-28 | R-LEX-03 : « mot courant » en Module 0, fréquence à partir de A1 (DEC-0035). |
 
 ## Liens
 

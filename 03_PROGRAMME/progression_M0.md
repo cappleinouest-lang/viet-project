@@ -2,7 +2,7 @@
 id: PROG-M0
 titre: Progression du Module 0
 statut: BROUILLON
-version: 0.2
+version: 0.6
 date: 2026-10-28
 resume: >
   Programme des 14 leçons du Module 0 (sons et tons) : pour chaque leçon, la
@@ -78,14 +78,12 @@ qui relève du programme.
 
 ### 2.2 Paire utilisée en E2
 
-**Proposition** : la paire d'E2 est formée des termes **en position 1**
+**Règle** (DEC-0033) : la paire d'E2 est formée des termes **en position 1**
 (mot support) et **en position 2** de la série ; la position 2 porte donc le
 **contraste principal** de la leçon. Pour les leçons de tons qui opposent le
 nouveau ton à **deux** tons connus (L07, L11 : DEC-0006), E2 se fait en
 **deux temps** : position 1 / position 2, puis position 1 / position 3.
 Chaque temps reste un choix entre deux possibilités (R-PARC-04).
-→ Point P3 (§ 6) : l'ordre des termes de quelques séries ne suit pas encore
-cette convention.
 
 ### 2.3 Contenus à produire
 
@@ -110,7 +108,8 @@ préférence pour les choisir :
 ### 2.5 Fin d'une leçon
 
 - **Volet écoute** validé : E2 et E3 au seuil du tableau § 1, au débit
-  normal, sur au moins 2 voix (R-VOL-05 à 07). L'écoute de la leçon suivante
+  normal, sur au moins 2 voix, **chaque série** ayant été réussie au moins
+  2 fois au débit normal (R-VOL-05 à 07, DEC-0032). L'écoute de la leçon suivante
   s'ouvre (R-VOL-02), dans la limite de **3 leçons d'avance** sur la
   production (R-VOL-04).
 - **Volet production** validé : méthode encore à définir (R-VOL-08 ;
@@ -129,11 +128,11 @@ affichée, R-LEX-06).
 | Point | Contenu |
 |---|---|
 | But | Installer les sons « faciles » et le ton plat, avec des syllabes simples |
-| Niveau | 4 (mineur), sauf **ê / e** et **ô / o** (voyelles mi-fermées / mi-ouvertes) |
+| Niveau | 4 (mineur) : sons proches ou identiques au français. Écarts réels : **h** (muet en français), **ê / e** et **ô / o** (souvent confondus par les francophones du Sud de la France), **-m / -n** finales (risque de nasaliser la voyelle), implosives **b, đ** (écart faible), ton **ngang** (garder la voix plate) |
 | Ordre recommandé des séries | 1) voyelles : o/ô (*to/tô*, *ho/hô*), e/ê (*xem/xêm\**), i/ê (*đi/đê*), u/ô (*tu/tô*) ; 2) consonnes : b/m/v (*ba/ma/va*), n/l (*nên/lên*), đ/d (*đi/di*, *da/đa*) ; 3) finales -m/-n (*xem/xen*, *nên/nêm*) |
 | Vigilance | **đ** (implosive) face à **d** (= /z/ à Hanoï) ; le ton ngang reste **plat**, sans montée de fin de phrase |
 | Recyclage E5 | aucun (première leçon) ; E5 mêle les trois groupes de séries |
-| Remarque | Leçon la plus lourde en nombre d'éléments (21) : point P4 |
+| Remarque | Leçon la plus lourde en nombre d'éléments (21), mais la plus facile. Sa vraie nouveauté est la **méthode** (étapes E1–E5, symboles de réponse, voix et débits). Elle sert aussi de **test d'entrée** : une série qui ne se valide pas vite révèle un contraste moins évident que prévu (DEC-0034) |
 
 ### L02 — Tons sắc et huyền
 
@@ -156,7 +155,6 @@ affichée, R-LEX-06).
 | Ordre recommandé | E2 : nặng face à **huyền** (position 2) ; E3 : la série complète |
 | Vigilance | L'arrêt final est l'indice principal au Nord ; ne pas l'entendre comme un huyền court |
 | Recyclage E5 | mots de L02, en priorité ceux en huyền |
-| Remarque | Série S0026 (*bị*) : le terme en position 2 est sắc, pas huyền (point P3) |
 
 ### L04 — Diphtongues
 
@@ -240,11 +238,11 @@ affichée, R-LEX-06).
 |---|---|
 | But | Dernier ton : montant, **cassé** au milieu ; puis séparer hỏi et ngã |
 | Niveau | 1 |
-| Séries | 6 séries de 4 termes (*mũ / mú\* / mủ / mu*, *ngã / nga / ngá\* / ngả*, *nghĩ / nghỉ / nghi / nghị*) |
+| Séries | 6 séries de 4 termes ngã / sắc / hỏi / autre (*mũ / mú\* / mủ / mu*, *ngã / ngá\* / ngả / nga*, *cũng / cúng / củng / cùng*) |
 | Ordre recommandé | E2 en deux temps : ngã / **sắc**, puis ngã / **hỏi** ; E3 : la série complète |
 | Vigilance | ngã entendu comme sắc (même direction) ; hỏi et ngã se confondent dans le Sud, mais restent distincts à Hanoï : c'est la norme du projet (DEC-0009) |
 | Recyclage E5 | mots de L07 (hỏi) et de L02 (sắc) |
-| Remarque | ngã doit être acquis **avant A1** (R-PROG-03) ; ordre des termes à reprendre (point P3) |
+| Remarque | ngã doit être acquis **avant A1** (R-PROG-03)  ; S0084 et S0085 complétées par *củng* et *nghí\** (DEC-0033) |
 
 ### L12 — Noyaux à glissement (iê, uô, ươ, oa…)
 
@@ -308,10 +306,10 @@ travail.
 | N° | Point | Constat (fait) | Proposition |
 |---|---|---|---|
 | **P1** | ~~11 sons sans mot ni série~~ | — | **Décidé** (DEC-0031) : *tuy* (uy, L04) et *chuyện* (uyê, L12) ajoutés ; 9 sons rares reportés en A1–A2 |
-| **P2** | **Calcul du score** d'E2–E3 | Score sur les 20 dernières réponses, toutes séries mêlées : en L01 (16 séries), une série difficile peut ne jamais être vérifiée | Exiger en plus que **chaque série** ait été réussie au moins 2 fois au débit normal |
-| **P3** | **Ordre des termes** dans les séries | Convention proposée § 2.2 (position 2 = contraste principal). Non respectée en S0026 (L03, sắc en position 2) et en L11 (position 2 = huyền, ngang, sắc ou hỏi selon la série) | Réordonner : L03 → huyền en position 2 ; L11 → **sắc** en position 2, **hỏi** en position 3 |
-| **P4** | **Charge de L01** | 21 éléments, 16 séries | Garder une seule leçon (R-ATOM-01 : une famille), avec l'ordre interne voyelles → consonnes → finales (§ 3) |
-| **P5** | **Mots hors liste de fréquence** | 8 mots ajoutés hors corpus (*dạ, bị, lạ, pha, thư, tư, tu*, et *chuyện* par DEC-0031) : critère « 500 plus fréquents » (R-LEX-03) non vérifié | Vérification lors du choix de la liste de fréquence (R-LEX-07) |
+| **P2** | ~~Calcul du score d'E2–E3~~ | — | **Décidé** (DEC-0032) : score sur les 20 dernières réponses **et** chaque série réussie au moins 2 fois au débit normal |
+| **P3** | ~~Ordre des termes dans les séries~~ | — | **Décidé** (DEC-0033) : position 2 = contraste principal ; S0026 et 5 séries de L11 réordonnées ; *củng* et *nghí\** ajoutés |
+| **P4** | ~~Charge de L01~~ | — | **Décidé** (DEC-0034) : une seule leçon, ordre interne voyelles → consonnes → finales ; à couper seulement si l'usage la montre trop longue |
+| **P5** | ~~Mots hors liste de fréquence~~ | 46 mots sur 100 hors des 500 plus fréquents (26 sans rang, 20 au-delà de 500) | **Décidé** (DEC-0035) : « mot courant » en Module 0, fréquence à partir de A1 ; relecture des 100 mots à faire ; *tu* douteux |
 | **P6** | **Seuil des finales** | FOND-01 § 6.1 : 80 % ; verrou de L08 et L10 (R-VOL-05) : 85 % | Garder 85 % pour les verrous de leçon, 80 % pour la sortie du M0 ; à confirmer |
 
 ## Historique
@@ -320,6 +318,10 @@ travail.
 |---|---|---|
 | 0.1 | 2026-10-28 | Création à partir des données du 2026-10-28 ; contrôle d'atomicité ; 6 points à décider. |
 | 0.2 | 2026-10-28 | Point P1 décidé (DEC-0031) : 100 mots, 97 séries, 9 sons reportés. |
+| 0.3 | 2026-10-28 | Point P2 décidé (DEC-0032) : minimum de réussites par série. |
+| 0.4 | 2026-10-28 | Point P3 décidé (DEC-0033) : ordre des termes des séries. |
+| 0.5 | 2026-10-28 | Point P4 décidé (DEC-0034) ; écarts réels de L01 avec le français. |
+| 0.6 | 2026-10-28 | Point P5 décidé (DEC-0035). |
 
 ## Liens
 

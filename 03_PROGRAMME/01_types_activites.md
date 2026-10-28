@@ -2,7 +2,7 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.3
+version: 0.4
 date: 2026-10-28
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
@@ -64,7 +64,7 @@ sources:
 | Répond | touche un choix ; peut réécouter le terme avant de répondre |
 | Correction | **immédiate** : juste → le terme est rejoué ; faux → la bonne réponse s'éclaire, puis les deux termes sont rejoués |
 | Débit | **lent**, puis **normal** quand le seuil est atteint au débit lent |
-| Score | part de réponses justes sur les **20 dernières** (paramètre) |
+| Score | part de réponses justes sur les **20 dernières** (paramètre) ; en plus, nombre de réussites **par série** au débit normal (DEC-0032) |
 
 ### ACT-E3-LEQUEL — Lequel ? (2 à 4 choix)
 
@@ -83,7 +83,8 @@ tirée au hasard.
 ### Verrou d'écoute (rappel R-VOL-05 à 07)
 
 Seuil atteint en **E2 et E3**, au **débit normal**, sur **≥ 2 voix** :
-85 %, 90 % pour les leçons de tons.
+85 %, 90 % pour les leçons de tons ; **et** chaque série de la leçon réussie
+au moins **2 fois** au débit normal (paramètre, DEC-0032).
 
 ## 3. Volet production
 
@@ -154,6 +155,7 @@ calibrés.
 | 0.1 | 2026-10-28 | Création. |
 | 0.2 | 2026-10-28 | Étiquettes E2–E3 : images, puis symboles (DEC-0028). |
 | 0.3 | 2026-10-28 | Symbole des sons et symboles présentés dès E1 (DEC-0029). |
+| 0.4 | 2026-10-28 | Verrou d'écoute : minimum de réussites par série (DEC-0032). |
 
 ## Liens
 

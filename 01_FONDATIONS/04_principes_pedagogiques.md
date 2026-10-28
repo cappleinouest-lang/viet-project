@@ -2,7 +2,7 @@
 id: FOND-04
 titre: Principes pédagogiques
 statut: VALIDE
-version: 1.5
+version: 1.6
 date: 2026-10-28
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
@@ -161,7 +161,7 @@ apprendre. Le **micro-lexique** compte **50 à 100 mots** au plus (FOND-01).
 Critères de choix (repris de la règle de choix des mots v1.1) :
 1. tous ses sons appartiennent à l'inventaire du projet ;
 2. tous ses sons et tons sont déjà ouverts dans le volet concerné (§ 6) ;
-3. mot **fréquent** (parmi les 500 plus fréquents) ;
+3. en Module 0, mot **courant** de la vie quotidienne (vérifié par relecture) ; à partir de A1, mot **fréquent** selon la liste de référence (DEC-0035) ;
 4. **syllabe réelle** de la langue ;
 5. **une seule** cible nouvelle par mot.
 Préférence pour les mots d'**une syllabe** ; pas de mot de 3 syllabes ou plus
@@ -201,6 +201,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | 1.4 | 2026-10-28 | E2 = paire minimale tirée de la série d'E3 ; contraste de ton ou de son (DEC-0026). Syllabe inventée permise en E2 (DEC-0027). Images, puis symboles (DEC-0028). |
 | — | 2026-10-28 | Mise en cohérence des liens `sorties` (exception DOC-21, statut inchangé). |
 | 1.5 | 2026-10-28 | § 7 bis : symbole des sons, symboles dès E1 (DEC-0029). |
+| 1.6 | 2026-10-28 | § 9, critère 3 : « mot courant » en Module 0, fréquence à partir de A1 (DEC-0035). Revalidé par Christophe. |
 
 ## Liens
 
