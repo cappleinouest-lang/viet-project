@@ -2,7 +2,7 @@
 id: FOND-01
 titre: Intention et objectifs de la formation
 statut: BROUILLON
-version: 0.1
+version: 0.2
 date: 2026-10-28
 resume: >
   Dit pourquoi la formation existe, pour qui, ce qu'elle vise à l'issue de
@@ -84,9 +84,9 @@ et des erreurs qui s'installent durablement (**fossilisation**).
 Le Module 0 est à la fois une **phase initiale obligatoire** et une
 **réserve de séquences** réutilisables ensuite pour des rappels ciblés.
 
-Au sein de chaque leçon, l'élève suit **deux parcours** : l'**écoute** et la
-**production**. Il peut avancer en écoute jusqu'à 3 leçons au-delà de sa
-production (DEC-0007).
+Chaque leçon suit un **parcours** en 5 étapes (E1 à E5), réparties en deux
+**volets** : **écoute** et **production**. L'élève peut avancer dans le volet
+écoute jusqu'à 3 leçons au-delà de sa production (DEC-0007, DEC-0010).
 
 ## 5. Principes non négociables
 
@@ -101,17 +101,14 @@ production (DEC-0007).
 5. **La répétition espacée** comme mécanisme central de mémorisation.
 6. **L'oral avant l'écrit**.
 7. **Un audio natif et de qualité**, lent au début, normal après verrou.
-8. **Des contenus regénérables** : cartes, audio et supports peuvent être
+8. **Des contenus regénérables** : activités, audio et supports peuvent être
    recréés à l'identique à partir des données.
 9. **Une traçabilité complète** : chaque décision est documentée, chaque
    unité est identifiable.
 
-> **À décider** : les archives interdisent d'« utiliser l'orthographe
-> vietnamienne avant maîtrise phonétique ». Or les leçons du Module 0 et la
-> règle d'atomicité s'appuient sur des mots écrits (*tim*, *bàn*…). Faut-il
-> autoriser l'écrit comme **support** dès L01 (affiché sous l'audio), en
-> interdisant seulement la lecture sans audio ? Question à trancher dans
-> `FOND-04` (principes pédagogiques).
+> **Règle** (DEC-0011) : l'écrit n'apparaît jamais aux étapes d'écoute ;
+> il est visible, à l'appui de l'audio, aux étapes de production. Détail
+> dans `FOND-04`.
 
 ## 6. Objectifs mesurables
 
@@ -171,6 +168,7 @@ La formation est en difficulté si l'on observe :
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion de la note d'intention v2, des objectifs généraux v2.0 et de la stratégie globale v01 ; intégration de DEC-0004 et DEC-0007 ; chiffres non sourcés marqués comme hypothèses. |
+| 0.2 | 2026-10-28 | Place de l'écrit (DEC-0011) ; vocabulaire parcours / volets / étapes (DEC-0010) ; « cartes » remplacé par « activités ». |
 
 ## Liens
 

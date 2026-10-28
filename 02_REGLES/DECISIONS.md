@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.6
+version: 1.7
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -194,6 +194,58 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : `01_FONDATIONS/02_specificites_vietnamien.md` (§ 4.3),
   `03_PROGRAMME/progression_M0.md` (L08), choix des voix de synthèse.
 
+### DEC-0010 — Vocabulaire du parcours et étapes E1 à E5
+
+- **Date** : 2026-10-28
+- **Question** : comment nommer les niveaux de la formation sans ambiguïté
+  et sans présupposer le support (cartes, écrans…) ? Les archives emploient
+  « unité » dans deux sens, numérotent U1, U2, U4, U5, U6 (pas de U3) dans un
+  ordre qui n'est pas l'ordre pédagogique, et le contrat v1.9 contient deux
+  architectures incompatibles (§ 2 par leçon, § 3 par phase).
+- **Décision** :
+  1. **Cinq termes**, un par niveau : **module** > **leçon** > **étape** >
+     **activité** > **item**. Aucun terme ne désigne un support (« carte »
+     n'est pas employé avant le choix de l'outil).
+  2. **Cinq étapes**, dans cet ordre, pour chaque leçon : **E1 Écouter**
+     (ex-U1) → **E2 Distinguer** (ex-U2) → **E3 Opposer**, paires minimales
+     (ex-U5) → **E4 Répéter** (ex-U4) → **E5 Stabiliser** (ex-U6).
+  3. Le **parcours** d'une leçon est la suite E1 → E5. Les deux ensembles de
+     DEC-0007 s'appellent **volets** : volet **écoute** = E1–E3 ; volet
+     **production** = E4–E5. La règle d'écart de DEC-0007 (3 leçons) porte
+     sur ces volets.
+  4. L'organisation **par leçon** (§ 2 du contrat v1.9) est retenue ; le
+     modèle « par phase » (§ 3, R-ARCH-01, verrou de phase) est **remplacé**.
+- **Raison** : un mot = un sens ; ordre des numéros = ordre réel ;
+  neutralité vis-à-vis du support, choisi plus tard ; cohérence avec DEC-0007.
+- **Impacte** : `01_FONDATIONS/04_principes_pedagogiques.md`, glossaire,
+  `03_PROGRAMME`, données d'exercices.
+
+### DEC-0011 — Place de l'écrit
+
+- **Date** : 2026-10-28
+- **Question** : l'écrit vietnamien est-il visible pendant le Module 0 ?
+  (*Objectifs v2* l'interdisaient « avant maîtrise phonétique » ; le contrat
+  v1.9, R-CU-05, l'autorise en production.)
+- **Décision** : reprise de R-CU-05, adaptée aux étapes :
+  - **E1, E2** : écrit **jamais** visible ;
+  - **E3** : écrit absent au début, visible en fin d'étape ;
+  - **E4, E5** : écrit **visible**, à l'appui de l'audio.
+  Les points d'orthographe (tr/ch, s/x, d/gi/r — DEC-0009) s'apprennent en
+  E4–E5.
+- **Raison** : l'oreille d'abord, sans béquille visuelle ; l'écrit est
+  nécessaire ensuite pour fixer l'orthographe.
+- **Impacte** : FOND-01 (question levée), FOND-04.
+
+### DEC-0012 — Seuils des verrous d'écoute
+
+- **Date** : 2026-10-28
+- **Question** : 85 % (contrat v1.9), ou 90 % pour les tons (*Objectifs v2*) ?
+- **Décision** : **85 %** par défaut ; **90 %** pour les leçons de tons.
+  Mesuré sur **au moins 2 voix**. Valeurs paramétrables, à ajuster avec les
+  statistiques réelles.
+- **Raison** : les tons sont la difficulté n° 1 (FOND-03).
+- **Impacte** : FOND-04, `03_PROGRAMME`.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -205,6 +257,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.4 | 2026-10-28 | DEC-0006 prise : nặng → hỏi → ngã, répartis dans le Module 0. |
 | 1.5 | 2026-10-28 | Ajout de DEC-0008 (corrections factuelles : prosodie du français, notation de ư et ơ). |
 | 1.6 | 2026-10-28 | Ajout de DEC-0009 (accent courant de Hanoï). |
+| 1.7 | 2026-10-28 | Ajout de DEC-0010 (vocabulaire, étapes E1–E5), DEC-0011 (écrit), DEC-0012 (seuils). |
 
 ## Liens
 
