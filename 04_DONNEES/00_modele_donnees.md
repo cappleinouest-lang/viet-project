@@ -9,7 +9,7 @@ resume: >
   et les liens entre fichiers. Sert de référence au générateur et au script
   de contrôle. Les noms de colonnes sont en anglais (DEC-0002).
 entrees: [REG-REGLES, REG-DEC, FOND-02]
-sorties: [04_DONNEES/*.csv, 05_PRODUCTION (générateur, contrôle), 07_QUALITE, QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028]
+sorties: [04_DONNEES/*.csv, 05_PRODUCTION (générateur, contrôle), 07_QUALITE, QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT]
 sources:
   - 02_REGLES/DECISIONS.md (DEC-0007, DEC-0013, DEC-0017)
   - _ARCHIVES/Projet de Formation_Vietnamien_A0_to_A2/PROD/00_GLOBAL/*.csv

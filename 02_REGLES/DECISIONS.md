@@ -9,7 +9,7 @@ resume: >
   décision et sa raison. Une décision ne se modifie pas : on en prend une
   nouvelle qui la remplace.
 entrees: []
-sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028]
+sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT]
 sources: []
 ---
 

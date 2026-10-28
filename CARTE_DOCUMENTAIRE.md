@@ -35,12 +35,14 @@ graph LR
   FOND_03["FOND-03<br/>Difficultés du vietnamien pour un francophone"]
   FOND_04["FOND-04<br/>Principes pédagogiques"]
   PROD_ARCH["PROD-ARCH<br/>Architecture des outils de formation"]
+  PROG_ACT["PROG-ACT<br/>Types d'activités des étapes E1 à E5"]
   QUAL_PROP_MOTS_M0["QUAL-PROP-MOTS-M0<br/>Proposition de mots supports du Module 0"]
   QUAL_REPRISE_MOTS_20261028["QUAL-REPRISE-MOTS-20261028<br/>Rapport de reprise des mots et syllabes"]
   QUAL_VERIF_HORS_CORPUS_20261028["QUAL-VERIF-HORS-CORPUS-20261028<br/>Vérification des termes hors corpus des séries minimales"]
   REG_DEC["REG-DEC<br/>Journal des décisions"]
   REG_DOC["REG-DOC<br/>Règles documentaires du projet"]
   REG_REGLES["REG-REGLES<br/>Registre des règles"]
+  DATA_MODELE --> PROG_ACT
   DATA_MODELE --> QUAL_PROP_MOTS_M0
   DATA_MODELE --> QUAL_REPRISE_MOTS_20261028
   DATA_MODELE --> QUAL_VERIF_HORS_CORPUS_20261028
@@ -71,15 +73,19 @@ graph LR
   FOND_03 --> FOND_04
   FOND_03 --> REG_REGLES
   FOND_04 --> PROD_ARCH
+  FOND_04 --> PROG_ACT
   FOND_04 --> REG_REGLES
+  PROG_ACT --> PROD_ARCH
   REG_DEC --> DATA_MODELE
   REG_DEC --> PROD_ARCH
+  REG_DEC --> PROG_ACT
   REG_DEC --> QUAL_REPRISE_MOTS_20261028
   REG_DEC --> QUAL_VERIF_HORS_CORPUS_20261028
   REG_DEC --> REG_DOC
   REG_DEC --> REG_REGLES
   REG_REGLES --> DATA_MODELE
   REG_REGLES --> PROD_ARCH
+  REG_REGLES --> PROG_ACT
   REG_REGLES --> QUAL_PROP_MOTS_M0
 ```
 
@@ -88,7 +94,7 @@ graph LR
 | Identifiant | Titre | Statut | Version | Entrées | Sorties | Fichier |
 |---|---|---|---|---|---|---|
 | CTX-IA | Contexte du projet pour une IA | VALIDE | 1.0 | DIR-00 | — | [CONTEXTE_IA.md](CONTEXTE_IA.md) |
-| DATA-MODELE | Modèle des données | BROUILLON | 0.9 | REG-REGLES, REG-DEC, FOND-02 | QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028 | [04_DONNEES/00_modele_donnees.md](04_DONNEES/00_modele_donnees.md) |
+| DATA-MODELE | Modèle des données | BROUILLON | 0.9 | REG-REGLES, REG-DEC, FOND-02 | QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [04_DONNEES/00_modele_donnees.md](04_DONNEES/00_modele_donnees.md) |
 | DIR-00 | Formation vietnamien A0 → A2 pour francophones | BROUILLON | 0.2 | — | DIR-01, DIR-02, DIR-03, DIR-04, DIR-05, DIR-06, DIR-07, CTX-IA | [README.md](README.md) |
 | DIR-01 | 01 — Fondations | BROUILLON | 0.1 | DIR-00 | DIR-02 | [01_FONDATIONS/README.md](01_FONDATIONS/README.md) |
 | DIR-02 | 02 — Règles | BROUILLON | 0.1 | DIR-01, DIR-00, DIR-07 | DIR-03, DIR-04 | [02_REGLES/README.md](02_REGLES/README.md) |
@@ -100,18 +106,20 @@ graph LR
 | FOND-01 | Intention et objectifs de la formation | VALIDE | 1.0 | — | FOND-02, FOND-03, FOND-04, REG-REGLES, PROG-M0 | [01_FONDATIONS/01_intention_et_objectifs.md](01_FONDATIONS/01_intention_et_objectifs.md) |
 | FOND-02 | Spécificités du vietnamien | VALIDE | 1.0 | FOND-01 | FOND-03, FOND-04, REG-REGLES, DATA-MODELE | [01_FONDATIONS/02_specificites_vietnamien.md](01_FONDATIONS/02_specificites_vietnamien.md) |
 | FOND-03 | Difficultés du vietnamien pour un francophone | VALIDE | 1.1 | FOND-01, FOND-02 | FOND-04, REG-REGLES, PROG-M0 | [01_FONDATIONS/03_difficultes_francophones.md](01_FONDATIONS/03_difficultes_francophones.md) |
-| FOND-04 | Principes pédagogiques | VALIDE | 1.4 | FOND-01, FOND-02, FOND-03 | REG-REGLES, PROG-M0, PROD-ARCH | [01_FONDATIONS/04_principes_pedagogiques.md](01_FONDATIONS/04_principes_pedagogiques.md) |
-| PROD-ARCH | Architecture des outils de formation | BROUILLON | 0.1 | REG-REGLES, REG-DEC, FOND-04 | — | [05_PRODUCTION/01_architecture_outils.md](05_PRODUCTION/01_architecture_outils.md) |
+| FOND-04 | Principes pédagogiques | VALIDE | 1.4 | FOND-01, FOND-02, FOND-03 | REG-REGLES, PROG-M0, PROD-ARCH, PROG-ACT | [01_FONDATIONS/04_principes_pedagogiques.md](01_FONDATIONS/04_principes_pedagogiques.md) |
+| PROD-ARCH | Architecture des outils de formation | BROUILLON | 0.1 | REG-REGLES, REG-DEC, FOND-04, PROG-ACT | — | [05_PRODUCTION/01_architecture_outils.md](05_PRODUCTION/01_architecture_outils.md) |
+| PROG-ACT | Types d'activités des étapes E1 à E5 | BROUILLON | 0.1 | FOND-04, REG-REGLES, REG-DEC, DATA-MODELE | PROG-M0, PROD-ARCH | [03_PROGRAMME/01_types_activites.md](03_PROGRAMME/01_types_activites.md) |
 | QUAL-PROP-MOTS-M0 | Proposition de mots supports du Module 0 | BROUILLON | 0.1 | DATA-MODELE, REG-REGLES | — | [07_QUALITE/proposition_mots_supports_M0.md](07_QUALITE/proposition_mots_supports_M0.md) |
 | QUAL-REPRISE-MOTS-20261028 | Rapport de reprise des mots et syllabes | BROUILLON | 0.1 | DATA-MODELE, REG-DEC | — | [07_QUALITE/rapport_reprise_mots_2026-10-28.md](07_QUALITE/rapport_reprise_mots_2026-10-28.md) |
 | QUAL-VERIF-HORS-CORPUS-20261028 | Vérification des termes hors corpus des séries minimales | BROUILLON | 0.1 | DATA-MODELE, REG-DEC | — | [07_QUALITE/verification_hors_corpus_2026-10-28.md](07_QUALITE/verification_hors_corpus_2026-10-28.md) |
-| REG-DEC | Journal des décisions | VALIDE | 1.2 | — | REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028 | [02_REGLES/DECISIONS.md](02_REGLES/DECISIONS.md) |
+| REG-DEC | Journal des décisions | VALIDE | 1.2 | — | REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [02_REGLES/DECISIONS.md](02_REGLES/DECISIONS.md) |
 | REG-DOC | Règles documentaires du projet | BROUILLON | 0.4 | REG-DEC | — | [02_REGLES/REGLES_DOCUMENTAIRES.md](02_REGLES/REGLES_DOCUMENTAIRES.md) |
-| REG-REGLES | Registre des règles | BROUILLON | 0.7 | FOND-01, FOND-02, FOND-03, FOND-04, REG-DEC | PROG-M0, DATA-MODELE, PROD-ARCH, QUAL-PROP-MOTS-M0 | [02_REGLES/REGISTRE_REGLES.md](02_REGLES/REGISTRE_REGLES.md) |
+| REG-REGLES | Registre des règles | BROUILLON | 0.7 | FOND-01, FOND-02, FOND-03, FOND-04, REG-DEC | PROG-M0, DATA-MODELE, PROD-ARCH, QUAL-PROP-MOTS-M0, PROG-ACT | [02_REGLES/REGISTRE_REGLES.md](02_REGLES/REGISTRE_REGLES.md) |
 
 ## 3. Anomalies
 
 - `FOND-01` → `PROG-M0` : document de sortie inexistant (à créer ?)
 - `FOND-03` → `PROG-M0` : document de sortie inexistant (à créer ?)
 - `FOND-04` → `PROG-M0` : document de sortie inexistant (à créer ?)
+- `PROG-ACT` → `PROG-M0` : document de sortie inexistant (à créer ?)
 - `REG-REGLES` → `PROG-M0` : document de sortie inexistant (à créer ?)

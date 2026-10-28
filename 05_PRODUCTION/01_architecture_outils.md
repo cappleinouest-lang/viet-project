@@ -10,7 +10,7 @@ resume: >
   extension de progression, page de prononciation, paquets Anki générés pour
   les révisions. Précise qui fait quoi, d'où viennent les contenus et quelles
   règles chaque composant applique.
-entrees: [REG-REGLES, REG-DEC, FOND-04]
+entrees: [REG-REGLES, REG-DEC, FOND-04, PROG-ACT]
 sorties: [05_PRODUCTION (développements à venir), 06_LIVRABLES]
 sources:
   - 02_REGLES/DECISIONS.md (DEC-0015, DEC-0016)

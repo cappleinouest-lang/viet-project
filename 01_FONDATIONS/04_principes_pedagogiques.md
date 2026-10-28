@@ -12,7 +12,7 @@ resume: >
   tout support (Anki ou autre). Les règles détaillées et vérifiables en
   découlent dans REG-REGLES.
 entrees: [FOND-01, FOND-02, FOND-03]
-sorties: [REG-REGLES, PROG-M0, PROD-ARCH]
+sorties: [REG-REGLES, PROG-M0, PROD-ARCH, PROG-ACT]
 sources:
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/P0_PEDA_GLOB_REF_Paradigme_Pedagogique_Fondateur_v3.md
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/P0_PEDA_GLOB_01_RULE_Referentiel_Pedagogique_Global_v1.md
