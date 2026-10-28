@@ -9,7 +9,7 @@ resume: >
   décision et sa raison. Une décision ne se modifie pas : on en prend une
   nouvelle qui la remplace.
 entrees: []
-sorties: [REG-DOC]
+sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028]
 sources: []
 ---
 
@@ -514,6 +514,9 @@ qui indique « remplace DEC-NNNN ».
   supports : **79 séries** (35 de 2 termes, 21 de 3, 23 de 4), **225 termes** ;
   hors corpus et hors listes de fréquence → traités comme syllabes
   inventées (DEC-0013), à confirmer. Le terme 1 est toujours le mot support.
+- **Complément (même jour)** : ajout de **16 séries pour L01** (contrastes
+  o/ô, e/ê, i/ê, đ/d, b/m/v, n/l, -m/-n ; exemples *to/tô*, *đi/di*,
+  *ba/ma/va*) → **95 séries**, **260 termes**.
 - **Impacte** : `paires_minimales.csv`, R-PARC-05, R-LEX-05, FOND-04.
 
 ## Historique

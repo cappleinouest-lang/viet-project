@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   La formation elle-même : modules M0, A1, A2, leçons, ordre, verrous de validation.
-entrees: [DIR-02]
+entrees: [DIR-02, DIR-00]
 sorties: [DIR-05]
 sources: []
 ---

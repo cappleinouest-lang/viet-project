@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   Tout ce qui est produit automatiquement : paquets Anki, fichiers audio, exports. Jamais modifié à la main, toujours regénérable (DOC-03).
-entrees: [DIR-05]
+entrees: [DIR-05, DIR-00]
 sorties: [DIR-07]
 sources: []
 ---

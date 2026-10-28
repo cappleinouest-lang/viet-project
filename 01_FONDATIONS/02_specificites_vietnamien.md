@@ -10,7 +10,7 @@ resume: >
   orthographe, rythme et grammaire. Fixe la notation phonétique de référence
   du projet. Les difficultés propres aux francophones sont traitées dans FOND-03.
 entrees: [FOND-01]
-sorties: [FOND-03, FOND-04, REG-REGLES, 04_DONNEES/tons.csv, 04_DONNEES/phonemes.csv]
+sorties: [FOND-03, FOND-04, REG-REGLES, 04_DONNEES/tons.csv, 04_DONNEES/phonemes.csv, DATA-MODELE]
 sources:
   - _ARCHIVES/OLD/DOCS/00_CADRAGE/P0_CADR_GLOB_01_NORM_Specificites_Langue_Vietnamienne_v3.md
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/Archives/01_synthese_specificites_langue_vietnamienne_.md
@@ -200,6 +200,7 @@ le Sud, à connaître pour comprendre :
 | 0.1 | 2026-10-28 | Fusion de la v3 et de la synthèse archivées ; corrections DEC-0005 et DEC-0008 ; vérifications sur Kirby (2011) et Brunelle (2009) : notation de ngã, hỏi à Hanoï, fusions de consonnes, rythme du français ; ajout des pronoms de parenté et des variétés régionales. |
 | 0.2 | 2026-10-28 | § 4.3 : norme de l'accent courant de Hanoï (DEC-0009). |
 | 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). |
+| — | 2026-10-28 | Mise en cohérence des liens `sorties` (exception DOC-21, statut inchangé). |
 
 ## Liens
 

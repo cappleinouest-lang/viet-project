@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   Contrôles automatiques, rapports et journaux techniques. Les anomalies remontent vers les règles via DECISIONS.md.
-entrees: [DIR-06]
+entrees: [DIR-06, DIR-00]
 sorties: [DIR-02]
 sources: []
 ---

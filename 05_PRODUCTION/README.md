@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   Ce qui transforme les données en livrables : scripts, configuration, modèles de cartes, prompts.
-entrees: [DIR-03, DIR-04]
+entrees: [DIR-03, DIR-04, DIR-00]
 sorties: [DIR-06]
 sources: []
 ---

@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   Le quoi : règles opposables, numérotées et vérifiables, et journal des décisions.
-entrees: [DIR-01]
+entrees: [DIR-01, DIR-00, DIR-07]
 sorties: [DIR-03, DIR-04]
 sources: []
 ---

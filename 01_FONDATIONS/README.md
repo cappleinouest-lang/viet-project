@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   Le pourquoi de la formation : intention, objectifs, spécificités du vietnamien, difficultés des francophones, principes pédagogiques. Documents stables, peu nombreux (5 au maximum).
-entrees: []
+entrees: [DIR-00]
 sorties: [DIR-02]
 sources: []
 ---

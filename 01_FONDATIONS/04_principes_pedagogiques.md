@@ -12,7 +12,7 @@ resume: >
   tout support (Anki ou autre). Les règles détaillées et vérifiables en
   découlent dans REG-REGLES.
 entrees: [FOND-01, FOND-02, FOND-03]
-sorties: [REG-REGLES, PROG-M0]
+sorties: [REG-REGLES, PROG-M0, PROD-ARCH]
 sources:
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/P0_PEDA_GLOB_REF_Paradigme_Pedagogique_Fondateur_v3.md
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/P0_PEDA_GLOB_01_RULE_Referentiel_Pedagogique_Global_v1.md
@@ -193,6 +193,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | 1.1 | 2026-10-28 | Numéros de leçon mis à jour (14 leçons, DEC-0019). Revalidé par Christophe. |
 | 1.2 | 2026-10-28 | § 7 : pas de transcription des mots, seulement des sons (DEC-0021). Revalidé par Christophe. |
 | 1.3 | 2026-10-28 | Images (§ 7 bis, DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). Revalidé par Christophe. |
+| — | 2026-10-28 | Mise en cohérence des liens `sorties` (exception DOC-21, statut inchangé). |
 
 ## Liens
 

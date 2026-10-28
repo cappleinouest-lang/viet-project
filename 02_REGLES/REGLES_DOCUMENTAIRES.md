@@ -2,14 +2,14 @@
 id: REG-DOC
 titre: Règles documentaires du projet
 statut: BROUILLON
-version: 0.3
+version: 0.4
 date: 2026-10-28
 resume: >
   Fixe où ranger chaque fichier, dans quel format, comment le nommer,
   le versionner, le relier aux autres documents et le rédiger pour qu'il
   soit exploitable par un humain comme par une IA. S'applique à tout
   fichier créé dans la nouvelle structure.
-entrees: []
+entrees: [REG-DEC]
 sorties:
   - CARTE_DOCUMENTAIRE.md (générée)
   - tous les documents du projet (en-tête, nommage, rangement)
@@ -162,6 +162,9 @@ sources: []                 # provenance externe : archives, ouvrages, sites
 - **DOC-21 — Validation humaine.** Seul Christophe fait passer un document à
   `VALIDE`. Une IA peut proposer, jamais valider. Une modification d'un
   document `VALIDE` le repasse en `BROUILLON` jusqu'à nouvelle validation.
+  **Exception** : la seule mise en cohérence des champs `entrees` et
+  `sorties` (liens, DOC-32) ne change pas le statut ; elle est notée dans
+  l'historique.
 - **DOC-22 — Décisions tracées.** Tout arbitrage (par exemple : « ordre de
   progression des tons ») est noté dans `02_REGLES/DECISIONS.md` :
   date, question, options, décision, raison.
@@ -283,6 +286,8 @@ comme `> **À décider**` et remontée à Christophe.
 |---|---|---|
 | 0.1 | 2026-10-28 | Première proposition, à partir des conventions v2.1 et v4.0 et des règles IA v4.0. |
 | 0.2 | 2026-10-28 | Ajout des liens entre documents (section 8, DOC-30 à DOC-35) : champs `entrees` / `sorties`, carte documentaire générée, analyse d'impact. |
+| 0.3 | 2026-10-28 | Décisions : noms en français (DEC-0002), Git (DEC-0003). Périmètre du dépôt Git précisé (DOC-19). |
+| 0.4 | 2026-10-28 | DOC-21 : exception pour la mise en cohérence des liens. Liens mis en cohérence. |
 
 ## Liens
 

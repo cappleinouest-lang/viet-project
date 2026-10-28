@@ -11,7 +11,7 @@ resume: >
   vérifier et d'où elle vient. Les règles de code et de programmation sont
   hors périmètre pour l'instant.
 entrees: [FOND-01, FOND-02, FOND-03, FOND-04, REG-DEC]
-sorties: [PROG-M0, 04_DONNEES, 07_QUALITE]
+sorties: [PROG-M0, 04_DONNEES, 07_QUALITE, DATA-MODELE, PROD-ARCH, QUAL-PROP-MOTS-M0]
 sources:
   - 01_FONDATIONS (FOND-01 à FOND-04, version 1.0)
   - 02_REGLES/DECISIONS.md (DEC-0004 à DEC-0013)

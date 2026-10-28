@@ -2,13 +2,13 @@
 id: DIR-00
 titre: Formation vietnamien A0 → A2 pour francophones
 statut: BROUILLON
-version: 0.1
+version: 0.2
 date: 2026-10-28
 resume: >
   Point d'entrée du projet. Explique le rôle de chaque dossier et l'ordre
   dans lequel l'information circule.
 entrees: []
-sorties: [DIR-01, DIR-02, DIR-03, DIR-04, DIR-05, DIR-06, DIR-07]
+sorties: [DIR-01, DIR-02, DIR-03, DIR-04, DIR-05, DIR-06, DIR-07, CTX-IA]
 sources: []
 ---
 
@@ -44,6 +44,12 @@ graph LR
   Q -. anomalies .-> R
 ```
 
+## Pour commencer
+
+- **Une IA ?** Lui donner [CONTEXTE_IA.md](CONTEXTE_IA.md), et rien d'autre au départ.
+- **Vue d'ensemble des documents** : [CARTE_DOCUMENTAIRE.md](CARTE_DOCUMENTAIRE.md)
+  (générée par `05_PRODUCTION/tools/build_doc_map.py`).
+
 ## Règles à connaître
 
 Les règles de rangement, de format, de nommage et de liens entre documents
@@ -54,3 +60,4 @@ sont dans [02_REGLES/REGLES_DOCUMENTAIRES.md](02_REGLES/REGLES_DOCUMENTAIRES.md)
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Création de la structure. |
+| 0.2 | 2026-10-28 | Liens vers CONTEXTE_IA.md et CARTE_DOCUMENTAIRE.md. |

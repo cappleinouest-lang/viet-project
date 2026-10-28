@@ -6,7 +6,7 @@ version: 0.1
 date: 2026-10-28
 resume: >
   Source unique de vérité des données de référence : sons, tons, syllabes, mots, sens, phrases. Format CSV UTF-8, séparateur point-virgule.
-entrees: [DIR-02]
+entrees: [DIR-02, DIR-00]
 sorties: [DIR-05]
 sources: []
 ---
