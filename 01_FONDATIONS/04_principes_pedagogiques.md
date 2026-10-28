@@ -1,7 +1,7 @@
 ---
 id: FOND-04
 titre: Principes pédagogiques
-statut: BROUILLON
+statut: VALIDE
 version: 1.3
 date: 2026-10-28
 resume: >
@@ -192,7 +192,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). Ajout de la règle sur les syllabes inventées (DEC-0013). |
 | 1.1 | 2026-10-28 | Numéros de leçon mis à jour (14 leçons, DEC-0019). Revalidé par Christophe. |
 | 1.2 | 2026-10-28 | § 7 : pas de transcription des mots, seulement des sons (DEC-0021). Revalidé par Christophe. |
-| 1.3 | 2026-10-28 | Images (§ 7 bis, DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). À revalider. |
+| 1.3 | 2026-10-28 | Images (§ 7 bis, DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). Revalidé par Christophe. |
 
 ## Liens
 
