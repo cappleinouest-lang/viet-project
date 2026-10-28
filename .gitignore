@@ -1,0 +1,26 @@
+# Fichiers ignores par Git (regle DOC-19, REGLES_DOCUMENTAIRES.md)
+
+# Archives : lecture seule, deja conservees telles quelles (DOC-02)
+_ARCHIVES/
+
+# Livrables : regenerables a partir des donnees et des scripts (DOC-03)
+06_LIVRABLES/*
+!06_LIVRABLES/README.md
+
+# Secrets : cles d'acces aux services (DOC-04)
+.env
+*.env
+
+# Journaux techniques (DOC-05)
+07_QUALITE/journaux/
+*.log
+
+# Environnements et caches Python
+.venv*/
+__pycache__/
+*.pyc
+
+# Fichiers systeme et temporaires
+desktop.ini
+Thumbs.db
+~$*
