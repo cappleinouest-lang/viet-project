@@ -2,14 +2,14 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.8
+version: 0.9
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
   et les liens entre fichiers. Sert de référence au générateur et au script
   de contrôle. Les noms de colonnes sont en anglais (DEC-0002).
 entrees: [REG-REGLES, REG-DEC, FOND-02]
-sorties: [04_DONNEES/*.csv, 05_PRODUCTION (générateur, contrôle), 07_QUALITE, QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028]
+sorties: [04_DONNEES/*.csv, 05_PRODUCTION (générateur, contrôle), 07_QUALITE, QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028]
 sources:
   - 02_REGLES/DECISIONS.md (DEC-0007, DEC-0013, DEC-0017)
   - _ARCHIVES/Projet de Formation_Vietnamien_A0_to_A2/PROD/00_GLOBAL/*.csv
@@ -146,7 +146,7 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `position` | rang du terme ; 1 = mot support de la leçon | 1 à 4 | `2` |
 | `written` | terme écrit | | `bàn` |
 | `word_code` | mot correspondant | `word_code` ; vide si hors corpus | `W0004` |
-| `invented` | syllabe inventée (DEC-0013) | `true` / `false` | `false` |
+| `invented` | syllabe inventée : absente de `mots.csv` et de moins de 2 dictionnaires sur 3 (DEC-0013, DEC-0027) | `true` / `false` | `false` |
 | `element` | élément porté par ce terme | `sound_code` ou `tone_code` | `huyen` |
 | `validated` | série relue et validée | `true` / `false` | `false` |
 | `note` | remarque | | |
@@ -236,7 +236,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | Un mot de la leçon N ne contient que des éléments ouverts en N ou avant, dans le volet concerné | R-ATOM-03, R-ATOM-04 |
 | Les termes d'une série (2 à 4) ne diffèrent que par l'élément opposé | R-PARC-05 |
 | Pas de paire d'écoute sur tr/ch, s/x, d/gi/r | R-PHON-02 |
-| Terme inventé seulement dans une série minimale, jamais affiché | R-LEX-05, R-LEX-06 |
+| Terme inventé seulement dans une série minimale (E2, E3), jamais affiché | R-LEX-05, R-LEX-06 |
 | Au moins 2 voix par item d'écoute | R-AUD-02 |
 | Micro-lexique M0 ≤ 100 mots (`mots_lecons.csv`) | R-LEX-02 |
 | Chaque mot support respecte les critères de choix dans sa leçon | R-LEX-03, R-ATOM-05 |
@@ -254,6 +254,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.6 | 2026-10-28 | Ajout de `voix.csv` ; débit `fast` ; audios dans `04_DONNEES/audio/` (DEC-0023). |
 | 0.7 | 2026-10-28 | `classificateurs.csv` : colonnes `kind`, `frequency_level`, `note`. |
 | 0.8 | 2026-10-28 | Colonne `imageable`, fichier `images.csv` (DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). |
+| 0.9 | 2026-10-28 | Définition de `invented` précisée (DEC-0027). |
 
 ## Liens
 

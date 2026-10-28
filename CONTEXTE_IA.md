@@ -46,7 +46,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0025) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0027) | `02_REGLES/DECISIONS.md` |
 | Outils : WordPress, lecteur d'activités, Anki | `05_PRODUCTION/01_architecture_outils.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
 | Vue d'ensemble des documents et de leurs liens | `CARTE_DOCUMENTAIRE.md` (générée) |
@@ -61,7 +61,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Verrous | 85 %, 90 % pour les tons, sur ≥ 2 voix (DEC-0012) |
 | Écrit | jamais en E1–E2, fin d'E3, visible en E4–E5 ; **images** pour donner le sens sans écrit (DEC-0011, 0024) |
 | Accent | courant de Hanoï : tr/ch, s/x, d/gi/r = orthographe, pas écoute ; **un code par son** (76 sons) (DEC-0009, 0018) |
-| Mots | 98 mots supports en M0 (79 imageables) ; séries minimales de **2 à 4 termes** (DEC-0020, 0024, 0025) |
+| Mots | 98 mots supports en M0 (79 imageables) ; séries minimales de **2 à 4 termes**, paire en E2, série complète en E3 ; contraste de ton ou de son (DEC-0020, 0024 à 0026) |
 | Outils | **WordPress sans LMS** + lecteur d'activités sur mesure + page de prononciation (courbe mélodique) ; **Anki** pour les révisions (DEC-0015, 0016) |
 | Données | **CSV** comme source de vérité, contrôle par SQLite temporaire (DEC-0017) |
 | Audio | regénéré, FPT.AI (banmai, thuminh, leminh), variété des voix et débits (DEC-0023) |
@@ -87,7 +87,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 - Voix d'enfant et deuxième voix masculine du Nord : source à trouver.
 - Liste de fréquence de référence (R-LEX-07) ; traductions à relire
   (*chưng*, *à*, *chi*, *lẽ*) ; étymologies manquantes.
-- 96 termes de séries minimales hors corpus à confirmer (réels ou inventés).
+- Termes hors corpus vérifiés (DEC-0027) : 74 mots réels dont le sens reste à vérifier ; 9 séries utilisent une syllabe inventée dès E2.
 - Valeurs `imageable` à corriger ; choix des images (OpenMoji privilégié).
 - Le raccourci « VIET_PROJECT » épinglé dans l'Explorateur pointe vers
   `D:\VIET_PROJECT`, qui n'existe plus.

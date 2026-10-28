@@ -2,7 +2,7 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.5
+version: 0.7
 date: 2026-10-28
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
@@ -59,8 +59,8 @@ de l'élève.
 | **R-PARC-01** | Chaque leçon se parcourt en **5 étapes**, dans cet ordre : E1 Écouter, E2 Distinguer, E3 Opposer, E4 Répéter, E5 Stabiliser. | auto : chaque activité porte une étape E1–E5 | DEC-0010 |
 | **R-PARC-02** | Une activité appartient à **une seule** étape et **une seule** leçon. | auto | DEC-0010 |
 | **R-PARC-03** | **E1** : l'élève écoute sans répondre ni répéter. | revue | FOND-04 § 3 |
-| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B), présentées par des **images** quand le mot s'image, sinon par des boutons sonores ou des pictogrammes de ton. | auto : 2 items par activité | FOND-04 § 3 ; DEC-0024 |
-| **R-PARC-05** | **E3** : les termes forment une **série minimale** de **2 à 4** mots ou pseudo-mots, qui ne diffèrent que par l'élément cible. | auto : comparaison des termes | FOND-04 § 3 ; DEC-0025 |
+| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon (mot support + un autre terme) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés par des **images** quand le mot s'image, sinon par des boutons sonores ou des pictogrammes de ton. | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 |
+| **R-PARC-05** | **E3** : les termes forment une **série minimale** de **2 à 4** mots ou pseudo-mots, qui ne diffèrent que par l'élément cible (ton ou son). E3 reprend la série **complète** dont E2 a utilisé une paire. | auto : comparaison des termes | FOND-04 § 3 ; DEC-0025 ; DEC-0026 |
 | **R-PARC-06** | **E4** : l'élève reproduit après un modèle, d'abord **lent** puis **normal** ; le modèle lent précède toujours le modèle normal. | auto : ordre des audios | FOND-04 § 3 |
 | **R-PARC-07** | **E5** : séries d'enchaînement, débit progressif (lent → normal → un peu plus rapide). | auto | FOND-04 § 3 |
 
@@ -109,7 +109,7 @@ de l'élève.
 | **R-LEX-02** | **Micro-lexique** du Module 0 : **50 à 100 mots** au plus. | auto : comptage | FOND-01 § 4 |
 | **R-LEX-03** | Un mot utilisé satisfait les **5 critères** : sons de l'inventaire ; sons et tons déjà ouverts dans le volet ; parmi les **500 plus fréquents** ; **syllabe réelle** ; **une seule** cible nouvelle. | auto (fréquence : sur la liste de référence) | Règle de choix des mots v1.1 (archives) |
 | **R-LEX-04** | Préférence pour les mots d'**une syllabe** ; **pas** de mot de 3 syllabes ou plus aux étapes d'écoute. | auto | Règle de choix des mots v1.1, R-MOT-01/02 |
-| **R-LEX-05** | **Exception** : une **syllabe inventée**, conforme à la structure du vietnamien, est autorisée **uniquement en E3**, comme terme d'une série minimale, quand aucun mot réel ne convient. | auto : `invented` + étape E3 | DEC-0013 ; DEC-0025 |
+| **R-LEX-05** | **Exception** : une **syllabe inventée**, conforme à la structure du vietnamien, est autorisée **uniquement en E2 et E3**, comme terme d'une série minimale, quand aucun mot réel ne convient (moins de 2 dictionnaires sur 3). En E2, elle est présentée par un **bouton sonore**. | auto : `invented` + étape E2 ou E3 | DEC-0013 ; DEC-0025 ; DEC-0027 |
 | **R-LEX-06** | Une syllabe inventée n'est **jamais affichée**. | auto | DEC-0013 |
 | **R-LEX-07** | La liste de fréquence de référence est à **fixer et documenter** dans `04_DONNEES` ; ses traductions doivent être revues (erreurs constatées). | revue | FOND-03 ; constat du 2026-10-28 |
 
@@ -177,6 +177,8 @@ de l'élève.
 | 0.3 | 2026-10-28 | R-ECR-04 : pas de transcription des mots (DEC-0021). |
 | 0.4 | 2026-10-28 | R-AUD-02 et R-AUD-04 : variété des voix, débit rapide (DEC-0023). |
 | 0.5 | 2026-10-28 | R-PARC-04, R-PARC-05, R-LEX-05 ; ajout de R-IMG-01 et R-IMG-02 (DEC-0024, DEC-0025). |
+| 0.6 | 2026-10-28 | R-PARC-04 et R-PARC-05 : même série en E2 (paire) et E3 (série complète) ; contraste de ton ou de son (DEC-0026). |
+| 0.7 | 2026-10-28 | R-LEX-05 : syllabe inventée permise en E2 et E3 (DEC-0027). |
 
 ## Liens
 

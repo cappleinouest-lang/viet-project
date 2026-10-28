@@ -1,238 +1,238 @@
 series_code;lesson_code;contrast_type;position;written;word_code;invented;element;validated;note
 S0001;M0-L01;sound;1;xem;W0057;false;PH-VS-e;false;
-S0001;M0-L01;sound;2;xêm;;true;PH-VO-ee;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0001;M0-L01;sound;2;xêm;;true;PH-VO-ee;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0002;M0-L01;sound;1;xem;W0057;false;PH-FI-m;false;
-S0002;M0-L01;sound;2;xen;;true;PH-FI-n;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0002;M0-L01;sound;2;xen;;false;PH-FI-n;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0003;M0-L01;sound;1;nên;W0152;false;PH-IN-n;false;
 S0003;M0-L01;sound;2;lên;W0032;false;PH-IN-l;false;
 S0004;M0-L01;sound;1;nên;W0152;false;PH-VO-ee;false;
-S0004;M0-L01;sound;2;nen;;true;PH-VS-e;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0004;M0-L01;sound;3;nin;;true;PH-VS-i;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0004;M0-L01;sound;2;nen;;true;PH-VS-e;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
+S0004;M0-L01;sound;3;nin;;true;PH-VS-i;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0005;M0-L01;sound;1;nên;W0152;false;PH-FI-n;false;
-S0005;M0-L01;sound;2;nêm;;true;PH-FI-m;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0005;M0-L01;sound;2;nêm;;false;PH-FI-m;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0006;M0-L01;sound;1;to;W0050;false;PH-VS-o;false;
 S0006;M0-L01;sound;2;tô;;false;PH-VS-oo;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0007;M0-L01;sound;1;môn;W0323;false;PH-VS-oo;false;
-S0007;M0-L01;sound;2;mon;;true;PH-VS-o;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0007;M0-L01;sound;3;mun;;true;PH-VS-u;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0007;M0-L01;sound;2;mon;;true;PH-VS-o;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0007;M0-L01;sound;3;mun;;false;PH-VS-u;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0008;M0-L01;sound;1;môn;W0323;false;PH-FI-n;false;
-S0008;M0-L01;sound;2;môm;;true;PH-FI-m;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0008;M0-L01;sound;2;môm;;false;PH-FI-m;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0009;M0-L01;sound;1;đi;W0062;false;PH-IN-dd;false;
 S0009;M0-L01;sound;2;di;;false;PH-IN-d;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0010;M0-L01;sound;1;đi;W0062;false;PH-VS-i;false;
-S0010;M0-L01;sound;2;đê;;true;PH-VO-ee;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0010;M0-L01;sound;2;đê;;false;PH-VO-ee;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0011;M0-L01;sound;1;ba;W0003;false;PH-IN-b;false;
 S0011;M0-L01;sound;2;ma;W0318;false;PH-IN-m;false;
-S0011;M0-L01;sound;3;va;;true;PH-IN-v;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0011;M0-L01;sound;3;va;;false;PH-IN-v;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0012;M0-L01;sound;1;ho;W0313;false;PH-VS-o;false;
-S0012;M0-L01;sound;2;hô;;true;PH-VS-oo;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0012;M0-L01;sound;2;hô;;false;PH-VS-oo;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0013;M0-L01;sound;1;pin;W0321;false;PH-VS-i;false;
-S0013;M0-L01;sound;2;pên;;true;PH-VO-ee;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0013;M0-L01;sound;2;pên;;true;PH-VO-ee;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0014;M0-L01;sound;1;pin;W0321;false;PH-FI-n;false;
-S0014;M0-L01;sound;2;pim;;true;PH-FI-m;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0014;M0-L01;sound;2;pim;;true;PH-FI-m;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0015;M0-L01;sound;1;da;W0017;false;PH-IN-d;false;
 S0015;M0-L01;sound;2;đa;;false;PH-IN-dd;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0016;M0-L01;sound;1;tu;W0338;false;PH-VS-u;false;
 S0016;M0-L01;sound;2;tô;;false;PH-VS-oo;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0017;M0-L02;tone;1;nó;W0162;false;sac;false;
 S0017;M0-L02;tone;2;no;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0017;M0-L02;tone;3;nò;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0017;M0-L02;tone;3;nò;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0018;M0-L02;tone;1;bàn;W0004;false;huyen;false;
 S0018;M0-L02;tone;2;ban;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0018;M0-L02;tone;3;bán;W0076;false;sac;false;
 S0019;M0-L02;tone;1;bé;W0005;false;sac;false;
-S0019;M0-L02;tone;2;be;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0019;M0-L02;tone;3;bè;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0019;M0-L02;tone;2;be;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0019;M0-L02;tone;3;bè;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0020;M0-L02;tone;1;làm;W0073;false;huyen;false;
 S0020;M0-L02;tone;2;lam;W0315;false;ngang;false;
-S0020;M0-L02;tone;3;lám;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0020;M0-L02;tone;3;lám;;true;sac;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0021;M0-L02;tone;1;đồ;W0022;false;huyen;false;
 S0021;M0-L02;tone;2;đô;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0021;M0-L02;tone;3;đố;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0021;M0-L02;tone;3;đố;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0022;M0-L02;tone;1;giá;W0106;false;sac;false;
 S0022;M0-L02;tone;2;da;W0017;false;ngang;false;
 S0022;M0-L02;tone;3;già;W0107;false;huyen;false;
 S0023;M0-L03;tone;1;họ;W0115;false;nang;false;
 S0023;M0-L03;tone;2;ho;W0313;false;ngang;false;
-S0023;M0-L03;tone;3;hò;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0023;M0-L03;tone;4;hó;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0023;M0-L03;tone;3;hò;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0023;M0-L03;tone;4;hó;;true;sac;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0024;M0-L03;tone;1;bạn;W0071;false;nang;false;
 S0024;M0-L03;tone;2;bàn;W0004;false;huyen;false;
 S0024;M0-L03;tone;3;bán;W0076;false;sac;false;
 S0024;M0-L03;tone;4;ban;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0025;M0-L03;tone;1;mẹ;W0138;false;nang;false;
-S0025;M0-L03;tone;2;mè;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0025;M0-L03;tone;3;mé;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0025;M0-L03;tone;4;me;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0025;M0-L03;tone;2;mè;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0025;M0-L03;tone;3;mé;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0025;M0-L03;tone;4;me;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0026;M0-L03;tone;1;bị;W0333;false;nang;false;
 S0026;M0-L03;tone;2;bí;;false;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0026;M0-L03;tone;3;bì;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0026;M0-L03;tone;4;bi;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0026;M0-L03;tone;3;bì;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0026;M0-L03;tone;4;bi;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0027;M0-L03;tone;1;lạ;W0334;false;nang;false;
 S0027;M0-L03;tone;2;là;W0030;false;huyen;false;
 S0027;M0-L03;tone;3;lá;W0029;false;sac;false;
 S0027;M0-L03;tone;4;la;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0028;M0-L03;tone;1;hẹn;W0114;false;nang;false;
-S0028;M0-L03;tone;2;hèn;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0028;M0-L03;tone;3;hén;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0028;M0-L03;tone;4;hen;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0028;M0-L03;tone;2;hèn;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0028;M0-L03;tone;3;hén;;false;sac;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0028;M0-L03;tone;4;hen;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0029;M0-L03;tone;1;dạ;W0332;false;nang;false;
 S0029;M0-L03;tone;2;già;W0107;false;huyen;false;
 S0029;M0-L03;tone;3;giá;W0106;false;sac;false;
 S0029;M0-L03;tone;4;da;W0017;false;ngang;false;
 S0030;M0-L04;sound;1;tôi;W0064;false;PH-DP-ooi;false;
-S0030;M0-L04;sound;2;toi;;true;PH-DP-oi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0030;M0-L04;sound;2;toi;;false;PH-DP-oi;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0031;M0-L04;sound;1;nói;W0163;false;PH-DP-oi;false;
 S0031;M0-L04;sound;2;nó;W0162;false;PH-VS-o;false;
 S0032;M0-L04;sound;1;hai;W0025;false;PH-DP-ai;false;
-S0032;M0-L04;sound;2;ha;;true;PH-VS-a;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0032;M0-L04;sound;2;ha;;false;PH-VS-a;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0033;M0-L04;sound;1;vui;W0055;false;PH-DP-ui;false;
-S0033;M0-L04;sound;2;vu;;true;PH-VS-u;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0033;M0-L04;sound;2;vu;;false;PH-VS-u;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0034;M0-L04;sound;1;mèo;W0139;false;PH-DP-eo;false;
-S0034;M0-L04;sound;2;mè;;true;PH-VS-e;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0034;M0-L04;sound;2;mè;;false;PH-VS-e;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0035;M0-L04;sound;1;áo;W0075;false;PH-DP-ao;false;
 S0035;M0-L04;sound;2;á;;false;PH-VS-a;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0035;M0-L04;sound;3;ó;;true;PH-VS-o;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0035;M0-L04;sound;3;ó;;false;PH-VS-o;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0036;M0-L04;sound;1;dịu;W0327;false;PH-DP-iu;false;
-S0036;M0-L04;sound;2;dị;;true;PH-VS-i;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0036;M0-L04;sound;2;dị;;false;PH-VS-i;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0037;M0-L05;sound;1;con;W0015;false;PH-CO-c;false;
-S0037;M0-L05;sound;2;hon;;true;PH-IN-h;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0037;M0-L05;sound;2;hon;;true;PH-IN-h;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0038;M0-L05;sound;1;pha;W0335;false;PH-CO-ph;false;
 S0038;M0-L05;sound;2;ba;W0003;false;PH-IN-b;false;
-S0038;M0-L05;sound;3;pa;;true;PH-IN-p;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0038;M0-L05;sound;3;pa;;true;PH-IN-p;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
 S0039;M0-L05;sound;1;quán;W0171;false;PH-CO-qu;false;
-S0039;M0-L05;sound;2;cán;;true;PH-CO-c;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0039;M0-L05;sound;2;cán;;false;PH-CO-c;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0040;M0-L05;sound;1;thôi;W0196;false;PH-CO-th;false;
 S0040;M0-L05;sound;2;tôi;W0064;false;PH-CO-t;false;
 S0041;M0-L05;sound;1;cá;W0066;false;PH-CO-c;false;
-S0041;M0-L05;sound;2;há;;true;PH-IN-h;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0041;M0-L05;sound;2;há;;false;PH-IN-h;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0042;M0-L05;sound;1;cam;W0009;false;PH-CO-c;false;
-S0042;M0-L05;sound;2;ham;;true;PH-IN-h;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0042;M0-L05;sound;2;ham;;false;PH-IN-h;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0043;M0-L05;sound;1;quê;W0292;false;PH-CO-qu;false;
 S0043;M0-L05;sound;2;kê;;false;PH-CO-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0044;M0-L06;sound;1;tư;W0337;false;PH-VO-uw;false;
 S0044;M0-L06;sound;2;tu;W0338;false;PH-VS-u;false;
-S0044;M0-L06;sound;3;ti;;true;PH-VS-i;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0044;M0-L06;sound;3;ti;;false;PH-VS-i;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0045;M0-L06;sound;1;vợ;W0212;false;PH-VO-ow;false;
-S0045;M0-L06;sound;2;vọ;;true;PH-VS-o;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0045;M0-L06;sound;3;vộ;;true;PH-VS-oo;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0045;M0-L06;sound;4;vạ;;true;PH-VS-a;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0045;M0-L06;sound;2;vọ;;false;PH-VS-o;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0045;M0-L06;sound;3;vộ;;true;PH-VS-oo;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0045;M0-L06;sound;4;vạ;;false;PH-VS-a;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0046;M0-L06;sound;1;với;W0213;false;PH-DP-owi;false;
-S0046;M0-L06;sound;2;vối;;true;PH-DP-ooi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0046;M0-L06;sound;3;vói;;true;PH-DP-oi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0046;M0-L06;sound;2;vối;;false;PH-DP-ooi;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0046;M0-L06;sound;3;vói;;false;PH-DP-oi;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0047;M0-L06;sound;1;nếu;W0280;false;PH-DP-eeu;false;
-S0047;M0-L06;sound;2;néo;;true;PH-DP-eo;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0047;M0-L06;sound;2;néo;;false;PH-DP-eo;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0048;M0-L06;sound;1;lưu;W0329;false;PH-DP-uwu;false;
-S0048;M0-L06;sound;2;liu;;true;PH-DP-iu;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0048;M0-L06;sound;2;liu;;false;PH-DP-iu;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0049;M0-L06;sound;1;thư;W0336;false;PH-VO-uw;false;
 S0049;M0-L06;sound;2;thu;;false;PH-VS-u;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0049;M0-L06;sound;3;thi;;false;PH-VS-i;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0050;M0-L06;sound;1;cơm;W0220;false;PH-VO-ow;false;
 S0050;M0-L06;sound;2;cam;W0009;false;PH-VS-a;false;
-S0050;M0-L06;sound;3;com;;true;PH-VS-o;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0050;M0-L06;sound;4;côm;;true;PH-VS-oo;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0050;M0-L06;sound;3;com;;true;PH-VS-o;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0050;M0-L06;sound;4;côm;;true;PH-VS-oo;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
 S0051;M0-L06;sound;1;sợ;W0184;false;PH-VO-ow;false;
-S0051;M0-L06;sound;2;sọ;;true;PH-VS-o;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0051;M0-L06;sound;3;sộ;;true;PH-VS-oo;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0051;M0-L06;sound;4;sạ;;true;PH-VS-a;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0051;M0-L06;sound;2;sọ;;false;PH-VS-o;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0051;M0-L06;sound;3;sộ;;true;PH-VS-oo;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0051;M0-L06;sound;4;sạ;;false;PH-VS-a;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0052;M0-L06;sound;1;mới;W0141;false;PH-DP-owi;false;
 S0052;M0-L06;sound;2;mối;;false;PH-DP-ooi;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0052;M0-L06;sound;3;mói;;true;PH-DP-oi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0052;M0-L06;sound;3;mói;;true;PH-DP-oi;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0053;M0-L07;tone;1;hỏi;W0226;false;hoi;false;
-S0053;M0-L07;tone;2;hòi;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0053;M0-L07;tone;3;họi;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0053;M0-L07;tone;4;hoi;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0053;M0-L07;tone;2;hòi;;true;huyen;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0053;M0-L07;tone;3;họi;;true;nang;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0053;M0-L07;tone;4;hoi;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0054;M0-L07;tone;1;mở;W0277;false;hoi;false;
 S0054;M0-L07;tone;2;mơ;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0054;M0-L07;tone;3;mờ;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0054;M0-L07;tone;4;mợ;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0054;M0-L07;tone;3;mờ;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0054;M0-L07;tone;4;mợ;;false;nang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0055;M0-L07;tone;1;phở;W0291;false;hoi;false;
-S0055;M0-L07;tone;2;phờ;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0055;M0-L07;tone;3;phợ;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0055;M0-L07;tone;4;phơ;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0055;M0-L07;tone;2;phờ;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0055;M0-L07;tone;3;phợ;;true;nang;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0055;M0-L07;tone;4;phơ;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0056;M0-L07;tone;1;dở;W0259;false;hoi;false;
 S0056;M0-L07;tone;2;giờ;W0110;false;huyen;false;
-S0056;M0-L07;tone;3;dợ;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0056;M0-L07;tone;4;dơ;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0056;M0-L07;tone;3;dợ;;true;nang;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0056;M0-L07;tone;4;dơ;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0057;M0-L07;tone;1;ở;W0165;false;hoi;false;
-S0057;M0-L07;tone;2;ờ;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0057;M0-L07;tone;3;ợ;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0057;M0-L07;tone;4;ơ;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0057;M0-L07;tone;2;ờ;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0057;M0-L07;tone;3;ợ;;false;nang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0057;M0-L07;tone;4;ơ;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0058;M0-L07;tone;1;phải;W0167;false;hoi;false;
-S0058;M0-L07;tone;2;phài;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0058;M0-L07;tone;3;phại;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0058;M0-L07;tone;4;phai;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0058;M0-L07;tone;2;phài;;true;huyen;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0058;M0-L07;tone;3;phại;;true;nang;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0058;M0-L07;tone;4;phai;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0059;M0-L07;tone;1;giỏi;W0112;false;hoi;false;
-S0059;M0-L07;tone;2;giòi;;true;huyen;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0059;M0-L07;tone;3;giọi;;true;nang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0059;M0-L07;tone;4;gioi;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0059;M0-L07;tone;2;giòi;;false;huyen;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0059;M0-L07;tone;3;giọi;;false;nang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0059;M0-L07;tone;4;gioi;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0060;M0-L08;sound;1;học;W0117;false;PH-FI-c;false;
-S0060;M0-L08;sound;2;họt;;true;PH-FI-t;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0060;M0-L08;sound;2;họt;;true;PH-FI-t;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0061;M0-L08;sound;1;một;W0142;false;PH-FI-t;false;
-S0061;M0-L08;sound;2;mộn;;true;PH-FI-n;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0061;M0-L08;sound;3;mộc;;true;PH-FI-c;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0061;M0-L08;sound;2;mộn;;true;PH-FI-n;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0061;M0-L08;sound;3;mộc;;false;PH-FI-c;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0062;M0-L08;sound;1;sách;W0178;false;PH-FI-ch;false;
 S0062;M0-L08;sound;2;sát;;false;PH-FI-t;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0063;M0-L08;sound;1;đẹp;W0097;false;PH-FI-p;false;
-S0063;M0-L08;sound;2;đẹm;;true;PH-FI-m;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0063;M0-L08;sound;3;đẹt;;true;PH-FI-t;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0063;M0-L08;sound;2;đẹm;;true;PH-FI-m;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0063;M0-L08;sound;3;đẹt;;false;PH-FI-t;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0064;M0-L08;sound;1;đọc;W0101;false;PH-FI-c;false;
-S0064;M0-L08;sound;2;đọt;;true;PH-FI-t;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0064;M0-L08;sound;2;đọt;;false;PH-FI-t;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0065;M0-L08;sound;1;thịt;W0231;false;PH-FI-t;false;
-S0065;M0-L08;sound;2;thịn;;true;PH-FI-n;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0065;M0-L08;sound;3;thịc;;true;PH-FI-c;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0065;M0-L08;sound;2;thịn;;true;PH-FI-n;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0065;M0-L08;sound;3;thịc;;true;PH-FI-c;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0066;M0-L08;sound;1;tóc;W0200;false;PH-FI-c;false;
-S0066;M0-L08;sound;2;tót;;true;PH-FI-t;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0066;M0-L08;sound;2;tót;;false;PH-FI-t;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0067;M0-L09;sound;1;năm;W0036;false;PH-VO-aw;false;
 S0067;M0-L09;sound;2;nam;;false;PH-VS-a;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0068;M0-L09;sound;1;tay;W0047;false;PH-DP-ay;false;
 S0068;M0-L09;sound;2;tai;W0046;false;PH-DP-ai;false;
 S0069;M0-L09;sound;1;đau;W0019;false;PH-DP-au;false;
-S0069;M0-L09;sound;2;đao;;true;PH-DP-ao;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0069;M0-L09;sound;2;đao;;false;PH-DP-ao;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0070;M0-L09;sound;1;đầu;W0095;false;PH-DI-aau;false;
 S0070;M0-L09;sound;2;đào;;false;PH-DP-ao;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0070;M0-L09;sound;3;đàu;;true;PH-DP-au;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0070;M0-L09;sound;3;đàu;;true;PH-DP-au;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0071;M0-L09;sound;1;đất;W0094;false;PH-VO-aa;false;
-S0071;M0-L09;sound;2;đớt;;true;PH-VO-ow;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0071;M0-L09;sound;3;đát;;true;PH-VS-a;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0071;M0-L09;sound;2;đớt;;false;PH-VO-ow;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0071;M0-L09;sound;3;đát;;false;PH-VS-a;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0072;M0-L09;sound;1;giây;W0109;false;PH-DI-aay;false;
 S0072;M0-L09;sound;2;giai;;false;PH-DP-ai;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0072;M0-L09;sound;3;giay;;true;PH-DP-ay;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0072;M0-L09;sound;3;giay;;true;PH-DP-ay;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0073;M0-L09;sound;1;ăn;W0074;false;PH-VO-aw;false;
 S0073;M0-L09;sound;2;an;;false;PH-VS-a;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0074;M0-L10;sound;1;ông;W0041;false;PH-FI-ng;false;
-S0074;M0-L10;sound;2;ôn;;true;PH-FI-n;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0074;M0-L10;sound;2;ôn;;false;PH-FI-n;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0075;M0-L10;sound;1;nhà;W0038;false;PH-IN-nh;false;
-S0075;M0-L10;sound;2;nà;;true;PH-IN-n;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0075;M0-L10;sound;2;nà;;false;PH-IN-n;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0076;M0-L10;sound;1;anh;W0060;false;PH-FI-nh;false;
 S0076;M0-L10;sound;2;an;;false;PH-FI-n;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0076;M0-L10;sound;3;ang;;true;PH-FI-ng;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0076;M0-L10;sound;3;ang;;false;PH-FI-ng;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0077;M0-L10;sound;1;nghe;W0282;false;PH-IN-ng;false;
-S0077;M0-L10;sound;2;nhe;;true;PH-IN-n;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0077;M0-L10;sound;2;nhe;;false;PH-IN-n;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0078;M0-L10;sound;1;gà;W0023;false;PH-IN-g;false;
 S0078;M0-L10;sound;2;cà;;false;PH-CO-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0079;M0-L10;sound;1;cho;W0061;false;PH-IN-ch;false;
 S0079;M0-L10;sound;2;to;W0050;false;PH-CO-t;false;
-S0079;M0-L10;sound;3;xo;;true;PH-IN-x;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0079;M0-L10;sound;3;xo;;false;PH-IN-x;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0080;M0-L10;sound;1;khéo;W0123;false;PH-IN-kh;false;
 S0080;M0-L10;sound;2;kéo;;false;PH-CO-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0080;M0-L10;sound;3;héo;;true;PH-IN-h;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0080;M0-L10;sound;3;héo;;false;PH-IN-h;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0081;M0-L11;tone;1;mũi;W0279;false;nga;false;
 S0081;M0-L11;tone;2;mùi;W0144;false;huyen;false;
-S0081;M0-L11;tone;3;múi;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0081;M0-L11;tone;4;mủi;;true;hoi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0081;M0-L11;tone;3;múi;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0081;M0-L11;tone;4;mủi;;false;hoi;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0082;M0-L11;tone;1;ngã;W0281;false;nga;false;
 S0082;M0-L11;tone;2;nga;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0082;M0-L11;tone;3;ngá;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0082;M0-L11;tone;4;ngả;;true;hoi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0082;M0-L11;tone;3;ngá;;true;sac;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0082;M0-L11;tone;4;ngả;;false;hoi;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0083;M0-L11;tone;1;mũ;W0309;false;nga;false;
-S0083;M0-L11;tone;2;mú;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0083;M0-L11;tone;3;mủ;;true;hoi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
-S0083;M0-L11;tone;4;mu;;true;ngang;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0083;M0-L11;tone;2;mú;;true;sac;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
+S0083;M0-L11;tone;3;mủ;;false;hoi;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0083;M0-L11;tone;4;mu;;false;ngang;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0084;M0-L11;tone;1;cũng;W0255;false;nga;false;
 S0084;M0-L11;tone;2;cung;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0084;M0-L11;tone;3;cùng;;false;huyen;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0084;M0-L11;tone;4;cúng;;true;sac;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0084;M0-L11;tone;4;cúng;;false;sac;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0085;M0-L11;tone;1;nghĩ;W0283;false;nga;false;
 S0085;M0-L11;tone;2;nghỉ;W0156;false;hoi;false;
 S0085;M0-L11;tone;3;nghi;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
@@ -240,22 +240,22 @@ S0085;M0-L11;tone;4;nghị;;false;nang;false;mot réel attesté dans une liste d
 S0086;M0-L11;tone;1;mỗi;W0278;false;nga;false;
 S0086;M0-L11;tone;2;mối;;false;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0086;M0-L11;tone;3;môi;;false;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0086;M0-L11;tone;4;mổi;;true;hoi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0086;M0-L11;tone;4;mổi;;true;hoi;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0087;M0-L12;sound;1;nước;W0222;false;PH-GL-uwow;false;
-S0087;M0-L12;sound;2;nuốc;;true;PH-GL-uoo;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0087;M0-L12;sound;2;nuốc;;true;PH-GL-uoo;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
 S0088;M0-L12;sound;1;hoa;W0026;false;PH-GL-oa;false;
-S0088;M0-L12;sound;2;ha;;true;PH-VS-a;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0088;M0-L12;sound;2;ha;;false;PH-VS-a;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0089;M0-L12;sound;1;khỏe;W0227;false;PH-GL-oe;false;
-S0089;M0-L12;sound;2;khẻ;;true;PH-VS-e;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0089;M0-L12;sound;2;khẻ;;false;PH-VS-e;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0090;M0-L12;sound;1;viết;W0235;false;PH-GL-iee;false;
-S0090;M0-L12;sound;2;vít;;true;PH-VS-i;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0090;M0-L12;sound;2;vít;;false;PH-VS-i;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0091;M0-L12;sound;1;uống;W0243;false;PH-GL-uoo;false;
-S0091;M0-L12;sound;2;úng;;true;PH-VS-u;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0091;M0-L12;sound;2;úng;;false;PH-VS-u;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0092;M0-L13;sound;1;người;W0228;false;PH-TR-uwowi;false;
-S0092;M0-L13;sound;2;nguồi;;true;PH-TR-uooi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0092;M0-L13;sound;2;nguồi;;true;PH-TR-uooi;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0093;M0-L13;sound;1;muối;W0145;false;PH-TR-uooi;false;
 S0093;M0-L13;sound;2;mối;;false;PH-DP-ooi;false;mot réel attesté dans une liste de fréquence (hors corpus)
 S0094;M0-L13;sound;1;tiêu;W0199;false;PH-TR-ieeu;false;
-S0094;M0-L13;sound;2;tiu;;true;PH-DP-iu;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0094;M0-L13;sound;2;tiu;;false;PH-DP-iu;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0095;M0-L13;sound;1;mười;W0146;false;PH-TR-uwowi;false;
-S0095;M0-L13;sound;2;muồi;;true;PH-TR-uooi;false;hors corpus : traité comme syllabe inventée (DEC-0013), à confirmer
+S0095;M0-L13;sound;2;muồi;;false;PH-TR-uooi;false;hors corpus, attesté dans 2 dictionnaires (hongocduc, tudientv) : mot réel (DEC-0027), sens et usage au Nord à confirmer

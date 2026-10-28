@@ -2,7 +2,7 @@
 id: FOND-04
 titre: Principes pédagogiques
 statut: VALIDE
-version: 1.3
+version: 1.4
 date: 2026-10-28
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
@@ -76,8 +76,8 @@ Autres termes :
 | Étape | Nom | Ce que fait l'élève | Volet | Voix | Débit | Écrit |
 |---|---|---|---|---|---|---|
 | **E1** | Écouter | Écoute, sans répondre ni répéter | écoute | ≥ 2 | lent | **non** |
-| **E2** | Distinguer | Choisit entre deux possibilités : « A ou B ? » (images, ou boutons sonores) | écoute | ≥ 2 | lent, puis normal | **non** |
-| **E3** | Opposer | Distingue 2 à 4 mots ou pseudo-mots qui ne diffèrent que par l'élément nouveau (série minimale) | écoute | ≥ 2 | lent, puis normal | non au début, **oui** en fin d'étape |
+| **E2** | Distinguer | Choisit entre deux possibilités : « A ou B ? » (images, ou boutons sonores). A et B forment une **paire minimale** : ils ne diffèrent que par un ton ou un son proche | écoute | ≥ 2 | lent, puis normal | **non** |
+| **E3** | Opposer | Distingue 2 à 4 mots ou pseudo-mots qui ne diffèrent que par l'élément nouveau (série minimale complète, dont E2 a utilisé une paire) | écoute | ≥ 2 | lent, puis normal | non au début, **oui** en fin d'étape |
 | **E4** | Répéter | Reproduit après un modèle (lent, puis normal) | production | 1 modèle | lent → normal | **oui** |
 | **E5** | Stabiliser | Enchaîne des séries pour automatiser ; inclut des éléments des leçons précédentes | production | 1 modèle | lent → normal → un peu plus rapide | **oui** |
 
@@ -164,9 +164,10 @@ Préférence pour les mots d'**une syllabe** ; pas de mot de 3 syllabes ou plus
 aux étapes d'écoute.
 
 > **Règle** (DEC-0013) : exception au critère 4. Une **syllabe inventée**
-> (mais conforme à la structure du vietnamien) est autorisée **uniquement à
-> l'étape E3**, comme terme d'une série minimale (2 à 4 termes, DEC-0025), quand
-> aucun mot réel ne convient. Elle est **seulement entendue, jamais affichée**,
+> (mais conforme à la structure du vietnamien) est autorisée **uniquement aux
+> étapes E2 et E3**, comme terme d'une série minimale (2 à 4 termes, DEC-0025),
+> quand aucun mot réel ne convient (DEC-0027 : moins de 2 dictionnaires sur 3).
+> En E2, elle est présentée par un bouton sonore. Elle est **seulement entendue, jamais affichée**,
 > même en fin d'E3.
 
 ## 10. Recyclage et révision
@@ -193,6 +194,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | 1.1 | 2026-10-28 | Numéros de leçon mis à jour (14 leçons, DEC-0019). Revalidé par Christophe. |
 | 1.2 | 2026-10-28 | § 7 : pas de transcription des mots, seulement des sons (DEC-0021). Revalidé par Christophe. |
 | 1.3 | 2026-10-28 | Images (§ 7 bis, DEC-0024) ; séries minimales de 2 à 4 termes (DEC-0025). Revalidé par Christophe. |
+| 1.4 | 2026-10-28 | E2 = paire minimale tirée de la série d'E3 ; contraste de ton ou de son (DEC-0026). Syllabe inventée permise en E2 (DEC-0027). |
 | — | 2026-10-28 | Mise en cohérence des liens `sorties` (exception DOC-21, statut inchangé). |
 
 ## Liens

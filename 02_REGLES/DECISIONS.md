@@ -2,14 +2,14 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.18
+version: 1.20
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
   décision et sa raison. Une décision ne se modifie pas : on en prend une
   nouvelle qui la remplace.
 entrees: []
-sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028]
+sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028]
 sources: []
 ---
 
@@ -519,6 +519,43 @@ qui indique « remplace DEC-NNNN ».
   *ba/ma/va*) → **95 séries**, **260 termes**.
 - **Impacte** : `paires_minimales.csv`, R-PARC-05, R-LEX-05, FOND-04.
 
+### DEC-0026 — E2 et E3 utilisent la même série minimale
+
+- **Date** : 2026-10-28
+- **Question** : d'où viennent les deux possibilités de E2 ?
+- **Options** : A) une **paire minimale** tirée de la série de E3 ;
+  B) un contraste large et facile (deux mots très différents).
+- **Décision** : **A**. E2 utilise **2 termes** de la série (le mot support
+  et un autre terme) ; E3 utilise la **série complète** (2 à 4 termes). La
+  difficulté monte par le nombre de choix, sur le même contraste fin.
+- **Précision de Christophe** : le contraste ne se limite pas au ton ; il
+  peut porter sur des **tons proches** ou des **sons proches** (voyelles,
+  consonnes initiales ou finales). Les données le prévoient déjà
+  (`contrast_type` = `tone` ou `sound` : 26 séries de tons, 69 de sons).
+- **Conséquence** : le hasard donne 50 % de réussite en E2 et 25 % à 33 %
+  en E3 ; le seuil d'E3 (85 %) est donc plus exigeant, à réévaluer à l'usage.
+- **Point ouvert** : 52 séries sur 95 n'ont qu'**un seul mot réel** ; leur
+  paire E2 contiendrait une syllabe hors corpus, aujourd'hui interdite
+  hors E3 (R-LEX-05). Arbitrage à prendre.
+- **Impacte** : R-PARC-04, R-PARC-05, FOND-04 § 3.
+
+### DEC-0027 — Termes hors corpus et syllabes inventées en E2
+
+- **Date** : 2026-10-28
+- **Question** : point ouvert de DEC-0026 : 52 séries n'avaient qu'un mot
+  réel, et la syllabe inventée était interdite hors E3.
+- **Décision** : 1) **vérifier** les termes hors corpus dans des
+  dictionnaires ; 2) pour les séries qui restent sans paire réelle,
+  **autoriser la syllabe inventée en E2** aussi, présentée par des boutons
+  sonores (pas d'image, jamais affichée).
+- **Critère** : un terme présent dans **au moins 2 des 3 dictionnaires**
+  (Hồ Ngọc Đức, Từ điển tiếng Việt, Wiktionnaire) est un mot réel.
+- **Résultat** : 107 termes vérifiés → 74 réels, 33 inventés ; séries sans
+  paire réelle : **52 → 9** (toutes des contrastes de son).
+- **Remplace** : la restriction « uniquement en E3 » de DEC-0013.
+- **Impacte** : `paires_minimales.csv`, R-LEX-05, FOND-04 § 9,
+  DATA-MODELE, QUAL-VERIF-HORS-CORPUS-20261028.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -542,6 +579,8 @@ qui indique « remplace DEC-NNNN ».
 | 1.16 | 2026-10-28 | Ajout de DEC-0022 (symboles des tons). |
 | 1.17 | 2026-10-28 | Ajout de DEC-0023 (audio : stockage, régénération, variété des voix). |
 | 1.18 | 2026-10-28 | Ajout de DEC-0024 (images) et DEC-0025 (séries minimales de 2 à 4 termes). |
+| 1.19 | 2026-10-28 | Ajout de DEC-0026 (E2 et E3 sur la même série minimale). |
+| 1.20 | 2026-10-28 | Ajout de DEC-0027 (termes hors corpus vérifiés ; syllabe inventée permise en E2). |
 
 ## Liens
 
