@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.3
+version: 0.4
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -74,7 +74,8 @@ erDiagram
 | `sound_code` | code | `PH-…` (repris des archives) | `PH-VO-uw` |
 | `grapheme` | écriture | | `ư` |
 | `spellings` | toutes les écritures du même son (DEC-0018) | liste `|` | `d|gi|r` |
-| `ipa` | notation (DEC-0008) | | `/ɨ/` |
+| `ipa` | notation, avec variantes éventuelles (DEC-0008) | | `/c/ ~ /tɕ/` |
+| `ipa_main` | notation **principale**, sans barres, utilisée pour calculer la transcription des mots | | `c` |
 | `position` | place dans la syllabe | `initial`, `glide`, `nucleus`, `final` | `nucleus` |
 | `kind` | nature | `vowel`, `diphthong`, `triphthong`, `consonant`, `semivowel` | `vowel` |
 | `note` | remarque | | |
@@ -181,6 +182,13 @@ erDiagram
 
 ## 4. Ce qui n'est pas un fichier source
 
+**Transcription phonétique des mots** : calculée par le générateur à partir de
+`syllabes.csv`, de `ipa_main` (`sons.csv`) et des chiffres Chao (`tons.csv`),
+avec un coup de glotte [ʔ] devant une syllabe sans consonne initiale.
+Elle est approximative : les variations selon le contexte (par exemple
+*anh*, *sách* à Hanoï) ne sont pas calculées.
+
+
 Les **activités** du lecteur (E1 → E5) ne sont pas saisies : le générateur les
 **construit** à partir des leçons, des ouvertures, des mots, des paires et des
 audios. Elles sont donc toujours cohérentes avec les données et regénérables
@@ -210,6 +218,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.1 | 2026-10-28 | Création : 9 fichiers, conventions, liens, contrôles. |
 | 0.2 | 2026-10-28 | `sons.csv` : un code par son, colonne `hanoi_merge` supprimée (DEC-0018). |
 | 0.3 | 2026-10-28 | Ajout de `mots_lecons.csv` ; colonne `m0_vector` supprimée de `mots.csv` (DEC-0020). |
+| 0.4 | 2026-10-28 | `sons.csv` : colonne `ipa_main` ; la transcription d'un mot est **calculée** (§ 4), jamais stockée. |
 
 ## Liens
 
