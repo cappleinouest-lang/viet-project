@@ -2,7 +2,7 @@
 id: PROD-ARCH
 titre: Architecture des outils de formation
 statut: BROUILLON
-version: 0.2
+version: 0.3
 date: 2026-10-28
 resume: >
   Décrit, sans code, les composants qui délivrent la formation : site
@@ -20,6 +20,13 @@ sources:
 # Architecture des outils de formation
 
 ## Résumé
+
+> **Mise à jour (DEC-0030)** : le lecteur d'activités et la page de
+> prononciation sont d'abord développés et testés comme un **site
+> statique**, avec la progression enregistrée dans l'appareil. L'enveloppe
+> décrite ci-dessous (WordPress + extension de progression) n'est plus
+> acquise : elle sera comparée à **Firebase** quand le lecteur fonctionnera.
+> Analyse : [comparaison WordPress / application web](comparaison_wordpress_application_web_2026-10-28.md).
 
 **WordPress** porte le site et les comptes ; un **lecteur d'activités** sur
 mesure fait vivre chaque leçon (E1 → E5) et applique les verrous ; une
@@ -98,6 +105,7 @@ graph LR
 |---|---|---|
 | 0.1 | 2026-10-28 | Création, à partir de DEC-0015 et DEC-0016. |
 | 0.2 | 2026-10-28 | Point ouvert 2 : FPT.AI sans reconnaissance vocale publique ; test PhoWhisper. |
+| 0.3 | 2026-10-28 | DEC-0030 : lecteur développé d'abord en site statique ; enveloppe WordPress ou Firebase à choisir ensuite. |
 
 ## Liens
 

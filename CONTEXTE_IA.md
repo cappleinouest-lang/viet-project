@@ -2,7 +2,7 @@
 id: CTX-IA
 titre: Contexte du projet pour une IA
 statut: VALIDE
-version: 1.1
+version: 1.2
 date: 2026-10-28
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
@@ -46,8 +46,8 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0029) | `02_REGLES/DECISIONS.md` |
-| Outils : WordPress, lecteur d'activités, Anki | `05_PRODUCTION/01_architecture_outils.md` |
+| Toutes les décisions (DEC-0001 à DEC-0030) | `02_REGLES/DECISIONS.md` |
+| Outils : lecteur d'activités, enveloppe (WordPress ou Firebase), Anki | `05_PRODUCTION/01_architecture_outils.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
 | Vue d'ensemble des documents et de leurs liens | `CARTE_DOCUMENTAIRE.md` (générée) |
 
@@ -63,7 +63,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Étiquettes E2–E3 | débit lent : image + symbole ; débit normal : symbole seul. Ton → pictogramme + couleur ; son → `ipa_main` du son contrasté ; symboles présentés dès E1 (DEC-0028, 0029) |
 | Accent | courant de Hanoï : tr/ch, s/x, d/gi/r = orthographe, pas écoute ; **un code par son** (76 sons) (DEC-0009, 0018) |
 | Mots | 98 mots supports en M0 (79 imageables) ; séries minimales de **2 à 4 termes**, paire en E2, série complète en E3 ; contraste de ton ou de son (DEC-0020, 0024 à 0026) |
-| Outils | **WordPress sans LMS** + lecteur d'activités sur mesure + page de prononciation (courbe mélodique) ; **Anki** pour les révisions (DEC-0015, 0016) |
+| Outils | **Lecteur d'activités** + page de prononciation (courbe mélodique), développés d'abord en **site statique** ; enveloppe définitive **WordPress ou Firebase** choisie quand le lecteur fonctionne ; **Anki** pour les révisions (DEC-0015, 0016, 0030) |
 | Données | **CSV** comme source de vérité, contrôle par SQLite temporaire (DEC-0017) |
 | Audio | regénéré, FPT.AI (banmai, thuminh, leminh), variété des voix et débits (DEC-0023) |
 
@@ -99,3 +99,4 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 |---|---|---|
 | 1.0 | 2026-10-28 | Création, en fin de session de refonte. |
 | 1.1 | 2026-10-28 | Étiquettes de réponse E2–E3 (DEC-0028, DEC-0029). |
+| 1.2 | 2026-10-28 | Outils : lecteur d'abord en site statique (DEC-0030). |

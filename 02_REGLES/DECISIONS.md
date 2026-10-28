@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.22
+version: 1.23
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -613,6 +613,40 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : PROG-ACT, R-PARC-04, R-ECR-04, FOND-04 § 7 bis,
   `sons.csv` (colonne `ipa_main` à relire, triphtongues comprises).
 
+### DEC-0030 — Lecteur d'activités développé d'abord en site statique
+
+- **Date** : 2026-10-28
+- **Question** : faut-il développer le lecteur d'activités directement dans
+  WordPress (DEC-0016), ou sous une autre forme ? (précise DEC-0016)
+- **Options** : W — WordPress + extension de progression (DEC-0016) ;
+  S1 — site statique, progression dans l'appareil ; S2 — site statique +
+  comptes Firebase. Supabase écarté (offre gratuite mise en pause après une
+  semaine d'inactivité).
+- **Constats** (2026-10-28) :
+  - le lecteur d'activités et la page de prononciation (environ 80 % du
+    travail) sont identiques dans toutes les options ;
+  - un site statique est plus facile à développer et à tester par l'IA
+    (un seul langage, essais sans WordPress, moins de manipulations pour
+    Christophe) ;
+  - Christophe a l'habitude de WordPress ; il accepte, si besoin, que la
+    progression soit enregistrée chez Google (Firebase).
+- **Décision** :
+  1. Le lecteur d'activités et la page de prononciation sont **développés et
+     testés comme un site statique**, la progression étant enregistrée
+     **dans l'appareil**.
+  2. L'**enveloppe définitive** (WordPress ou Firebase) est choisie **quand
+     le lecteur fonctionne**.
+  3. Dans les deux cas : contenus **générés** depuis `04_DONNEES` et suivis
+     par Git, jamais saisis dans l'outil ; enregistrement de la progression
+     **isolé** dans une seule partie du code, remplaçable.
+  4. Anki reste l'outil des révisions (DEC-0015).
+- **Raison** : commencer par ce qui sert dans tous les cas, au plus simple ;
+  garder le choix de l'enveloppe ouvert sans travail perdu.
+- **Précise** : DEC-0016 (WordPress n'est plus acquis ; il reste une des deux
+  enveloppes possibles).
+- **Impacte** : PROD-ARCH, `05_PRODUCTION` ;
+  `05_PRODUCTION/comparaison_wordpress_application_web_2026-10-28.md`.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -640,6 +674,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.20 | 2026-10-28 | Ajout de DEC-0027 (termes hors corpus vérifiés ; syllabe inventée permise en E2). |
 | 1.21 | 2026-10-28 | Ajout de DEC-0028 (étiquettes de réponse : images, puis symboles). |
 | 1.22 | 2026-10-28 | Ajout de DEC-0029 (symbole des sons : `ipa_main` du son contrasté ; pictogrammes de ton dès E1). |
+| 1.23 | 2026-10-28 | Ajout de DEC-0030 (lecteur développé d'abord en site statique ; enveloppe WordPress ou Firebase choisie ensuite). |
 
 ## Liens
 
