@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.15
+version: 1.17
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -434,6 +434,52 @@ qui indique « remplace DEC-NNNN ».
   par exemple *anh*, *sách*).
 - **Impacte** : FOND-04 § 7 (à revalider), R-ECR-04, `00_modele_donnees.md`.
 
+### DEC-0022 — Symboles des tons
+
+- **Date** : 2026-10-28
+- **Question** : quels symboles utiliser pour représenter les tons ?
+- **Décision** : `tons.csv` reçoit trois informations en plus des signes de
+  l'écriture et des chiffres Chao :
+  - **lettres de ton** de l'alphabet phonétique (norme) : ˧˧ ˧˥ ˨˩ ˧˩˧ ˧ˀ˥ ˨˩ʔ ;
+  - **pictogramme** du projet : → (ngang), ↗ (sắc), ↘ (huyền), ↘↗ (hỏi),
+    ↗ˀ↗ (ngã, cassé au milieu), ↘ʔ (nặng, arrêt final) ;
+  - **couleur** : gris, rouge, bleu, vert, violet, orange.
+  Les numéros de ton (1 à 6) ne sont **pas** utilisés (ordre variable selon
+  les ouvrages).
+- **Règles d'emploi** : symboles affichés seulement là où l'écrit est
+  autorisé (fin d'E3, E4, E5 — DEC-0011) ; la couleur n'est **jamais** le seul
+  porteur de l'information (toujours avec le pictogramme ou le signe), pour
+  les personnes qui distinguent mal les couleurs.
+- **Statut des valeurs** : pictogrammes et couleurs **proposés**, à confirmer
+  à l'usage.
+- **Impacte** : `04_DONNEES/tons.csv`, lecteur d'activités, page de
+  prononciation.
+
+### DEC-0023 — Audio : stockage, régénération, variété des voix
+
+- **Date** : 2026-10-28
+- **Constats** : les 274 audios de OLD enchaînent « son ; syllabe ; mot » dans
+  un même fichier (inutilisables tels quels) ; les 93 audios récents ne
+  couvrent que 19 mots (8 des 98 mots supports) ; il faut environ 211
+  éléments sonores (mots supports et termes des paires minimales).
+- **Décision** :
+  1. Les fichiers audio sont des **données sources** : rangés dans
+     `04_DONNEES/audio/`, suivis par Git, chacun **écouté et validé**.
+  2. **Tout est regénéré** avec des réglages homogènes ; les audios des
+     archives ne sont pas repris.
+  3. **Au moins 2 voix**, avec pour objectif la **variété** : homme, femme,
+     enfant, débits lent, normal et rapide — pour que l'élève entende
+     plusieurs prononciations.
+  4. Voix de départ (FPT.AI, accent du Nord) : **F1** *banmai*, **F2**
+     *thuminh*, **H1** *leminh* (`04_DONNEES/voix.csv`).
+- **Points ouverts** :
+  - **voix d'enfant** : FPT.AI n'en propose aucune ; source à trouver
+    (enregistrements natifs, autre fournisseur) ;
+  - **une seule voix masculine** du Nord chez FPT.AI ;
+  - **réglages de débit** FPT.AI (échelle −3 à +3) à calibrer à l'écoute.
+- **Impacte** : `04_DONNEES` (`voix.csv`, `audios.csv`, `audio/`),
+  R-AUD-02, R-AUD-04, `00_modele_donnees.md`.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -454,6 +500,8 @@ qui indique « remplace DEC-NNNN ».
 | 1.13 | 2026-10-28 | Ajout de DEC-0019 (14 leçons, place de ê, ơi, au, ay). |
 | 1.14 | 2026-10-28 | Ajout de DEC-0020 (98 mots supports du Module 0). |
 | 1.15 | 2026-10-28 | Ajout de DEC-0021 (pas de transcription des mots). |
+| 1.16 | 2026-10-28 | Ajout de DEC-0022 (symboles des tons). |
+| 1.17 | 2026-10-28 | Ajout de DEC-0023 (audio : stockage, régénération, variété des voix). |
 
 ## Liens
 

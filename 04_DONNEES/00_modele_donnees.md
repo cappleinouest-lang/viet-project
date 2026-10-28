@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.5
+version: 0.6
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -20,7 +20,7 @@ sources:
 
 ## Résumé
 
-Dix fichiers CSV. Chaque ligne est identifiée par un **code** lisible et
+Onze fichiers CSV. Chaque ligne est identifiée par un **code** lisible et
 stable (par exemple `ngang`, `PH-VO-uw`, `W0042`, `M0-L06`), jamais par un
 numéro technique. Les fichiers se citent entre eux par ces codes.
 
@@ -155,10 +155,10 @@ erDiagram
 | `audio_code` | code | | `A-W0042-F1-slow` |
 | `item_type` | ce qui est prononcé | `word`, `syllable`, `invented` | `word` |
 | `item_ref` | référence | `word_code`, ou écriture pour une syllabe | `W0042` |
-| `voice` | voix | `F1`, `F2`, `H1`, `H2`… | `F1` |
-| `speed` | débit | `slow`, `normal` | `slow` |
+| `voice` | voix | `voice_code` de `voix.csv` | `F1` |
+| `speed` | débit | `slow`, `normal`, `fast` | `slow` |
 | `source` | origine | `fpt`, `native`, `recorded` | `fpt` |
-| `file` | chemin relatif du fichier | | `audio/W0042-F1-slow.mp3` |
+| `file` | chemin relatif, dans `04_DONNEES/audio/` (DEC-0023) | | `audio/W0042-F1-slow.mp3` |
 | `validated` | écouté et validé (R-AUD-01) | `true` / `false` | `false` |
 
 ### 3.9 `classificateurs.csv` (pour A1)
@@ -181,6 +181,19 @@ erDiagram
 
 > Un mot est « support du Module 0 » s'il figure dans ce fichier : il n'y a
 > plus de colonne `m0_vector` dans `mots.csv` (une seule source).
+
+### 3.11 `voix.csv` — les voix (DEC-0023)
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `voice_code` | code | `F1`, `F2`, `H1`, `E1`… | `H1` |
+| `gender` | genre | `female`, `male`, vide | `male` |
+| `age` | âge | `adult`, `child` | `adult` |
+| `region` | accent | `north` (DEC-0009) | `north` |
+| `provider` | origine | `fpt`, `native` (enregistrement), autre | `fpt` |
+| `provider_voice` | identifiant chez le fournisseur | | `leminh` |
+| `status` | état | `active`, `planned` | `active` |
+| `note` | remarque | | |
 
 ## 4. Ce qui n'est pas un fichier source
 
@@ -219,6 +232,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.3 | 2026-10-28 | Ajout de `mots_lecons.csv` ; colonne `m0_vector` supprimée de `mots.csv` (DEC-0020). |
 | 0.4 | 2026-10-28 | Pas de transcription des mots ; seule la notation des sons est utilisée (DEC-0021). |
 | 0.5 | 2026-10-28 | `tons.csv` : lettres de ton, pictogramme, couleur (DEC-0022). |
+| 0.6 | 2026-10-28 | Ajout de `voix.csv` ; débit `fast` ; audios dans `04_DONNEES/audio/` (DEC-0023). |
 
 ## Liens
 

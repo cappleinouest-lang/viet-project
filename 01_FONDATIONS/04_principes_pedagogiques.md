@@ -1,8 +1,8 @@
 ---
 id: FOND-04
 titre: Principes pédagogiques
-statut: VALIDE
-version: 1.1
+statut: BROUILLON
+version: 1.2
 date: 2026-10-28
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
@@ -127,8 +127,9 @@ Volet production  L01 ─ L02 ─ …          (au plus 3 leçons de retard)
 - **E4, E5** : écrit visible, à l'appui de l'audio. C'est là que se fixent
   les points d'orthographe (*c/k/q*, *g/gh*, *ng/ngh*, et à Hanoï *tr/ch*,
   *s/x*, *d/gi/r* — DEC-0009).
-- Une transcription phonétique (API) peut accompagner l'écrit en production
-  si elle aide ; elle n'est jamais exigée de l'élève.
+- Les **mots** ne sont pas transcrits en alphabet phonétique ; seule la
+  notation des **sons** peut accompagner l'écrit en production, si elle aide.
+  Elle n'est jamais exigée de l'élève (DEC-0021).
 
 ## 8. L'audio
 
@@ -181,6 +182,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | 0.1 | 2026-10-28 | Fusion du paradigme v3, des référentiels R01 et R02, de la règle d'atomicité v1.1, du contrat d'unité v1.9 et de la règle de choix des mots v1.1 ; intégration de DEC-0007 et DEC-0010 à DEC-0012. |
 | 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). Ajout de la règle sur les syllabes inventées (DEC-0013). |
 | 1.1 | 2026-10-28 | Numéros de leçon mis à jour (14 leçons, DEC-0019). Revalidé par Christophe. |
+| 1.2 | 2026-10-28 | § 7 : pas de transcription des mots, seulement des sons (DEC-0021). À revalider. |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.2
+version: 0.4
 date: 2026-10-28
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
@@ -120,16 +120,16 @@ de l'élève.
 | **R-ECR-01** | **E1, E2** : aucun écrit visible. | auto | DEC-0011 |
 | **R-ECR-02** | **E3** : écrit absent au début, visible **en fin d'étape** (sauf syllabe inventée : R-LEX-06). | auto | DEC-0011 ; DEC-0013 |
 | **R-ECR-03** | **E4, E5** : écrit visible, **à l'appui** de l'audio. | auto | DEC-0011 |
-| **R-ECR-04** | La transcription phonétique (API) peut accompagner l'écrit en production ; elle n'est jamais exigée de l'élève. | revue | FOND-04 § 7 |
+| **R-ECR-04** | Aucune transcription phonétique des **mots**. La notation phonétique des **sons** (`sons.csv`) peut accompagner l'écrit en production ; elle n'est jamais exigée de l'élève. | revue | FOND-04 § 7 ; DEC-0021 |
 
 ## R-AUD — Audio
 
 | ID | Règle | Vérification | Source |
 |---|---|---|---|
 | **R-AUD-01** | Audio **natif** ou **de synthèse validé**, accent courant de Hanoï. | revue (écoute de contrôle) | DEC-0009 ; FOND-04 § 8 |
-| **R-AUD-02** | Étapes d'écoute (E1–E3) : **au moins 2 voix** distinctes, homme et femme. | auto | FOND-04 § 8 ; R-CU-04 (archives) |
+| **R-AUD-02** | Étapes d'écoute (E1–E3) : **au moins 2 voix** distinctes, et autant de **variété** que possible (homme, femme, enfant ; débits différents) pour habituer l'oreille à plusieurs prononciations. | auto | FOND-04 § 8 ; DEC-0023 |
 | **R-AUD-03** | Étapes de production (E4–E5) : **une voix modèle** unique par item. | auto | FOND-04 § 8 |
-| **R-AUD-04** | Toute nouveauté est introduite à **débit lent** ; le débit normal vient après verrou. | auto | FOND-04 § 8 ; R-CU-06 (archives) |
+| **R-AUD-04** | Toute nouveauté est introduite à **débit lent** ; le débit normal vient après verrou ; le débit **rapide** sert à la stabilisation (E5). | auto | FOND-04 § 8 ; R-CU-06 (archives) ; DEC-0023 |
 | **R-AUD-05** | Aucun audio **décoratif** ; tout audio est un item pédagogique. | revue | R02 (archives) |
 | **R-AUD-06** | Tout audio est **regénérable** à partir des données seules (texte, voix, débit). | auto | FOND-01 § 5 ; R-CU-03 (archives) |
 
@@ -172,6 +172,8 @@ de l'élève.
 |---|---|---|
 | 0.1 | 2026-10-28 | Création : 57 règles en 10 familles, issues des fondations v1.0 et de DEC-0004 à DEC-0013. Règles de code hors périmètre. |
 | 0.2 | 2026-10-28 | R-PROG-01, R-PROG-02, R-ATOM-05, R-REV-03 : 14 leçons (DEC-0019). |
+| 0.3 | 2026-10-28 | R-ECR-04 : pas de transcription des mots (DEC-0021). |
+| 0.4 | 2026-10-28 | R-AUD-02 et R-AUD-04 : variété des voix, débit rapide (DEC-0023). |
 
 ## Liens
 
