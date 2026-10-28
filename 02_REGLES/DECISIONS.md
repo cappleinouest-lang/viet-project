@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.8
+version: 1.14
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -268,6 +268,159 @@ qui indique « remplace DEC-NNNN ».
 - **Décision** : FOND-01, FOND-02, FOND-03 et FOND-04 passent au statut
   **VALIDE** (version 1.0), validés par Christophe.
 
+### DEC-0015 — Outils de formation : WordPress pour l'apprentissage, Anki pour les révisions
+
+- **Date** : 2026-10-28
+- **Question** : quel outil (ou quelle combinaison) pour diffuser la
+  formation ? Besoins : vous d'abord puis d'autres apprenants ; PC,
+  Android, iPhone, navigateur ; budget modeste ; mesure de la production
+  par la machine.
+- **Options étudiées** : A — Anki seul ; B — application web sur mesure ;
+  C — Anki + page de prononciation ; D — LMS Moodle ; E — LMS sur WordPress.
+- **Constats** (2026-10-28) :
+  - Azure Speech jugé peu performant en vietnamien (expérience de
+    Christophe) ;
+  - le code des cartes Anki n'a pas accès au micro (refus du développeur,
+    juin 2025) ;
+  - aucun LMS (Moodle ou WordPress) n'offre de vraie révision espacée ;
+  - l'analyse de la courbe mélodique fonctionne (test du 2026-10-28 sur
+    « ma » juste / faux) et peut tourner dans un navigateur.
+- **Décision** :
+  - **WordPress + extension LMS** pour l'**apprentissage** : leçons, parcours
+    E1 → E5, verrous, volets, et page de **prononciation** (courbe
+    mélodique) intégrée au site ;
+  - **Anki** pour les **révisions périodiques** (répétition espacée) des
+    éléments appris.
+- **Raison** : chaque outil fait ce qu'il fait le mieux ; WordPress facilite
+  l'intégration d'une page sur mesure (micro) et le partage futur ; Anki
+  reste la référence éprouvée et gratuite de la révision espacée.
+- **Conséquences à traiter** :
+  - choisir l'extension LMS (critère clé : déblocage sur **score minimum**) ;
+  - relier les deux outils : les éléments validés dans WordPress sont
+    ajoutés aux révisions Anki, générés à partir de la même source
+    (`04_DONNEES`) ;
+  - définir l'hébergement (développement en local avec Local, puis en ligne).
+- **Impacte** : `05_PRODUCTION`, `03_PROGRAMME`, R-VOL-08 (mesure de la
+  production : courbe mélodique, reconnaissance vocale plus tard).
+
+### DEC-0016 — WordPress sans extension LMS au départ
+
+- **Date** : 2026-10-28
+- **Question** : faut-il une extension LMS (Sensei, LearnDash…) sur
+  WordPress ? (précise DEC-0015)
+- **Constats** : les quiz des extensions LMS ne documentent pas les questions
+  audio A/B sans écrit ; un lecteur d'activités sur mesure est de toute façon
+  nécessaire (E1–E5, courbe mélodique) et porte déjà scores, verrous et
+  volets ; les prérequis des LMS sont moins précis que les règles du projet.
+- **Options** : WordPress + LMS (Sensei) + lecteur ; WordPress seul +
+  lecteur + petite extension de progression.
+- **Décision** : **WordPress sans LMS au départ** :
+  - **pages** WordPress pour la structure (module > leçon) ;
+  - **lecteur d'activités** sur mesure pour E1–E5, scores, verrous, volets ;
+  - **petite extension** qui enregistre la progression sur le compte
+    WordPress (même progression sur PC, téléphone, tablette) ;
+  - **Anki** pour les révisions (DEC-0015).
+  Un LMS pourra être ajouté au moment du partage s'il apporte un réel gain.
+- **Raison** : une seule logique de progression, la vôtre ; plus léger ;
+  pas de dépendance à un éditeur d'extension.
+- **Impacte** : `05_PRODUCTION/01_architecture_outils.md`.
+
+### DEC-0017 — Format des données : CSV comme source de vérité
+
+- **Date** : 2026-10-28
+- **Question** : fichiers CSV, Excel, ou base de données (SQLite,
+  PostgreSQL) pour les données de la formation ?
+- **Décision** :
+  - **source de vérité** : fichiers **CSV** dans `04_DONNEES`, un par table
+    (UTF-8, séparateur `;`, conformes à DOC-07) ;
+  - **contrôle** : un script charge les CSV dans une base **SQLite
+    temporaire** et vérifie liens entre tables, règles « auto » du registre
+    et encodage ; rapport dans `07_QUALITE` ;
+  - **Excel** : consultation seulement, jamais d'enregistrement (DOC-08) ;
+  - **PostgreSQL** : abandonné comme outil de travail ; sa dernière version
+    sert de **source de reprise** (export unique), puis reste archivée.
+- **Raison** : faible volume (quelques milliers de lignes), suivi ligne à
+  ligne par Git, aucun serveur à entretenir ; la rigueur relationnelle est
+  apportée par le contrôle automatique.
+- **Réexamen** : si plusieurs personnes modifient les données en même temps,
+  ou au-delà de quelques dizaines de milliers de lignes.
+- **Impacte** : `04_DONNEES`, `05_PRODUCTION` (générateur, script de
+  contrôle), `07_QUALITE`.
+
+### DEC-0018 — Un seul code par son (fusion des écritures)
+
+- **Date** : 2026-10-28
+- **Question** : les archives donnent plusieurs codes à un même son
+  (c/k, g/gh, ng/ngh, i/y) ; à Hanoï, d/gi/r, ch/tr et s/x se prononcent
+  aussi pareil (DEC-0009). Fusionner ou garder des codes séparés ?
+- **Décision** : **fusionner** : un code par son entendu ; les différentes
+  écritures sont listées dans la colonne `spellings` de `sons.csv`.
+
+| Code absorbé | Code conservé | Écritures |
+|---|---|---|
+| PH-CO-k | PH-CO-c | c, k |
+| PH-IN-gh | PH-IN-g | g, gh |
+| PH-IN-ngh | PH-IN-ng | ng, ngh |
+| PH-VS-y | PH-VS-i | i, y |
+| PH-CO-gi, PH-CO-r | PH-IN-d | d, gi, r |
+| PH-IN-tr | PH-IN-ch | ch, tr |
+| PH-CO-s | PH-IN-x | x, s |
+
+- **Non fusionnés** : les finales -c / -ch et -ng / -nh (la voyelle qui
+  précède se prononce différemment : *anh*, *ach*) ; qu (PH-CO-qu, /kw/).
+- **Raison** : la règle d'atomicité compte les **sons** entendus ; un même
+  son ne doit pas compter pour deux nouveautés. L'orthographe est travaillée
+  séparément, en E4–E5 (DEC-0011).
+- **Conséquences** : 84 → **76** sons ; lors de la reprise des mots et des
+  paires minimales, les codes absorbés sont remplacés par les codes
+  conservés (table ci-dessus).
+- **Impacte** : `04_DONNEES/sons.csv`, `00_modele_donnees.md`, reprise des
+  données.
+
+### DEC-0019 — Les 14 leçons du Module 0 et la place de quelques sons
+
+- **Date** : 2026-10-28
+- **Question** : comment appliquer DEC-0006 (tons glottalisés un par un)
+  sans mettre deux familles de nouveautés dans une même leçon (R-ATOM-01) ?
+  Où placer ê ? Que faire des diphtongues qui contiennent une voyelle pas
+  encore vue ?
+- **Décision** :
+  1. **Une leçon dédiée** par ton glottalisé : le Module 0 passe de 12 à
+     **14 leçons** — L03 nặng, L07 hỏi, L11 ngã + contraste hỏi/ngã ;
+     L14 = recyclage. Détail dans `04_DONNEES/lecons.csv`.
+  2. **ê** passe en **L01** (voyelle avant, proche du « é » français) ; il
+     n'est pas une voyelle centrale.
+  3. **ơi** passe en **L06** (avec ơ, ư) ; **au** et **ay** passent en **L09**
+     (avec ă, â), car ils contiennent ces voyelles.
+  4. Par défaut, chaque son et ton s'ouvre **dans la même leçon** en écoute
+     et en production (`ouvertures.csv`).
+- **Raison** : respect de R-ATOM-01 et de l'atomicité par sons entendus ;
+  correction d'erreurs héritées des archives.
+- **Impacte** : `04_DONNEES/lecons.csv`, `ouvertures.csv` ; registre
+  (R-PROG-01, R-PROG-02, R-ATOM-05, R-REV-03) ; FOND-03 et FOND-04
+  (numéros de leçon, à revalider).
+
+### DEC-0020 — Mots supports du Module 0
+
+- **Date** : 2026-10-28
+- **Question** : quels mots servent de supports dans chaque leçon du Module 0,
+  avec les 14 leçons (DEC-0019) ? Les 84 mots supports des archives étaient
+  répartis pour l'ancien ordre (1 seul mot pour L03, L07, L11).
+- **Décision** :
+  - sélection **automatique** dans `mots.csv` selon R-ATOM-03, R-ATOM-05,
+    R-LEX-03 (critère 5) et R-LEX-04, en privilégiant la couverture des
+    éléments nouveaux, puis les mots des archives, les monosyllabes et la
+    fréquence ;
+  - quotas : 10 mots en L01, 7 ailleurs, **plus** 7 mots ajoutés hors corpus
+    pour combler des manques : *dạ, bị, lạ* (L03), *pha* (L05), *thư, tư*
+    (L06), *tu* (L01) — sens et fréquence **à vérifier** ;
+  - **98 mots** au total (≤ 100, R-LEX-02), enregistrés dans
+    `04_DONNEES/mots_lecons.csv` ; la colonne `m0_vector` de `mots.csv` est
+    supprimée (une seule source).
+- **Non couverts** (sons rares) : L06 *ơu, ưi* ; L12 *uơ, uê, uâ* ; L13
+  *oeo, uyu, oao, uây, oay* — à travailler par syllabes d'exercice.
+- **Source** : `07_QUALITE/proposition_mots_supports_M0.md`.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -281,6 +434,12 @@ qui indique « remplace DEC-NNNN ».
 | 1.6 | 2026-10-28 | Ajout de DEC-0009 (accent courant de Hanoï). |
 | 1.7 | 2026-10-28 | Ajout de DEC-0010 (vocabulaire, étapes E1–E5), DEC-0011 (écrit), DEC-0012 (seuils). |
 | 1.8 | 2026-10-28 | Ajout de DEC-0013 (syllabes inventées) et DEC-0014 (validation des fondations). |
+| 1.9 | 2026-10-28 | Ajout de DEC-0015 (WordPress pour l'apprentissage, Anki pour les révisions). |
+| 1.10 | 2026-10-28 | Ajout de DEC-0016 (WordPress sans LMS au départ). |
+| 1.11 | 2026-10-28 | Ajout de DEC-0017 (CSV comme source de vérité). |
+| 1.12 | 2026-10-28 | Ajout de DEC-0018 (un seul code par son). |
+| 1.13 | 2026-10-28 | Ajout de DEC-0019 (14 leçons, place de ê, ơi, au, ay). |
+| 1.14 | 2026-10-28 | Ajout de DEC-0020 (98 mots supports du Module 0). |
 
 ## Liens
 

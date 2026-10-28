@@ -2,7 +2,7 @@
 id: FOND-03
 titre: Difficultés du vietnamien pour un francophone
 statut: VALIDE
-version: 1.0
+version: 1.1
 date: 2026-10-28
 resume: >
   Classe les difficultés que rencontre un francophone, d'abord à l'oral
@@ -49,21 +49,24 @@ Niveaux : **1 critique** · **2 majeur** · **3 intermédiaire** · **4 mineur**
 
 ## 2. Difficultés de l'oral
 
-| Niv. | Difficulté | Pourquoi c'est difficile | Erreur typique du francophone | Effet sur la compréhension | Leçon M0 (par défaut) |
-|---|---|---|---|---|---|
-| **1** | **Tons**, surtout **hỏi, ngã, nặng** | Catégorie absente du français ; au Nord, reconnaissance par la mélodie **et** la qualité de la voix (Brunelle, 2009) | Traiter le ton comme une intonation ; aplatir les tons ; ne pas utiliser la glottalisation (Bauman et al., 2009) ; hỏi sans creux | **Fort** : autre mot ou mot incompris | L01–L02 (ngang, sắc, huyền) ; nặng, hỏi, ngã répartis (DEC-0006) |
-| **1** | **Voyelles centrales ư, ơ** et **brève â** | Absentes du français | ư → u, ơ → o ou « eu », â → a | **Fort** : *mưa* (pluie) ≠ *mua* (acheter) | L05, L07 |
-| **1** | **Finales non relâchées -p, -t, -c, -ch** | Contraire au réflexe français, qui relâche les finales | Ajouter un petit souffle ou une voyelle : *một* → « mot-e » | **Fort** sur des mots très fréquents (*một*, *học*, *việc*) | L06 |
-| **1** | **Triphtongues** (iêu, ươi, uôi, uây…) | Séquence longue à tenir avec le ton et parfois une finale | Raccourcir ou écraser : *nhiều* → « niou » | **Fort** | L11 |
-| **1** | **Coup de glotte** (nặng en fin, ngã au milieu) | Geste absent du français comme élément du mot | Le supprimer, ou ajouter une voyelle | **Fort**, surtout au Nord | avec nặng et ngã (DEC-0006) |
-| **2** | **Diphtongues** et noyaux à glissement (iê, uô, ươ) | Chaque partie doit être tenue | Trop glisser, ou réduire à une voyelle | Moyen | L03, L10 |
-| **2** | **ng-, nh-** en début de mot | /ŋ/ n'existe pas en début de mot en français | « n-g », « ni » | Moyen à fort | L08 |
-| **2** | **Finales nasales -n / -ng / -nh** | Le français a des **voyelles** nasales, pas ces trois consonnes finales | Les confondre, ou nasaliser la voyelle | **Fort** : *bản* ≠ *bảng* | L08 (-ng, -nh) |
-| **2** | **Rythme et mélodie de phrase** | Habitude française d'allonger la fin de groupe et de moduler la phrase | Accentuer une syllabe ; faire monter la fin d'une question et en **changer le ton** | Moyen | transversal |
-| **3** | **Brève ă** face à **a** | La durée distingue les mots | Allonger ă | Moyen | L07 |
-| **3** | **th** /tʰ/ et **kh** /x/ | Souffle de th ; kh comme la *jota* | th → t ; kh → k ou h | Moyen | L04, L08 |
-| **3** | **g/gh** /ɣ/ | Son absent du français | g dur | Faible à moyen | L08 |
-| **4** | b, m, n, l, h, v, ph ; a, e, i, o, u simples | Proches du français | Légères variations | Faible | L01, L04 |
+La leçon où chaque son et chaque ton est introduit figure dans
+`04_DONNEES/ouvertures.csv` (source unique).
+
+| Niv. | Difficulté | Pourquoi c'est difficile | Erreur typique du francophone | Effet sur la compréhension |
+|---|---|---|---|---|
+| **1** | **Tons**, surtout **hỏi, ngã, nặng** | Catégorie absente du français ; au Nord, reconnaissance par la mélodie **et** la qualité de la voix (Brunelle, 2009) | Traiter le ton comme une intonation ; aplatir les tons ; ne pas utiliser la glottalisation (Bauman et al., 2009) ; hỏi sans creux | **Fort** : autre mot ou mot incompris |
+| **1** | **Voyelles centrales ư, ơ** et **brève â** | Absentes du français | ư → u, ơ → o ou « eu », â → a | **Fort** : *mưa* (pluie) ≠ *mua* (acheter) |
+| **1** | **Finales non relâchées -p, -t, -c, -ch** | Contraire au réflexe français, qui relâche les finales | Ajouter un petit souffle ou une voyelle : *một* → « mot-e » | **Fort** sur des mots très fréquents (*một*, *học*, *việc*) |
+| **1** | **Triphtongues** (iêu, ươi, uôi, uây…) | Séquence longue à tenir avec le ton et parfois une finale | Raccourcir ou écraser : *nhiều* → « niou » | **Fort** |
+| **1** | **Coup de glotte** (nặng en fin, ngã au milieu) | Geste absent du français comme élément du mot | Le supprimer, ou ajouter une voyelle | **Fort**, surtout au Nord |
+| **2** | **Diphtongues** et noyaux à glissement (iê, uô, ươ) | Chaque partie doit être tenue | Trop glisser, ou réduire à une voyelle | Moyen |
+| **2** | **ng-, nh-** en début de mot | /ŋ/ n'existe pas en début de mot en français | « n-g », « ni » | Moyen à fort |
+| **2** | **Finales nasales -n / -ng / -nh** | Le français a des **voyelles** nasales, pas ces trois consonnes finales | Les confondre, ou nasaliser la voyelle | **Fort** : *bản* ≠ *bảng* |
+| **2** | **Rythme et mélodie de phrase** | Habitude française d'allonger la fin de groupe et de moduler la phrase | Accentuer une syllabe ; faire monter la fin d'une question et en **changer le ton** | Moyen |
+| **3** | **Brève ă** face à **a** | La durée distingue les mots | Allonger ă | Moyen |
+| **3** | **th** /tʰ/ et **kh** /x/ | Souffle de th ; kh comme la *jota* | th → t ; kh → k ou h | Moyen |
+| **3** | **g/gh** /ɣ/ | Son absent du français | g dur | Faible à moyen |
+| **4** | b, m, n, l, h, v, ph ; a, e, i, o, u simples | Proches du français | Légères variations | Faible |
 
 ### Ce qui n'est **pas** une difficulté d'écoute (DEC-0009)
 
@@ -112,6 +115,7 @@ Niveaux : **1 critique** · **2 majeur** · **3 intermédiaire** · **4 mineur**
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion de l'analyse P1, de la hiérarchie et du tableau normatif archivés ; un tableau unique pour l'oral, un pour la grammaire et l'usage ; intégration de DEC-0005, DEC-0006, DEC-0009 ; 8 corrections. |
 | 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). |
+| 1.1 | 2026-10-28 | Colonne « leçon » retirée du tableau de l'oral : renvoi à `ouvertures.csv` (DEC-0019, source unique). Revalidé par Christophe. |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: FOND-04
 titre: Principes pédagogiques
 statut: VALIDE
-version: 1.0
+version: 1.1
 date: 2026-10-28
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
@@ -56,7 +56,7 @@ appris est **recyclé** et **révisé à intervalles espacés**.
 | Niveau | Terme | Définition | Exemple |
 |---|---|---|---|
 | 1 | **Module** | Grande partie de la formation | M0, A1, A2 |
-| 2 | **Leçon** | Une famille de sons ou de tons nouveaux | L06 : finales -p, -t, -c, -ch |
+| 2 | **Leçon** | Une famille de sons ou de tons nouveaux | L08 : finales -p, -t, -c, -ch |
 | 3 | **Étape** | Moment du parcours d'une leçon, toujours dans le même ordre | E2 Distinguer |
 | 4 | **Activité** | Exercice concret réalisé à une étape ; sa forme (carte, écran…) dépendra du support choisi | « Lequel entendez-vous : *mát* ou *mác* ? » |
 | 5 | **Item** | Élément présenté dans une activité : syllabe ou mot, avec son audio | *mát*, voix féminine, débit lent |
@@ -163,7 +163,7 @@ aux étapes d'écoute.
 
 - Toute nouveauté est **réutilisée** dans les leçons suivantes.
 - L'étape **E5** inclut toujours au moins un élément des leçons précédentes.
-- La **leçon L12** du Module 0 est entièrement consacrée au recyclage.
+- La **dernière leçon** du Module 0 (L14) est entièrement consacrée au recyclage.
 - Les révisions sont **espacées** dans le temps ; une erreur rapproche la
   révision suivante.
 - Le Module 0 reste une **réserve** de leçons réactivables plus tard.
@@ -180,6 +180,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 |---|---|---|
 | 0.1 | 2026-10-28 | Fusion du paradigme v3, des référentiels R01 et R02, de la règle d'atomicité v1.1, du contrat d'unité v1.9 et de la règle de choix des mots v1.1 ; intégration de DEC-0007 et DEC-0010 à DEC-0012. |
 | 1.0 | 2026-10-28 | Validé par Christophe (DEC-0014). Ajout de la règle sur les syllabes inventées (DEC-0013). |
+| 1.1 | 2026-10-28 | Numéros de leçon mis à jour (14 leçons, DEC-0019). Revalidé par Christophe. |
 
 ## Liens
 

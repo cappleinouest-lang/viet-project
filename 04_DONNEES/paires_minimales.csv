@@ -1,0 +1,135 @@
+pair_code;lesson_code;contrast_type;term1_written;term1_word;term2_written;term2_word;term2_invented;element1;element2;validated;note
+P0001;M0-L02;tone;là;W0030;la;;false;huyen;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0002;M0-L02;tone;là;W0030;lá;W0029;false;huyen;sac;false;
+P0003;M0-L02;tone;nó;W0162;no;;false;sac;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0004;M0-L02;tone;nó;W0162;nò;;true;sac;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0005;M0-L02;tone;về;W0209;vê;;true;huyen;ngang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0006;M0-L02;tone;về;W0209;vế;;true;huyen;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0007;M0-L02;tone;bé;W0005;be;;true;sac;ngang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0008;M0-L02;tone;bé;W0005;bè;;true;sac;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0009;M0-L02;tone;bán;W0076;ban;;false;sac;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0010;M0-L02;tone;bán;W0076;bàn;W0004;false;sac;huyen;false;
+P0011;M0-L02;tone;bàn;W0004;ban;;false;huyen;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0012;M0-L02;tone;à;W0001;a;;false;huyen;ngang;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0013;M0-L02;tone;à;W0001;á;;false;huyen;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0014;M0-L03;tone;bạn;W0071;bàn;W0004;false;nang;huyen;false;
+P0015;M0-L03;tone;bạn;W0071;bán;W0076;false;nang;sac;false;
+P0016;M0-L03;tone;họ;W0115;hò;;true;nang;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0017;M0-L03;tone;họ;W0115;hó;;true;nang;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0018;M0-L03;tone;mẹ;W0138;mè;;true;nang;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0019;M0-L03;tone;mẹ;W0138;mé;;true;nang;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0020;M0-L03;tone;hẹn;W0114;hèn;;true;nang;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0021;M0-L03;tone;hẹn;W0114;hén;;true;nang;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0022;M0-L03;tone;dạ;W0332;già;W0107;false;nang;huyen;false;
+P0023;M0-L03;tone;dạ;W0332;giá;W0106;false;nang;sac;false;
+P0024;M0-L03;tone;bị;W0333;bì;;true;nang;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0025;M0-L03;tone;bị;W0333;bí;;false;nang;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0026;M0-L03;tone;lạ;W0334;là;W0030;false;nang;huyen;false;
+P0027;M0-L03;tone;lạ;W0334;lá;W0029;false;nang;sac;false;
+P0028;M0-L04;sound;tôi;W0064;toi;;true;PH-DP-ooi;PH-DP-oi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0029;M0-L04;sound;nói;W0163;nó;W0162;false;PH-DP-oi;PH-VS-o;false;
+P0030;M0-L04;sound;hai;W0025;ha;;true;PH-DP-ai;PH-VS-a;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0031;M0-L04;sound;sao;W0044;xa;W0056;false;PH-DP-ao;PH-VS-a;false;
+P0032;M0-L04;sound;sao;W0044;so;;false;PH-DP-ao;PH-VS-o;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0033;M0-L04;sound;tuy;W0328;tu;W0338;false;PH-DP-uy;PH-VS-u;false;
+P0034;M0-L04;sound;vui;W0055;vu;;true;PH-DP-ui;PH-VS-u;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0035;M0-L04;sound;mèo;W0139;mè;;true;PH-DP-eo;PH-VS-e;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0036;M0-L05;sound;có;W0072;hó;;true;PH-CO-c;PH-IN-h;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0037;M0-L05;sound;quá;W0170;cá;W0066;false;PH-CO-qu;PH-CO-c;false;
+P0038;M0-L05;sound;thôi;W0196;tôi;W0064;false;PH-CO-th;PH-CO-t;false;
+P0039;M0-L05;sound;con;W0015;hon;;true;PH-CO-c;PH-IN-h;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0040;M0-L05;sound;cá;W0066;há;;true;PH-CO-c;PH-IN-h;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0041;M0-L05;sound;cái;W0008;hái;;true;PH-CO-c;PH-IN-h;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0042;M0-L05;sound;quý;W0173;ký;;false;PH-CO-qu;PH-CO-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0043;M0-L05;sound;pha;W0335;pa;;true;PH-CO-ph;PH-IN-p;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0044;M0-L05;sound;pha;W0335;ba;W0003;false;PH-CO-ph;PH-IN-b;false;
+P0045;M0-L06;sound;mới;W0141;mối;;false;PH-DP-owi;PH-DP-ooi;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0046;M0-L06;sound;mới;W0141;mói;;true;PH-DP-owi;PH-DP-oi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0047;M0-L06;sound;lưu;W0329;liu;;true;PH-DP-uwu;PH-DP-iu;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0048;M0-L06;sound;cơm;W0220;com;;true;PH-VO-ow;PH-VS-o;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0049;M0-L06;sound;cơm;W0220;côm;;true;PH-VO-ow;PH-VS-oo;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0050;M0-L06;sound;cơm;W0220;cam;W0009;false;PH-VO-ow;PH-VS-a;false;
+P0051;M0-L06;sound;nếu;W0280;néo;;true;PH-DP-eeu;PH-DP-eo;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0052;M0-L06;sound;với;W0213;vối;;true;PH-DP-owi;PH-DP-ooi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0053;M0-L06;sound;với;W0213;vói;;true;PH-DP-owi;PH-DP-oi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0054;M0-L06;sound;giờ;W0110;giò;;true;PH-VO-ow;PH-VS-o;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0055;M0-L06;sound;giờ;W0110;giồ;;true;PH-VO-ow;PH-VS-oo;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0056;M0-L06;sound;giờ;W0110;già;W0107;false;PH-VO-ow;PH-VS-a;false;
+P0057;M0-L06;sound;vợ;W0212;vọ;;true;PH-VO-ow;PH-VS-o;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0058;M0-L06;sound;vợ;W0212;vộ;;true;PH-VO-ow;PH-VS-oo;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0059;M0-L06;sound;vợ;W0212;vạ;;true;PH-VO-ow;PH-VS-a;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0060;M0-L06;sound;thư;W0336;thu;;false;PH-VO-uw;PH-VS-u;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0061;M0-L06;sound;thư;W0336;thi;;false;PH-VO-uw;PH-VS-i;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0062;M0-L06;sound;tư;W0337;tu;W0338;false;PH-VO-uw;PH-VS-u;false;
+P0063;M0-L06;sound;tư;W0337;ti;;true;PH-VO-uw;PH-VS-i;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0064;M0-L07;tone;phở;W0291;phờ;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0065;M0-L07;tone;phở;W0291;phợ;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0066;M0-L07;tone;ở;W0165;ờ;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0067;M0-L07;tone;ở;W0165;ợ;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0068;M0-L07;tone;phải;W0167;phài;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0069;M0-L07;tone;phải;W0167;phại;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0070;M0-L07;tone;hỏi;W0226;hòi;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0071;M0-L07;tone;hỏi;W0226;họi;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0072;M0-L07;tone;mở;W0277;mờ;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0073;M0-L07;tone;mở;W0277;mợ;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0074;M0-L07;tone;giỏi;W0112;giòi;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0075;M0-L07;tone;giỏi;W0112;giọi;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0076;M0-L07;tone;rẻ;W0241;rè;;true;hoi;huyen;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0077;M0-L07;tone;rẻ;W0241;rẹ;;true;hoi;nang;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0078;M0-L08;sound;học;W0117;họt;;true;PH-FI-c;PH-FI-t;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0079;M0-L08;sound;tốt;W0202;tốn;;true;PH-FI-t;PH-FI-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0080;M0-L08;sound;tốt;W0202;tốc;;false;PH-FI-t;PH-FI-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0081;M0-L08;sound;thích;W0230;thít;;true;PH-FI-ch;PH-FI-t;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0082;M0-L08;sound;giúp;W0269;giúm;;true;PH-FI-p;PH-FI-m;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0083;M0-L08;sound;giúp;W0269;giút;;true;PH-FI-p;PH-FI-t;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0084;M0-L08;sound;ít;W0122;ín;;true;PH-FI-t;PH-FI-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0085;M0-L08;sound;ít;W0122;íc;;true;PH-FI-t;PH-FI-c;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0086;M0-L08;sound;phút;W0169;phún;;true;PH-FI-t;PH-FI-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0087;M0-L08;sound;phút;W0169;phúc;;false;PH-FI-t;PH-FI-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0088;M0-L08;sound;tết;W0193;tến;;true;PH-FI-t;PH-FI-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0089;M0-L08;sound;tết;W0193;tếc;;true;PH-FI-t;PH-FI-c;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0090;M0-L09;sound;năm;W0036;nam;;false;PH-VO-aw;PH-VS-a;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0091;M0-L09;sound;rất;W0175;rớt;;true;PH-VO-aa;PH-VO-ow;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0092;M0-L09;sound;rất;W0175;rát;;true;PH-VO-aa;PH-VS-a;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0093;M0-L09;sound;đây;W0021;đay;;true;PH-DI-aay;PH-DP-ay;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0094;M0-L09;sound;đây;W0021;đai;;true;PH-DI-aay;PH-DP-ai;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0095;M0-L09;sound;tay;W0047;tai;W0046;false;PH-DP-ay;PH-DP-ai;false;
+P0096;M0-L09;sound;đâu;W0020;đau;W0019;false;PH-DI-aau;PH-DP-au;false;
+P0097;M0-L09;sound;đâu;W0020;đao;;true;PH-DI-aau;PH-DP-ao;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0098;M0-L09;sound;đau;W0019;đao;;true;PH-DP-au;PH-DP-ao;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0099;M0-L09;sound;thấy;W0296;tháy;;true;PH-DI-aay;PH-DP-ay;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0100;M0-L09;sound;thấy;W0296;thái;;false;PH-DI-aay;PH-DP-ai;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0101;M0-L10;sound;ông;W0041;ôn;;true;PH-FI-ng;PH-FI-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0102;M0-L10;sound;nhà;W0038;nà;;true;PH-IN-nh;PH-IN-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0103;M0-L10;sound;trên;W0205;tên;W0048;false;PH-IN-ch;PH-CO-t;false;
+P0104;M0-L10;sound;anh;W0060;an;;false;PH-FI-nh;PH-FI-n;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0105;M0-L10;sound;anh;W0060;ang;;true;PH-FI-nh;PH-FI-ng;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0106;M0-L10;sound;nghe;W0282;nhe;;true;PH-IN-ng;PH-IN-n;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0107;M0-L10;sound;gà;W0023;cà;;false;PH-IN-g;PH-CO-c;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0108;M0-L10;sound;khi;W0028;hi;;true;PH-IN-kh;PH-IN-h;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0109;M0-L10;sound;khi;W0028;ki;;true;PH-IN-kh;PH-CO-c;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0110;M0-L11;tone;cũng;W0255;cúng;;true;nga;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0111;M0-L11;tone;cũng;W0255;củng;;true;nga;hoi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0112;M0-L11;tone;nghĩ;W0283;nghí;;true;nga;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0113;M0-L11;tone;nghĩ;W0283;nghỉ;W0156;false;nga;hoi;false;
+P0114;M0-L11;tone;mỗi;W0278;mối;;false;nga;sac;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0115;M0-L11;tone;mỗi;W0278;mổi;;true;nga;hoi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0116;M0-L11;tone;dễ;W0096;dế;;true;nga;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0117;M0-L11;tone;dễ;W0096;dể;;true;nga;hoi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0118;M0-L11;tone;lẽ;W0133;lé;;true;nga;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0119;M0-L11;tone;lẽ;W0133;lẻ;;true;nga;hoi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0120;M0-L11;tone;cũ;W0306;cú;;true;nga;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0121;M0-L11;tone;cũ;W0306;củ;;true;nga;hoi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0122;M0-L11;tone;mũi;W0279;múi;;true;nga;sac;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0123;M0-L11;tone;mũi;W0279;mủi;;true;nga;hoi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0124;M0-L12;sound;nước;W0222;nuốc;;true;PH-GL-uwow;PH-GL-uoo;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0125;M0-L12;sound;biết;W0219;bít;;true;PH-GL-iee;PH-VS-i;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0126;M0-L12;sound;muốn;W0147;mún;;true;PH-GL-uoo;PH-VS-u;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0127;M0-L12;sound;hoa;W0026;ha;;true;PH-GL-oa;PH-VS-a;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0128;M0-L12;sound;khỏe;W0227;khẻ;;true;PH-GL-oe;PH-VS-e;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0129;M0-L13;sound;người;W0228;nguồi;;true;PH-TR-uwowi;PH-TR-uooi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0130;M0-L13;sound;ngoài;W0284;ngài;;false;PH-TR-oai;PH-DP-ai;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0131;M0-L13;sound;rượu;W0177;rượ;;true;PH-TR-uwowu;PH-GL-uwow;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0132;M0-L13;sound;muối;W0145;mối;;false;PH-TR-uooi;PH-DP-ooi;false;mot réel attesté dans une liste de fréquence (hors corpus)
+P0133;M0-L13;sound;tiêu;W0199;tiu;;true;PH-TR-ieeu;PH-DP-iu;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
+P0134;M0-L13;sound;mười;W0146;muồi;;true;PH-TR-uwowi;PH-TR-uooi;false;"hors corpus et hors listes de fréquence : traité comme syllabe inventée (entendue, jamais affichée, DEC-0013) ; à confirmer"
