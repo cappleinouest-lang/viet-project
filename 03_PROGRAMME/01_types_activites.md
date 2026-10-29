@@ -2,7 +2,7 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.4
+version: 0.5
 date: 2026-10-28
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
@@ -42,7 +42,7 @@ sources:
 | Point | Règle |
 |---|---|
 | Entend | l'élément nouveau dans les mots supports, **≥ 2 voix**, débit **lent** |
-| Voit | image du mot ; **symbole** de l'élément nouveau (pictogramme du ton, ou `ipa_main` du son), présenté avec son audio (DEC-0029) ; **aucun écrit** (R-ECR-01) |
+| Voit | image du mot ; **symbole** de l'élément nouveau, avec sa **catégorie** (= ≈ ★), son **mot repère** et son **indice d'écoute** (DEC-0038) ; pictogramme du ton, ou `ipa_main` du son, présenté avec son audio (DEC-0029) ; **aucun écrit** (R-ECR-01) |
 | Répond | rien ; peut **réécouter** autant qu'il veut, puis « suivant » |
 | Fin | chaque item écouté au moins une fois avec chaque voix |
 
@@ -60,7 +60,7 @@ sources:
 | Point | Règle |
 |---|---|
 | Entend | **un** terme de la paire minimale (DEC-0026), voix tirée au hasard parmi ≥ 2 |
-| Voit | **deux** choix : au débit lent, **image + symbole** ; au débit normal, **symbole seul**, l'image restant en petit (DEC-0028). Symbole : pictogramme et couleur du ton, ou `ipa_main` du son contrasté (ex. /ə/ – /o/) (DEC-0029). Sans image : symbole ou bouton sonore (syllabe inventée : DEC-0027) |
+| Voit | **deux** choix : au débit lent, **image + symbole**, avec catégorie et mot repère en petit (DEC-0038) ; au débit normal, **symbole seul**, l'image restant en petit (DEC-0028). Symbole : pictogramme et couleur du ton, ou `ipa_main` du son contrasté (ex. /ə/ – /o/) (DEC-0029). Sans image : symbole ou bouton sonore (syllabe inventée : DEC-0027) |
 | Répond | touche un choix ; peut réécouter le terme avant de répondre |
 | Correction | **immédiate** : juste → le terme est rejoué ; faux → la bonne réponse s'éclaire, puis les deux termes sont rejoués |
 | Débit | **lent**, puis **normal** quand le seuil est atteint au débit lent |
@@ -93,7 +93,7 @@ au moins **2 fois** au débit normal (paramètre, DEC-0032).
 | Point | Règle |
 |---|---|
 | Entend | **un seul modèle** (même voix pour toute la leçon, R-AUD), lent puis normal |
-| Voit | image + **écrit** (R-ECR-03) ; notation du son en option, jamais exigée (DEC-0021) |
+| Voit | image + **écrit** (R-ECR-03) ; notation du son en option, jamais exigée (DEC-0021) ; pour un son absent ou proche du français, le **chemin de prononciation** (départ, un seul changement, vérification) de `reperes_sons.csv` (DEC-0038) |
 | Répond | écoute, s'enregistre, puis réécoute son enregistrement **à côté** du modèle |
 | Aide | **courbe mélodique** superposée au modèle (page de prononciation, PROD-ARCH) |
 | Évaluation | l'élève se note : « proche » / « à reprendre » ; 3 essais au plus, puis item suivant |
@@ -156,6 +156,7 @@ calibrés.
 | 0.2 | 2026-10-28 | Étiquettes E2–E3 : images, puis symboles (DEC-0028). |
 | 0.3 | 2026-10-28 | Symbole des sons et symboles présentés dès E1 (DEC-0029). |
 | 0.4 | 2026-10-28 | Verrou d'écoute : minimum de réussites par série (DEC-0032). |
+| 0.5 | 2026-10-29 | Mots repères, catégories, indices d'écoute, chemins de prononciation (DEC-0038). |
 
 ## Liens
 

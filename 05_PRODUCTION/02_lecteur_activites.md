@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.1
+version: 0.3
 date: 2026-10-28
 resume: >
   Décrit la première version du lecteur d'activités (volet écoute E1 → E3,
@@ -36,7 +36,6 @@ de l'appareil.
 | `05_PRODUCTION/lecteur/lecteur.css` | présentation (clair et sombre, téléphone d'abord) | oui |
 | `05_PRODUCTION/lecteur/lecteur.js` | déroulement des étapes, scores, verrous, progression | oui |
 | `05_PRODUCTION/lecteur/images_provisoires.csv` | une image (emoji) par mot imageable, **provisoire** en attendant `images.csv` | oui |
-| `05_PRODUCTION/lecteur/indications_symboles.csv` | mise en garde affichée sous chaque symbole en E1 (DEC-0029 § 4), **à relire** | oui |
 | `05_PRODUCTION/tools/generer_lecteur.py` | générateur : CSV → lecteur | oui |
 | `06_LIVRABLES/lecteur/` | résultat, regénérable (DOC-03) ; `lecteur_autonome.html` = tout en un fichier | non |
 
@@ -64,11 +63,17 @@ installation n'est nécessaire ; le générateur n'utilise que Python.
 | R-VOL-05 à 07, DEC-0032 | passage au débit normal quand le seuil est atteint au débit lent ; étape validée au débit normal : seuil sur les 20 dernières réponses, au moins 2 voix, chaque série réussie 2 fois |
 | PROG-ACT § 4 | tirage au hasard ; pas plus de 3 fois de suite la bonne réponse à la même place ; voix alternées ; pas de chronomètre |
 | R-VOL-02 | la leçon suivante s'ouvre quand l'écoute de la précédente est validée |
+| DEC-0038 | symbole de son avec sa catégorie (= ≈ ★, couleur et marque), son mot repère (🇫🇷 mot écrit, 🇻🇳 image seule) et son indice d'écoute en E1 ; catégorie et repère en petit au débit lent ; symbole seul au débit normal. Données : `04_DONNEES/reperes_sons.csv` |
+| DEC-0037 | leçon marquée `split_parts` (L01) : partie A voyelles, puis partie B consonnes et finales, chacune avec E1 → E3, son verrou et l'écrit ; l'écoute de la leçon est validée après la dernière partie |
 
 **Essai automatique du 2026-10-28** (navigateur sans son, voix simulée,
 une erreur sur dix) : L01 parcourue en entier ; E2 validée en 81 réponses,
 E3 en 63 ; trois voix utilisées ; chaque série réussie au moins 2 fois ;
 syllabes inventées jamais affichées ; L02 ouverte ensuite.
+
+**Essai du 2026-10-29** (L01 en deux parties) : partie A, E2 en 40 réponses
+et E3 en 42 ; partie B, E2 en 41 et E3 en 44 ; la progression enregistrée
+avec l'ancienne version est reprise et répartie entre les deux parties.
 
 ## 4. Provisoire
 
@@ -95,3 +100,5 @@ syllabes inventées jamais affichées ; L02 ouverte ensuite.
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Création : volet écoute, voix de synthèse provisoire. |
+| 0.2 | 2026-10-29 | Leçons en deux parties (DEC-0037) ; reprise de l'ancienne progression. |
+| 0.3 | 2026-10-29 | Mots repères et catégories de sons (DEC-0038) ; `indications_symboles.csv` remplacé par `04_DONNEES/reperes_sons.csv`. |

@@ -1,15 +1,15 @@
-lesson_code;module;sort_order;family_fr;listen_threshold;is_tone_lesson;is_recycling
-M0-L01;M0;1;Sons proches du français + ton ngang;0.85;false;false
-M0-L02;M0;2;Tons sắc et huyền;0.90;true;false
-M0-L03;M0;3;Ton nặng (opposé à huyền);0.90;true;false
-M0-L04;M0;4;Diphtongues;0.85;false;false
-M0-L05;M0;5;Consonnes complexes (c, ph, th, qu);0.85;false;false
-M0-L06;M0;6;Voyelles centrales (ơ, ư) et leurs diphtongues;0.85;false;false
-M0-L07;M0;7;Ton hỏi (opposé à huyền, puis à nặng);0.90;true;false
-M0-L08;M0;8;Finales non relâchées (-p, -t, -c, -ch);0.85;false;false
-M0-L09;M0;9;Voyelles brèves (ă, â) et leurs diphtongues;0.85;false;false
-M0-L10;M0;10;Consonnes difficiles (ng, nh, ch, kh, g) et finales -ng, -nh;0.85;false;false
-M0-L11;M0;11;Ton ngã (opposé à sắc) et contraste hỏi / ngã;0.90;true;false
-M0-L12;M0;12;Noyaux à glissement (iê, uô, ươ, oa…);0.85;false;false
-M0-L13;M0;13;Triphtongues;0.85;false;false
-M0-L14;M0;14;Recyclage général;0.85;false;true
+lesson_code;module;sort_order;family_fr;listen_threshold;is_tone_lesson;is_recycling;split_parts
+M0-L01;M0;1;Sons proches du français + ton ngang;0.85;false;false;true
+M0-L02;M0;2;Tons sắc et huyền;0.90;true;false;false
+M0-L03;M0;3;Ton nặng (opposé à huyền);0.90;true;false;false
+M0-L04;M0;4;Diphtongues;0.85;false;false;false
+M0-L05;M0;5;Consonnes complexes (c, ph, th, qu);0.85;false;false;false
+M0-L06;M0;6;Voyelles centrales (ơ, ư) et leurs diphtongues;0.85;false;false;false
+M0-L07;M0;7;Ton hỏi (opposé à huyền, puis à nặng);0.90;true;false;false
+M0-L08;M0;8;Finales non relâchées (-p, -t, -c, -ch);0.85;false;false;false
+M0-L09;M0;9;Voyelles brèves (ă, â) et leurs diphtongues;0.85;false;false;false
+M0-L10;M0;10;Consonnes difficiles (ng, nh, ch, kh, g) et finales -ng, -nh;0.85;false;false;false
+M0-L11;M0;11;Ton ngã (opposé à sắc) et contraste hỏi / ngã;0.90;true;false;false
+M0-L12;M0;12;Noyaux à glissement (iê, uô, ươ, oa…);0.85;false;false;false
+M0-L13;M0;13;Triphtongues;0.85;false;false;false
+M0-L14;M0;14;Recyclage général;0.85;false;true;false

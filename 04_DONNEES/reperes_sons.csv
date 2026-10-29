@@ -1,0 +1,60 @@
+symbol;graphemes;language;keyword;word_code;picture;match;listening_cue;start;body_part;change;check;certainty
+ɛ;e;fr;fête;;🎉;exact;« è » comme dans « fête »;;;;;
+e;ê;fr;été;;🌞;exact;« é » comme dans « été »;;;;;
+m;m|-m;fr;miel;;🍯;exact;« m » comme dans « miel »;;;;;
+n;n|-n;fr;neige;;❄️;exact;« n » comme dans « neige »;;;;;
+l;l;fr;lune;;🌙;exact;« l » comme dans « lune »;;;;;
+i;i;fr;lit;;🛏️;exact;« i » comme dans « lit »;;;;;
+ɔ;o;fr;porte;;🚪;exact;« o » ouvert comme dans « porte »;;;;;
+o;ô;fr;rose;;🌹;exact;« ô » fermé comme dans « rose »;;;;;
+u;u;fr;loup;;🐺;exact;« ou » comme dans « loup » (jamais le « u » de « lune »);;;;;
+ɗ;đ;fr;dé;;🎲;proche;presque le « d » de « dé », avec une légère fermeture de la gorge;« d » de « dé »;gorge;juste avant le d, fermez très légèrement la gorge, puis dites d;"différence légère : un d français reste compris ; ne pas confondre avec d vietnamien, qui se dit « z »";fiable
+z;d;fr;zèbre;;🦓;exact;« z » comme dans « zèbre »;;;;;
+ɓ;b;fr;ballon;;🎈;proche;presque le « b » de « ballon », avec une légère fermeture de la gorge;« b » de « ballon »;gorge;juste avant le b, fermez très légèrement la gorge, comme avant une petite toux, puis dites b;différence légère : un b français reste compris;fiable
+v;v;fr;vélo;;🚲;exact;« v » comme dans « vélo »;;;;;
+oj;ôi;vi;tôi;W0064;🙋;;« ô » fermé suivi d’un « i » bref;« ô » de « rose »;décomposition;dites « ô », puis glissez sans pause vers un « i » très court : ô + i bref;"le « ô » reste fermé ; plus ouvert, c’est oi";fiable
+ɔj;oi;vi;nói;W0163;💬;;« o » ouvert suivi d’un « i » bref;« o » de « porte »;décomposition;dites « o » ouvert, puis glissez vers un « i » très court : o + i bref;bouche plus ouverte que pour ôi;fiable
+aj;ai;fr;ail;;🧄;exact;« aï » comme dans « ail »;;;;;
+a;a;fr;ananas;;🍍;exact;« a » comme dans « ananas », un peu long;;;;;
+uj;ui;fr;grenouille;;🐸;exact;« ouille » comme dans « grenouille »;;;;;
+ɛw;eo;vi;mèo;W0139;🐈;;« è » suivi d’un « ou » bref (et non « è-o »);« è » de « fête »;décomposition;dites « è », puis glissez vers un « ou » très court en arrondissant les lèvres : è + ou bref;"la première partie est la plus longue ; la fin n’est pas un « o »";fiable
+aw;ao;vi;áo;W0075;👕;;« a » long suivi d’un « ou » bref;« a » de « ananas »;décomposition;dites « a » long, puis glissez vers un « ou » très court : a + ou bref;"proche de la fin de « miaou » ; la fin n’est pas un « o »";fiable
+iw;iu;vi;dịu;W0327;🧸;;« i » suivi d’un « ou » bref;« i » de « lit »;décomposition;dites « i », puis glissez vers un « ou » très court : i + ou bref;deux parties enchaînées sans pause;fiable
+wi;uy;fr;oui;;👍;exact;« oui »;;;;;
+k;c;fr;kiwi;;🥝;exact;« k » comme dans « kiwi », sans souffle;;;;;
+h;h;vi;ho;W0313;🤧;;un souffle avant la voyelle, comme un soupir;la voyelle « o »;souffle;avant le « o », expirez comme pour embuer une vitre : h-o;"main devant la bouche : on sent de l’air chaud ; sinon, on n’entend que « o »";fiable
+f;ph;fr;feu;;🔥;exact;« f » comme dans « feu »;;;;;
+p;p;fr;pomme;;🍎;exact;« p » comme dans « pomme »;;;;;
+kw;q(u);vi;quán;W0171;☕;;« kw » comme au début de « quoi »;« quoi »;décomposition;k, puis un « ou » très bref, enchaînés : kw-an;pas de « kou-an » en deux temps;fiable
+tʰ;th;;;;;;un « t » suivi d’un petit souffle;« t » de « tomate »;souffle;dites t en laissant sortir une bouffée d’air juste après, comme le t anglais de « top »;une feuille de papier devant la bouche bouge pour th, pas pour t;fiable
+t;t;fr;tomate;;🍅;exact;« t » comme dans « tomate », sans souffle;;;;;
+ɨ;ư;vi;tư;W0337;4️⃣;;entre « ou » et « i »;« ou » de « loup »;lèvres;gardez la langue en arrière, comme pour « ou », et étirez les lèvres comme pour sourire;"au miroir, lèvres étirées ; si on entend « ou », les lèvres sont restées rondes ; si « i », la langue a avancé";fiable
+ə;ơ;vi;vợ;W0212;👰;;proche du « e » de « le », sans arrondir les lèvres;« eu » de « peu »;lèvres;gardez la langue et la bouche mi-ouverte, et décollez les coins des lèvres : elles ne doivent pas être rondes;"si on entend « eu », les lèvres sont trop rondes ; si « o », la langue est trop en arrière";fiable
+əj;ơi;;;;;;« ơ » suivi d’un « i » bref;ơ (voir ce son);décomposition;dites ơ, puis glissez vers un « i » très court : ơ + i bref;les lèvres ne s’arrondissent pas au début;fiable
+ew;êu;;;;;;« é » suivi d’un « ou » bref;« é » de « été »;décomposition;dites « é », puis glissez vers un « ou » très court : é + ou bref;à comparer avec eo (è + ou) : le début est plus fermé;fiable
+ɨw;ưu;;;;;;« ư » suivi d’un « ou » bref;ư (voir ce son);décomposition;dites ư, puis arrondissez les lèvres vers un « ou » très court : ư + ou bref;à comparer avec iu : le début n’est pas un « i »;fiable
+k̚;-c;vi;học;W0117;🎓;;la fin du mot est coupée net, sans « k » audible;« bac »;langue;au moment du k final, collez le dos de la langue au palais et laissez-la : pas de relâchement, pas de souffle. Après o, ô, u, les lèvres se ferment en même temps;"le mot finit net ; si on entend « bac-e » ou un souffle, la langue s’est décollée";fiable
+t̚;-t;vi;một;W0142;1️⃣;;la fin du mot est coupée net, sans « t » audible;« motte »;langue;au moment du t final, laissez la langue collée derrière les dents du haut, sans la décoller;"une main devant la bouche ne sent rien à la fin ; si on entend « mot-te », la langue s’est décollée";fiable
+c̚;-ch;vi;sách;W0178;📚;;la voyelle glisse vers un petit « i », puis le mot est coupé net;« ail » suivi d’un « k » coupé;langue;après la voyelle, glissez vers un « i » bref, puis collez le dos de la langue au palais sans relâcher (comme la finale -c);"sách se dit presque « saïk » coupé ; pas de « ch » français";à vérifier
+p̚;-p;vi;đẹp;W0097;✨;;la fin du mot est coupée net, lèvres fermées;« cap »;lèvres;au moment du p final, fermez les lèvres et gardez-les fermées : pas d’air;si les lèvres se rouvrent avec un petit bruit, c’est le p français;fiable
+ă;ă;vi;năm;W0036;5️⃣;;un « a » très bref;« a » de « ananas »;durée;"même « a », mais deux fois plus court ; la consonne qui suit arrive tout de suite";ăn est nettement plus court que an;fiable
+ăj;ay;vi;tay;W0047;🤚;;« a » bref suivi d’un « i » : plus rapide que ai;« ail »;durée;même « aï », mais le « a » est très bref et le « i » arrive vite;tay (ay) est plus court que tai (ai);fiable
+ăw;au;vi;đau;W0019;🤕;;« a » bref suivi d’un « ou » : plus rapide que ao;« a » de « ananas »;durée;a très bref, puis « ou » : a bref + ou;đau (au) est plus court que đao (ao);fiable
+ə̆w;âu;vi;đầu;W0095;🗣️;;« ơ » bref suivi d’un « ou »;ơ (voir ce son);décomposition;dites ơ très bref, puis glissez vers un « ou » : ơ bref + ou;plus court et plus fermé que ao;fiable
+ə̆;â;vi;đất;W0094;🟫;;un « ơ » très bref;ơ (voir ce son);durée;"même son que ơ, mais très bref ; la consonne qui suit arrive tout de suite";đất est plus court que đớt;fiable
+ə̆j;ây;vi;giây;W0109;⏱️;;« ơ » bref suivi d’un « i »;ơ (voir ce son);décomposition;dites ơ très bref, puis glissez vers un « i » : ơ bref + i;plus court que ơi;fiable
+ŋ;ng|-ng;vi;ông;W0041;👴;;« ng » comme à la fin de « parking », sans « g » audible;« parking »;langue;gardez le dos de la langue collé au palais, le son passe par le nez. En début de mot, partez de cette position et ouvrez vers la voyelle : ng-a. Après o, ô, u en fin de mot, les lèvres se ferment aussi;"pas de « n » puis « g » séparés ; si on entend « n », la langue touche les dents";fiable
+ɲ;nh|-nh;fr;agneau;;🐑;exact;« gn » comme dans « agneau »;;;;;
+ɣ;g;vi;gà;W0023;🐔;;un « g » doux, sans fermer : l’air frotte;« g » de « gare »;langue;approchez le dos de la langue du palais sans le toucher, et laissez l’air frotter avec la voix;"si on entend un « g » dur, la langue a touché ; le r français est proche mais plus en arrière";à vérifier
+c;ch;vi;cho;W0061;🎁;;entre « t » et « tch », plus doux que « tch »;« t » de « tiens »;langue;au lieu de la pointe, collez le plat de la langue contre le palais, puis relâchez;"pas de « tch » franc comme dans « tchèque » ; à Hanoï, ch et tr se disent pareil";à vérifier
+s;x;fr;serpent;;🐍;exact;« s » comme dans « serpent »;;;;;
+x;kh;vi;khéo;W0123;🧶;;un « k » qui frotte, comme la jota espagnole;« k » de « kiwi »;langue;ne fermez pas complètement : laissez l’air frotter au fond de la bouche, comme dans « Bach » en allemand;"si on entend « k », la langue a touché ; si « h », l’air ne frotte pas assez";fiable
+ɨə̯;ươ;vi;nước;W0222;💧;;« ư » qui glisse vers « ơ »;ư (voir ce son);décomposition;dites ư, puis glissez vers ơ : ư + ơ, la première partie domine;lèvres étirées tout du long;fiable
+uə̯;uô;vi;uống;W0243;🥤;;« ou » qui glisse vers « ơ »;« ou » de « loup »;décomposition;dites « ou », puis glissez vers ơ en desserrant les lèvres : ou + ơ;"la première partie domine ; on n’entend pas un vrai « ô »";fiable
+wa;oa;fr;roi;;👑;exact;« oi » comme dans « roi »;;;;;
+wɛ;oe;fr;ouest;;🧭;exact;« oue » comme dans « ouest »;;;;;
+iə̯;iê;vi;viết;W0235;✍️;;« i » qui glisse vers « ơ » (on n’entend pas un vrai « ê »);« i » de « lit »;décomposition;dites « i », puis glissez vers ơ : i + ơ;la première partie domine;fiable
+wiə̯;uyê;;;;;;« ou » bref, puis « i » qui glisse vers « ơ »;« oui »;décomposition;commencez comme « oui », puis glissez vers ơ : ou bref + i + ơ;trois parties enchaînées sans pause;fiable
+ɨə̯j;ươi;vi;người;W0228;🧑;;« ư » → « ơ » → « i » bref;ư (voir ce son);décomposition;ư, glissez vers ơ, finissez par un « i » bref : ư + ơ + i;pas de pause entre les trois parties;fiable
+uə̯j;uôi;vi;muối;W0145;🧂;;« ou » → « ơ » → « i » bref;« ou » de « loup »;décomposition;ou, glissez vers ơ, finissez par un « i » bref : ou + ơ + i;pas de pause entre les trois parties;fiable
+iə̯w;iêu;vi;yêu;W0305;❤️;;« i » → « ơ » → « ou » bref;« i » de « lit »;décomposition;i, glissez vers ơ, finissez par un « ou » bref : i + ơ + ou;ne pas réduire à « iou » (nhiều n’est pas « niou »);fiable

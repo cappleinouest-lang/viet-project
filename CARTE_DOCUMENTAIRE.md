@@ -3,7 +3,7 @@ id: CARTE-DOC
 titre: Carte documentaire
 statut: VALIDE
 version: 1.0
-date: 2026-10-28
+date: 2026-10-29
 resume: >
   Carte générée automatiquement à partir des en-têtes des documents (DOC-33).
   Ne pas modifier à la main : relancer 05_PRODUCTION/tools/build_doc_map.py.
@@ -14,7 +14,7 @@ sources: []
 
 # Carte documentaire
 
-Générée le 2026-10-28. **Ne pas modifier à la main.**
+Générée le 2026-10-29. **Ne pas modifier à la main.**
 
 ## 1. Schéma des liens
 
@@ -35,6 +35,7 @@ graph LR
   FOND_03["FOND-03<br/>Difficultés du vietnamien pour un francophone"]
   FOND_04["FOND-04<br/>Principes pédagogiques"]
   PROD_ARCH["PROD-ARCH<br/>Architecture des outils de formation"]
+  PROD_AUDIO["PROD-AUDIO<br/>Génération des audios avec FPT.AI"]
   PROD_COMP_SUPPORT_20261028["PROD-COMP-SUPPORT-20261028<br/>Comparaison WordPress / application web sur mesure"]
   PROD_DOSSIER_SUPPORT_20261028["PROD-DOSSIER-SUPPORT-20261028<br/>Dossier pour le choix du support de formation"]
   PROD_LECT["PROD-LECT<br/>Lecteur d'activités — version d'essai"]
@@ -102,8 +103,8 @@ graph LR
 
 | Identifiant | Titre | Statut | Version | Entrées | Sorties | Fichier |
 |---|---|---|---|---|---|---|
-| CTX-IA | Contexte du projet pour une IA | VALIDE | 1.9 | DIR-00 | — | [CONTEXTE_IA.md](CONTEXTE_IA.md) |
-| DATA-MODELE | Modèle des données | BROUILLON | 0.11 | REG-REGLES, REG-DEC, FOND-02 | QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [04_DONNEES/00_modele_donnees.md](04_DONNEES/00_modele_donnees.md) |
+| CTX-IA | Contexte du projet pour une IA | VALIDE | 1.11 | DIR-00 | — | [CONTEXTE_IA.md](CONTEXTE_IA.md) |
+| DATA-MODELE | Modèle des données | BROUILLON | 0.13 | REG-REGLES, REG-DEC, FOND-02 | QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [04_DONNEES/00_modele_donnees.md](04_DONNEES/00_modele_donnees.md) |
 | DIR-00 | Formation vietnamien A0 → A2 pour francophones | BROUILLON | 0.2 | — | DIR-01, DIR-02, DIR-03, DIR-04, DIR-05, DIR-06, DIR-07, CTX-IA | [README.md](README.md) |
 | DIR-01 | 01 — Fondations | BROUILLON | 0.1 | DIR-00 | DIR-02 | [01_FONDATIONS/README.md](01_FONDATIONS/README.md) |
 | DIR-02 | 02 — Règles | BROUILLON | 0.1 | DIR-01, DIR-00, DIR-07 | DIR-03, DIR-04 | [02_REGLES/README.md](02_REGLES/README.md) |
@@ -117,15 +118,16 @@ graph LR
 | FOND-03 | Difficultés du vietnamien pour un francophone | VALIDE | 1.1 | FOND-01, FOND-02 | FOND-04, REG-REGLES, PROG-M0 | [01_FONDATIONS/03_difficultes_francophones.md](01_FONDATIONS/03_difficultes_francophones.md) |
 | FOND-04 | Principes pédagogiques | VALIDE | 1.6 | FOND-01, FOND-02, FOND-03 | REG-REGLES, PROG-M0, PROD-ARCH, PROG-ACT | [01_FONDATIONS/04_principes_pedagogiques.md](01_FONDATIONS/04_principes_pedagogiques.md) |
 | PROD-ARCH | Architecture des outils de formation | BROUILLON | 0.3 | REG-REGLES, REG-DEC, FOND-04, PROG-ACT | — | [05_PRODUCTION/01_architecture_outils.md](05_PRODUCTION/01_architecture_outils.md) |
+| PROD-AUDIO | Génération des audios avec FPT.AI | BROUILLON | 0.1 | — | — | [05_PRODUCTION/03_audio.md](05_PRODUCTION/03_audio.md) |
 | PROD-COMP-SUPPORT-20261028 | Comparaison WordPress / application web sur mesure | BROUILLON | 0.1 | — | — | [05_PRODUCTION/comparaison_wordpress_application_web_2026-10-28.md](05_PRODUCTION/comparaison_wordpress_application_web_2026-10-28.md) |
 | PROD-DOSSIER-SUPPORT-20261028 | Dossier pour le choix du support de formation | BROUILLON | 0.1 | — | — | [05_PRODUCTION/dossier_choix_support_2026-10-28.md](05_PRODUCTION/dossier_choix_support_2026-10-28.md) |
-| PROD-LECT | Lecteur d'activités — version d'essai | BROUILLON | 0.1 | — | — | [05_PRODUCTION/02_lecteur_activites.md](05_PRODUCTION/02_lecteur_activites.md) |
-| PROG-ACT | Types d'activités des étapes E1 à E5 | BROUILLON | 0.4 | FOND-04, REG-REGLES, REG-DEC, DATA-MODELE | PROG-M0, PROD-ARCH | [03_PROGRAMME/01_types_activites.md](03_PROGRAMME/01_types_activites.md) |
-| PROG-M0 | Progression du Module 0 | BROUILLON | 0.6 | FOND-01, FOND-03, FOND-04, REG-REGLES, PROG-ACT | — | [03_PROGRAMME/progression_M0.md](03_PROGRAMME/progression_M0.md) |
+| PROD-LECT | Lecteur d'activités — version d'essai | BROUILLON | 0.3 | — | — | [05_PRODUCTION/02_lecteur_activites.md](05_PRODUCTION/02_lecteur_activites.md) |
+| PROG-ACT | Types d'activités des étapes E1 à E5 | BROUILLON | 0.5 | FOND-04, REG-REGLES, REG-DEC, DATA-MODELE | PROG-M0, PROD-ARCH | [03_PROGRAMME/01_types_activites.md](03_PROGRAMME/01_types_activites.md) |
+| PROG-M0 | Progression du Module 0 | BROUILLON | 0.8 | FOND-01, FOND-03, FOND-04, REG-REGLES, PROG-ACT | — | [03_PROGRAMME/progression_M0.md](03_PROGRAMME/progression_M0.md) |
 | QUAL-PROP-MOTS-M0 | Proposition de mots supports du Module 0 | BROUILLON | 0.1 | DATA-MODELE, REG-REGLES | — | [07_QUALITE/proposition_mots_supports_M0.md](07_QUALITE/proposition_mots_supports_M0.md) |
 | QUAL-REPRISE-MOTS-20261028 | Rapport de reprise des mots et syllabes | BROUILLON | 0.1 | DATA-MODELE, REG-DEC | — | [07_QUALITE/rapport_reprise_mots_2026-10-28.md](07_QUALITE/rapport_reprise_mots_2026-10-28.md) |
 | QUAL-VERIF-HORS-CORPUS-20261028 | Vérification des termes hors corpus des séries minimales | BROUILLON | 0.1 | DATA-MODELE, REG-DEC | — | [07_QUALITE/verification_hors_corpus_2026-10-28.md](07_QUALITE/verification_hors_corpus_2026-10-28.md) |
-| REG-DEC | Journal des décisions | VALIDE | 1.28 | — | REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [02_REGLES/DECISIONS.md](02_REGLES/DECISIONS.md) |
+| REG-DEC | Journal des décisions | VALIDE | 1.31 | — | REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT | [02_REGLES/DECISIONS.md](02_REGLES/DECISIONS.md) |
 | REG-DOC | Règles documentaires du projet | BROUILLON | 0.4 | REG-DEC | — | [02_REGLES/REGLES_DOCUMENTAIRES.md](02_REGLES/REGLES_DOCUMENTAIRES.md) |
 | REG-REGLES | Registre des règles | BROUILLON | 0.13 | FOND-01, FOND-02, FOND-03, FOND-04, REG-DEC | PROG-M0, DATA-MODELE, PROD-ARCH, QUAL-PROP-MOTS-M0, PROG-ACT | [02_REGLES/REGISTRE_REGLES.md](02_REGLES/REGISTRE_REGLES.md) |
 
@@ -133,4 +135,4 @@ graph LR
 
 Aucune.
 
-Documents sans aucun lien : PROD-COMP-SUPPORT-20261028, PROD-DOSSIER-SUPPORT-20261028, PROD-LECT
+Documents sans aucun lien : PROD-AUDIO, PROD-COMP-SUPPORT-20261028, PROD-DOSSIER-SUPPORT-20261028, PROD-LECT

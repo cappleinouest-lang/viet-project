@@ -10,6 +10,7 @@ Sortie   : 06_LIVRABLES/lecteur/  (regénérable, hors Git : DOC-03)
 
 Usage (depuis C:\\VIET_PROJECT) :
     python 05_PRODUCTION\\tools\\generer_lecteur.py .
+    python 05_PRODUCTION\\tools\\generer_lecteur.py . --non-valides   (essai : utilise aussi les audios pas encore validés)
 
 Ne modifie aucun fichier source. Ne nécessite aucune bibliothèque extérieure.
 """
@@ -20,7 +21,9 @@ import os
 import shutil
 import sys
 
-RACINE = sys.argv[1] if len(sys.argv) > 1 else '.'
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+RACINE = ARGS[0] if ARGS else '.'
+NON_VALIDES = '--non-valides' in sys.argv
 DONNEES = os.path.join(RACINE, '04_DONNEES')
 LECTEUR = os.path.join(RACINE, '05_PRODUCTION', 'lecteur')
 SORTIE = os.path.join(RACINE, '06_LIVRABLES', 'lecteur')
@@ -54,6 +57,17 @@ def lire(nom, dossier=DONNEES):
         return list(csv.DictReader(f, delimiter=';'))
 
 
+def parties(liste, couper):
+    """Une leçon « en deux parties » (DEC-0037) : voyelles, puis consonnes et finales."""
+    codes = [s['code'] for s in liste]
+    if not couper:
+        return [{'code': 'U', 'titre': '', 'series': codes}]
+    a = [s['code'] for s in liste if s['groupe'] == 0]
+    b = [s['code'] for s in liste if s['groupe'] != 0]
+    return [{'code': 'A', 'titre': 'Voyelles', 'series': a},
+            {'code': 'B', 'titre': 'Consonnes et finales', 'series': b}]
+
+
 def main():
     lecons = lire('lecons.csv')
     mots = {m['word_code']: m for m in lire('mots.csv')}
@@ -64,12 +78,12 @@ def main():
     audios = lire('audios.csv')
     images = {i['word_code']: i for i in lire('images.csv')}
     images_prov = {i['word_code']: i['emoji'] for i in lire('images_provisoires.csv', LECTEUR)}
-    indications = {i['symbole']: i['indication'] for i in lire('indications_symboles.csv', LECTEUR)}
+    reperes = {r['symbol']: r for r in lire('reperes_sons.csv')}   # DEC-0038
 
     # Audios validés : (référence, voix, débit) -> fichier
     fichiers_audio = {}
     for a in audios:
-        if a.get('validated') == 'true':
+        if a.get('validated') == 'true' or (NON_VALIDES and os.path.exists(os.path.join(DONNEES, a['file']))):
             fichiers_audio[(a['item_ref'], a['voice'], a['speed'])] = a['file']
 
     def symbole(element):
@@ -81,8 +95,15 @@ def main():
         if not s:
             raise SystemExit('Élément inconnu : ' + element)
         principal = s['ipa_main']
+        r = reperes.get(principal)
+        if not r:
+            raise SystemExit('Pas de repère pour le symbole /' + principal + '/ dans reperes_sons.csv')
+        # Catégorie (DEC-0038) : son identique au français, proche, ou nouveau.
+        categorie = {'exact': 'identique', 'proche': 'proche'}.get(r['match'], 'nouveau')
         return {'texte': '/' + principal + '/', 'couleur': '', 'nom': s['grapheme'],
-                'indication': indications.get(principal, '')}
+                'indication': r['listening_cue'], 'categorie': categorie,
+                'repere': {'langue': r['language'], 'mot': r['keyword'] if r['language'] == 'fr' else '',
+                           'image': r['picture']}}
 
     def audio(ref):
         res = {}
@@ -136,6 +157,7 @@ def main():
             'tons': l['is_tone_lesson'] == 'true',
             'recyclage': l['is_recycling'] == 'true',
             'series': liste,
+            'parties': parties(liste, l.get('split_parts') == 'true'),
         })
 
     donnees = {
@@ -174,7 +196,8 @@ def main():
         f.write(page)
 
     nb_series = sum(len(l['series']) for l in sortie_lecons)
-    print(f"{len(sortie_lecons)} leçons, {nb_series} séries, {len(fichiers_audio)} audios validés -> {SORTIE}")
+    print(f"{len(sortie_lecons)} leçons, {nb_series} séries, {len(fichiers_audio)} audios "
+          f"{'(validés ou non : ESSAI)' if NON_VALIDES else 'validés'} -> {SORTIE}")
 
 
 if __name__ == '__main__':

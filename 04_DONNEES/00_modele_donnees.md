@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.11
+version: 0.13
 date: 2026-10-28
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -92,7 +92,8 @@ erDiagram
 | `family_fr` | famille de nouveautés | | `finales non relâchées` |
 | `listen_threshold` | seuil du verrou d'écoute (DEC-0012) | 0 à 1 | `0.85` |
 | `is_tone_lesson` | leçon de tons | `true` / `false` | `false` |
-| `is_recycling` | leçon de recyclage (L12) | `true` / `false` | `false` |
+| `is_recycling` | leçon de recyclage (L14) | `true` / `false` | `false` |
+| `split_parts` | leçon présentée en deux parties : voyelles, puis consonnes et finales (DEC-0037) | `true` / `false` | `true` (L01) |
 
 ### 3.4 `ouvertures.csv` — quand chaque son et ton s'ouvre (DEC-0007)
 
@@ -218,6 +219,26 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `validated` | image vérifiée | `true` / `false` | `false` |
 | `note` | remarque | | |
 
+### 3.13 `reperes_sons.csv` — aides pour apprendre les symboles (DEC-0038)
+
+Une ligne par symbole (`ipa_main` de `sons.csv`) utilisé dans les séries.
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `symbol` | symbole | `ipa_main` de `sons.csv` | `ɨ` |
+| `graphemes` | écritures correspondantes | liste `|` | `ư` |
+| `language` | langue du mot repère | `fr`, `vi`, vide (aucun) | `vi` |
+| `keyword` | mot repère | | `tư` |
+| `word_code` | mot du projet, si repère vietnamien | `word_code` | `W0337` |
+| `picture` | image du repère (emoji provisoire) | | `4️⃣` |
+| `match` | ressemblance avec le français ; donne la catégorie = ≈ ★ | `exact` (=), `proche` (≈), vide (★ nouveau) | |
+| `listening_cue` | indice d'écoute (E1–E3) | | `entre « ou » et « i »` |
+| `start` | son français de départ (E4) | | `« ou » de « loup »` |
+| `body_part` | ce qu'on change | `lèvres`, `langue`, `gorge`, `souffle`, `durée`, `décomposition` | `lèvres` |
+| `change` | le changement, un seul | | |
+| `check` | comment vérifier | | |
+| `certainty` | fiabilité de la description | `fiable`, `à vérifier` | `fiable` |
+
 ## 4. Ce qui n'est pas un fichier source
 
 **Transcription phonétique des mots** : non utilisée (DEC-0021). Seule la
@@ -261,6 +282,8 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.9 | 2026-10-28 | Définition de `invented` précisée (DEC-0027). |
 | 0.10 | 2026-10-28 | `ouvertures.csv` : seuls les sons enseignés ; sons reportés signalés dans `sons.csv` (DEC-0031). |
 | 0.11 | 2026-10-28 | Colonne `position` de `paires_minimales.csv` : sens des positions 2 et 3 (DEC-0033). |
+| 0.12 | 2026-10-29 | `lecons.csv` : colonne `split_parts` (DEC-0037) ; L14 corrigé dans l'exemple de `is_recycling`. |
+| 0.13 | 2026-10-29 | Nouveau fichier `reperes_sons.csv` (DEC-0038). |
 
 ## Liens
 

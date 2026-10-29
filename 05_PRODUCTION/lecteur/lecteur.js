@@ -1,7 +1,8 @@
 /*
  * Lecteur d'activités — Module 0, volet écoute (E1 → E3).
  * Règles appliquées : PROG-ACT, R-PARC-01 à 05, R-ECR-01/02, R-LEX-06, R-VOL-02/05 à 07,
- * DEC-0028/0029 (étiquettes), DEC-0032 (minimum par série), DEC-0033 (positions 1 et 2 en E2).
+ * DEC-0028/0029 (étiquettes), DEC-0032 (minimum par série), DEC-0033 (positions 1 et 2 en E2),
+ * DEC-0037 (leçon en deux parties).
  * Données : window.DONNEES_LECTEUR, produit par 05_PRODUCTION/tools/generer_lecteur.py.
  * Ne pas modifier les contenus ici : ils viennent de 04_DONNEES.
  */
@@ -26,26 +27,57 @@
         var t = window.localStorage.getItem(CLE);
         if (t) return JSON.parse(t);
       } catch (e) { /* stockage indisponible : on garde la progression en mémoire */ }
-      return memoire || { version: 1, lecons: {} };
+      return memoire || { version: 2, lecons: {} };
     },
     enregistrer: function (p) {
       memoire = p;
       try { window.localStorage.setItem(CLE, JSON.stringify(p)); } catch (e) { /* idem */ }
     }
   };
-  var prog = Stockage.charger();
+
+  function trouverLecon(code) { return D.lecons.filter(function (l) { return l.code === code; })[0]; }
+  function seriesDe(l, partie) {
+    return l.series.filter(function (s) { return partie.series.indexOf(s.code) >= 0; });
+  }
+  function etatEtape() { return { debit: 'slow', hist: [], reussites: {}, validee: false }; }
+  function etatPartieNeuf() { return { e1: { vues: [] }, e2: etatEtape(), e3: etatEtape(), ecrit: false }; }
+
+  // Version 1 (une leçon = un seul bloc) -> version 2 (une leçon = une ou plusieurs parties).
+  function migrer(p) {
+    if (p.version === 2) return p;
+    Object.keys(p.lecons || {}).forEach(function (code) {
+      var ancien = p.lecons[code];
+      var l = trouverLecon(code);
+      if (!l || ancien.parties) return;
+      var neuf = { parties: {}, ecouteValideeLe: ancien.ecouteValideeLe || null };
+      l.parties.forEach(function (pa) {
+        var dans = function (s) { return pa.series.indexOf(s) >= 0; };
+        var copie = function (e) {
+          var r = {};
+          Object.keys(e.reussites || {}).forEach(function (s) { if (dans(s)) r[s] = e.reussites[s]; });
+          return { debit: e.debit, hist: (e.hist || []).filter(function (h) { return dans(h.s); }), reussites: r, validee: !!e.validee };
+        };
+        neuf.parties[pa.code] = {
+          e1: { vues: (ancien.e1 && ancien.e1.vues || []).filter(dans) },
+          e2: copie(ancien.e2 || etatEtape()), e3: copie(ancien.e3 || etatEtape()),
+          ecrit: !!ancien.ecrit
+        };
+      });
+      p.lecons[code] = neuf;
+    });
+    p.version = 2;
+    return p;
+  }
+  var prog = migrer(Stockage.charger());
 
   function etatLecon(code) {
-    if (!prog.lecons[code]) {
-      prog.lecons[code] = {
-        e1: { vues: [] },
-        e2: { debit: 'slow', hist: [], reussites: {}, validee: false },
-        e3: { debit: 'slow', hist: [], reussites: {}, validee: false },
-        ecrit: false,
-        ecouteValideeLe: null
-      };
-    }
+    if (!prog.lecons[code]) prog.lecons[code] = { parties: {}, ecouteValideeLe: null };
     return prog.lecons[code];
+  }
+  function etatPartie(code, pc) {
+    var e = etatLecon(code);
+    if (!e.parties[pc]) e.parties[pc] = etatPartieNeuf();
+    return e.parties[pc];
   }
   function sauver() { Stockage.enregistrer(prog); }
 
@@ -65,7 +97,10 @@
   function hasard(n) { return Math.floor(Math.random() * n); }
   function melanger(t) { t = t.slice(); for (var i = t.length - 1; i > 0; i--) { var j = hasard(i + 1); var x = t[i]; t[i] = t[j]; t[j] = x; } return t; }
   function pourcent(x) { return Math.round(x * 100) + ' %'; }
-  function trouverLecon(code) { return D.lecons.filter(function (l) { return l.code === code; })[0]; }
+  function nomPartie(l, pa) { return l.parties.length > 1 ? 'Partie ' + pa.code + ' · ' + pa.titre : ''; }
+  function titreEcran(l, pa, etape) {
+    return 'Leçon ' + l.numero + (l.parties.length > 1 ? pa.code : '') + ' · ' + etape;
+  }
 
   /* ---------- Audio : fichier validé si présent, sinon voix de synthèse (provisoire) ---------- */
   var voixVi = null;
@@ -120,6 +155,10 @@
       setTimeout(fin, 5000);
     });
   }
+  function arreterSon() {
+    if (lectureEnCours) lectureEnCours.pause();
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  }
   function pause(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
   function voixAuHasard(sauf) {
     var c = D.voix.map(function (v) { return v.code; }).filter(function (x) { return x !== sauf; });
@@ -130,7 +169,13 @@
   function contenuTerme(t, mode) {
     // mode : 'decouverte' (E1), 'lent' (image + symbole), 'normal' (symbole seul), 'ecrit'
     var morceaux = [];
-    var sym = el('span', { class: 'symbole', text: t.symbole.texte });
+    var cat = t.symbole.categorie;
+    // Catégorie du son (DEC-0038) : indice affiché en E1 et au débit lent, retiré au débit normal.
+    var avecIndices = mode === 'decouverte' || mode === 'lent';
+    var sym = el('span', { class: 'symbole' + (cat && avecIndices ? ' cat-' + cat : '') }, [
+      cat && avecIndices ? el('span', { class: 'marque', text: MARQUES[cat], 'aria-hidden': 'true' }) : null,
+      t.symbole.texte
+    ]);
     if (t.symbole.couleur) sym.style.color = t.symbole.couleur;
     var img = t.image ? el('span', { class: 'image', text: t.image, 'aria-hidden': 'true' }) : null;
     if (mode === 'ecrit') {
@@ -141,36 +186,52 @@
     }
     if (img) morceaux.push(img);
     morceaux.push(sym);
+    var r = t.symbole.repere;
+    if (r && r.image && avecIndices) {
+      // Mot repère (DEC-0038) : français écrit ; vietnamien en image seulement (pas d'écrit en E1–E2).
+      morceaux.push(el('span', { class: 'repere' + (mode === 'lent' ? ' petit-repere' : ''), title: 'mot repère' }, [
+        el('span', { 'aria-hidden': 'true', text: r.langue === 'fr' ? '🇫🇷 ' : '🇻🇳 ' }),
+        el('span', { text: r.image + (r.mot && mode === 'decouverte' ? ' ' + r.mot : '') })
+      ]));
+    }
     if (mode === 'decouverte') {
       if (t.symbole.indication) morceaux.push(el('span', { class: 'indication', text: t.symbole.indication }));
-      if (t.sens) morceaux.push(el('span', { class: 'sens', text: t.sens }));
+      if (t.sens) morceaux.push(el('span', { class: 'sens', text: 'mot entendu : ' + t.sens }));
     }
     return morceaux;
   }
-  function nomAccessible(t) {
-    return (t.sens ? t.sens + ', ' : '') + 'symbole ' + t.symbole.texte;
+  var MARQUES = { identique: '=', proche: '≈', nouveau: '★' };
+  var LIBELLES = { identique: 'son du français', proche: 'son proche du français', nouveau: 'son nouveau' };
+  function legende(series) {
+    var vues = {};
+    series.forEach(function (s) { s.termes.forEach(function (t) { if (t.symbole.categorie) vues[t.symbole.categorie] = true; }); });
+    var cats = ['identique', 'proche', 'nouveau'].filter(function (c) { return vues[c]; });
+    if (!cats.length) return null;
+    return el('div', { class: 'legende' }, cats.map(function (c) {
+      return el('span', { class: 'symbole-legende cat-' + c }, [el('span', { class: 'marque', text: MARQUES[c] }), LIBELLES[c]]);
+    }));
   }
+  function nomAccessible(t) {
+    return (t.sens ? t.sens + ', ' : '') + 'symbole ' + t.symbole.texte;  // ne pas modifier : utilisé par les essais automatiques
+  }
+  function classeTuiles(n) { return 'tuiles' + (n === 3 ? ' trois' : n === 4 ? ' quatre' : ''); }
 
   /* ---------- Calcul des scores et des verrous ---------- */
-  function dernieres(etat, debit) {
-    var h = etat.hist.filter(function (x) { return x.d === debit; });
-    return h.slice(-P.fenetre_score);
-  }
   function mesure(etat, debit) {
-    var h = dernieres(etat, debit);
+    var h = etat.hist.filter(function (x) { return x.d === debit; }).slice(-P.fenetre_score);
     var justes = h.filter(function (x) { return x.ok; }).length;
     var voix = {};
     h.forEach(function (x) { voix[x.v] = true; });
     return { n: h.length, justes: justes, taux: h.length ? justes / h.length : 0, voix: Object.keys(voix).length };
   }
-  function seriesCouvertes(lecon, etat) {
-    return lecon.series.filter(function (s) { return (etat.reussites[s.code] || 0) >= P.min_reussites_par_serie; }).length;
+  function seriesCouvertes(series, etat) {
+    return series.filter(function (s) { return (etat.reussites[s.code] || 0) >= P.min_reussites_par_serie; }).length;
   }
-  function verifierPassages(lecon, etat) {
+  function verifierPassages(seuil, series, etat) {
     var m = mesure(etat, etat.debit);
-    var seuilAtteint = m.n >= P.fenetre_score && m.taux >= lecon.seuil;
+    var seuilAtteint = m.n >= P.fenetre_score && m.taux >= seuil;
     if (etat.debit === 'slow' && seuilAtteint) { etat.debit = 'normal'; return 'normal'; }
-    if (etat.debit === 'normal' && seuilAtteint && m.voix >= P.min_voix && seriesCouvertes(lecon, etat) === lecon.series.length && !etat.validee) {
+    if (etat.debit === 'normal' && seuilAtteint && m.voix >= P.min_voix && seriesCouvertes(series, etat) === series.length && !etat.validee) {
       etat.validee = true; return 'validee';
     }
     return null;
@@ -183,6 +244,7 @@
     return !!(prec && prec.ecouteValideeLe);
   }
   function ecranAccueil() {
+    arreterSon();
     vider();
     btnRetour.hidden = true;
     titreBarre.textContent = 'Vietnamien · Module 0';
@@ -200,12 +262,13 @@
       else if (!l.series.length) pastille = el('span', { class: 'pastille ferme', text: 'À venir' });
       else if (!ouverte) pastille = el('span', { class: 'pastille ferme', text: 'Fermée' });
       else pastille = el('span', { class: 'pastille', text: etat ? 'En cours' : 'Ouverte' });
+      var detail = l.series.length + ' séries' + (l.parties.length > 1 ? ' en ' + l.parties.length + ' parties' : '') + ' · seuil ' + pourcent(l.seuil);
       liste.appendChild(el('button', {
         class: 'lecon', type: 'button', disabled: !ouverte,
         onclick: function () { ecranLecon(l.code); }
       }, [
         el('span', { class: 'num', text: 'L' + String(l.numero).padStart(2, '0') }),
-        el('span', { class: 'titre' }, [el('span', { text: l.titre }), el('br'), el('span', { class: 'petit', text: l.series.length + ' séries · seuil ' + pourcent(l.seuil) })]),
+        el('span', { class: 'titre' }, [el('span', { text: l.titre }), el('br'), el('span', { class: 'petit', text: detail })]),
         pastille
       ]));
     });
@@ -214,9 +277,12 @@
   }
 
   /* ---------- Écran : une leçon ---------- */
+  function partieTerminee(code, pa) { var e = etatLecon(code).parties[pa.code]; return !!(e && e.ecrit); }
+
   function ecranLecon(code) {
+    arreterSon();
     var l = trouverLecon(code);
-    var etat = etatLecon(code);
+    var etatL = etatLecon(code);
     sauver();
     vider();
     btnRetour.hidden = false;
@@ -224,39 +290,58 @@
     titreBarre.textContent = 'Leçon ' + l.numero;
     app.appendChild(el('div', { class: 'consigne' }, [
       el('span', { class: 'etiquette', text: 'Leçon ' + l.numero + (l.tons ? ' · tons' : ' · sons') }),
-      el('h1', { text: l.titre })
+      el('h1', { text: l.titre }),
+      l.parties.length > 1 ? el('p', { class: 'petit', text: 'Cette leçon se fait en ' + l.parties.length + ' parties, l’une après l’autre. Elle est validée quand toutes le sont.' }) : null
     ]));
 
-    var e1Fait = etat.e1.vues.length >= l.series.length;
-    var etapes = el('div', { class: 'etapes' });
+    l.parties.forEach(function (pa, k) {
+      var series = seriesDe(l, pa);
+      var etat = etatPartie(code, pa.code);
+      var partieOuverte = k === 0 || partieTerminee(code, l.parties[k - 1]);
+      var etapes = el('div', { class: 'etapes' });
+      if (l.parties.length > 1) {
+        etapes.appendChild(el('div', { class: 'partie-tete' }, [
+          el('h2', { text: nomPartie(l, pa) }),
+          el('span', { class: 'pastille' + (etat.ecrit ? ' ok' : partieOuverte ? '' : ' ferme'),
+            text: etat.ecrit ? 'Validée' : partieOuverte ? series.length + ' séries' : 'Après la partie ' + l.parties[k - 1].code })
+        ]));
+      }
+      var e1Fait = etat.e1.vues.length >= series.length;
+      etapes.appendChild(blocEtape('E1 · Écouter', 'Écoutez chaque série, sans répondre.',
+        etat.e1.vues.length + ' / ' + series.length + ' séries', etat.e1.vues.length / series.length,
+        e1Fait ? 'Réécouter' : 'Commencer', partieOuverte, function () { ecranE1(code, pa.code, 0); }));
 
-    etapes.appendChild(blocEtape('E1 · Écouter', 'Écoutez chaque série, sans répondre.',
-      etat.e1.vues.length + ' / ' + l.series.length + ' séries', etat.e1.vues.length / l.series.length,
-      e1Fait ? 'Réécouter' : 'Commencer', true, function () { ecranE1(code); }));
+      [['e2', 'E2 · Distinguer', 'Lequel avez-vous entendu ? Deux choix.'], ['e3', 'E3 · Opposer', 'Lequel avez-vous entendu ? Toute la série.']].forEach(function (x, j) {
+        var e = etat[x[0]];
+        var m = mesure(e, e.debit);
+        var ouvert = partieOuverte && (j === 0 ? e1Fait : etat.e2.validee);
+        var texte = e.validee ? 'Validée' :
+          'Débit ' + (e.debit === 'slow' ? 'lent' : 'normal') + ' · ' + m.justes + ' justes sur les ' + m.n + ' dernières' +
+          (e.debit === 'normal' ? ' · séries réussies 2 fois : ' + seriesCouvertes(series, e) + ' / ' + series.length : '');
+        etapes.appendChild(blocEtape(x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
+          e.validee ? 'Refaire' : 'Continuer', ouvert, function () { ecranQuiz(code, pa.code, x[0]); }));
+      });
 
-    [['e2', 'E2 · Distinguer', 'Lequel avez-vous entendu ? Deux choix.'], ['e3', 'E3 · Opposer', 'Lequel avez-vous entendu ? Toute la série.']].forEach(function (x, k) {
-      var e = etat[x[0]];
-      var m = mesure(e, e.debit);
-      var ouvert = k === 0 ? e1Fait : etat.e2.validee;
-      var texte = e.validee ? 'Validée' :
-        'Débit ' + (e.debit === 'slow' ? 'lent' : 'normal') + ' · ' + m.justes + ' justes sur les ' + m.n + ' dernières' +
-        (e.debit === 'normal' ? ' · séries réussies 2 fois : ' + seriesCouvertes(l, e) + ' / ' + l.series.length : '');
-      etapes.appendChild(blocEtape(x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
-        e.validee ? 'Refaire' : 'Continuer', ouvert, function () { ecranQuiz(code, x[0]); }));
+      etapes.appendChild(blocEtape('Fin d’E3 · L’écrit', 'Découvrez comment s’écrivent les mots entendus.',
+        etat.ecrit ? 'Vu' : 'Après la validation d’E3', etat.ecrit ? 1 : 0,
+        'Voir l’écrit', partieOuverte && etat.e3.validee, function () { ecranEcrit(code, pa.code); }));
+      app.appendChild(etapes);
     });
 
-    etapes.appendChild(blocEtape('Fin d’E3 · L’écrit', 'Découvrez comment s’écrivent les mots entendus.',
-      etat.ecouteValideeLe ? 'Écoute validée le ' + etat.ecouteValideeLe : 'Après la validation d’E3', etat.ecouteValideeLe ? 1 : 0,
-      'Voir l’écrit', etat.e3.validee, function () { ecranEcrit(code); }));
-
-    etapes.appendChild(el('div', { class: 'etape' }, [
+    var resume = el('div', { class: 'etapes' });
+    resume.appendChild(el('div', { class: 'etape' }, [
+      el('div', { class: 'etape-tete' }, [el('h2', { text: 'Écoute de la leçon' }),
+        el('span', { class: 'pastille' + (etatL.ecouteValideeLe ? ' ok' : ' ferme'), text: etatL.ecouteValideeLe ? 'Validée le ' + etatL.ecouteValideeLe : 'Pas encore validée' })]),
+      el('p', { class: 'petit', text: 'Valider l’écoute ouvre la leçon suivante.' })
+    ]));
+    resume.appendChild(el('div', { class: 'etape' }, [
       el('div', { class: 'etape-tete' }, [el('h2', { text: 'E4–E5 · Répéter, stabiliser' }), el('span', { class: 'pastille ferme', text: 'À venir' })]),
       el('p', { class: 'petit', text: 'Le volet production (micro, courbe mélodique) sera ajouté ensuite.' })
     ]));
-    app.appendChild(etapes);
+    app.appendChild(resume);
 
     var zone = el('div', { class: 'actions' });
-    var btnRaz = el('button', { class: 'bouton discret', type: 'button', text: 'Recommencer cette leçon', onclick: function () {
+    zone.appendChild(el('button', { class: 'bouton discret', type: 'button', text: 'Recommencer cette leçon', onclick: function () {
       zone.innerHTML = '';
       zone.appendChild(el('div', { class: 'confirmation' }, [
         el('p', { text: 'Toute la progression de la leçon ' + l.numero + ' sera effacée.' }),
@@ -265,8 +350,7 @@
           el('button', { class: 'bouton second', type: 'button', text: 'Annuler', onclick: function () { ecranLecon(code); } })
         ])
       ]));
-    } });
-    zone.appendChild(btnRaz);
+    } }));
     app.appendChild(zone);
   }
   function blocEtape(titre, consigne, etat, part, libelle, ouvert, action) {
@@ -279,24 +363,26 @@
       el('div', { class: 'actions' }, [el('button', { class: 'bouton', type: 'button', text: ouvert ? libelle : 'Fermée', disabled: !ouvert, onclick: action })])
     ]);
   }
+  function partieDe(l, pc) { return l.parties.filter(function (p) { return p.code === pc; })[0]; }
 
   /* ---------- E1 : écoute des séries (découverte + écoute contrastée) ---------- */
-  function ecranE1(code, index) {
+  function ecranE1(code, pc, index) {
+    arreterSon();
     var l = trouverLecon(code);
-    var etat = etatLecon(code);
-    index = index || 0;
-    var s = l.series[index];
+    var pa = partieDe(l, pc);
+    var series = seriesDe(l, pa);
+    var etat = etatPartie(code, pc);
+    var s = series[index];
     vider();
     btnRetour.onclick = function () { ecranLecon(code); };
-    titreBarre.textContent = 'Leçon ' + l.numero + ' · E1 Écouter';
+    titreBarre.textContent = titreEcran(l, pa, 'E1 Écouter');
     var groupe = l.tons ? 'tons' : ['voyelles', 'consonnes', 'finales', 'autres'][s.groupe];
     app.appendChild(el('div', { class: 'consigne' }, [
-      el('span', { class: 'etiquette', text: 'Série ' + (index + 1) + ' sur ' + l.series.length + ' · ' + groupe }),
+      el('span', { class: 'etiquette', text: 'Série ' + (index + 1) + ' sur ' + series.length + ' · ' + groupe }),
       el('h1', { text: 'Écoutez, sans répondre' }),
       el('p', { class: 'petit', text: 'Touchez une case pour la réentendre. Chaque son est dit par plusieurs voix, lentement.' })
     ]));
-    var classe = 'tuiles' + (s.termes.length === 3 ? ' trois' : s.termes.length === 4 ? ' quatre' : '');
-    var grille = el('div', { class: classe });
+    var grille = el('div', { class: classeTuiles(s.termes.length) });
     var tours = {};
     var tuiles = s.termes.map(function (t, i) {
       var b = el('button', { class: 'tuile', type: 'button', 'aria-label': nomAccessible(t), onclick: function () {
@@ -308,8 +394,8 @@
     });
     function surligner(k) { tuiles.forEach(function (b, i) { b.classList.toggle('joue', i === k); }); }
     var suivant = el('button', { class: 'bouton', type: 'button', disabled: etat.e1.vues.indexOf(s.code) < 0,
-      text: index + 1 < l.series.length ? 'Série suivante' : 'Terminer E1',
-      onclick: function () { if (index + 1 < l.series.length) ecranE1(code, index + 1); else ecranLecon(code); } });
+      text: index + 1 < series.length ? 'Série suivante' : 'Terminer E1',
+      onclick: function () { if (index + 1 < series.length) ecranE1(code, pc, index + 1); else ecranLecon(code); } });
     var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Écouter la série', onclick: function () {
       ecoute.disabled = true;
       // Chaque terme avec chaque voix ; la paire d'E2 (positions 1 et 2) en premier.
@@ -327,27 +413,29 @@
     } });
     app.appendChild(ecoute);
     app.appendChild(grille);
+    var lg = legende([s]); if (lg) app.appendChild(lg);
     app.appendChild(el('div', { class: 'actions' }, [suivant]));
   }
 
   /* ---------- E2 et E3 : « Lequel ? » ---------- */
-  function ecranQuiz(code, cle) {
+  function ecranQuiz(code, pc, cle) {
     var l = trouverLecon(code);
-    var etat = etatLecon(code);
-    var e = etat[cle];
+    var pa = partieDe(l, pc);
+    var series = seriesDe(l, pa);
+    var e = etatPartie(code, pc)[cle];
     var derniereVoix = null;
     var positionsJustes = [];
 
     function choisirSerie() {
       // Les séries pas encore réussies 2 fois au débit normal sont tirées plus souvent (DEC-0032).
-      var poids = l.series.map(function (s) {
+      var poids = series.map(function (s) {
         var manque = Math.max(0, P.min_reussites_par_serie - (e.reussites[s.code] || 0));
         return 1 + (e.debit === 'normal' ? manque * 2 : 0);
       });
       var total = poids.reduce(function (a, b) { return a + b; }, 0);
       var r = Math.random() * total;
-      for (var i = 0; i < poids.length; i++) { r -= poids[i]; if (r < 0) return l.series[i]; }
-      return l.series[l.series.length - 1];
+      for (var i = 0; i < poids.length; i++) { r -= poids[i]; if (r < 0) return series[i]; }
+      return series[series.length - 1];
     }
 
     function nouvelItem() {
@@ -371,23 +459,23 @@
 
     function afficherItem(s, ordre, cible, voix) {
       vider();
-      btnRetour.onclick = function () { window.speechSynthesis && window.speechSynthesis.cancel(); ecranLecon(code); };
-      titreBarre.textContent = 'Leçon ' + l.numero + (cle === 'e2' ? ' · E2 Distinguer' : ' · E3 Opposer');
+      btnRetour.onclick = function () { ecranLecon(code); };
+      titreBarre.textContent = titreEcran(l, pa, cle === 'e2' ? 'E2 Distinguer' : 'E3 Opposer');
       var debit = e.debit;
       var m = mesure(e, debit);
       app.appendChild(el('div', { class: 'mesures' }, [
         el('div', { class: 'mesure' }, [el('b', { text: debit === 'slow' ? 'Lent' : 'Normal' }), el('span', { text: 'débit' })]),
         el('div', { class: 'mesure' }, [el('b', { text: m.justes + ' / ' + m.n }), el('span', { text: 'justes · objectif ' + pourcent(l.seuil) + ' sur ' + P.fenetre_score })]),
-        el('div', { class: 'mesure' }, [el('b', { text: debit === 'normal' ? seriesCouvertes(l, e) + ' / ' + l.series.length : '—' }), el('span', { text: 'séries réussies 2 fois' })])
+        el('div', { class: 'mesure' }, [el('b', { text: debit === 'normal' ? seriesCouvertes(series, e) + ' / ' + series.length : '—' }), el('span', { text: 'séries réussies 2 fois' })])
       ]));
       var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(cible, voix, debit); } });
       app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: 'Lequel avez-vous entendu ?' })]));
       app.appendChild(ecoute);
       var mode = debit === 'slow' ? 'lent' : 'normal';
-      var classe = 'tuiles' + (ordre.length === 3 ? ' trois' : ordre.length === 4 ? ' quatre' : '');
-      var grille = el('div', { class: classe });
+      var grille = el('div', { class: classeTuiles(ordre.length) });
       var retour = el('p', { class: 'retour-reponse', role: 'status' });
       var repondu = false;
+      var suivant = el('button', { class: 'bouton', type: 'button', text: 'Suivant', hidden: true, onclick: nouvelItem });
       var tuiles = ordre.map(function (t) {
         var cls = 'tuile' + (mode === 'normal' ? ' symbole-seul' : '');
         var b = el('button', { class: cls, type: 'button', 'aria-label': nomAccessible(t), onclick: function () {
@@ -397,7 +485,7 @@
           e.hist.push({ s: s.code, ok: ok, v: voix, d: debit });
           if (e.hist.length > 400) e.hist = e.hist.slice(-400);
           if (ok && debit === 'normal') e.reussites[s.code] = (e.reussites[s.code] || 0) + 1;
-          var passage = verifierPassages(l, e);
+          var passage = verifierPassages(l.seuil, series, e);
           sauver();
           tuiles[ordre.indexOf(cible)].classList.add('juste');
           if (ok) {
@@ -421,8 +509,8 @@
         return b;
       });
       app.appendChild(grille);
+      if (mode === 'lent') { var lg = legende([s]); if (lg) app.appendChild(lg); }
       app.appendChild(retour);
-      var suivant = el('button', { class: 'bouton', type: 'button', text: 'Suivant', hidden: true, onclick: nouvelItem });
       app.appendChild(el('div', { class: 'actions' }, [suivant]));
       app.appendChild(el('p', { class: 'petit', text: 'Réécouter ne coûte rien. Après votre réponse, touchez une case pour l’entendre.' }));
       setTimeout(function () { jouer(cible, voix, debit); }, 250);
@@ -432,29 +520,38 @@
   }
 
   /* ---------- Fin d'E3 : l'écrit (R-ECR-02 ; syllabes inventées jamais affichées, R-LEX-06) ---------- */
-  function ecranEcrit(code) {
+  function ecranEcrit(code, pc) {
+    arreterSon();
     var l = trouverLecon(code);
-    var etat = etatLecon(code);
+    var pa = partieDe(l, pc);
+    var etatL = etatLecon(code);
+    var etat = etatPartie(code, pc);
     vider();
     btnRetour.onclick = function () { ecranLecon(code); };
-    titreBarre.textContent = 'Leçon ' + l.numero + ' · L’écrit';
+    titreBarre.textContent = titreEcran(l, pa, 'L’écrit');
     app.appendChild(el('div', { class: 'consigne' }, [
-      el('span', { class: 'etiquette', text: 'Fin d’E3' }),
+      el('span', { class: 'etiquette', text: 'Fin d’E3' + (nomPartie(l, pa) ? ' · ' + nomPartie(l, pa) : '') }),
       el('h1', { text: 'Voici comment ils s’écrivent' }),
       el('p', { class: 'petit', text: 'Touchez une case pour réentendre. Rien à retenir par cœur : l’écrit se travaillera en E4–E5.' })
     ]));
-    l.series.forEach(function (s) {
-      var g = el('div', { class: 'tuiles' + (s.termes.length === 3 ? ' trois' : s.termes.length === 4 ? ' quatre' : '') });
+    seriesDe(l, pa).forEach(function (s) {
+      var g = el('div', { class: classeTuiles(s.termes.length) });
       s.termes.forEach(function (t) {
         g.appendChild(el('button', { class: 'tuile', type: 'button', 'aria-label': t.invente ? 'syllabe inventée' : t.ecrit,
           onclick: function () { jouer(t, D.voix[0].code, 'normal'); } }, contenuTerme(t, 'ecrit')));
       });
       app.appendChild(g);
     });
-    app.appendChild(el('div', { class: 'actions' }, [el('button', { class: 'bouton', type: 'button',
-      text: etat.ecouteValideeLe ? 'Revenir à la leçon' : 'Valider l’écoute de la leçon',
+    var derniere = l.parties.every(function (p) { return p.code === pc || partieTerminee(code, p); });
+    var libelle = etat.ecrit ? 'Revenir à la leçon' :
+      derniere ? 'Valider l’écoute de la leçon' : 'Valider la partie ' + pc;
+    app.appendChild(el('div', { class: 'actions' }, [el('button', { class: 'bouton', type: 'button', text: libelle,
       onclick: function () {
-        if (!etat.ecouteValideeLe) { etat.ecrit = true; etat.ecouteValideeLe = new Date().toISOString().slice(0, 10); sauver(); }
+        etat.ecrit = true;
+        if (l.parties.every(function (p) { return partieTerminee(code, p); }) && !etatL.ecouteValideeLe) {
+          etatL.ecouteValideeLe = new Date().toISOString().slice(0, 10);
+        }
+        sauver();
         ecranLecon(code);
       } })]));
   }

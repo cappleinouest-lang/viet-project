@@ -2,7 +2,7 @@
 id: PROG-M0
 titre: Progression du Module 0
 statut: BROUILLON
-version: 0.6
+version: 0.8
 date: 2026-10-28
 resume: >
   Programme des 14 leçons du Module 0 (sons et tons) : pour chaque leçon, la
@@ -129,6 +129,7 @@ affichée, R-LEX-06).
 |---|---|
 | But | Installer les sons « faciles » et le ton plat, avec des syllabes simples |
 | Niveau | 4 (mineur) : sons proches ou identiques au français. Écarts réels : **h** (muet en français), **ê / e** et **ô / o** (souvent confondus par les francophones du Sud de la France), **-m / -n** finales (risque de nasaliser la voyelle), implosives **b, đ** (écart faible), ton **ngang** (garder la voix plate) |
+| Parties (DEC-0037) | **A, voyelles** (8 séries), puis **B, consonnes et finales** (8 séries) ; chacune avec E1 → E3 et son verrou |
 | Ordre recommandé des séries | 1) voyelles : o/ô (*to/tô*, *ho/hô*), e/ê (*xem/xêm\**), i/ê (*đi/đê*), u/ô (*tu/tô*) ; 2) consonnes : b/m/v (*ba/ma/va*), n/l (*nên/lên*), đ/d (*đi/di*, *da/đa*) ; 3) finales -m/-n (*xem/xen*, *nên/nêm*) |
 | Vigilance | **đ** (implosive) face à **d** (= /z/ à Hanoï) ; le ton ngang reste **plat**, sans montée de fin de phrase |
 | Recyclage E5 | aucun (première leçon) ; E5 mêle les trois groupes de séries |
@@ -277,7 +278,13 @@ affichée, R-LEX-06).
 | Verrou = sortie du Module 0 | toutes les leçons validées dans les deux volets ; tons ≥ 90 % ; ư, ơ, â intelligibles ; -p, -t, -c, -ch non relâchées ; rythme syllabique (R-VOL-09) |
 
 Objectifs chiffrés de FOND-01 § 6.1 à mesurer en L14 : tons ≥ 90 % ;
-voyelles centrales (ơ, ư, â) ≥ 85 % ; consonnes finales ≥ 80 % (point P6).
+voyelles centrales (ơ, ư, â) ≥ 85 % ; consonnes finales ≥ 80 %.
+
+> **Règle** (DEC-0036) : 80 % pour les finales en L14 n'est pas une
+> contradiction avec les 85 % des verrous de L08 et L10. En L14, les finales
+> sont mêlées à tous les autres contrastes, ce qui est plus difficile qu'une
+> leçon isolée. Les deux valeurs sont des paramètres, à ajuster avec les
+> résultats réels.
 
 ## 5. Calendrier indicatif
 
@@ -308,9 +315,9 @@ travail.
 | **P1** | ~~11 sons sans mot ni série~~ | — | **Décidé** (DEC-0031) : *tuy* (uy, L04) et *chuyện* (uyê, L12) ajoutés ; 9 sons rares reportés en A1–A2 |
 | **P2** | ~~Calcul du score d'E2–E3~~ | — | **Décidé** (DEC-0032) : score sur les 20 dernières réponses **et** chaque série réussie au moins 2 fois au débit normal |
 | **P3** | ~~Ordre des termes dans les séries~~ | — | **Décidé** (DEC-0033) : position 2 = contraste principal ; S0026 et 5 séries de L11 réordonnées ; *củng* et *nghí\** ajoutés |
-| **P4** | ~~Charge de L01~~ | — | **Décidé** (DEC-0034) : une seule leçon, ordre interne voyelles → consonnes → finales ; à couper seulement si l'usage la montre trop longue |
+| **P4** | ~~Charge de L01~~ | — | **Décidé** (DEC-0034, DEC-0037) : une seule leçon, en deux parties dans le lecteur (A voyelles, B consonnes et finales) ; ordre interne voyelles → consonnes → finales ; à couper seulement si l'usage la montre trop longue |
 | **P5** | ~~Mots hors liste de fréquence~~ | 46 mots sur 100 hors des 500 plus fréquents (26 sans rang, 20 au-delà de 500) | **Décidé** (DEC-0035) : « mot courant » en Module 0, fréquence à partir de A1 ; relecture des 100 mots à faire ; *tu* douteux |
-| **P6** | **Seuil des finales** | FOND-01 § 6.1 : 80 % ; verrou de L08 et L10 (R-VOL-05) : 85 % | Garder 85 % pour les verrous de leçon, 80 % pour la sortie du M0 ; à confirmer |
+| **P6** | ~~Seuil des finales~~ | FOND-01 § 6.1 : 80 % ; verrous de L08 et L10 : 85 % | **Décidé** (DEC-0036) : les deux sont gardés (leçon isolée / sortie mêlée en L14) |
 
 ## Historique
 
@@ -322,6 +329,8 @@ travail.
 | 0.4 | 2026-10-28 | Point P3 décidé (DEC-0033) : ordre des termes des séries. |
 | 0.5 | 2026-10-28 | Point P4 décidé (DEC-0034) ; écarts réels de L01 avec le français. |
 | 0.6 | 2026-10-28 | Point P5 décidé (DEC-0035). |
+| 0.7 | 2026-10-28 | Point P6 décidé (DEC-0036) : tous les points du § 6 sont tranchés. |
+| 0.8 | 2026-10-29 | L01 en deux parties (DEC-0037). |
 
 ## Liens
 

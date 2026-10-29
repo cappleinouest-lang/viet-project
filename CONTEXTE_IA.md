@@ -2,7 +2,7 @@
 id: CTX-IA
 titre: Contexte du projet pour une IA
 statut: VALIDE
-version: 1.9
+version: 1.11
 date: 2026-10-28
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
@@ -46,7 +46,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0036) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0038) | `02_REGLES/DECISIONS.md` |
 | Outils : lecteur d'activités, enveloppe (WordPress ou Firebase), Anki | `05_PRODUCTION/01_architecture_outils.md` |
 | Lecteur d'activités : fichiers, génération, règles appliquées | `05_PRODUCTION/02_lecteur_activites.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -108,3 +108,5 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | 1.7 | 2026-10-28 | Critère « mot courant » en Module 0 (DEC-0035). |
 | 1.8 | 2026-10-28 | Seuils des finales (DEC-0036). |
 | 1.9 | 2026-10-28 | Lecteur d'activités, version d'essai 0.1 (volet écoute). |
+| 1.10 | 2026-10-29 | L01 en deux parties (DEC-0037). |
+| 1.11 | 2026-10-29 | Mots repères et catégories de sons (DEC-0038). |

@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.28
+version: 1.31
 date: 2026-10-28
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -761,6 +761,76 @@ qui indique « remplace DEC-NNNN ».
   cas douteux signalé : *tu* (« pratiquer une religion »).
 - **Impacte** : R-LEX-03, FOND-04 § 9 (revalidé), PROG-M0.
 
+### DEC-0036 — Seuils des finales : 85 % par leçon, 80 % en sortie
+
+- **Date** : 2026-10-28
+- **Question** : les verrous de L08 et L10 sont à 85 % (DEC-0012), l'objectif
+  de sortie du Module 0 pour les finales à 80 % (FOND-01 § 6.1). Faut-il
+  aligner ? (point P6 de PROG-M0)
+- **Options** : A — garder les deux ; B — tout à 85 % ; C — tout à 80 %.
+- **Décision** : **A**. 85 % pour le verrou d'écoute de L08 et L10 ; 80 %
+  pour la sortie du Module 0, mesurée en L14.
+- **Raison** : en L14, les finales sont mêlées à tous les contrastes, ce qui
+  est plus difficile qu'une leçon isolée ; pas de modification de FOND-01.
+  Valeurs paramétrables.
+- **Impacte** : PROG-M0 § 4.
+
+### DEC-0037 — L01 en deux parties dans le lecteur
+
+- **Date** : 2026-10-29
+- **Question** : comment raccourcir les séances de L01 (16 séries) ?
+  (précise DEC-0034)
+- **Options** : 1 — deux vraies leçons (15 leçons, renumérotation de 4
+  fichiers de données et d'une dizaine de documents, DEC-0019 remplacée) ;
+  2 — une seule leçon, présentée en deux parties.
+- **Décision** : **2**. L01 reste une leçon (DEC-0019, DEC-0034 tiennent) ;
+  le lecteur la présente en deux parties, faites l'une après l'autre, chacune
+  avec E1 → E3, son verrou et sa révélation de l'écrit :
+  - **partie A, voyelles** : les 8 séries dont le contraste porte sur le
+    noyau ;
+  - **partie B, consonnes et finales** : les 8 autres.
+  L'écoute de la leçon est validée quand les deux parties le sont.
+- **Données** : colonne `split_parts` dans `lecons.csv` (`true` pour L01) ;
+  le partage suit la place du son contrasté (`sons.csv`, colonne
+  `position`).
+- **Raison** : séances plus courtes et première étape franchie plus tôt, sans
+  renumérotation. Applicable plus tard à d'autres leçons si l'usage le
+  montre.
+- **Impacte** : `lecons.csv`, DATA-MODELE, PROG-M0 (fiche L01), lecteur
+  d'activités (PROD-LECT).
+
+### DEC-0038 — Mots repères, catégories de sons et chemins de prononciation
+
+- **Date** : 2026-10-29
+- **Question** : le symbole phonétique seul ne suffit pas pour apprendre le
+  symbole (remarque de Christophe après l'essai de L01). Quelle aide donner ?
+- **Décision** :
+  1. **Mot repère** pour chaque symbole de son : un mot **français** quand le
+     son existe en français (25 symboles, dont 2 « proches » : /ɓ/, /ɗ/) ;
+     sinon un mot **vietnamien** illustré de la leçon (29), montré en
+     image seulement (pas d'écrit en E1–E2) ; à défaut, symbole seul (5).
+  2. **Catégorie** de chaque son, indiquée par une couleur **et** une
+     marque : **=** son du français, **≈** son proche, **★** son nouveau.
+     Couleurs choisies hors de la palette des tons (DEC-0022).
+  3. **Indice d'écoute** d'une ligne pour chaque symbole (E1–E3).
+  4. **Chemin de prononciation** pour les 36 sons absents ou proches du
+     français, pour E4 : son français de départ, **un seul** changement
+     (lèvres, langue, gorge, souffle, durée) ou **décomposition** des
+     diphtongues et triphtongues, puis vérification.
+  5. **Affichage** : repère, catégorie et indice en E1 ; repère et catégorie
+     en petit en E2–E3 au débit lent ; **symbole seul** au débit normal, où
+     se mesure le verrou (DEC-0028).
+- **Données** : `04_DONNEES/reperes_sons.csv` (source unique) ; remplace
+  `05_PRODUCTION/lecteur/indications_symboles.csv`.
+- **À vérifier** : trois descriptions marquées « à vérifier » (finale -ch,
+  g /ɣ/, ch /c/), par un natif ou un ouvrage ; images provisoires (emoji).
+- **Précision** : dans les diphtongues, la lettre finale o / u se dit « ou »
+  bref et i / y se dit « i » bref (*mèo* = mè + « ou » bref).
+- **Raison** : partir de ce que l'apprenant connaît ; ne pas créer de faux
+  équivalents pour les sons nouveaux (FOND-03, transferts) ; une seule
+  nouveauté à la fois, y compris dans le geste de prononciation.
+- **Impacte** : DATA-MODELE, PROG-ACT (E1, E2, E4), lecteur d'activités.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -794,6 +864,9 @@ qui indique « remplace DEC-NNNN ».
 | 1.26 | 2026-10-28 | Ajout de DEC-0033 (position 2 = contraste principal ; séries de L03 et L11 réordonnées). |
 | 1.27 | 2026-10-28 | Ajout de DEC-0034 (L01 reste une seule leçon ; test d'entrée). |
 | 1.28 | 2026-10-28 | Ajout de DEC-0035 (« mot courant » en Module 0 ; fréquence à partir de A1). |
+| 1.29 | 2026-10-28 | Ajout de DEC-0036 (finales : 85 % par leçon, 80 % en sortie). |
+| 1.30 | 2026-10-29 | Ajout de DEC-0037 (L01 en deux parties dans le lecteur). |
+| 1.31 | 2026-10-29 | Ajout de DEC-0038 (mots repères, catégories de sons, chemins de prononciation). |
 
 ## Liens
 
