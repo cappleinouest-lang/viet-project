@@ -2,8 +2,8 @@
 id: PROG-M0
 titre: Progression du Module 0
 statut: BROUILLON
-version: 0.8
-date: 2026-10-28
+version: 0.11
+date: 2026-10-30
 resume: >
   Programme des 14 leçons du Module 0 (sons et tons) : pour chaque leçon, la
   famille de nouveautés, les contrastes travaillés, le volume de contenus, les
@@ -68,9 +68,9 @@ qui relève du programme.
 
 ### 2.1 Ordre dans la leçon
 
-1. **E1** : découverte de chaque élément nouveau dans ses mots supports
-   (ACT-E1-DECOUV), puis écoute contrastée de chaque paire d'E2
-   (ACT-E1-CONTRA).
+1. **E1** : découverte de chaque son (ou ton) seul, dans 3 mots au plus,
+   voix de femme puis voix d'homme (ACT-E1-DECOUV) ; aucune opposition en
+   E1 (DEC-0039).
 2. **E2 → E3** : les séries de la leçon, **dans l'ordre recommandé de la
    fiche** (§ 3) ; une fois toutes vues, elles sont mêlées.
 3. **E4 → E5** : quand le volet production de la leçon est ouvert (verrou
@@ -89,7 +89,7 @@ Chaque temps reste un choix entre deux possibilités (R-PARC-04).
 
 | Volet | Contenu | Volume du Module 0 |
 |---|---|---|
-| Écoute (E1–E3) | 257 termes distincts × 3 voix (F1, F2, H1) × 2 débits | **1 542 audios** |
+| Écoute (E1–E3) | voir `05_PRODUCTION/03_audio.md` : 3 voix actives (F1, H3, H4 ; F3 écartée, DEC-0048) × 2 débits, plus les mots d'exemple d'E1 (DEC-0039) | **2 238 audios** (2026-10-29) |
 | Production (E4–E5) | 100 mots supports × 1 voix modèle × 2 débits (+ débit rapide en E5) | **200 à 300 audios** |
 | Images | mots supports `imageable` (79 sur 100, estimation à corriger) | 79 images |
 
@@ -129,8 +129,8 @@ affichée, R-LEX-06).
 |---|---|
 | But | Installer les sons « faciles » et le ton plat, avec des syllabes simples |
 | Niveau | 4 (mineur) : sons proches ou identiques au français. Écarts réels : **h** (muet en français), **ê / e** et **ô / o** (souvent confondus par les francophones du Sud de la France), **-m / -n** finales (risque de nasaliser la voyelle), implosives **b, đ** (écart faible), ton **ngang** (garder la voix plate) |
-| Parties (DEC-0037) | **A, voyelles** (8 séries), puis **B, consonnes et finales** (8 séries) ; chacune avec E1 → E3 et son verrou |
-| Ordre recommandé des séries | 1) voyelles : o/ô (*to/tô*, *ho/hô*), e/ê (*xem/xêm\**), i/ê (*đi/đê*), u/ô (*tu/tô*) ; 2) consonnes : b/m/v (*ba/ma/va*), n/l (*nên/lên*), đ/d (*đi/di*, *da/đa*) ; 3) finales -m/-n (*xem/xen*, *nên/nêm*) |
+| Parties (DEC-0037) | **A, voyelles** (6 séries), puis **B, consonnes et finales** (8 séries) ; chacune avec E1 → E3 et son verrou. Le son **i** n'est pas un contraste en L01 (DEC-0044) |
+| Ordre recommandé des séries | 1) voyelles : o/ô (*to/tô*, *ho/hô*), e/ê (*xem/xêm\**), u/ô (*tu/tô*) ; 2) consonnes : b/m/v (*ba/ma/va*), n/l (*nên/lên*), đ/d (*đi/di*, *da/đa*) ; 3) finales -m/-n (*xem/xen*, *nên/nêm*) |
 | Vigilance | **đ** (implosive) face à **d** (= /z/ à Hanoï) ; le ton ngang reste **plat**, sans montée de fin de phrase |
 | Recyclage E5 | aucun (première leçon) ; E5 mêle les trois groupes de séries |
 | Remarque | Leçon la plus lourde en nombre d'éléments (21), mais la plus facile. Sa vraie nouveauté est la **méthode** (étapes E1–E5, symboles de réponse, voix et débits). Elle sert aussi de **test d'entrée** : une série qui ne se valide pas vite révèle un contraste moins évident que prévu (DEC-0034) |
@@ -331,6 +331,9 @@ travail.
 | 0.6 | 2026-10-28 | Point P5 décidé (DEC-0035). |
 | 0.7 | 2026-10-28 | Point P6 décidé (DEC-0036) : tous les points du § 6 sont tranchés. |
 | 0.8 | 2026-10-29 | L01 en deux parties (DEC-0037). |
+| 0.9 | 2026-10-29 | E1 sans écoute contrastée (DEC-0039) ; audios : 4 voix (DEC-0040). |
+| 0.10 | 2026-10-29 | L01 : i retiré des contrastes, 14 séries (DEC-0044). |
+| 0.11 | 2026-10-30 | Audios : F3 écartée, 3 voix (DEC-0048). |
 
 ## Liens
 

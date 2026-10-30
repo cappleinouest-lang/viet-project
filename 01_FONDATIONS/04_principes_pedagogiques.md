@@ -2,8 +2,8 @@
 id: FOND-04
 titre: Principes pédagogiques
 statut: VALIDE
-version: 1.6
-date: 2026-10-28
+version: 1.7
+date: 2026-10-29
 resume: >
   Définit comment la formation fait apprendre : le vocabulaire commun
   (module, leçon, étape, activité, item), le parcours en 5 étapes de chaque
@@ -12,7 +12,7 @@ resume: >
   tout support (Anki ou autre). Les règles détaillées et vérifiables en
   découlent dans REG-REGLES.
 entrees: [FOND-01, FOND-02, FOND-03]
-sorties: [REG-REGLES, PROG-M0, PROD-ARCH, PROG-ACT]
+sorties: [REG-REGLES, PROG-M0, PROD-ARCH, PROG-ACT, PROD-AF-LECT]
 sources:
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/P0_PEDA_GLOB_REF_Paradigme_Pedagogique_Fondateur_v3.md
   - _ARCHIVES/OLD/DOCS/01_REFERENCES/P0_PEDA_GLOB_01_RULE_Referentiel_Pedagogique_Global_v1.md
@@ -202,6 +202,7 @@ Voir FOND-01 § 7. S'y ajoutent :
 | — | 2026-10-28 | Mise en cohérence des liens `sorties` (exception DOC-21, statut inchangé). |
 | 1.5 | 2026-10-28 | § 7 bis : symbole des sons, symboles dès E1 (DEC-0029). |
 | 1.6 | 2026-10-28 | § 9, critère 3 : « mot courant » en Module 0, fréquence à partir de A1 (DEC-0035). Revalidé par Christophe. |
+| 1.7 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
 
 ## Liens
 

@@ -2,8 +2,8 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.13
-date: 2026-10-28
+version: 0.17
+date: 2026-10-29
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
   et les liens entre fichiers. Sert de référence au générateur et au script
@@ -165,7 +165,7 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `item_ref` | référence | `word_code`, ou écriture pour une syllabe | `W0042` |
 | `voice` | voix | `voice_code` de `voix.csv` | `F1` |
 | `speed` | débit | `slow`, `normal`, `fast` | `slow` |
-| `source` | origine | `fpt`, `native`, `recorded` | `fpt` |
+| `source` | origine | `fpt-mkp`, `fpt`, `native`, `recorded` | `fpt-mkp` |
 | `file` | chemin relatif, dans `04_DONNEES/audio/` (DEC-0023) | | `audio/W0042-F1-slow.mp3` |
 | `validated` | écouté et validé (R-AUD-01) | `true` / `false` | `false` |
 
@@ -197,14 +197,30 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
-| `voice_code` | code | `F1`, `F2`, `H1`, `E1`… | `H1` |
+| `voice_code` | code | `F1`, `F2`, `H1`, `E1`… (un code n'est jamais réutilisé pour une autre voix) | `H3` |
 | `gender` | genre | `female`, `male`, vide | `male` |
 | `age` | âge | `adult`, `child` | `adult` |
 | `region` | accent | `north` (DEC-0009) | `north` |
-| `provider` | origine | `fpt`, `native` (enregistrement), autre | `fpt` |
-| `provider_voice` | identifiant chez le fournisseur | | `leminh` |
-| `status` | état | `active`, `planned` | `active` |
+| `provider` | origine | `fpt-mkp` (FPT AI Marketplace), `fpt` (ancienne API FPT.AI), `native` (enregistrement), autre | `fpt-mkp` |
+| `provider_voice` | identifiant chez le fournisseur | | `std_leminh` |
+| `provider_model` | modèle de synthèse chez le fournisseur | `FPT.TTS-pro`, `FPT.AI-VITs`, vide | `FPT.AI-VITs` |
+| `provider_speed_slow` | valeur `speed` du débit lent pour cette voix (vide : 0,8) | nombre | `0.6` |
+| `status` | état | `active`, `planned`, `inactive` (écartée, gardée pour l'historique) | `active` |
 | `note` | remarque | | |
+
+### 3.11 bis `exemples_e1.csv` — mots d'exemple de l'étape E1 (DEC-0039)
+
+Produit par `05_PRODUCTION/tools/choisir_exemples_e1.py` ; peut être corrigé
+à la main (relancer l'outil réécrit le fichier : `--verifier` compare sans écrire).
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `lesson_code` | leçon | `lesson_code` | `M0-L01` |
+| `element` | son ou ton découvert | `sound_code` ou `tone_code` | `PH-VS-e` |
+| `rank` | ordre de passage | 1 à 3 | `1` |
+| `word_code` | mot d'une syllabe contenant l'élément | `word_code` | `W0057` |
+| `voice_f` / `voice_h` | voix de femme, puis voix d'homme | `voice_code` actifs | `F1` / `H3` |
+| `note` | écriture du mot (lecture humaine du fichier) | | `xem` |
 
 ### 3.12 `images.csv` — images des mots (DEC-0024)
 
@@ -221,7 +237,9 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 
 ### 3.13 `reperes_sons.csv` — aides pour apprendre les symboles (DEC-0038)
 
-Une ligne par symbole (`ipa_main` de `sons.csv`) utilisé dans les séries.
+Une ligne par symbole (`ipa_main` de `sons.csv`) utilisé dans les séries. Une
+consonne **finale** peut avoir sa propre ligne, symbole précédé de `-`
+(`-m`, `-n`) : elle est utilisée en priorité pour la fin de mot (DEC-0046).
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
@@ -284,6 +302,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.11 | 2026-10-28 | Colonne `position` de `paires_minimales.csv` : sens des positions 2 et 3 (DEC-0033). |
 | 0.12 | 2026-10-29 | `lecons.csv` : colonne `split_parts` (DEC-0037) ; L14 corrigé dans l'exemple de `is_recycling`. |
 | 0.13 | 2026-10-29 | Nouveau fichier `reperes_sons.csv` (DEC-0038). |
+| 0.14 | 2026-10-29 | `voix.csv` : colonne `provider_model`, statut `inactive`, fournisseur `fpt-mkp`. |
 
 ## Liens
 
@@ -293,3 +312,6 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
   [Spécificités du vietnamien](../01_FONDATIONS/02_specificites_vietnamien.md)
 - **Sorties** : fichiers CSV de ce dossier ·
   [Architecture des outils](../05_PRODUCTION/01_architecture_outils.md)
+| 0.15 | 2026-10-29 | `voix.csv` : colonne `provider_speed_slow` (débit lent propre à chaque voix). |
+| 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
+| 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |

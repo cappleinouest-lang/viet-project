@@ -2,14 +2,14 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.31
-date: 2026-10-28
+version: 1.42
+date: 2026-10-30
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
   décision et sa raison. Une décision ne se modifie pas : on en prend une
   nouvelle qui la remplace.
 entrees: []
-sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT]
+sorties: [REG-DOC, REG-REGLES, DATA-MODELE, PROD-ARCH, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT, PROD-AF-LECT]
 sources: []
 ---
 
@@ -831,6 +831,261 @@ qui indique « remplace DEC-NNNN ».
   nouveauté à la fois, y compris dans le geste de prononciation.
 - **Impacte** : DATA-MODELE, PROG-ACT (E1, E2, E4), lecteur d'activités.
 
+### DEC-0039 — E1 : découverte de chaque son seul, sans écoute contrastée
+
+- **Date** : 2026-10-29
+- **Question** : en E1, le lecteur faisait entendre les termes d'une série
+  côte à côte (*xem* / *xêm*), avec toutes les voix mêlées. Christophe,
+  après essai : cela prête à confusion ; en E1 on doit seulement
+  « s'imprégner de ce qui est juste », les différences viennent en E2.
+- **Options** : (A) chaque son seul, dans plusieurs mots ; (B) seulement le
+  mot support de chaque série. Pour les mots : règle stricte (sons tous déjà
+  vus) ou souple (ton déjà vu, autres sons libres).
+- **Décision** :
+  1. E1 = **ACT-E1-DECOUV seule** : un écran par son (ou ton) des séries de
+     la leçon (ou de la partie, DEC-0037), avec son symbole, sa catégorie,
+     son mot repère et son indice d'écoute (DEC-0038).
+  2. **ACT-E1-CONTRA est supprimée** : aucune opposition entre sons en E1 ;
+     la première opposition est la paire d'E2.
+  3. Chaque son est entendu dans **3 mots au plus**, mots du corpus d'une
+     syllabe, choisis par **règle souple** : le **ton** du mot est déjà
+     ouvert à l'écoute ; les autres sons sont libres. Priorité au mot
+     support de la série, puis à des mots dont le **début varie** (la
+     voyelle, pour un son de début), du plus fréquent au moins fréquent.
+  4. Chaque mot est dit par **une voix de femme puis une voix d'homme**,
+     au **débit normal** ; un bouton « Plus lentement » passe au débit lent.
+     Paires de voix alternées : F1 + H3, F3 + H4, F3 + H3 (F1 seule
+     depuis DEC-0048).
+- **Précision** (2026-10-29, demande de Christophe) : le bouton « Plus
+  lentement » est remplacé par **deux boutons d'écoute**, « ▶ Écouter »
+  (débit normal) et « 🐢 Écouter lentement » (débit lent) ; et l'élève
+  choisit la voix : « Femme et homme » (par défaut), « Femme » ou « Homme ».
+- **Données** : `04_DONNEES/exemples_e1.csv`, produit par
+  `05_PRODUCTION/tools/choisir_exemples_e1.py` (305 mots pour 111 sons, le
+  2026-10-29) ; corrigeable à la main. Audios : 326 fichiers de plus.
+- **Limite** : la règle souple fait entendre en E1 des sons pas encore
+  étudiés (*năm*, *cơm*…) ; ils ne sont ni montrés ni expliqués.
+  Quelques sons n'ont qu'un ou deux mots (b, u, iu, oa, oe, uy…).
+- **Raison** : écouter d'abord un modèle juste et varié (plusieurs mots,
+  plusieurs voix), sans risque de confondre ; l'identification avec
+  correction (E2–E3) est ce qui fait progresser (méta-analyse citée dans
+  PROG-ACT).
+- **Remplace** : la partie « écoute contrastée » de l'E1 décrite dans
+  PROG-ACT et PROG-M0.
+- **Impacte** : R-PARC-03, PROG-ACT, PROG-M0, DATA-MODELE, lecteur, audios.
+
+### DEC-0040 — Voix et modèles de synthèse retenus (FPT AI Marketplace)
+
+- **Date** : 2026-10-29
+- **Question** : quelles voix du Nord, quel modèle, quel réglage, pour les
+  audios de la formation (DEC-0023) ?
+- **Constats** (écoute de Christophe et mesures) : avec FPT.TTS-pro, les voix
+  d'homme Quang Anh et Viet Khoa avalent la consonne de départ d'un mot
+  isolé (*xem* : syllabe d'environ 0,25 s, « x » absent) ; avec
+  FPT.AI-VITs, Le Minh, Huy Phong et Minh Quan sont claires en mot seul ;
+  les niveaux sonores diffèrent (Huy Phong environ 5 dB plus faible).
+- **Décision** :
+  1. **Deux femmes et deux hommes** : F1 Ban Mai (FPT.TTS-pro, voix
+     modèle), F3 Thu Minh, H3 Le Minh, H4 Huy Phong (FPT.AI-VITs). Quang
+     Anh (H1), Viet Khoa (H2) et Minh Quan (H5) sont écartés.
+  2. Mot envoyé **seul** (le doublement « mot, mot. » puis découpage reste
+     disponible en option).
+  3. **Débit lent** propre à chaque voix : F1 0,7 ; F3, H3, H4 0,6
+     (débit normal : 1).
+  4. **Volume égalisé** : niveau de parole −20 dBFS, crête ≤ −1 dBFS ;
+     fichier reçu de FPT conservé dans `audio/_bruts/`.
+- **Données** : `voix.csv` (colonnes `provider_model`,
+  `provider_speed_slow`) ; détails dans PROD-AUDIO.
+- **Impacte** : DATA-MODELE, PROD-AUDIO, lecteur (voix).
+
+### DEC-0041 — E2 : échauffement « Pareil ou différent ? » non noté
+
+- **Date** : 2026-10-29
+- **Question** : Christophe propose qu'en E2 l'élève entende deux mots et
+  dise seulement s'ils ont le même son : marche plus douce après E1
+  (DEC-0039), où aucune différence n'est encore entendue.
+- **Options** : (A) E2 entièrement « même / différent » ; (B) échauffement
+  « même / différent » non noté, puis le « Lequel ? » à 2 choix ;
+  (C) sans changement.
+- **Décision** : **B**.
+  1. Au début de l'E2 de chaque partie, **10 paires** « Pareil ou
+     différent ? » : deux termes de la paire d'E2 (positions 1 et 2), débit
+     lent ; autant de paires pareilles que différentes, dans un ordre au
+     hasard.
+  2. Les deux mots d'une paire sont dits par **deux voix différentes**,
+     même quand ils sont pareils : l'élève juge le son, pas l'enregistrement.
+  3. Correction simple (juste / faux), puis les deux termes sont montrés
+     (image et symbole) et peuvent être réécoutés.
+  4. **Non noté, hors verrou** : rien n'entre dans le score ni dans la
+     validation d'E2, qui reste le « Lequel ? » (identification).
+  5. L'échauffement peut être refait à tout moment (« Pareil ou
+     différent ? » sur l'étape E2) ; une E2 déjà commencée le saute.
+- **Raison** : l'identification (« Lequel ? ») fait mieux progresser que la
+  discrimination « même / différent » (g = 0,95 contre 0,57, méta-analyse
+  citée dans PROG-ACT) ; elle reste donc l'exercice qui valide. La
+  discrimination, plus facile, sert seulement de transition.
+- **Remplace** : l'abandon complet du « même / différent » noté dans
+  PROG-ACT (§ 4) est assoupli pour cet échauffement seulement.
+- **Impacte** : PROG-ACT, R-PARC-04, lecteur.
+
+### DEC-0042 — Indiquer la place du son : début, fin, voyelle, ton
+
+- **Date** : 2026-10-29
+- **Question** : en E2, Christophe ne savait pas s'il fallait comparer la
+  consonne du début ou celle de la fin (*xem* / *xen* : finale ; *nên* /
+  *lên* : début). Le symbole seul ne le dit pas (/m/ sert pour *ma* et
+  pour *xem*).
+- **Décision** :
+  1. Chaque symbole de **consonne** porte une marque de place :
+     **« début ▸ »** ou **« ◂ fin »**, partout (E1, échauffement, E2, E3,
+     aux deux débits).
+  2. En E1, l'en-tête précise : « consonne en début de mot », « consonne
+     en fin de mot » ou « voyelle ».
+  3. En E2 (échauffement compris) et E3, une consigne dit **quoi
+     écouter** : « Écoutez la consonne du début du mot », « … de la fin du
+     mot », « Écoutez la voyelle (le milieu du mot) », « Écoutez le ton (la
+     mélodie du mot) ».
+- **Données** : colonne `position` de `sons.csv` (initial, nucleus, final) ;
+  aucun nouveau fichier.
+- **À traiter** : les mots repères (DEC-0038) sont attachés au symbole, donc
+  partagés par le début et la fin : pour **-m** et **-n** finals, le repère
+  est « miel » / « neige », où le son est au début. Un repère propre aux
+  finales est à choisir.
+- **Raison** : une seule chose à écouter à la fois, nommée clairement
+  (principe d'atomicité) ; éviter qu'un échec vienne de la consigne et non
+  de l'oreille.
+- **Impacte** : PROG-ACT, lecteur.
+
+### DEC-0043 — Leçons de tons : jamais d'audio lent
+
+- **Date** : 2026-10-29
+- **Question** : Christophe, à l'écoute : dans les leçons de tons, le débit
+  lent rend la mélodie (le ton) moins perceptible.
+- **Décision** : dans les leçons de tons (`is_tone_lesson`, L02, L03, L07,
+  L11), tous les audios sont joués au **débit normal** : E1 (pas de bouton
+  « Écouter lentement »), échauffement « Pareil ou différent ? », E2 et E3.
+  Les deux phases d'E2–E3 restent : d'abord **images et symboles**, puis
+  **symboles seuls** (DEC-0028) ; le seuil se mesure de la même façon.
+- **Non changé** : les audios lents de ces mots restent générés (beaucoup
+  servent aussi dans des leçons de sons) ; ils ne sont simplement pas joués
+  dans les leçons de tons.
+- **Raison** : le ralenti de la synthèse étire et aplatit le contour
+  mélodique ; or c'est lui qu'il faut entendre.
+- **Remplace** : pour les leçons de tons seulement, le passage « débit lent
+  puis débit normal » de R-VOL-05 à 07 devient « images puis symboles ».
+- **Impacte** : PROG-ACT, lecteur.
+
+### DEC-0044 — L01 : le son i n'est plus un contraste
+
+- **Date** : 2026-10-29
+- **Question** : Christophe, à l'essai de L01 : inutile de faire distinguer
+  **i** en E1 et E2, aucun son proche ne le menace (son identique au
+  français, « i » de « lit »).
+- **Décision** : dans L01, i n'est plus opposé à aucun son :
+  - série **S0010** (*đi* / *đê*) supprimée ;
+  - série **S0013** (*pin* / *pên*\*) supprimée ;
+  - série **S0004** : terme *nin*\* retiré, la série garde *nên* / *nen*\*
+    (ê / e).
+  L01 passe de 16 à **14 séries** (partie A : 6 séries, 5 sons en E1 ;
+  partie B inchangée). Les mots *đi* et *pin* restent en L01 pour d'autres
+  contrastes (đ / d, -n / -m).
+- **Non changé** : i reste un point de comparaison là où il est proche d'un
+  son nouveau : *iu* (L04), *ư* (L06), *iê* (L12). Il reste ouvert en L01
+  dans `ouvertures.csv` (il peut figurer dans les mots).
+- **À examiner** (même logique) : **u** en L01 (*mun* dans S0007, série
+  S0016 *tu* / *tô*), autre son identique au français.
+- **Raison** : ne faire distinguer que ce qui risque d'être confondu ; un
+  contraste trop facile allonge la leçon sans rien apprendre.
+- **Données** : `paires_minimales.csv` (5 lignes retirées),
+  `exemples_e1.csv` regénéré.
+- **Impacte** : PROG-M0 (fiche L01), lecteur, audios (fichiers de *nin*,
+  *đê*, *pên* devenus inutiles, sans gêne).
+
+### DEC-0045 — Leçons de tons : une seule voix d'abord, plusieurs ensuite
+
+- **Date** : 2026-10-29
+- **Question** : Christophe : pour les tons, il vaut mieux distinguer et
+  opposer avec la **même voix** ; plusieurs voix ensuite, pour rendre
+  l'exercice plus difficile.
+- **Décision** (leçons `is_tone_lesson` seulement) :
+  1. Échauffement « Pareil ou différent ? » : les deux mots sont dits par
+     la **même voix**, la voix modèle F1 (exception à DEC-0041, point 2).
+  2. E2 et E3, phase **« avec images »** : **une seule voix**, F1.
+  3. E2 et E3, phase **« symboles seuls »** : voix tirées au hasard parmi
+     les 4, comme avant ; le verrou (≥ 2 voix, R-VOL-05) s'y mesure.
+  4. E1 inchangée : l'élève choisit femme, homme ou les deux (DEC-0039).
+- **Raison** : un ton est une mélodie **relative** à la voix de celui qui
+  parle ; changer de voix d'un mot à l'autre ajoute un écart de hauteur qui
+  n'est pas le ton. On apprend d'abord la forme avec une voix, puis on la
+  reconnaît malgré la variété des voix (variabilité, HVPT).
+- **Impacte** : PROG-ACT, R-AUD-02 (exception pour la première phase des
+  leçons de tons), lecteur.
+
+### DEC-0046 — Repères des finales -m et -n ; u gardé en L01
+
+- **Date** : 2026-10-29
+- **Question** : suites de DEC-0042 (repère « miel » / « neige » trompeur
+  pour une finale) et de DEC-0044 (faut-il aussi retirer **u** des
+  contrastes de L01 ?).
+- **Décision** (Christophe) :
+  1. Repères propres aux finales : **-m** → « pomme » 🍎, **-n** → « laine »
+     🧶, avec l'indice « sans voyelle après ». Les débuts gardent « miel »
+     et « neige ». Les autres finales (-p, -t, -c, -ch, -ng, -nh) gardent
+     leur repère vietnamien.
+  2. **u reste** un contraste en L01 (*tu* / *tô*, *môn* / *mon*\* / *mun*).
+- **Données** : `reperes_sons.csv`, lignes `-m` et `-n` ; le générateur du
+  lecteur les prend en priorité pour une consonne finale.
+- **Impacte** : DATA-MODELE, lecteur.
+
+### DEC-0047 — Mode test : afficher ce qui est joué
+
+- **Date** : 2026-10-30
+- **Question** : pendant la phase d'essai, Christophe veut savoir, à chaque
+  son, quel fichier est joué, quel personnage parle, homme ou femme, à
+  quelle vitesse et avec quel modèle FPT.
+- **Décision** : le lecteur affiche en bas de l'écran une **bande
+  d'information** mise à jour à chaque son : chemin du fichier (ou « aucun
+  fichier : voix de synthèse »), nom du personnage, femme / homme, code de
+  voix et identifiant FPT, débit et valeur `speed`, modèle FPT. Activée par
+  défaut ; réglage « Infos de test sur le son » pour la masquer.
+- **Précision** (même jour, demande de Christophe) : l'information est notée
+  **dans la case du mot joué** et non dans une bande en bas de l'écran ; une
+  ligne par voix (fichier ; personnage · F/H · code ; modèle · débit ·
+  `speed`). En E2, E3 et à l'échauffement, elle n'apparaît **qu'après la
+  réponse** (le nom du fichier trahirait la bonne réponse).
+- **Limite** : la valeur `speed` et le modèle affichés sont ceux de
+  `voix.csv` **au moment de la génération du lecteur** ; ils ne sont pas
+  enregistrés dans le fichier audio lui-même. Un fichier produit avec un
+  ancien réglage afficherait le réglage actuel.
+- **À décider** : désactiver cette bande par défaut avant d'ouvrir la
+  formation à d'autres apprenants.
+- **Impacte** : lecteur, PROD-AF-LECT.
+
+### DEC-0048 — Voix F3 (Thu Minh) écartée
+
+- **Date** : 2026-10-30
+- **Question** : après écoute des audios générés, toutes les voix retenues
+  par DEC-0040 sont-elles de qualité suffisante ?
+- **Constat** (écoute de Christophe) : F3 Thu Minh est **la moins bonne des
+  voix**.
+- **Décision** :
+  1. F3 passe au statut `inactive` dans `voix.csv` : le lecteur et le
+     script de génération ne la prennent plus en compte. Remplace DEC-0040,
+     point 1, pour F3.
+  2. Voix actives : **F1 Ban Mai** (femme, voix modèle), **H3 Le Minh** et
+     **H4 Huy Phong** (hommes).
+  3. Mots d'exemple d'E1 (DEC-0039, point 4) : la voix de femme est
+     toujours F1 ; paires F1 + H3, F1 + H4, F1 + H3.
+  4. Les fichiers F3 déjà produits restent dans `04_DONNEES/audio/` et dans
+     `audios.csv` (rien n'est supprimé) ; ils sont simplement ignorés.
+- **Conséquences** : une seule voix de femme. Le verrou « ≥ 2 voix »
+  (R-VOL-05) reste atteignable avec 3 voix. La variété des voix en phase
+  « symboles seuls » (DEC-0045) est moindre.
+- **À décider** : chercher une deuxième voix de femme du Nord (autre voix
+  FPT ou enregistrement).
+- **Impacte** : `voix.csv`, `exemples_e1.csv`, `choisir_exemples_e1.py`,
+  PROD-AUDIO, PROD-LECT, PROG-M0, lecteur.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -867,6 +1122,17 @@ qui indique « remplace DEC-NNNN ».
 | 1.29 | 2026-10-28 | Ajout de DEC-0036 (finales : 85 % par leçon, 80 % en sortie). |
 | 1.30 | 2026-10-29 | Ajout de DEC-0037 (L01 en deux parties dans le lecteur). |
 | 1.31 | 2026-10-29 | Ajout de DEC-0038 (mots repères, catégories de sons, chemins de prononciation). |
+| 1.32 | 2026-10-29 | Ajout de DEC-0039 (E1 : découverte de chaque son seul, sans écoute contrastée). |
+| 1.33 | 2026-10-29 | Ajout de DEC-0040 (voix et modèles de synthèse retenus). |
+| 1.34 | 2026-10-29 | Ajout de DEC-0041 (E2 : échauffement « Pareil ou différent ? » non noté). |
+| 1.35 | 2026-10-29 | Ajout de DEC-0042 (place du son : début, fin, voyelle, ton). |
+| 1.36 | 2026-10-29 | Ajout de DEC-0043 (leçons de tons : jamais d'audio lent). |
+| 1.37 | 2026-10-29 | Ajout de DEC-0044 (L01 : le son i n'est plus un contraste). |
+| 1.38 | 2026-10-29 | Ajout de DEC-0045 (tons : une seule voix d'abord, plusieurs ensuite). |
+| 1.39 | 2026-10-29 | Ajout de DEC-0046 (repères des finales -m et -n ; u gardé en L01). |
+| 1.40 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
+| 1.41 | 2026-10-30 | Ajout de DEC-0047 (mode test : afficher ce qui est joué). |
+| 1.42 | 2026-10-30 | Ajout de DEC-0048 (voix F3 Thu Minh écartée). |
 
 ## Liens
 

@@ -1,14 +1,76 @@
 /*
- * Lecteur d'activités — Module 0, volet écoute (E1 → E3).
+ * ============================================================================
+ * LECTEUR D'ACTIVITÉS — PROGRAMME (lecteur.js)
+ * Vietnamien, Module 0, volet écoute : E1 Découvrir → échauffement → E2 → E3 → écrit
+ * ============================================================================
+ *
+ * À QUOI SERT CE FICHIER
+ *   Il fabrique tous les écrans dans la zone <main id="app"> de index.html,
+ *   joue les sons, note les réponses, calcule les scores et ouvre les étapes
+ *   (verrous). Il ne contient AUCUN contenu pédagogique : leçons, séries,
+ *   sons, mots et audios arrivent tout faits dans window.DONNEES_LECTEUR,
+ *   produit par 05_PRODUCTION/tools/generer_lecteur.py à partir de 04_DONNEES.
+ *   → Pour changer un mot, une série, un seuil de leçon : modifier 04_DONNEES
+ *     puis regénérer, jamais ce fichier.
+ *
+ * PLAN DU FICHIER (chercher le titre « ---------- … ---------- »)
+ *    1. Enregistrement de la progression (Stockage, migration, réglages)
+ *    2. Outils (fabriquer un élément, tirer au hasard…)
+ *    3. Audio (fichier ou voix de synthèse)
+ *    4. Affichage d'un terme (symbole, image, repère, place dans le mot)
+ *    5. Calcul des scores et des verrous
+ *    6. Écran : accueil (liste des leçons)
+ *    7. Écran : une leçon (parties, étapes, boutons)
+ *    8. Écran : E1 Découvrir
+ *    9. Écran : échauffement « Pareil ou différent ? »
+ *   10. Écran : E2 et E3 « Lequel ? »
+ *   11. Écran : l'écrit (fin d'E3)
+ *   12. Écran : réglages
+ *   13. Écran : mes progrès
+ *   14. Démarrage
+ *
+ * VOCABULAIRE UTILISÉ DANS LE CODE
+ *   leçon (l)    : { code 'M0-L01', numero, titre, seuil (0.85), tons (vrai/faux),
+ *                    series [...], parties [...], decouverte {...} }
+ *   partie (pa)  : { code 'A' | 'B' | 'U' (unique), titre, series [codes], elements [codes] }
+ *   série (s)    : { code 'S0001', place 'debut'|'fin'|'voyelle'|'ton', termes [...] }
+ *   terme (t)    : un mot ou une syllabe : { ecrit, sens, invente, image, symbole, audio }
+ *   symbole      : { texte '/ɛ/', categorie 'identique'|'proche'|'nouveau', place, repere, indication }
+ *   debit        : 'slow' (lent) ou 'normal' ; dans l'état d'une étape, c'est la PHASE
+ *                  (phase 1 = 'slow' = images + symboles ; phase 2 = 'normal' = symboles seuls)
+ *   voix         : code 'F1', 'H3', 'H4' (voix actives de voix.csv ; F3 écartée, DEC-0048)
+ *   cle          : 'e2' ou 'e3' (quelle étape « Lequel ? »)
+ *   pc           : code de la partie ('A', 'B' ou 'U')
+ *
+ * MODIFICATIONS COURANTES : OÙ REGARDER
+ *   - un texte affiché (consigne, bouton)      → chercher le texte entre apostrophes ;
+ *   - le nombre de paires de l'échauffement    → NB_PAIRES_ECHAUFFEMENT ;
+ *   - les seuils, 20 réponses, 2 voix…         → PARAMETRES dans generer_lecteur.py ;
+ *   - ce qu'il faut écouter (début/fin…)       → PLACES ;
+ *   - la couleur, la taille                    → lecteur.css ;
+ *   - passer à WordPress ou Firebase           → l'objet Stockage, et lui seul.
+ *
+ * PRÉCAUTIONS
+ *   - Ne pas écrire de balise fermante de script dans ce fichier, même en
+ *     commentaire : le générateur l'insère dans lecteur_autonome.html.
+ *   - nomAccessible() sert aux essais automatiques : ne pas changer son texte.
+ *   - Après une modification : regénérer, ouvrir 06_LIVRABLES/lecteur/index.html,
+ *     et parcourir au moins une leçon de sons (L01) et une leçon de tons (L02).
+ *
  * Règles appliquées : PROG-ACT, R-PARC-01 à 05, R-ECR-01/02, R-LEX-06, R-VOL-02/05 à 07,
  * DEC-0028/0029 (étiquettes), DEC-0032 (minimum par série), DEC-0033 (positions 1 et 2 en E2),
- * DEC-0037 (leçon en deux parties).
- * Données : window.DONNEES_LECTEUR, produit par 05_PRODUCTION/tools/generer_lecteur.py.
- * Ne pas modifier les contenus ici : ils viennent de 04_DONNEES.
+ * DEC-0037 (leçon en deux parties), DEC-0039 (E1 un son à la fois), DEC-0041 (échauffement),
+ * DEC-0042 (place du son), DEC-0043 et DEC-0045 (leçons de tons).
+ * Description complète : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
  */
+// Tout le programme est enfermé dans une fonction qui s'exécute aussitôt :
+// ses variables ne se mélangent pas avec celles de la page.
 (function () {
+  // Mode strict : le navigateur signale plus d'erreurs (variable mal orthographiée…).
   'use strict';
 
+  // Raccourcis : D = toutes les données générées ; P = paramètres des verrous ;
+  // puis les zones de la page (voir les id dans index.html).
   var D = window.DONNEES_LECTEUR;
   var P = D.parametres;
   var app = document.getElementById('app');
@@ -17,11 +79,15 @@
   var bandeau = document.getElementById('bandeau-voix');
   var pied = document.getElementById('pied');
 
-  /* ---------- Enregistrement de la progression (seul endroit à remplacer
+  /* ---------- 1. Enregistrement de la progression (seul endroit à remplacer
      pour passer à WordPress ou Firebase : DEC-0030) ---------- */
+  // Nom sous lequel la progression est rangée dans le navigateur (localStorage).
+  // Le changer revient à repartir de zéro pour tout le monde.
   var CLE = 'viet-lecteur-progression-v1';
   var memoire = null;
   var Stockage = {
+    // charger() : lit la progression enregistrée (texte JSON) ; si rien ou si le
+    // navigateur refuse (navigation privée…), repart d'une progression vide.
     charger: function () {
       try {
         var t = window.localStorage.getItem(CLE);
@@ -29,19 +95,35 @@
       } catch (e) { /* stockage indisponible : on garde la progression en mémoire */ }
       return memoire || { version: 2, lecons: {} };
     },
+    // enregistrer(p) : garde p en mémoire et l'écrit dans le navigateur.
+    // Pour WordPress ou Firebase : remplacer le corps de ces deux fonctions par
+    // un envoi / une lecture sur le compte de l'apprenant (DEC-0030).
     enregistrer: function (p) {
       memoire = p;
       try { window.localStorage.setItem(CLE, JSON.stringify(p)); } catch (e) { /* idem */ }
     }
+  // (Fin de l'objet Stockage.)
   };
 
+  // Retrouve une leçon par son code ('M0-L01').
   function trouverLecon(code) { return D.lecons.filter(function (l) { return l.code === code; })[0]; }
+  // Séries d'une leçon qui appartiennent à une partie (A, B ou U).
   function seriesDe(l, partie) {
     return l.series.filter(function (s) { return partie.series.indexOf(s.code) >= 0; });
   }
+  // État vide d'une étape E2 ou E3 :
+  //   debit    : phase en cours, 'slow' (phase 1) puis 'normal' (phase 2)
+  //   hist     : toutes les réponses { s: série, ok: juste ?, v: voix, d: phase, t: heure,
+  //              c: n° du terme attendu, r: n° du terme choisi }
+  //   reussites: nombre de bonnes réponses par série, en phase 2 (DEC-0032)
+  //   validee  : étape validée ; echauffe (ajouté plus tard) : échauffement fait
+  // État vide d'une partie : sons vus en E1, E2, E3, écrit vu.
   function etatEtape() { return { debit: 'slow', hist: [], reussites: {}, validee: false }; }
   function etatPartieNeuf() { return { e1: { vues: [] }, e2: etatEtape(), e3: etatEtape(), ecrit: false }; }
 
+  // MIGRATION : convertit une progression enregistrée avec une ancienne version
+  // du lecteur. À compléter (et à monter le numéro de version) si la forme de
+  // l'état change un jour.
   // Version 1 (une leçon = un seul bloc) -> version 2 (une leçon = une ou plusieurs parties).
   function migrer(p) {
     if (p.version === 2) return p;
@@ -68,8 +150,24 @@
     p.version = 2;
     return p;
   }
+  // prog = TOUTE la progression de l'apprenant, chargée au démarrage :
+  //   { version: 2, lecons: { 'M0-L01': { parties: { A: {...}, B: {...} }, ecouteValideeLe: '2026-10-29' } },
+  //     reglages: {...} }
+  // On la modifie en mémoire puis on appelle sauver().
   var prog = migrer(Stockage.charger());
+  // Réglages par défaut (écran Réglages). Ajouter un réglage : l'ajouter ici,
+  // puis une ligne dans ecranReglages().
+  var REGLAGES_DEFAUT = { vitesse: 1, suivantAuto: false, aides: true, grandTexte: false, infoTest: true };
+  function reglages() {
+    prog.reglages = prog.reglages || {};
+    Object.keys(REGLAGES_DEFAUT).forEach(function (k) { if (prog.reglages[k] === undefined) prog.reglages[k] = REGLAGES_DEFAUT[k]; });
+    return prog.reglages;
+  }
+  // Applique le réglage « Grand texte » (classe sur la balise html, voir lecteur.css).
+  function appliquerReglages() { document.documentElement.classList.toggle('grand-texte', !!reglages().grandTexte); }
+  appliquerReglages();
 
+  // Accès à l'état d'une leçon ou d'une partie ; le crée vide s'il n'existe pas encore.
   function etatLecon(code) {
     if (!prog.lecons[code]) prog.lecons[code] = { parties: {}, ecouteValideeLe: null };
     return prog.lecons[code];
@@ -79,9 +177,15 @@
     if (!e.parties[pc]) e.parties[pc] = etatPartieNeuf();
     return e.parties[pc];
   }
+  // Enregistre toute la progression. À appeler après chaque changement d'état.
   function sauver() { Stockage.enregistrer(prog); }
 
-  /* ---------- Outils ---------- */
+  /* ---------- 2. Outils ---------- */
+  // Fabrique un élément de la page. Exemple :
+  //   el('button', { class: 'bouton', text: 'OK', onclick: f })  →  <button class="bouton">OK</button>
+  // attrs : 'class', 'text' (texte affiché), 'onclick'… (actions), sinon attributs HTML
+  //         (une valeur false ou null n'est pas posée ; true pose l'attribut vide, ex. hidden).
+  // enfants : liste d'éléments ou de textes à placer dedans (les null sont ignorés).
   function el(tag, attrs, enfants) {
     var n = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
@@ -93,23 +197,33 @@
     (enfants || []).forEach(function (c) { if (c) n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
     return n;
   }
+  // Efface l'écran courant et remonte en haut de la page (avant d'afficher un nouvel écran).
   function vider() { app.innerHTML = ''; window.scrollTo(0, 0); }
+  // hasard(n) : entier au hasard de 0 à n-1. melanger(t) : copie de t dans un ordre au hasard.
   function hasard(n) { return Math.floor(Math.random() * n); }
   function melanger(t) { t = t.slice(); for (var i = t.length - 1; i > 0; i--) { var j = hasard(i + 1); var x = t[i]; t[i] = t[j]; t[j] = x; } return t; }
   function pourcent(x) { return Math.round(x * 100) + ' %'; }
+  // Textes de titres : « Partie A · Voyelles » et « Leçon 1A · E1 Découvrir ».
   function nomPartie(l, pa) { return l.parties.length > 1 ? 'Partie ' + pa.code + ' · ' + pa.titre : ''; }
   function titreEcran(l, pa, etape) {
     return 'Leçon ' + l.numero + (l.parties.length > 1 ? pa.code : '') + ' · ' + etape;
   }
 
-  /* ---------- Audio : fichier validé si présent, sinon voix de synthèse (provisoire) ---------- */
+  /* ---------- 3. Audio : fichier validé si présent, sinon voix de synthèse (provisoire) ----------
+     Le générateur met dans chaque terme : audio[voix][débit] = chemin du fichier mp3,
+     seulement pour les fichiers validés (ou tous avec --non-valides). S'il manque,
+     la voix de synthèse de l'appareil lit l'écrit du terme ; les « voix » F1, H3…
+     sont alors simulées par la hauteur (VOIX_PROVISOIRES dans generer_lecteur.py). */
   var voixVi = null;
+  // Cherche une voix de synthèse vietnamienne sur l'appareil (la liste arrive parfois en retard).
   function chercherVoix() {
     if (!('speechSynthesis' in window)) return;
     var v = window.speechSynthesis.getVoices().filter(function (x) { return /^vi/i.test(x.lang); });
     voixVi = v.length ? v[0] : null;
     afficherBandeau();
   }
+  // Bandeau jaune en haut : caché dès qu'il existe au moins un fichier audio ;
+  // sinon il explique la voix provisoire, ou comment installer une voix vietnamienne.
   function afficherBandeau() {
     var aDesFichiers = D.lecons.some(function (l) { return l.series.some(function (s) { return s.termes.some(function (t) { return Object.keys(t.audio).length; }); }); });
     if (aDesFichiers) { bandeau.hidden = true; return; }
@@ -127,12 +241,44 @@
     window.speechSynthesis.onvoiceschanged = chercherVoix;
   }
 
+  // JOUER UN TERME : jouer(terme, 'F1', 'slow') renvoie une « promesse » qui se termine
+  // quand le son est fini. On enchaîne avec .then(...) : jouer(a).then(function () { return jouer(b); }).
+  // Sécurité : la promesse se termine de toute façon après 5 à 6 s (son bloqué).
   var lectureEnCours = null;
-  function jouer(terme, codeVoix, debit) {
+
+  // MODE TEST (DEC-0047) : dans la case du mot qui vient d'être joué, une petite note dit
+  // ce qui a été entendu : fichier, personnage, F (femme) ou H (homme), modèle FPT, débit et
+  // valeur « speed ». Une ligne par voix (en E1, la femme puis l'homme).
+  // Se désactive dans Réglages (« Infos de test sur le son »).
+  // En E2, E3 et à l'échauffement, les notes n'apparaissent qu'APRÈS la réponse (sinon le
+  // nom du fichier trahirait la bonne réponse) : on n'indique alors pas de case à jouer().
+  function texteInfoSon(terme, codeVoix, debit, fichier) {
+    var v = D.voix.filter(function (x) { return x.code === codeVoix; })[0] || {};
+    var genre = v.genre === 'female' ? 'F' : v.genre === 'male' ? 'H' : '?';
+    var qui = (v.nom || codeVoix) + ' · ' + genre + ' · ' + codeVoix;
+    var vitesse = (debit === 'slow' ? 'lent' : 'normal') + (v.vitesse_fpt ? ' · speed ' + String(v.vitesse_fpt[debit]).replace('.', ',') : '');
+    if (!fichier) return ['synthèse de l’appareil (aucun fichier)', qui, debit === 'slow' ? 'lent' : 'normal'];
+    return [fichier.split('/').pop(), qui, (v.modele ? v.modele + ' · ' : '') + vitesse];
+  }
+  function noterInfoSon(caseMot, terme, codeVoix, debit) {
+    if (!caseMot || !reglages().infoTest) return;
+    var f = terme.audio && terme.audio[codeVoix] && terme.audio[codeVoix][debit];
+    var bloc = caseMot.querySelector('.info-son');
+    if (!bloc) { bloc = el('span', { class: 'info-son', 'aria-hidden': 'true' }); caseMot.appendChild(bloc); }
+    var ligne = bloc.querySelector('[data-voix="' + codeVoix + '"]');
+    if (!ligne) { ligne = el('span', { class: 'info-son-voix' }); ligne.dataset.voix = codeVoix; bloc.appendChild(ligne); }
+    ligne.innerHTML = '';
+    texteInfoSon(terme, codeVoix, debit, f).forEach(function (x) { ligne.appendChild(el('span', { text: x })); });
+  }
+
+  // jouer(terme, voix, débit, caseMot) : caseMot (facultatif) = case où noter l'info de test.
+  function jouer(terme, codeVoix, debit, caseMot) {
     return new Promise(function (resolve) {
       var fini = false;
       function fin() { if (!fini) { fini = true; resolve(); } }
+      // 1) Un fichier existe pour cette voix et ce débit : on le joue.
       var f = terme.audio[codeVoix] && terme.audio[codeVoix][debit];
+      noterInfoSon(caseMot, terme, codeVoix, debit);   // mode test (DEC-0047)
       if (f) {
         if (lectureEnCours) lectureEnCours.pause();
         var a = new Audio(f);
@@ -142,30 +288,41 @@
         setTimeout(fin, 6000);
         return;
       }
+      // 2) Sinon, voix de synthèse : elle lit l'écrit du terme, avec la hauteur de la « voix »
+      //    simulée et une vitesse = débit × vitesse de la voix × réglage de l'apprenant.
       if (!('speechSynthesis' in window)) { fin(); return; }
       var v = D.voix.filter(function (x) { return x.code === codeVoix; })[0] || D.voix[0];
       var u = new SpeechSynthesisUtterance(terme.ecrit);
       u.lang = 'vi-VN';
       if (voixVi) u.voice = voixVi;
       u.pitch = v.hauteur || 1;
-      u.rate = (D.debits[debit] || 0.9) * (v.vitesse || 1);
+      u.rate = (D.debits[debit] || 0.9) * (v.vitesse || 1) * (reglages().vitesse || 1);
       u.onend = fin; u.onerror = fin;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
       setTimeout(fin, 5000);
     });
   }
+  // Coupe le son en cours (appelé à chaque changement d'écran).
   function arreterSon() {
     if (lectureEnCours) lectureEnCours.pause();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }
+  // pause(700) : attendre 700 millisecondes dans un enchaînement de sons.
   function pause(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  // Une voix au hasard, différente de « sauf » (pour ne pas répéter la même voix).
   function voixAuHasard(sauf) {
     var c = D.voix.map(function (v) { return v.code; }).filter(function (x) { return x !== sauf; });
     return c.length ? c[hasard(c.length)] : D.voix[0].code;
   }
 
-  /* ---------- Affichage d'un terme ---------- */
+  /* ---------- 4. Affichage d'un terme ---------- */
+  // Contenu d'une tuile ou d'une carte pour un terme, selon le mode :
+  //   'decouverte' (E1) : symbole + catégorie + repère + indice + sens
+  //   'lent'   (phase 1) : image + symbole + repère en petit
+  //   'normal' (phase 2) : symbole seul (l'image passe en petit, voir .symbole-seul en CSS)
+  //   'ecrit'  (fin d'E3) : image + écrit + sens (syllabe inventée : 🔊, jamais écrite)
+  // Renvoie une liste d'éléments à placer dans la tuile.
   function contenuTerme(t, mode) {
     // mode : 'decouverte' (E1), 'lent' (image + symbole), 'normal' (symbole seul), 'ecrit'
     var morceaux = [];
@@ -177,6 +334,8 @@
       t.symbole.texte
     ]);
     if (t.symbole.couleur) sym.style.color = t.symbole.couleur;
+    var pl = placeDe(t.symbole);
+    if (pl && pl.court && mode !== 'ecrit') sym.appendChild(el('span', { class: 'place place-' + t.symbole.place, text: pl.court }));
     var img = t.image ? el('span', { class: 'image', text: t.image, 'aria-hidden': 'true' }) : null;
     if (mode === 'ecrit') {
       if (img) morceaux.push(img);
@@ -187,7 +346,7 @@
     if (img) morceaux.push(img);
     morceaux.push(sym);
     var r = t.symbole.repere;
-    if (r && r.image && avecIndices) {
+    if (r && r.image && avecIndices && reglages().aides) {
       // Mot repère (DEC-0038) : français écrit ; vietnamien en image seulement (pas d'écrit en E1–E2).
       morceaux.push(el('span', { class: 'repere' + (mode === 'lent' ? ' petit-repere' : ''), title: 'mot repère' }, [
         el('span', { 'aria-hidden': 'true', text: r.langue === 'fr' ? '🇫🇷 ' : '🇻🇳 ' }),
@@ -195,12 +354,39 @@
       ]));
     }
     if (mode === 'decouverte') {
-      if (t.symbole.indication) morceaux.push(el('span', { class: 'indication', text: t.symbole.indication }));
+      if (t.symbole.indication && reglages().aides) morceaux.push(el('span', { class: 'indication', text: t.symbole.indication }));
       if (t.sens) morceaux.push(el('span', { class: 'sens', text: 'mot entendu : ' + t.sens }));
     }
     return morceaux;
   }
+  // Marque de catégorie d'un son (DEC-0038), toujours affichée avec la couleur.
   var MARQUES = { identique: '=', proche: '≈', nouveau: '★' };
+  // PLACES : pour chaque place, le texte court de la pastille (dans le symbole),
+  // le texte long (en-tête d'E1) et la consigne d'E2–E3. Modifier ces textes ici.
+  // Place du son dans le mot (DEC-0042) : une même consonne peut être au début ou à la fin.
+  var PLACES = {
+    debut: { court: 'début ▸', long: 'consonne en début de mot', consigne: 'Écoutez la consonne du début du mot.' },
+    fin: { court: '◂ fin', long: 'consonne en fin de mot', consigne: 'Écoutez la consonne de la fin du mot.' },
+    voyelle: { court: '', long: 'voyelle', consigne: 'Écoutez la voyelle (le milieu du mot).' },
+    ton: { court: '', long: 'ton', consigne: 'Écoutez le ton (la mélodie du mot).' }
+  };
+  function placeDe(sym) { return PLACES[sym && sym.place] || null; }
+  // RÈGLES PROPRES AUX LEÇONS DE TONS (l.tons vrai)
+  //   debitSon   : débit du SON joué ; toujours normal pour les tons (le ralenti déforme la mélodie)
+  //   voixUnique : vrai quand il faut une seule voix (tons, phase 1) ; voixModele : F1
+  //   nomPhase   : nom affiché de la phase (« débit lent » ou, pour les tons, « avec images »)
+  // Leçons de tons (DEC-0043) : jamais d'audio lent, le ralenti déforme la mélodie.
+  // Les deux phases d'E2–E3 restent (images + symboles, puis symboles seuls), au débit normal.
+  function debitSon(l, debit) { return l.tons ? 'normal' : debit; }
+  // Leçons de tons (DEC-0045) : on compare des mélodies, donc d'abord avec UNE voix (la voix modèle) ;
+  // plusieurs voix ensuite seulement, en phase « symboles seuls », pour rendre l'exercice plus difficile.
+  function voixUnique(l, debit) { return l.tons && debit === 'slow'; }
+  function voixModele() { return D.voix.some(function (v) { return v.code === 'F1'; }) ? 'F1' : D.voix[0].code; }   // R-AUD-03
+  function nomPhase(l, debit) {
+    if (l.tons) return debit === 'slow' ? 'avec images' : 'symboles seuls';
+    return debit === 'slow' ? 'débit lent' : 'débit normal';
+  }
+  // Légende des catégories affichée sous les tuiles.
   var LIBELLES = { identique: 'son du français', proche: 'son proche du français', nouveau: 'son nouveau' };
   function legende(series) {
     var vues = {};
@@ -211,12 +397,22 @@
       return el('span', { class: 'symbole-legende cat-' + c }, [el('span', { class: 'marque', text: MARQUES[c] }), LIBELLES[c]]);
     }));
   }
+  // Nom lu par les lecteurs d'écran pour une tuile. NE PAS MODIFIER : les essais automatiques
+  // s'en servent pour trouver les tuiles.
   function nomAccessible(t) {
     return (t.sens ? t.sens + ', ' : '') + 'symbole ' + t.symbole.texte;  // ne pas modifier : utilisé par les essais automatiques
   }
+  // Classe de la grille selon le nombre de tuiles (3 ou 4 : colonnes en plus sur grand écran).
   function classeTuiles(n) { return 'tuiles' + (n === 3 ? ' trois' : n === 4 ? ' quatre' : ''); }
 
-  /* ---------- Calcul des scores et des verrous ---------- */
+  /* ---------- 5. Calcul des scores et des verrous (R-VOL-05 à 07, DEC-0032) ----------
+     Une étape E2 ou E3 a deux phases :
+       phase 1 ('slow')   → passe en phase 2 quand : 20 réponses au moins (P.fenetre_score)
+                            et taux de réussite ≥ seuil de la leçon sur les 20 dernières ;
+       phase 2 ('normal') → étape VALIDÉE quand : même condition, + au moins 2 voix
+                            différentes (P.min_voix) dans ces 20 réponses, + chaque série
+                            réussie au moins 2 fois en phase 2 (P.min_reussites_par_serie). */
+  // Mesure sur les 20 dernières réponses d'une phase : nombre, justes, taux, nombre de voix.
   function mesure(etat, debit) {
     var h = etat.hist.filter(function (x) { return x.d === debit; }).slice(-P.fenetre_score);
     var justes = h.filter(function (x) { return x.ok; }).length;
@@ -224,9 +420,12 @@
     h.forEach(function (x) { voix[x.v] = true; });
     return { n: h.length, justes: justes, taux: h.length ? justes / h.length : 0, voix: Object.keys(voix).length };
   }
+  // Nombre de séries réussies au moins 2 fois en phase 2.
   function seriesCouvertes(series, etat) {
     return series.filter(function (s) { return (etat.reussites[s.code] || 0) >= P.min_reussites_par_serie; }).length;
   }
+  // Appelée après CHAQUE réponse. Renvoie 'normal' (passage en phase 2), 'validee'
+  // (étape validée) ou null (rien ne change). Modifie l'état de l'étape en conséquence.
   function verifierPassages(seuil, series, etat) {
     var m = mesure(etat, etat.debit);
     var seuilAtteint = m.n >= P.fenetre_score && m.taux >= seuil;
@@ -237,12 +436,14 @@
     return null;
   }
 
-  /* ---------- Écran : liste des leçons ---------- */
+  /* ---------- 6. Écran : accueil (liste des leçons) ---------- */
+  // La 1re leçon est toujours ouverte ; la suivante quand l'écoute de la précédente est validée (R-VOL-02).
   function leconOuverte(i) {
     if (i === 0) return true;
     var prec = prog.lecons[D.lecons[i - 1].code];
     return !!(prec && prec.ecouteValideeLe);
   }
+  // Affiche la liste des leçons avec leur état (pastille) ; une leçon sans série est « À venir ».
   function ecranAccueil() {
     arreterSon();
     vider();
@@ -273,12 +474,17 @@
       ]));
     });
     app.appendChild(liste);
+    app.appendChild(el('div', { class: 'actions' }, [el('button', { class: 'bouton second', type: 'button', text: '⚙ Réglages', onclick: ecranReglages })]));
     pied.textContent = 'Données générées le ' + D.genere_le + '. Progression enregistrée dans ce navigateur, sur cet appareil.';
   }
 
-  /* ---------- Écran : une leçon ---------- */
+  /* ---------- 7. Écran : une leçon ---------- */
+  var deplies = {};   // parties terminées affichées en entier (pour cette visite seulement)
+  // Une partie est terminée quand son écrit a été vu et validé (bouton en fin d'E3).
   function partieTerminee(code, pa) { var e = etatLecon(code).parties[pa.code]; return !!(e && e.ecrit); }
 
+  // Écran d'une leçon : pour chaque partie, les blocs E1, E2, E3 et l'écrit, chacun
+  // ouvert ou fermé selon les verrous ; puis « Mes progrès » et « Recommencer ».
   function ecranLecon(code) {
     arreterSon();
     var l = trouverLecon(code);
@@ -294,34 +500,54 @@
       l.parties.length > 1 ? el('p', { class: 'petit', text: 'Cette leçon se fait en ' + l.parties.length + ' parties, l’une après l’autre. Elle est validée quand toutes le sont.' }) : null
     ]));
 
+    // Pour chaque partie (A puis B, ou U) : la partie B n'est ouverte que si A est terminée.
     l.parties.forEach(function (pa, k) {
       var series = seriesDe(l, pa);
       var etat = etatPartie(code, pa.code);
       var partieOuverte = k === 0 || partieTerminee(code, l.parties[k - 1]);
       var etapes = el('div', { class: 'etapes' });
+      // Une partie terminée est réduite à une ligne « Validée » (bouton Afficher / Réduire).
+      var reduite = l.parties.length > 1 && etat.ecrit && !deplies[code + pa.code];
       if (l.parties.length > 1) {
         etapes.appendChild(el('div', { class: 'partie-tete' }, [
           el('h2', { text: nomPartie(l, pa) }),
           el('span', { class: 'pastille' + (etat.ecrit ? ' ok' : partieOuverte ? '' : ' ferme'),
-            text: etat.ecrit ? 'Validée' : partieOuverte ? series.length + ' séries' : 'Après la partie ' + l.parties[k - 1].code })
+            text: etat.ecrit ? 'Validée' : partieOuverte ? series.length + ' séries' : 'Après la partie ' + l.parties[k - 1].code }),
+          etat.ecrit ? el('button', { class: 'bouton discret', type: 'button', text: reduite ? 'Afficher' : 'Réduire',
+            'aria-expanded': reduite ? 'false' : 'true',
+            onclick: function () { deplies[code + pa.code] = reduite; ecranLecon(code); } }) : null
         ]));
       }
-      var e1Fait = etat.e1.vues.length >= series.length;
-      etapes.appendChild(blocEtape('E1 · Écouter', 'Écoutez chaque série, sans répondre.',
-        etat.e1.vues.length + ' / ' + series.length + ' séries', etat.e1.vues.length / series.length,
+      if (reduite) { app.appendChild(etapes); return; }
+      // Bloc E1 : jauge = sons vus / sons de la partie.
+      var e1Fait = e1Termine(etat, pa);
+      var nbEl = elementsDe(pa).length || 1;
+      etapes.appendChild(blocEtape('E1 · Découvrir', 'Écoutez chaque ' + (l.tons ? 'ton' : 'son') + ' dans plusieurs mots, sans répondre.',
+        e1Vus(etat, pa) + ' / ' + elementsDe(pa).length + (l.tons ? ' tons' : ' sons'), e1Fait ? 1 : e1Vus(etat, pa) / nbEl,
         e1Fait ? 'Réécouter' : 'Commencer', partieOuverte, function () { ecranE1(code, pa.code, 0); }));
 
+      // Blocs E2 et E3 : E2 s'ouvre quand E1 est faite, E3 quand E2 est validée.
+      // La jauge approche 1 quand le taux s'approche du seuil sur 20 réponses.
       [['e2', 'E2 · Distinguer', 'Lequel avez-vous entendu ? Deux choix.'], ['e3', 'E3 · Opposer', 'Lequel avez-vous entendu ? Toute la série.']].forEach(function (x, j) {
         var e = etat[x[0]];
         var m = mesure(e, e.debit);
         var ouvert = partieOuverte && (j === 0 ? e1Fait : etat.e2.validee);
         var texte = e.validee ? 'Validée' :
-          'Débit ' + (e.debit === 'slow' ? 'lent' : 'normal') + ' · ' + m.justes + ' justes sur les ' + m.n + ' dernières' +
+          nomPhase(l, e.debit).replace(/^./, function (c) { return c.toUpperCase(); }) + ' · ' + m.justes + ' justes sur les ' + m.n + ' dernières' +
           (e.debit === 'normal' ? ' · séries réussies 2 fois : ' + seriesCouvertes(series, e) + ' / ' + series.length : '');
-        etapes.appendChild(blocEtape(x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
-          e.validee ? 'Refaire' : 'Continuer', ouvert, function () { ecranQuiz(code, pa.code, x[0]); }));
+        // E2 : échauffement « Pareil ou différent ? » non noté avant le premier « Lequel ? » (DEC-0041)
+        var echauffer = j === 0 && !e.echauffe && !e.hist.length;
+        var bloc = blocEtape(x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
+          e.validee ? 'Refaire' : echauffer ? 'Commencer' : 'Continuer', ouvert,
+          function () { if (echauffer) ecranPareil(code, pa.code); else ecranQuiz(code, pa.code, x[0]); });
+        if (j === 0 && ouvert && !echauffer) {
+          bloc.querySelector('.actions').appendChild(el('button', { class: 'bouton second', type: 'button', text: 'Pareil ou différent ?',
+            onclick: function () { ecranPareil(code, pa.code); } }));
+        }
+        etapes.appendChild(bloc);
       });
 
+      // Bloc de l'écrit : ouvert quand E3 est validée.
       etapes.appendChild(blocEtape('Fin d’E3 · L’écrit', 'Découvrez comment s’écrivent les mots entendus.',
         etat.ecrit ? 'Vu' : 'Après la validation d’E3', etat.ecrit ? 1 : 0,
         'Voir l’écrit', partieOuverte && etat.e3.validee, function () { ecranEcrit(code, pa.code); }));
@@ -340,6 +566,9 @@
     ]));
     app.appendChild(resume);
 
+    app.appendChild(el('div', { class: 'actions' }, [el('button', { class: 'bouton second', type: 'button', text: '📈 Mes progrès dans cette leçon', onclick: function () { ecranProgres(code); } })]));
+
+    // « Recommencer cette leçon » : demande confirmation, puis efface la leçon de la progression.
     var zone = el('div', { class: 'actions' });
     zone.appendChild(el('button', { class: 'bouton discret', type: 'button', text: 'Recommencer cette leçon', onclick: function () {
       zone.innerHTML = '';
@@ -353,6 +582,8 @@
     } }));
     app.appendChild(zone);
   }
+  // Fabrique le bloc d'une étape : titre, état (texte), consigne, jauge (part de 0 à 1),
+  // bouton (libellé, ouvert ou « Fermée », action au clic).
   function blocEtape(titre, consigne, etat, part, libelle, ouvert, action) {
     var j = el('div', { class: 'jauge' }, [el('span')]);
     j.firstChild.style.width = Math.round(Math.max(0, Math.min(1, part)) * 100) + '%';
@@ -363,69 +594,218 @@
       el('div', { class: 'actions' }, [el('button', { class: 'bouton', type: 'button', text: ouvert ? libelle : 'Fermée', disabled: !ouvert, onclick: action })])
     ]);
   }
+  // Retrouve une partie de leçon par son code.
   function partieDe(l, pc) { return l.parties.filter(function (p) { return p.code === pc; })[0]; }
 
-  /* ---------- E1 : écoute des séries (découverte + écoute contrastée) ---------- */
+  /* ---------- 8. Écran : E1 Découvrir, un son à la fois (DEC-0039) ---------- */
+  // Chaque son (ou ton) de la partie, seul, dans quelques mots ; chaque mot dit par une voix
+  // de femme puis une voix d'homme ; deux boutons : écoute au débit normal ou au débit lent ;
+  // choix de la voix : femme et homme (par défaut), femme seule, homme seul.
+  // Aucune opposition entre sons en E1 : les différences commencent en E2.
+  function elementsDe(pa) { return pa.elements || []; }
+  function e1Vus(etat, pa) {
+    var els = elementsDe(pa);
+    return etat.e1.vues.filter(function (x) { return els.indexOf(x) >= 0; }).length;
+  }
+  function e1Termine(etat, pa) {
+    // Progression antérieure à DEC-0039 (E1 par séries) : une E2 déjà commencée vaut E1 faite.
+    return e1Vus(etat, pa) >= elementsDe(pa).length || etat.e2.hist.length > 0 || etat.e2.validee;
+  }
+  // Affiche le son n° index de la partie : sa carte, le choix des voix, les boutons
+  // d'écoute et ses mots d'exemple (l.decouverte[son].mots, venus de exemples_e1.csv).
+  // Le son est noté « vu » (etat.e1.vues) après une écoute complète.
   function ecranE1(code, pc, index) {
     arreterSon();
     var l = trouverLecon(code);
     var pa = partieDe(l, pc);
-    var series = seriesDe(l, pa);
+    var els = elementsDe(pa);
     var etat = etatPartie(code, pc);
-    var s = series[index];
+    // d = le son présenté : { element, symbole, mots: [{ ecrit, sens, image, voix: [femme, homme], audio }] }
+    var d = l.decouverte[els[index]];
+    // lent : vitesse choisie en dernier (bouton « Écouter lentement ») ; choixVoix : femme, homme ou les deux.
+    var lent = false;
+    var choixVoix = 'fh';   // 'fh' : femme puis homme ; 'f' : femme ; 'h' : homme
     vider();
     btnRetour.onclick = function () { ecranLecon(code); };
-    titreBarre.textContent = titreEcran(l, pa, 'E1 Écouter');
-    var groupe = l.tons ? 'tons' : ['voyelles', 'consonnes', 'finales', 'autres'][s.groupe];
+    titreBarre.textContent = titreEcran(l, pa, 'E1 Découvrir');
     app.appendChild(el('div', { class: 'consigne' }, [
-      el('span', { class: 'etiquette', text: 'Série ' + (index + 1) + ' sur ' + series.length + ' · ' + groupe }),
+      el('span', { class: 'etiquette', text: (l.tons ? 'Ton ' : 'Son ') + (index + 1) + ' sur ' + els.length +
+        (placeDe(d.symbole) && !l.tons ? ' · ' + placeDe(d.symbole).long : '') }),
       el('h1', { text: 'Écoutez, sans répondre' }),
-      el('p', { class: 'petit', text: 'Touchez une case pour la réentendre. Chaque son est dit par plusieurs voix, lentement.' })
+      el('p', { class: 'petit', text: l.tons ? 'Le même ton dans plusieurs mots, à vitesse normale (le ralenti déforme la mélodie). Choisissez la voix ; touchez un mot pour le réentendre.'
+        : 'Le même son dans plusieurs mots. Choisissez la voix et la vitesse ; touchez un mot pour le réentendre.' })
     ]));
-    var grille = el('div', { class: classeTuiles(s.termes.length) });
-    var tours = {};
-    var tuiles = s.termes.map(function (t, i) {
-      var b = el('button', { class: 'tuile', type: 'button', 'aria-label': nomAccessible(t), onclick: function () {
-        tours[i] = ((tours[i] || 0) + 1) % D.voix.length;
-        surligner(i); jouer(t, D.voix[tours[i]].code, 'slow').then(function () { surligner(-1); });
-      } }, contenuTerme(t, 'decouverte'));
+    // Le son présenté : symbole, catégorie, mot repère, indice d'écoute (DEC-0038)
+    var carte = el('div', { class: 'carte-son' }, contenuTerme({ symbole: d.symbole, image: '', sens: '' }, 'decouverte'));
+    app.appendChild(carte);
+
+    // dire(m) : prononce un mot avec la voix choisie (ou femme puis homme), à la vitesse choisie.
+    function dire(m, caseMot) {
+      var v = m.voix;
+      var debit = debitSon(l, lent ? 'slow' : 'normal');
+      if (choixVoix === 'f') return jouer(m, v[0], debit, caseMot);
+      if (choixVoix === 'h') return jouer(m, v[1], debit, caseMot);
+      return jouer(m, v[0], debit, caseMot).then(function () { return pause(450); }).then(function () { return jouer(m, v[1], debit, caseMot); });
+    }
+    var boutonsVoix = [['fh', '👩 👨 Femme et homme'], ['f', '👩 Femme'], ['h', '👨 Homme']].map(function (x) {
+      var b = el('button', { class: 'choix-voix' + (x[0] === choixVoix ? ' choisi' : ''), type: 'button',
+        'aria-pressed': x[0] === choixVoix ? 'true' : 'false', text: x[1], onclick: function () {
+          choixVoix = x[0];
+          boutonsVoix.forEach(function (o) { var oui = o.dataset.v === choixVoix; o.classList.toggle('choisi', oui); o.setAttribute('aria-pressed', oui ? 'true' : 'false'); });
+        } });
+      b.dataset.v = x[0];
+      return b;
+    });
+    // Tuiles des mots : image (ou 🔊) et sens ; aucun écrit vietnamien en E1 (R-ECR-01).
+    var grille = el('div', { class: classeTuiles(d.mots.length) });
+    var tuiles = d.mots.map(function (m, i) {
+      var b = el('button', { class: 'tuile', type: 'button', 'aria-label': 'mot ' + (i + 1) + (m.sens ? ', ' + m.sens : ''),
+        onclick: function () { surligner(i); dire(m, tuiles[i]).then(function () { surligner(-1); }); } }, [
+        el('span', { class: 'image', text: m.image || '🔊', 'aria-hidden': 'true' }),
+        m.sens ? el('span', { class: 'sens', text: m.sens }) : null
+      ]);
       grille.appendChild(b);
       return b;
     });
     function surligner(k) { tuiles.forEach(function (b, i) { b.classList.toggle('joue', i === k); }); }
-    var suivant = el('button', { class: 'bouton', type: 'button', disabled: etat.e1.vues.indexOf(s.code) < 0,
-      text: index + 1 < series.length ? 'Série suivante' : 'Terminer E1',
-      onclick: function () { if (index + 1 < series.length) ecranE1(code, pc, index + 1); else ecranLecon(code); } });
-    var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Écouter la série', onclick: function () {
-      ecoute.disabled = true;
-      // Chaque terme avec chaque voix ; la paire d'E2 (positions 1 et 2) en premier.
+    var suivant = el('button', { class: 'bouton', type: 'button', disabled: etat.e1.vues.indexOf(d.element) < 0,
+      text: index + 1 < els.length ? (l.tons ? 'Ton suivant' : 'Son suivant') : 'Terminer E1',
+      onclick: function () { if (index + 1 < els.length) ecranE1(code, pc, index + 1); else ecranLecon(code); } });
+    // Deux boutons : vitesse normale ou lente. Toucher un mot le redit à la vitesse choisie en dernier.
+    // ecouterTout : dit tous les mots l'un après l'autre ; à la fin, le son est noté « vu »
+    // et « Son suivant » s'active.
+    function ecouterTout(avecLenteur) {
+      lent = avecLenteur;
+      ecoute.disabled = true; ecouteLente.disabled = true;
+      ecoute.classList.toggle('choisi', !lent); ecouteLente.classList.toggle('choisi', lent);
       var seq = Promise.resolve();
-      D.voix.forEach(function (v) {
-        s.termes.forEach(function (t, i) {
-          seq = seq.then(function () { surligner(i); return jouer(t, v.code, 'slow'); }).then(function () { return pause(350); });
-        });
+      d.mots.forEach(function (m, i) {
+        seq = seq.then(function () { surligner(i); return dire(m, tuiles[i]); }).then(function () { return pause(700); });
       });
       seq.then(function () {
-        surligner(-1); ecoute.disabled = false;
-        if (etat.e1.vues.indexOf(s.code) < 0) { etat.e1.vues.push(s.code); sauver(); }
+        surligner(-1); ecoute.disabled = false; ecouteLente.disabled = false;
+        if (etat.e1.vues.indexOf(d.element) < 0) { etat.e1.vues.push(d.element); sauver(); }
         suivant.disabled = false;
       });
-    } });
-    app.appendChild(ecoute);
+    }
+    var ecoute = el('button', { class: 'ecoute choisi', type: 'button', text: '▶ Écouter', onclick: function () { ecouterTout(false); } });
+    var ecouteLente = el('button', { class: 'ecoute', type: 'button', text: '🐢 Écouter lentement', onclick: function () { ecouterTout(true); } });
+    app.appendChild(el('div', { class: 'choix-voix-groupe', role: 'group', 'aria-label': 'Voix' }, boutonsVoix));
+    // Leçon de tons : pas d'écoute lente (DEC-0043)
+    // Leçon de tons : un seul bouton (pas d'écoute lente, DEC-0043).
+    app.appendChild(l.tons ? el('div', { class: 'actions centre' }, [ecoute]) : el('div', { class: 'deux-ecoutes' }, [ecoute, ecouteLente]));
     app.appendChild(grille);
-    var lg = legende([s]); if (lg) app.appendChild(lg);
+    var lg = legende([{ termes: [{ symbole: d.symbole }] }]); if (lg) app.appendChild(lg);
     app.appendChild(el('div', { class: 'actions' }, [suivant]));
+    if (!d.mots.length) { suivant.disabled = false; ecoute.disabled = true; ecouteLente.disabled = true; }
   }
 
-  /* ---------- E2 et E3 : « Lequel ? » ---------- */
+  /* ---------- 9. Écran : échauffement « Pareil ou différent ? » (DEC-0041) ---------- */
+  // Non noté, hors verrou. Deux termes de la paire d'E2, débit lent, deux voix différentes
+  // (même quand les termes sont pareils : on juge le son, pas l'enregistrement).
+  var NB_PAIRES_ECHAUFFEMENT = 10;
+  function ecranPareil(code, pc) {
+    arreterSon();
+    var l = trouverLecon(code);
+    var pa = partieDe(l, pc);
+    var series = seriesDe(l, pa);
+    var e2 = etatPartie(code, pc).e2;
+    // reponses : 10 cases vrai/faux (vrai = paire pareille), moitié-moitié, mélangées.
+    var reponses = melanger(Array.apply(null, Array(NB_PAIRES_ECHAUFFEMENT)).map(function (_, i) { return i % 2 === 0; }));
+    var k = 0, justes = 0;
+
+    // item() : affiche la paire n° k. fin() : écran de résultat.
+    function item() {
+      if (k >= reponses.length) return fin();
+      var s = series[hasard(series.length)];
+      // La paire d'E2 de la série (positions 1 et 2) ; t2 = t1 si la paire doit être pareille.
+      var paire = s.termes.slice(0, 2);
+      var t1 = paire[hasard(2)];
+      var pareil = reponses[k];
+      var t2 = pareil ? t1 : paire[1 - paire.indexOf(t1)];
+      // Sons : deux voix différentes (DEC-0041). Tons : la même voix modèle pour les deux mots (DEC-0045).
+      var v1 = l.tons ? voixModele() : voixAuHasard(null), v2 = l.tons ? v1 : voixAuHasard(v1);
+      vider();
+      btnRetour.onclick = function () { ecranLecon(code); };
+      titreBarre.textContent = titreEcran(l, pa, 'E2 Pareil ou différent ?');
+      app.appendChild(el('div', { class: 'consigne' }, [
+        el('span', { class: 'etiquette', text: 'Échauffement · paire ' + (k + 1) + ' sur ' + reponses.length + ' · non noté' }),
+        el('h1', { text: 'Pareil ou différent ?' }),
+        el('p', { class: 'consigne-place', text: (placeDe(s.termes[0].symbole) || PLACES.voyelle).consigne }),
+        el('p', { class: 'petit', text: l.tons ? 'Deux mots, la même voix. La mélodie est-elle la même ?' : 'Deux mots, deux voix. Ce son est-il le même dans les deux mots ?' })
+      ]));
+      var ds = debitSon(l, 'slow');
+      function ecouterPaire() { return jouer(t1, v1, ds).then(function () { return pause(700); }).then(function () { return jouer(t2, v2, ds); }); }
+      app.appendChild(el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: ecouterPaire }));
+      var retour = el('p', { class: 'retour-reponse', role: 'status' });
+      var revelation = el('div', { class: 'tuiles' });
+      var suivant = el('button', { class: 'bouton', type: 'button', text: 'Suivant', hidden: true, onclick: function () { k++; item(); } });
+      var repondu = false;
+      // repondre(vrai = « Pareil ») : corrige, puis montre les deux termes (réécoutables).
+      // Rien n'est enregistré dans le score : l'échauffement est hors verrou.
+      function repondre(dit) {
+        if (repondu) return;
+        repondu = true;
+        var ok = dit === pareil;
+        if (ok) justes++;
+        boutons.forEach(function (b) { b.disabled = true; });
+        boutons[pareil ? 0 : 1].classList.add('juste');
+        if (!ok) boutons[pareil ? 1 : 0].classList.add('faux');
+        retour.className = 'retour-reponse ' + (ok ? 'juste' : 'faux');
+        retour.textContent = ok ? 'Juste.' : (pareil ? 'C’était le même son.' : 'Les deux sons étaient différents.');
+        // On montre les deux termes (image et symbole) ; toucher pour réentendre.
+        [[t1, v1], [t2, v2]].forEach(function (x, i) {
+          var c = el('button', { class: 'tuile', type: 'button', 'aria-label': 'mot ' + (i + 1) + ', ' + nomAccessible(x[0]),
+            onclick: function () { jouer(x[0], x[1], ds, c); } }, [el('span', { class: 'etiquette', text: 'Mot ' + (i + 1) })].concat(contenuTerme(x[0], 'lent')));
+          revelation.appendChild(c);
+          noterInfoSon(c, x[0], x[1], ds);   // mode test : ce qui a été entendu, une fois la réponse donnée
+        });
+        suivant.hidden = false;
+        sauver();
+      }
+      var boutons = [
+        el('button', { class: 'tuile reponse-pd', type: 'button', onclick: function () { repondre(true); } }, [el('span', { class: 'symbole', text: '=' }), el('span', { text: 'Pareil' })]),
+        el('button', { class: 'tuile reponse-pd', type: 'button', onclick: function () { repondre(false); } }, [el('span', { class: 'symbole', text: '≠' }), el('span', { text: 'Différent' })])
+      ];
+      app.appendChild(el('div', { class: 'tuiles' }, boutons));
+      app.appendChild(retour);
+      app.appendChild(revelation);
+      app.appendChild(el('div', { class: 'actions' }, [suivant]));
+      setTimeout(ecouterPaire, 250);
+    }
+    // Fin : l'échauffement est noté fait (le bouton E2 affichera « Continuer »).
+    function fin() {
+      e2.echauffe = true; sauver();
+      vider();
+      titreBarre.textContent = titreEcran(l, pa, 'E2 Pareil ou différent ?');
+      app.appendChild(el('div', { class: 'consigne' }, [
+        el('span', { class: 'etiquette', text: 'Échauffement terminé · non noté' }),
+        el('h1', { text: justes + ' juste' + (justes > 1 ? 's' : '') + ' sur ' + reponses.length }),
+        el('p', { class: 'petit', text: 'Maintenant, il faudra dire lequel des deux sons vous entendez. C’est cette étape qui compte pour valider.' })
+      ]));
+      app.appendChild(el('div', { class: 'actions' }, [
+        el('button', { class: 'bouton', type: 'button', text: 'Commencer « Lequel ? »', onclick: function () { ecranQuiz(code, pc, 'e2'); } }),
+        el('button', { class: 'bouton second', type: 'button', text: 'Encore ' + NB_PAIRES_ECHAUFFEMENT + ' paires', onclick: function () { ecranPareil(code, pc); } })
+      ]));
+    }
+    item();
+  }
+
+  /* ---------- 10. Écran : E2 et E3 « Lequel ? » ----------
+     ecranQuiz(code, partie, 'e2' ou 'e3'). Une question = une série tirée au sort,
+     un terme cible joué, des tuiles de choix (2 en E2, toute la série en E3).
+     Chaque réponse est enregistrée puis verifierPassages() décide du passage de phase. */
   function ecranQuiz(code, pc, cle) {
     var l = trouverLecon(code);
     var pa = partieDe(l, pc);
     var series = seriesDe(l, pa);
+    // e = état de l'étape (e2 ou e3) : phase, historique, réussites, validée.
     var e = etatPartie(code, pc)[cle];
     var derniereVoix = null;
     var positionsJustes = [];
 
+    // Tirage d'une série, pondéré : en phase 2, une série pas encore réussie 2 fois
+    // a plus de chances de sortir (poids 1 + 2 par réussite manquante).
     function choisirSerie() {
       // Les séries pas encore réussies 2 fois au débit normal sont tirées plus souvent (DEC-0032).
       var poids = series.map(function (s) {
@@ -438,6 +818,8 @@
       return series[series.length - 1];
     }
 
+    // nouvelItem() : prépare une question : choix (2 en E2, toute la série en E3),
+    // terme cible, ordre des tuiles (règle des 3 fois de suite), voix.
     function nouvelItem() {
       var s = choisirSerie();
       var choix = cle === 'e2' ? s.termes.slice(0, 2) : s.termes.slice();   // DEC-0026, DEC-0033
@@ -452,24 +834,27 @@
         if (!memes) break;
       }
       positionsJustes.push(ordre.indexOf(cible));
-      var voix = voixAuHasard(derniereVoix);
+      var voix = voixUnique(l, e.debit) ? voixModele() : voixAuHasard(derniereVoix);
       derniereVoix = voix;
       afficherItem(s, ordre, cible, voix);
     }
 
+    // afficherItem() : construit l'écran de la question et gère la réponse.
     function afficherItem(s, ordre, cible, voix) {
       vider();
       btnRetour.onclick = function () { ecranLecon(code); };
       titreBarre.textContent = titreEcran(l, pa, cle === 'e2' ? 'E2 Distinguer' : 'E3 Opposer');
-      var debit = e.debit;
+      var debit = e.debit;            // phase du verrou (lent puis normal)
+      var son = debitSon(l, debit);   // débit de l'audio : toujours normal pour les tons (DEC-0043)
       var m = mesure(e, debit);
       app.appendChild(el('div', { class: 'mesures' }, [
-        el('div', { class: 'mesure' }, [el('b', { text: debit === 'slow' ? 'Lent' : 'Normal' }), el('span', { text: 'débit' })]),
+        el('div', { class: 'mesure' }, [el('b', { text: l.tons ? (debit === 'slow' ? 'Images' : 'Symboles') : (debit === 'slow' ? 'Lent' : 'Normal') }), el('span', { text: l.tons ? 'phase' : 'débit' })]),
         el('div', { class: 'mesure' }, [el('b', { text: m.justes + ' / ' + m.n }), el('span', { text: 'justes · objectif ' + pourcent(l.seuil) + ' sur ' + P.fenetre_score })]),
         el('div', { class: 'mesure' }, [el('b', { text: debit === 'normal' ? seriesCouvertes(series, e) + ' / ' + series.length : '—' }), el('span', { text: 'séries réussies 2 fois' })])
       ]));
-      var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(cible, voix, debit); } });
-      app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: 'Lequel avez-vous entendu ?' })]));
+      var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(cible, voix, son); } });
+      app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: 'Lequel avez-vous entendu ?' }),
+        el('p', { class: 'consigne-place', text: (placeDe(s.termes[0].symbole) || PLACES.voyelle).consigne })]));
       app.appendChild(ecoute);
       var mode = debit === 'slow' ? 'lent' : 'normal';
       var grille = el('div', { class: classeTuiles(ordre.length) });
@@ -479,25 +864,32 @@
       var tuiles = ordre.map(function (t) {
         var cls = 'tuile' + (mode === 'normal' ? ' symbole-seul' : '');
         var b = el('button', { class: cls, type: 'button', 'aria-label': nomAccessible(t), onclick: function () {
-          if (repondu) { jouer(t, voix, debit); return; }
+          if (repondu) { jouer(t, voix, son, b); return; }
+          // Première touche = réponse : on l'enregistre dans l'historique, on compte la
+          // réussite de la série (phase 2), puis on vérifie les passages de phase.
           repondu = true;
           var ok = t === cible;
-          e.hist.push({ s: s.code, ok: ok, v: voix, d: debit });
-          if (e.hist.length > 400) e.hist = e.hist.slice(-400);
+          e.hist.push({ s: s.code, ok: ok, v: voix, d: debit, t: Date.now(), c: s.termes.indexOf(cible), r: s.termes.indexOf(t) });
+          if (e.hist.length > 3000) e.hist = e.hist.slice(-3000);
           if (ok && debit === 'normal') e.reussites[s.code] = (e.reussites[s.code] || 0) + 1;
           var passage = verifierPassages(l.seuil, series, e);
           sauver();
-          tuiles[ordre.indexOf(cible)].classList.add('juste');
+          var caseCible = tuiles[ordre.indexOf(cible)];
+          caseCible.classList.add('juste');
+          // Retour : « Juste » et on réentend le terme ; sinon on réentend le bon, puis celui choisi.
           if (ok) {
             retour.className = 'retour-reponse juste'; retour.textContent = 'Juste.';
-            jouer(cible, voix, debit);
+            jouer(cible, voix, son, caseCible).then(function () {
+              if (reglages().suivantAuto && !passage && app.contains(suivant)) setTimeout(function () { if (app.contains(suivant)) nouvelItem(); }, 600);
+            });
           } else {
             b.classList.add('faux');
             retour.className = 'retour-reponse faux'; retour.textContent = 'C’était l’autre. Écoutez les deux.';
-            jouer(cible, voix, debit).then(function () { return pause(400); }).then(function () { return jouer(t, voix, debit); });
+            jouer(cible, voix, son, caseCible).then(function () { return pause(400); }).then(function () { return jouer(t, voix, son, b); });
           }
           suivant.hidden = false;
-          if (passage === 'normal') retour.textContent += ' Seuil atteint au débit lent : on passe au débit normal, avec les symboles seuls.';
+          // Messages de passage en phase 2 ou de validation de l'étape.
+          if (passage === 'normal') retour.textContent += l.tons ? ' Seuil atteint avec les images : on passe aux symboles seuls, avec plusieurs voix.' : ' Seuil atteint au débit lent : on passe au débit normal, avec les symboles seuls.';
           if (passage === 'validee') {
             retour.textContent += ' Étape validée !';
             suivant.textContent = cle === 'e2' ? 'Revenir à la leçon (E3 ouverte)' : 'Revenir à la leçon (voir l’écrit)';
@@ -513,12 +905,17 @@
       app.appendChild(retour);
       app.appendChild(el('div', { class: 'actions' }, [suivant]));
       app.appendChild(el('p', { class: 'petit', text: 'Réécouter ne coûte rien. Après votre réponse, touchez une case pour l’entendre.' }));
-      setTimeout(function () { jouer(cible, voix, debit); }, 250);
+      // Le terme est joué automatiquement peu après l'affichage.
+      setTimeout(function () { jouer(cible, voix, son); }, 250);
     }
 
     nouvelItem();
   }
 
+  /* ---------- 11. Écran : l'écrit (fin d'E3) ----------
+     Montre l'écrit de tous les termes de la partie ; le bouton valide la partie et,
+     si c'est la dernière, enregistre la date de validation de l'écoute de la leçon
+     (ce qui ouvre la leçon suivante). */
   /* ---------- Fin d'E3 : l'écrit (R-ECR-02 ; syllabes inventées jamais affichées, R-LEX-06) ---------- */
   function ecranEcrit(code, pc) {
     arreterSon();
@@ -537,11 +934,14 @@
     seriesDe(l, pa).forEach(function (s) {
       var g = el('div', { class: classeTuiles(s.termes.length) });
       s.termes.forEach(function (t) {
-        g.appendChild(el('button', { class: 'tuile', type: 'button', 'aria-label': t.invente ? 'syllabe inventée' : t.ecrit,
-          onclick: function () { jouer(t, D.voix[0].code, 'normal'); } }, contenuTerme(t, 'ecrit')));
+        var c = el('button', { class: 'tuile', type: 'button', 'aria-label': t.invente ? 'syllabe inventée' : t.ecrit,
+          onclick: function () { jouer(t, D.voix[0].code, 'normal', c); } }, contenuTerme(t, 'ecrit'));
+        g.appendChild(c);
       });
       app.appendChild(g);
     });
+    // Le bouton valide la partie ; si toutes les parties sont validées, la date de
+    // validation de l'écoute est enregistrée (elle ouvre la leçon suivante).
     var derniere = l.parties.every(function (p) { return p.code === pc || partieTerminee(code, p); });
     var libelle = etat.ecrit ? 'Revenir à la leçon' :
       derniere ? 'Valider l’écoute de la leçon' : 'Valider la partie ' + pc;
@@ -556,6 +956,154 @@
       } })]));
   }
 
+  /* ---------- 12. Écran : réglages (enregistrés avec la progression) ---------- */
+  function ecranReglages() {
+    arreterSon();
+    var R = reglages();
+    vider();
+    btnRetour.hidden = false;
+    btnRetour.onclick = ecranAccueil;
+    titreBarre.textContent = 'Réglages';
+    app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: 'Réglages' }),
+      el('p', { class: 'petit', text: 'Enregistrés sur cet appareil.' })]));
+    // ligne() : une ligne de réglage (titre, aide, contrôle) ; interrupteur() : case à cocher
+    // reliée à un réglage, enregistrée à chaque changement.
+    function ligne(id, titre, aide, controle) {
+      return el('div', { class: 'etape reglage' }, [
+        el('div', { class: 'reglage-texte' }, [el('label', { for: id, text: titre }), el('p', { class: 'petit', text: aide })]),
+        controle
+      ]);
+    }
+    function interrupteur(id, cle) {
+      var c = el('input', { type: 'checkbox', id: id, class: 'interrupteur' });
+      c.checked = !!R[cle];
+      c.addEventListener('change', function () { R[cle] = c.checked; sauver(); appliquerReglages(); });
+      return c;
+    }
+    var vit = el('select', { id: 'reglage-vitesse' }, [
+      el('option', { value: '0.8', text: 'Plus lente' }), el('option', { value: '1', text: 'Normale' }), el('option', { value: '1.2', text: 'Plus rapide' })]);
+    vit.value = String(R.vitesse);
+    vit.addEventListener('change', function () { R.vitesse = parseFloat(vit.value); sauver(); });
+    var essai = el('button', { class: 'bouton second', type: 'button', text: '▶ Essayer', onclick: function () {
+      var t = D.lecons[0].series[0].termes[0]; jouer(t, D.voix[0].code, 'slow');
+    } });
+    app.appendChild(el('div', { class: 'etapes' }, [
+      ligne('reglage-vitesse', 'Vitesse de la voix de synthèse', 'Agit sur la voix provisoire de l’appareil, pas sur les enregistrements.', el('div', { class: 'actions' }, [vit, essai])),
+      ligne('reglage-auto', 'Question suivante automatique', 'Après une bonne réponse, passer seul à la question suivante.', interrupteur('reglage-auto', 'suivantAuto')),
+      ligne('reglage-aides', 'Aides sous les symboles', 'Mot repère et indice d’écoute en E1, repère au débit lent. La catégorie (= ≈ ★) reste affichée.', interrupteur('reglage-aides', 'aides')),
+      ligne('reglage-texte', 'Grand texte', 'Agrandit le texte et les symboles.', interrupteur('reglage-texte', 'grandTexte')),
+      ligne('reglage-info', 'Infos de test sur le son', 'Pendant les essais : dans la case du mot joué, fichier, personnage, femme ou homme, modèle FPT et vitesse (en E2–E3, après la réponse).', interrupteur('reglage-info', 'infoTest'))
+    ]));
+  }
+
+  /* ---------- 13. Écran : mes progrès ----------
+     Calculé à partir de l'historique des réponses d'E2 et E3 (toutes parties) :
+     par jour, par série (les plus difficiles d'abord), confusions fréquentes.
+     L'échauffement et E1 ne sont pas comptés. */
+  function jour(ms) { var d = new Date(ms); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function jourFr(j) { var x = j.split('-'); return x[2] + '/' + x[1]; }
+  function barre(part, classe) {
+    var b = el('span', { class: 'barre-mesure' + (classe ? ' ' + classe : '') }, [el('span')]);
+    b.firstChild.style.width = Math.round(Math.max(0, Math.min(1, part)) * 100) + '%';
+    return b;
+  }
+  function ecranProgres(code) {
+    arreterSon();
+    var l = trouverLecon(code);
+    var etatL = etatLecon(code);
+    vider();
+    btnRetour.onclick = function () { ecranLecon(code); };
+    titreBarre.textContent = 'Leçon ' + l.numero + ' · Progrès';
+    app.appendChild(el('div', { class: 'consigne' }, [el('span', { class: 'etiquette', text: 'Leçon ' + l.numero }), el('h1', { text: 'Mes progrès' })]));
+
+    // Toutes les réponses de la leçon, toutes parties et étapes confondues
+    // toutes = toutes les réponses d'E2 et E3 de la leçon, avec leur étape et leur partie.
+    var toutes = [];
+    l.parties.forEach(function (pa) {
+      var ep = etatL.parties[pa.code];
+      if (!ep) return;
+      ['e2', 'e3'].forEach(function (cle) { ep[cle].hist.forEach(function (h) { toutes.push({ h: h, etape: cle, partie: pa }); }); });
+    });
+    if (!toutes.length) {
+      app.appendChild(el('p', { text: 'Pas encore de réponses dans cette leçon. Les progrès apparaîtront dès vos premières réponses en E2.' }));
+      return;
+    }
+
+    // 1. Par jour : réponses, réussite, temps (écarts de moins de 2 min entre deux réponses)
+    // Temps de travail estimé : somme des écarts de moins de 2 minutes entre deux réponses du même jour.
+    var parJour = {};
+    var datees = toutes.filter(function (x) { return x.h.t; }).sort(function (a, b) { return a.h.t - b.h.t; });
+    datees.forEach(function (x, i) {
+      var j = jour(x.h.t);
+      var d = parJour[j] = parJour[j] || { n: 0, ok: 0, ms: 0 };
+      d.n++; if (x.h.ok) d.ok++;
+      if (i > 0) { var ecart = x.h.t - datees[i - 1].h.t; if (ecart < 120000 && jour(datees[i - 1].h.t) === j) d.ms += ecart; }
+    });
+    var jours = Object.keys(parJour).sort();
+    var sec1 = el('div', { class: 'etape' }, [el('h2', { text: 'Par jour' })]);
+    if (!jours.length) sec1.appendChild(el('p', { class: 'petit', text: 'Le détail par jour commence avec les réponses données à partir de cette version.' }));
+    var tab1 = el('div', { class: 'tableau' });
+    tab1.appendChild(el('div', { class: 'tab-ligne tab-tete' }, [el('span', { text: 'Jour' }), el('span', { text: 'Réponses' }), el('span', { text: 'Temps' }), el('span', { text: 'Réussite' })]));
+    jours.slice(-14).forEach(function (j) {
+      var d = parJour[j];
+      tab1.appendChild(el('div', { class: 'tab-ligne' }, [
+        el('span', { text: jourFr(j) }), el('span', { text: String(d.n) }),
+        el('span', { text: Math.max(1, Math.round(d.ms / 60000)) + ' min' }),
+        el('span', { class: 'tab-barre' }, [barre(d.ok / d.n), el('span', { text: pourcent(d.ok / d.n) })])
+      ]));
+    });
+    if (jours.length) sec1.appendChild(tab1);
+    app.appendChild(sec1);
+
+    // 2. Par série : réussite au débit normal (là où se mesure le verrou), sinon toutes
+    var sec2 = el('div', { class: 'etape' }, [el('h2', { text: 'Par série' }),
+      el('p', { class: 'petit', text: 'Réussite sur les réponses au débit normal (au débit lent s’il n’y en a pas encore). Les séries les plus difficiles en premier.' })]);
+    var stats = l.series.map(function (s) {
+      var hs = toutes.filter(function (x) { return x.h.s === s.code; });
+      var norm = hs.filter(function (x) { return x.h.d === 'normal'; });
+      var base = norm.length ? norm : hs;
+      var ok = base.filter(function (x) { return x.h.ok; }).length;
+      return { s: s, n: base.length, taux: base.length ? ok / base.length : null, normal: norm.length > 0 };
+    }).filter(function (x) { return x.n > 0; }).sort(function (a, b) { return a.taux - b.taux; });
+    var tab2 = el('div', { class: 'tableau' });
+    stats.forEach(function (x) {
+      var nom = (x.s.termes[0].image ? x.s.termes[0].image + ' ' : '') + x.s.termes.map(function (t) { return t.symbole.texte; }).join(' – ');
+      tab2.appendChild(el('div', { class: 'tab-ligne tab-serie' }, [
+        el('span', { class: 'symbole-petit', text: nom }),
+        el('span', { class: 'petit', text: x.n + ' rép.' + (x.normal ? '' : ' (lent)') }),
+        el('span', { class: 'tab-barre' }, [barre(x.taux, x.taux < l.seuil ? 'faible' : ''), el('span', { text: pourcent(x.taux) })])
+      ]));
+    });
+    sec2.appendChild(tab2);
+    app.appendChild(sec2);
+
+    // 3. Confusions : « vous avez choisi X alors que c'était Y »
+    // Confusions : pour chaque erreur, « attendu → choisi », comptées et triées.
+    var conf = {};
+    toutes.forEach(function (x) {
+      if (x.h.ok || x.h.c == null || x.h.r == null || x.h.c < 0 || x.h.r < 0) return;
+      var s = l.series.filter(function (z) { return z.code === x.h.s; })[0];
+      if (!s) return;
+      var cle = s.termes[x.h.c].symbole.texte + '→' + s.termes[x.h.r].symbole.texte;
+      conf[cle] = conf[cle] || { attendu: s.termes[x.h.c].symbole.texte, choisi: s.termes[x.h.r].symbole.texte, n: 0 };
+      conf[cle].n++;
+    });
+    var liste = Object.keys(conf).map(function (k) { return conf[k]; }).sort(function (a, b) { return b.n - a.n; }).slice(0, 6);
+    var sec3 = el('div', { class: 'etape' }, [el('h2', { text: 'Confusions fréquentes' })]);
+    if (!liste.length) sec3.appendChild(el('p', { class: 'petit', text: 'Aucune confusion enregistrée pour l’instant.' }));
+    liste.forEach(function (c) {
+      sec3.appendChild(el('p', {}, [
+        el('span', { class: 'symbole-petit', text: c.attendu }), ' entendu, ',
+        el('span', { class: 'symbole-petit', text: c.choisi }), ' choisi : ',
+        el('b', { text: c.n + ' fois' })
+      ]));
+    });
+    app.appendChild(sec3);
+  }
+
+  /* ---------- 14. Démarrage ----------
+     LecteurOutils : quelques fonctions rendues visibles pour les essais automatiques.
+     ecranAccueil() : premier écran affiché. */
   window.LecteurOutils = { Stockage: Stockage, mesure: mesure, verifierPassages: verifierPassages };
   ecranAccueil();
 })();

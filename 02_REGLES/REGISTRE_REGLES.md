@@ -2,8 +2,8 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.13
-date: 2026-10-28
+version: 0.17
+date: 2026-10-29
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
   vérifiables : parcours et étapes, volets et verrous, atomicité, sons et
@@ -11,7 +11,7 @@ resume: >
   vérifier et d'où elle vient. Les règles de code et de programmation sont
   hors périmètre pour l'instant.
 entrees: [FOND-01, FOND-02, FOND-03, FOND-04, REG-DEC]
-sorties: [PROG-M0, 04_DONNEES, 07_QUALITE, DATA-MODELE, PROD-ARCH, QUAL-PROP-MOTS-M0, PROG-ACT]
+sorties: [PROG-M0, 04_DONNEES, 07_QUALITE, DATA-MODELE, PROD-ARCH, QUAL-PROP-MOTS-M0, PROG-ACT, PROD-AF-LECT]
 sources:
   - 01_FONDATIONS (FOND-01 à FOND-04, version 1.0)
   - 02_REGLES/DECISIONS.md (DEC-0004 à DEC-0013)
@@ -58,8 +58,8 @@ de l'élève.
 |---|---|---|---|
 | **R-PARC-01** | Chaque leçon se parcourt en **5 étapes**, dans cet ordre : E1 Écouter, E2 Distinguer, E3 Opposer, E4 Répéter, E5 Stabiliser. | auto : chaque activité porte une étape E1–E5 | DEC-0010 |
 | **R-PARC-02** | Une activité appartient à **une seule** étape et **une seule** leçon. | auto | DEC-0010 |
-| **R-PARC-03** | **E1** : l'élève écoute sans répondre ni répéter. | revue | FOND-04 § 3 |
-| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon : terme en **position 1** (mot support) et terme en **position 2** (contraste principal) ; pour L07 et L11, puis position 1 / position 3 (DEC-0033) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés au débit lent par l'**image et le symbole**, au débit normal par le **symbole seul** (DEC-0028) ; sans image : symbole ou bouton sonore. Symbole d'un ton : pictogramme et couleur ; symbole d'un son : `ipa_main` du son contrasté, présenté en E1 avec son audio (DEC-0029). | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 ; DEC-0028 ; DEC-0029 |
+| **R-PARC-03** | **E1** : l'élève écoute sans répondre ni répéter. Il découvre **chaque son (ou ton) seul**, dans quelques mots du corpus (3 au plus), dit par une voix de femme et une voix d'homme ; **aucune opposition** entre sons en E1 : la première est la paire d'E2. | revue ; auto : `exemples_e1.csv` | FOND-04 § 3 ; DEC-0039 |
+| **R-PARC-04** | **E2** : l'élève choisit entre **deux** possibilités (A ou B) qui forment une **paire minimale** tirée de la série de la leçon : terme en **position 1** (mot support) et terme en **position 2** (contraste principal) ; pour L07 et L11, puis position 1 / position 3 (DEC-0033) ; le contraste porte sur un **ton** ou un **son** proche (voyelle, consonne). Choix présentés au débit lent par l'**image et le symbole**, au débit normal par le **symbole seul** (DEC-0028) ; sans image : symbole ou bouton sonore. Symbole d'un ton : pictogramme et couleur ; symbole d'un son : `ipa_main` du son contrasté, présenté en E1 avec son audio (DEC-0029).  Avant le premier « Lequel ? », un **échauffement non noté** « Pareil ou différent ? » (10 paires, deux voix différentes par paire) ; il n'entre pas dans le verrou. | auto : 2 termes d'une même `series_code` | FOND-04 § 3 ; DEC-0024 ; DEC-0026 ; DEC-0028 ; DEC-0029 ; DEC-0041 |
 | **R-PARC-05** | **E3** : les termes forment une **série minimale** de **2 à 4** mots ou pseudo-mots, qui ne diffèrent que par l'élément cible (ton ou son). E3 reprend la série **complète** dont E2 a utilisé une paire. | auto : comparaison des termes | FOND-04 § 3 ; DEC-0025 ; DEC-0026 |
 | **R-PARC-06** | **E4** : l'élève reproduit après un modèle, d'abord **lent** puis **normal** ; le modèle lent précède toujours le modèle normal. | auto : ordre des audios | FOND-04 § 3 |
 | **R-PARC-07** | **E5** : séries d'enchaînement, débit progressif (lent → normal → un peu plus rapide). | auto | FOND-04 § 3 |
@@ -127,7 +127,7 @@ de l'élève.
 | ID | Règle | Vérification | Source |
 |---|---|---|---|
 | **R-AUD-01** | Audio **natif** ou **de synthèse validé**, accent courant de Hanoï. | revue (écoute de contrôle) | DEC-0009 ; FOND-04 § 8 |
-| **R-AUD-02** | Étapes d'écoute (E1–E3) : **au moins 2 voix** distinctes, et autant de **variété** que possible (homme, femme, enfant ; débits différents) pour habituer l'oreille à plusieurs prononciations. | auto | FOND-04 § 8 ; DEC-0023 |
+| **R-AUD-02** | Étapes d'écoute (E1–E3) : **au moins 2 voix** distinctes, et autant de **variété** que possible (homme, femme, enfant ; débits différents) pour habituer l'oreille à plusieurs prononciations. Exception : leçons de tons, première phase d'E2–E3 et échauffement avec **une seule voix** (DEC-0045). | auto | FOND-04 § 8 ; DEC-0023 ; DEC-0045 |
 | **R-AUD-03** | Étapes de production (E4–E5) : **une voix modèle** unique par item. | auto | FOND-04 § 8 |
 | **R-AUD-04** | Toute nouveauté est introduite à **débit lent** ; le débit normal vient après verrou ; le débit **rapide** sert à la stabilisation (E5). | auto | FOND-04 § 8 ; R-CU-06 (archives) ; DEC-0023 |
 | **R-AUD-05** | Aucun audio **décoratif** ; tout audio est un item pédagogique. | revue | R02 (archives) |
@@ -185,6 +185,10 @@ de l'élève.
 | 0.11 | 2026-10-28 | R-VOL-05 : minimum de réussites par série (DEC-0032). |
 | 0.12 | 2026-10-28 | R-PARC-04 : paire d'E2 = positions 1 et 2 (DEC-0033). |
 | 0.13 | 2026-10-28 | R-LEX-03 : « mot courant » en Module 0, fréquence à partir de A1 (DEC-0035). |
+| 0.14 | 2026-10-29 | R-PARC-03 : E1 = découverte de chaque son seul, sans opposition (DEC-0039). |
+| 0.15 | 2026-10-29 | R-PARC-04 : échauffement « Pareil ou différent ? » non noté avant le « Lequel ? » (DEC-0041). |
+| 0.16 | 2026-10-29 | R-AUD-02 : exception des leçons de tons (DEC-0045). |
+| 0.17 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
 
 ## Liens
 

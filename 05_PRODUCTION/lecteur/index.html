@@ -1,24 +1,74 @@
 <!doctype html>
+<!--
+  ============================================================================
+  LECTEUR D'ACTIVITÉS — Vietnamien, Module 0, volet écoute (E1 → E3)
+  ============================================================================
+  Rôle de ce fichier : c'est la PAGE. Elle ne contient presque rien : un bandeau
+  en haut, une zone vide au milieu (<main id="app">) et un pied de page.
+  Tout le contenu des écrans (leçons, exercices, boutons…) est fabriqué
+  par le programme lecteur.js, qui écrit dans la zone « app ».
+
+  Les trois fichiers du lecteur :
+    - index.html   : la page (ce fichier) ; on la modifie rarement ;
+    - lecteur.css  : la présentation (couleurs, tailles, disposition) ;
+    - lecteur.js   : le fonctionnement (écrans, exercices, scores, verrous).
+  Plus un fichier GÉNÉRÉ, à ne jamais modifier à la main :
+    - donnees.js   : les leçons, séries, sons, mots et audios, produits par
+                     05_PRODUCTION/tools/generer_lecteur.py depuis 04_DONNEES.
+
+  Pour voir une modification : relancer le générateur, qui recopie ces
+  fichiers dans 06_LIVRABLES/lecteur, puis ouvrir 06_LIVRABLES/lecteur/index.html :
+      python 05_PRODUCTION\tools\generer_lecteur.py . --non-valides
+
+  ATTENTION : le générateur fabrique aussi « lecteur_autonome.html » (tout en
+  un seul fichier) en REMPLAÇANT mot pour mot trois lignes de cette page :
+  la ligne « link » qui charge lecteur.css, et les deux lignes « script »
+  qui chargent donnees.js et lecteur.js (repérées plus bas par un commentaire).
+  Ne pas les modifier (ni ajouter d'attribut), sinon la version autonome
+  ne contiendra plus la présentation, les données ou le programme.
+  Et ne jamais recopier ces trois lignes telles quelles dans un commentaire :
+  le générateur les remplacerait là aussi.
+  Documentation : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
+-->
 <html lang="fr">
 <head>
+<!-- Encodage des caractères : indispensable pour les accents vietnamiens (DOC-09). -->
 <meta charset="utf-8">
+<!-- Adapte la largeur à l'écran du téléphone ; « viewport-fit=cover » utilise
+     tout l'écran sur les iPhone à encoche (les marges sont gérées dans lecteur.css). -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Titre affiché dans l'onglet du navigateur. -->
 <title>Lecteur Vietnamien M0</title>
+<!-- Indication d'affichage pour l'aperçu dans l'application Claude ; sans effet ailleurs. -->
 <meta name="claude:viewport-fit-sides" content="cover">
+<!-- Polices de caractères (Google Fonts) : Be Vietnam Pro pour le texte,
+     Noto Sans pour les symboles phonétiques. FACULTATIVES : sans connexion,
+     le navigateur prend les polices de l'appareil (voir --police-texte dans lecteur.css). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans:wght@500;700&display=swap">
+<!-- Présentation du lecteur (ligne remplacée par le générateur : ne pas modifier). -->
 <link rel="stylesheet" href="lecteur.css">
 </head>
 <body>
+<!-- BARRE DU HAUT : bouton « Retour » (caché sur l'accueil) et titre de l'écran.
+     Les identifiants btn-retour et barre-titre sont utilisés par lecteur.js : ne pas les renommer. -->
 <header class="barre">
   <button class="lien-retour" id="btn-retour" type="button" hidden>‹ Retour</button>
   <div class="barre-titre" id="barre-titre">Vietnamien · Module 0</div>
 </header>
+<!-- BANDEAU D'INFORMATION (caché par défaut) : lecteur.js l'affiche quand aucun
+     fichier audio n'est disponible, pour expliquer la voix de synthèse provisoire
+     ou comment installer une voix vietnamienne sur l'appareil. -->
 <div class="bandeau" id="bandeau-voix" hidden></div>
+<!-- ZONE PRINCIPALE : vide ici, remplie par lecteur.js à chaque écran.
+     aria-live="polite" fait lire les changements par les lecteurs d'écran (accessibilité). -->
 <main id="app" class="app" aria-live="polite"></main>
+<!-- PIED DE PAGE : date de génération des données et rappel du lieu de sauvegarde. -->
 <footer class="pied" id="pied"></footer>
+<!-- 1) Les données (générées) doivent être chargées AVANT le programme qui les utilise. -->
 <script src="donnees.js"></script>
+<!-- 2) Le programme du lecteur : il démarre tout seul et affiche l'accueil. -->
 <script src="lecteur.js"></script>
 </body>
 </html>

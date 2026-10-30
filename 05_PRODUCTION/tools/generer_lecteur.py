@@ -1,19 +1,45 @@
 # -*- coding: utf-8 -*-
 """
-Génère le lecteur d'activités à partir de 04_DONNEES (DEC-0017, DEC-0030).
+GÉNÉRATEUR DU LECTEUR D'ACTIVITÉS (DEC-0017, DEC-0030)
+=======================================================
 
-Entrées  : 04_DONNEES/*.csv (source unique)
-           05_PRODUCTION/lecteur/ (code du lecteur, fichiers provisoires)
-Sortie   : 06_LIVRABLES/lecteur/  (regénérable, hors Git : DOC-03)
-             index.html, lecteur.css, lecteur.js, donnees.js, audio/ (si présent)
-             lecteur_autonome.html (tout en un seul fichier, pour l'envoyer ou l'essayer ailleurs)
+À QUOI IL SERT
+    Le lecteur (05_PRODUCTION/lecteur/) ne contient aucun contenu pédagogique.
+    Ce script lit les données de référence (04_DONNEES, source unique) et
+    fabrique, dans 06_LIVRABLES/lecteur/, un lecteur prêt à ouvrir :
+      - donnees.js : TOUT le contenu (leçons, séries, termes, symboles, sons
+        d'E1, voix, paramètres), sous la forme window.DONNEES_LECTEUR = {...} ;
+      - index.html, lecteur.css, lecteur.js : copiés tels quels ;
+      - audio/ : les fichiers mp3 utilisés (validés, ou tous avec --non-valides) ;
+      - lecteur_autonome.html : la même chose en UN seul fichier.
+    06_LIVRABLES est jetable : on peut l'effacer et le regénérer (DOC-03).
+    Ce script ne modifie aucun fichier source et n'utilise que Python standard.
 
-Usage (depuis C:\\VIET_PROJECT) :
+USAGE (depuis C:\\VIET_PROJECT)
     python 05_PRODUCTION\\tools\\generer_lecteur.py .
-    python 05_PRODUCTION\\tools\\generer_lecteur.py . --non-valides   (essai : utilise aussi les audios pas encore validés)
+    python 05_PRODUCTION\\tools\\generer_lecteur.py . --non-valides
+        (essai : utilise aussi les audios pas encore validés, R-AUD-01)
+    Résultat : ouvrir 06_LIVRABLES\\lecteur\\index.html.
 
-Ne modifie aucun fichier source. Ne nécessite aucune bibliothèque extérieure.
+ENTRÉES (04_DONNEES, sauf mention)
+    lecons.csv            leçons : numéro, titre, seuil, tons ?, deux parties ?
+    paires_minimales.csv  séries minimales : termes, position, élément contrasté
+    mots.csv, sons.csv, tons.csv, reperes_sons.csv
+                          sens des mots, symboles, place, repères (DEC-0038, DEC-0042)
+    exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039)
+    voix.csv              voix actives (F1, H3, H4 ; F3 écartée, DEC-0048)
+    audios.csv            fichiers audio déclarés et leur validation
+    05_PRODUCTION/lecteur/images_provisoires.csv   emoji en attendant images.csv
+
+MODIFICATIONS COURANTES : OÙ REGARDER
+    seuils de verrou, 20 réponses, 2 voix…  → PARAMETRES (ci-dessous)
+    hauteur des voix de synthèse provisoires → VOIX_PROVISOIRES
+    ordre des séries (voyelles d'abord…)     → ORDRE_POSITIONS
+    noms des parties A / B                   → parties()
+    ce que reçoit le lecteur pour un terme   → main(), bloc « sortie_termes »
+    Si on ajoute une information ici, il faut aussi l'utiliser dans lecteur.js.
 """
+# Bibliothèques standard de Python (rien à installer).
 import csv
 import datetime
 import json
@@ -21,6 +47,11 @@ import os
 import shutil
 import sys
 
+# ---------------------------------------------------------------------------
+# 1. Arguments et dossiers
+# ---------------------------------------------------------------------------
+# ARGS : arguments sans « -- » ; le premier est la racine du projet (« . »).
+# NON_VALIDES : vrai si --non-valides est donné (mode d'essai).
 ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
 RACINE = ARGS[0] if ARGS else '.'
 NON_VALIDES = '--non-valides' in sys.argv
@@ -28,6 +59,11 @@ DONNEES = os.path.join(RACINE, '04_DONNEES')
 LECTEUR = os.path.join(RACINE, '05_PRODUCTION', 'lecteur')
 SORTIE = os.path.join(RACINE, '06_LIVRABLES', 'lecteur')
 
+# ---------------------------------------------------------------------------
+# 2. Réglages transmis au lecteur
+# ---------------------------------------------------------------------------
+# PARAMETRES est recopié tel quel dans donnees.js et lu par lecteur.js (variable P).
+# Le seuil de réussite, lui, est propre à chaque leçon : lecons.csv, colonne listen_threshold.
 # Paramètres du verrou d'écoute (R-VOL-05, DEC-0032) et du lecteur (PROG-ACT).
 PARAMETRES = {
     'fenetre_score': 20,          # nombre de dernières réponses prises en compte
@@ -37,18 +73,35 @@ PARAMETRES = {
     'ecart_max_lecons': 3,        # R-VOL-04 (non contrôlé tant que le volet production n'existe pas)
 }
 
+# Quand un fichier audio manque, le lecteur fait lire le mot par la voix de synthèse de
+# l'appareil (une seule voix) : on imite plusieurs voix en changeant la hauteur
+# (> 1 : plus aigu, voix de femme ; < 1 : plus grave, voix d'homme) et la vitesse.
+# Ajouter ici toute nouvelle voix de voix.csv.
 # Réglages provisoires de la synthèse vocale du navigateur, en attendant les audios
 # FPT.AI (DEC-0023). Les « voix » F1, F2, H1 sont simulées par la hauteur de voix.
 VOIX_PROVISOIRES = {
     'F1': {'hauteur': 1.15, 'vitesse': 1.0},
     'F2': {'hauteur': 1.4, 'vitesse': 0.95},
+    'F3': {'hauteur': 1.35, 'vitesse': 0.95},
     'H1': {'hauteur': 0.7, 'vitesse': 1.0},
+    'H3': {'hauteur': 0.7, 'vitesse': 1.0},
+    'H4': {'hauteur': 0.85, 'vitesse': 0.95},
 }
+# Vitesse de la voix de synthèse pour chaque débit (n'agit pas sur les fichiers audio).
+# Les clés 'slow' et 'normal' sont aussi celles de audios.csv (colonne speed).
 DEBITS = {'slow': 0.55, 'normal': 0.9}
 
+# Ordre d'affichage des séries d'une leçon selon la place de l'élément contrasté :
+# 0 voyelles (et tons), 1 consonnes de début, 2 finales. Sert aussi au découpage en parties
+# (partie A = groupe 0, partie B = le reste).
 ORDRE_POSITIONS = {'nucleus': 0, 'glide': 0, 'initial': 1, 'final': 2}
 
 
+# ---------------------------------------------------------------------------
+# 3. Fonctions utilitaires
+# ---------------------------------------------------------------------------
+# lire('mots.csv') : renvoie la liste des lignes d'un CSV (séparateur « ; », UTF-8),
+# chaque ligne étant un dictionnaire {nom de colonne: valeur}. Fichier absent : liste vide.
 def lire(nom, dossier=DONNEES):
     chemin = os.path.join(dossier, nom)
     if not os.path.exists(chemin):
@@ -57,18 +110,44 @@ def lire(nom, dossier=DONNEES):
         return list(csv.DictReader(f, delimiter=';'))
 
 
+# Exemple : séries [xem/xêm, xem/xen] → ['PH-VS-e', 'PH-VO-ee', 'PH-FI-m', 'PH-FI-n'].
+def elements_de(series):
+    """Sons (ou tons) des séries, dans l'ordre d'apparition : un écran E1 par élément (DEC-0039)."""
+    res = []
+    for s in series:
+        for t in s['termes']:
+            if t['element'] not in res:
+                res.append(t['element'])
+    return res
+
+
+# Renvoie la liste des parties d'une leçon. Sans découpage : une seule partie « U ».
+# Avec découpage (colonne split_parts de lecons.csv) : A = séries de voyelles, B = les autres.
+# Nom du personnage d'une voix, pour l'affichage de test (DEC-0047) : début de la colonne
+# note de voix.csv (« Ban Mai (marketplace…) ; … » → « Ban Mai »), sinon l'identifiant FPT.
+def nom_personnage(v):
+    note = v.get('note', '')
+    for sep in (' (', ' :', ' ;'):
+        note = note.split(sep)[0]
+    return note.strip() or v.get('provider_voice', '') or v['voice_code']
+
+
 def parties(liste, couper):
     """Une leçon « en deux parties » (DEC-0037) : voyelles, puis consonnes et finales."""
-    codes = [s['code'] for s in liste]
     if not couper:
-        return [{'code': 'U', 'titre': '', 'series': codes}]
-    a = [s['code'] for s in liste if s['groupe'] == 0]
-    b = [s['code'] for s in liste if s['groupe'] != 0]
-    return [{'code': 'A', 'titre': 'Voyelles', 'series': a},
-            {'code': 'B', 'titre': 'Consonnes et finales', 'series': b}]
+        return [{'code': 'U', 'titre': '', 'series': [s['code'] for s in liste], 'elements': elements_de(liste)}]
+    a = [s for s in liste if s['groupe'] == 0]
+    b = [s for s in liste if s['groupe'] != 0]
+    return [{'code': 'A', 'titre': 'Voyelles', 'series': [s['code'] for s in a], 'elements': elements_de(a)},
+            {'code': 'B', 'titre': 'Consonnes et finales', 'series': [s['code'] for s in b], 'elements': elements_de(b)}]
 
 
+# ---------------------------------------------------------------------------
+# 4. Programme principal
+# ---------------------------------------------------------------------------
 def main():
+    # --- 4.1 Lecture des données. Les dictionnaires { code: ligne } permettent de retrouver
+    #         vite un mot, un son, un ton par son code.
     lecons = lire('lecons.csv')
     mots = {m['word_code']: m for m in lire('mots.csv')}
     sons = {s['sound_code']: s for s in lire('sons.csv')}
@@ -76,35 +155,53 @@ def main():
     paires = lire('paires_minimales.csv')
     voix = [v for v in lire('voix.csv') if v['status'] == 'active']
     audios = lire('audios.csv')
+    # images.csv est lu mais pas encore utilisé (fichier vide) : les images viennent
+    # provisoirement de images_provisoires.csv (emoji).
     images = {i['word_code']: i for i in lire('images.csv')}
     images_prov = {i['word_code']: i['emoji'] for i in lire('images_provisoires.csv', LECTEUR)}
     reperes = {r['symbol']: r for r in lire('reperes_sons.csv')}   # DEC-0038
+    exemples = lire('exemples_e1.csv')                              # DEC-0039
 
+    # --- 4.2 Audios utilisables : clé (référence du terme, voix, débit) -> chemin du fichier.
+    # Référence = code du mot (W0057) ou, pour une syllabe sans code, son écriture (xêm).
     # Audios validés : (référence, voix, débit) -> fichier
     fichiers_audio = {}
     for a in audios:
         if a.get('validated') == 'true' or (NON_VALIDES and os.path.exists(os.path.join(DONNEES, a['file']))):
             fichiers_audio[(a['item_ref'], a['voice'], a['speed'])] = a['file']
 
+    # --- 4.3 symbole(élément) : tout ce que le lecteur affiche pour un son ou un ton :
+    #   texte      : pictogramme du ton, ou symbole phonétique entre barres (/ɛ/)
+    #   categorie  : identique / proche / nouveau (marque = ≈ ★, DEC-0038)
+    #   place      : debut / fin / voyelle / ton (ce qu'il faut écouter, DEC-0042)
+    #   repere     : mot repère (français écrit, ou vietnamien en image) ; indication : indice d'écoute
+    # S'arrête avec un message clair si un son ou un repère manque dans les données.
     def symbole(element):
         if element in tons:
             t = tons[element]
             return {'texte': t['pictogram'], 'couleur': t['color_hex'], 'nom': t['name_vi'],
-                    'indication': 'ton ' + t['name_vi'] + ' : ' + t['contour_fr']}
+                    'indication': 'ton ' + t['name_vi'] + ' : ' + t['contour_fr'], 'place': 'ton'}
         s = sons.get(element)
         if not s:
             raise SystemExit('Élément inconnu : ' + element)
         principal = s['ipa_main']
-        r = reperes.get(principal)
+        # Consonne finale : repère propre à la fin de mot s'il existe (« -m » : pomme), DEC-0046.
+        r = reperes.get('-' + principal) if s['position'] == 'final' else None
+        r = r or reperes.get(principal)
         if not r:
             raise SystemExit('Pas de repère pour le symbole /' + principal + '/ dans reperes_sons.csv')
         # Catégorie (DEC-0038) : son identique au français, proche, ou nouveau.
         categorie = {'exact': 'identique', 'proche': 'proche'}.get(r['match'], 'nouveau')
+        # Place dans la syllabe (DEC-0042) : une consonne se dit en début ou en fin de mot.
+        place = {'initial': 'debut', 'final': 'fin'}.get(s['position'], 'voyelle')
         return {'texte': '/' + principal + '/', 'couleur': '', 'nom': s['grapheme'],
-                'indication': r['listening_cue'], 'categorie': categorie,
+                'indication': r['listening_cue'], 'categorie': categorie, 'place': place,
                 'repere': {'langue': r['language'], 'mot': r['keyword'] if r['language'] == 'fr' else '',
                            'image': r['picture']}}
 
+    # --- 4.4 audio(référence) : fichiers disponibles pour un terme, rangés par voix puis débit :
+    #   { 'F1': { 'slow': 'audio/W0057-F1-slow.mp3', 'normal': ... }, 'H3': {...} }
+    # Seules les voix actives de voix.csv sont prises.
     def audio(ref):
         res = {}
         for v in voix:
@@ -114,10 +211,12 @@ def main():
                     res.setdefault(v['voice_code'], {})[d] = f
         return res
 
+    # --- 4.5 Regroupement des lignes de paires_minimales.csv par série (S0001, S0002…).
     series = {}
     for p in paires:
         series.setdefault(p['series_code'], []).append(p)
 
+    # --- 4.6 Construction de chaque leçon, dans l'ordre de sort_order.
     sortie_lecons = []
     for l in sorted(lecons, key=lambda x: int(x['sort_order'])):
         code = l['lesson_code']
@@ -125,11 +224,15 @@ def main():
         for sc, termes in series.items():
             if termes[0]['lesson_code'] != code:
                 continue
+            # Termes de la série dans l'ordre des positions (1 = mot support, 2 = contraste principal).
+            # groupe : 0 voyelles ou tons, 1 début, 2 finale (voir ORDRE_POSITIONS).
             termes = sorted(termes, key=lambda t: int(t['position']))
             premier = termes[0]['element']
             groupe = 0 if premier in tons else ORDRE_POSITIONS.get(sons[premier]['position'], 3)
             sortie_termes = []
             for t in termes:
+                # m : le mot du corpus (None pour une syllabe sans code). Une syllabe inventée
+                # n'a jamais d'image ni d'écrit affiché (R-LEX-06).
                 m = mots.get(t['word_code']) if t['word_code'] else None
                 invente = t['invented'] == 'true'
                 image = ''
@@ -147,8 +250,26 @@ def main():
                     'audio': audio(ref),
                 })
             liste.append({'code': sc, 'type': termes[0]['contrast_type'], 'groupe': groupe,
+                          'place': sortie_termes[0]['symbole']['place'],   # ce qu'il faut écouter (DEC-0042)
                           'termes': sortie_termes})
+        # Séries triées : voyelles (ou tons), puis débuts, puis finales ; puis par code.
         liste.sort(key=lambda s: (s['groupe'], s['code']))
+        # E1 « Découverte » (DEC-0039) : chaque son seul, dans 3 mots au plus, voix de femme puis d'homme.
+        decouverte = {}
+        for e in elements_de(liste):
+            mots_e = []
+            for x in sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e and x['word_code']),
+                            key=lambda x: int(x['rank'])):
+                m = mots[x['word_code']]
+                mots_e.append({
+                    'ecrit': m['written'],          # pour la voix de synthèse seulement : jamais affiché en E1 (R-ECR-01)
+                    'sens': m['meaning_fr'].split(' / ')[0],
+                    'image': images_prov.get(m['word_code'], '') if m['imageable'] == 'true' else '',
+                    'voix': [x['voice_f'], x['voice_h']],
+                    'audio': audio(m['word_code']),
+                })
+            decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e}
+        # Ce que reçoit le lecteur pour une leçon (voir le « vocabulaire » en tête de lecteur.js).
         sortie_lecons.append({
             'code': code,
             'numero': int(l['sort_order']),
@@ -158,17 +279,25 @@ def main():
             'recyclage': l['is_recycling'] == 'true',
             'series': liste,
             'parties': parties(liste, l.get('split_parts') == 'true'),
+            'decouverte': decouverte,
         })
 
+    # --- 4.7 Le contenu complet de donnees.js.
     donnees = {
         'genere_le': datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
         'parametres': PARAMETRES,
-        'voix': [{'code': v['voice_code'], 'genre': v['gender'], **VOIX_PROVISOIRES.get(v['voice_code'], {})}
+        # Pour chaque voix : code, genre, réglages de la synthèse provisoire, et (mode test,
+        # DEC-0047) le nom du personnage, l'identifiant et le modèle FPT, la valeur speed par débit.
+        'voix': [{'code': v['voice_code'], 'genre': v['gender'], **VOIX_PROVISOIRES.get(v['voice_code'], {}),
+                  'nom': nom_personnage(v), 'voix_fpt': v.get('provider_voice', ''),
+                  'modele': v.get('provider_model', ''),
+                  'vitesse_fpt': {'slow': float(v.get('provider_speed_slow') or 0.8), 'normal': 1.0}}
                  for v in voix],
         'debits': DEBITS,
         'lecons': sortie_lecons,
     }
 
+    # --- 4.8 Écriture des fichiers dans 06_LIVRABLES/lecteur/.
     os.makedirs(SORTIE, exist_ok=True)
     js = 'window.DONNEES_LECTEUR = ' + json.dumps(donnees, ensure_ascii=False, indent=1) + ';\n'
     with open(os.path.join(SORTIE, 'donnees.js'), 'w', encoding='utf-8', newline='\n') as f:
@@ -182,6 +311,9 @@ def main():
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copyfile(src, dst)
 
+    # --- 4.9 lecteur_autonome.html : la page dans laquelle on REMPLACE mot pour mot les trois
+    # lignes qui chargent lecteur.css, donnees.js et lecteur.js par leur contenu.
+    # Si ces lignes changent dans index.html, il faut changer les trois replace() ci-dessous.
     # Version en un seul fichier
     with open(os.path.join(LECTEUR, 'index.html'), encoding='utf-8') as f:
         page = f.read()
@@ -195,10 +327,12 @@ def main():
     with open(os.path.join(SORTIE, 'lecteur_autonome.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(page)
 
+    # --- 4.10 Bilan affiché dans PowerShell.
     nb_series = sum(len(l['series']) for l in sortie_lecons)
     print(f"{len(sortie_lecons)} leçons, {nb_series} séries, {len(fichiers_audio)} audios "
           f"{'(validés ou non : ESSAI)' if NON_VALIDES else 'validés'} -> {SORTIE}")
 
 
+# Lancement quand le fichier est exécuté directement (et non importé par un autre script).
 if __name__ == '__main__':
     main()

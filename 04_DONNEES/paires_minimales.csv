@@ -7,7 +7,6 @@ S0003;M0-L01;sound;1;nên;W0152;false;PH-IN-n;false;
 S0003;M0-L01;sound;2;lên;W0032;false;PH-IN-l;false;
 S0004;M0-L01;sound;1;nên;W0152;false;PH-VO-ee;false;
 S0004;M0-L01;sound;2;nen;;true;PH-VS-e;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
-S0004;M0-L01;sound;3;nin;;true;PH-VS-i;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0005;M0-L01;sound;1;nên;W0152;false;PH-FI-n;false;
 S0005;M0-L01;sound;2;nêm;;false;PH-FI-m;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0006;M0-L01;sound;1;to;W0050;false;PH-VS-o;false;
@@ -19,15 +18,11 @@ S0008;M0-L01;sound;1;môn;W0323;false;PH-FI-n;false;
 S0008;M0-L01;sound;2;môm;;false;PH-FI-m;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0009;M0-L01;sound;1;đi;W0062;false;PH-IN-dd;false;
 S0009;M0-L01;sound;2;di;;false;PH-IN-d;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0010;M0-L01;sound;1;đi;W0062;false;PH-VS-i;false;
-S0010;M0-L01;sound;2;đê;;false;PH-VO-ee;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0011;M0-L01;sound;1;ba;W0003;false;PH-IN-b;false;
 S0011;M0-L01;sound;2;ma;W0318;false;PH-IN-m;false;
 S0011;M0-L01;sound;3;va;;false;PH-IN-v;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0012;M0-L01;sound;1;ho;W0313;false;PH-VS-o;false;
 S0012;M0-L01;sound;2;hô;;false;PH-VS-oo;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
-S0013;M0-L01;sound;1;pin;W0321;false;PH-VS-i;false;
-S0013;M0-L01;sound;2;pên;;true;PH-VO-ee;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0014;M0-L01;sound;1;pin;W0321;false;PH-FI-n;false;
 S0014;M0-L01;sound;2;pim;;true;PH-FI-m;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
 S0015;M0-L01;sound;1;da;W0017;false;PH-IN-d;false;

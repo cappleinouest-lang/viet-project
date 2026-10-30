@@ -1,5 +1,10 @@
-voice_code;gender;age;region;provider;provider_voice;status;note
-F1;female;adult;north;fpt;banmai;active;voix des archives (février et mars 2026)
-F2;female;adult;north;fpt;thuminh;active;voix des archives (mars 2026)
-H1;male;adult;north;fpt;leminh;active;seule voix masculine du Nord chez FPT.AI
-E1;;child;north;;;planned;"voix d’enfant : aucune chez FPT.AI ; source à trouver (DEC-0023)"
+voice_code;gender;age;region;provider;provider_voice;provider_model;provider_speed_slow;status;note
+F1;female;adult;north;fpt-mkp;std_banmai;FPT.TTS-pro;0.7;active;Ban Mai (marketplace.fptcloud.com) ; voix modèle ; claire en mot seul (écoute du 2026-10-29)
+F2;female;adult;north;fpt;thuminh;;;inactive;ancienne API FPT.AI (existe aussi en FPT.AI-VITs : std_thuminh)
+H1;male;adult;north;fpt-mkp;std_quanganh;FPT.TTS-pro;;inactive;Quang Anh : consonne de départ avalée en mot isolé (écoute du 2026-10-29)
+H2;male;adult;north;fpt-mkp;fci_vietkhoa;FPT.TTS-pro;;inactive;Viet Khoa : consonne de départ avalée en mot isolé (écoute du 2026-10-29)
+H3;male;adult;north;fpt-mkp;std_leminh;FPT.AI-VITs;0.6;active;Le Minh : claire en mot seul (écoute du 2026-10-29)
+H4;male;adult;north;fpt-mkp;std_huyphong;FPT.AI-VITs;0.6;active;Huy Phong : claire en mot seul (écoute du 2026-10-29)
+H5;male;adult;north;fpt-mkp;std_minhquan;FPT.AI-VITs;;inactive;Minh Quan : claire en mot seul, non retenue (choix 2 femmes + 2 hommes, 2026-10-29)
+F3;female;adult;north;fpt-mkp;std_thuminh;FPT.AI-VITs;0.6;inactive;Thu Minh : jugée la moins bonne des voix à l'écoute du 2026-10-30, écartée (DEC-0048) ; fichiers gardés
+E1;;child;north;;;;;planned;"voix d’enfant : aucune chez FPT.AI ; source à trouver (DEC-0023)"

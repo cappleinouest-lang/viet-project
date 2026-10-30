@@ -2,8 +2,8 @@
 id: PROD-ARCH
 titre: Architecture des outils de formation
 statut: BROUILLON
-version: 0.3
-date: 2026-10-28
+version: 0.4
+date: 2026-10-29
 resume: >
   Décrit, sans code, les composants qui délivrent la formation : site
   WordPress (structure), lecteur d'activités (étapes E1–E5, scores, verrous),
@@ -11,7 +11,7 @@ resume: >
   les révisions. Précise qui fait quoi, d'où viennent les contenus et quelles
   règles chaque composant applique.
 entrees: [REG-REGLES, REG-DEC, FOND-04, PROG-ACT]
-sorties: [05_PRODUCTION (développements à venir), 06_LIVRABLES]
+sorties: [05_PRODUCTION (développements à venir), 06_LIVRABLES, PROD-AF-LECT]
 sources:
   - 02_REGLES/DECISIONS.md (DEC-0015, DEC-0016)
   - Test de courbe mélodique du 2026-10-28 (« ma » juste / faux)
@@ -106,6 +106,7 @@ graph LR
 | 0.1 | 2026-10-28 | Création, à partir de DEC-0015 et DEC-0016. |
 | 0.2 | 2026-10-28 | Point ouvert 2 : FPT.AI sans reconnaissance vocale publique ; test PhoWhisper. |
 | 0.3 | 2026-10-28 | DEC-0030 : lecteur développé d'abord en site statique ; enveloppe WordPress ou Firebase à choisir ensuite. |
+| 0.4 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
 
 ## Liens
 

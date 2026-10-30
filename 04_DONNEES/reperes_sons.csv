@@ -1,8 +1,10 @@
 symbol;graphemes;language;keyword;word_code;picture;match;listening_cue;start;body_part;change;check;certainty
 ɛ;e;fr;fête;;🎉;exact;« è » comme dans « fête »;;;;;
 e;ê;fr;été;;🌞;exact;« é » comme dans « été »;;;;;
-m;m|-m;fr;miel;;🍯;exact;« m » comme dans « miel »;;;;;
-n;n|-n;fr;neige;;❄️;exact;« n » comme dans « neige »;;;;;
+m;m;fr;miel;;🍯;exact;« m » comme dans « miel »;;;;;
+-m;-m;fr;pomme;;🍎;exact;« m » final comme dans « pomme », lèvres fermées, sans voyelle après;;;;;
+n;n;fr;neige;;❄️;exact;« n » comme dans « neige »;;;;;
+-n;-n;fr;laine;;🧶;exact;« n » final comme dans « laine », sans voyelle après;;;;;
 l;l;fr;lune;;🌙;exact;« l » comme dans « lune »;;;;;
 i;i;fr;lit;;🛏️;exact;« i » comme dans « lit »;;;;;
 ɔ;o;fr;porte;;🚪;exact;« o » ouvert comme dans « porte »;;;;;
