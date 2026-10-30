@@ -6,5 +6,5 @@ H2;male;adult;north;fpt-mkp;fci_vietkhoa;FPT.TTS-pro;;inactive;false;false;Viet 
 H3;male;adult;north;fpt-mkp;std_leminh;FPT.AI-VITs;0.6;active;false;true;Le Minh : claire en mot seul (écoute du 2026-10-29) ; écoute des leçons de tons (provisoire) et page « Les 6 tons » (DEC-0055)
 H4;male;adult;north;fpt-mkp;std_huyphong;FPT.AI-VITs;0.6;active;true;true;Huy Phong : claire en mot seul (écoute du 2026-10-29) ; écoute des leçons de sons et de tons (DEC-0055)
 H5;male;adult;north;fpt-mkp;std_minhquan;FPT.AI-VITs;;inactive;false;false;Minh Quan : claire en mot seul, non retenue (choix 2 femmes + 2 hommes, 2026-10-29)
-F3;female;adult;north;fpt-mkp;std_thuminh;FPT.AI-VITs;0.6;active;true;false;Thu Minh : tons les plus nets à la mesure (07_QUALITE, 2026-10-30), consonnes de début brèves ; écartée (DEC-0048) puis réintégrée pour l'écoute des leçons de sons (DEC-0055)
+F3;female;adult;north;fpt-mkp;std_thuminh;FPT.AI-VITs;0.8;active;true;false;Thu Minh : tons les plus nets à la mesure (07_QUALITE, 2026-10-30), consonnes de début brèves ; écartée (DEC-0048) puis réintégrée pour l'écoute des leçons de sons (DEC-0055) ; débit lent 0,8 (rugueuse à 0,6, DEC-0059)
 E1;;child;north;;;;;planned;false;false;"voix d’enfant : aucune chez FPT.AI ; source à trouver (DEC-0023)"

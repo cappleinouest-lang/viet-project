@@ -119,6 +119,7 @@ suivant n'y a pas de ligne et porte « reporté » dans la colonne `note` de
 | `frequency_source` | liste de fréquence utilisée (R-LEX-07) | | `wordfreq-opensubtitles` |
 | `etymology` | origine | `native`, `sino`, `french`, `english`, vide | `native` |
 | `category` | catégorie grammaticale | codes de FOND-02 § 7 | `NUM` |
+| `classifier` | classificateur usuel (Nord) d'un nom, code de `classificateurs.csv` ; vide si aucun (DEC-0060) | | `con` |
 | `imageable` | facile à représenter par une image (estimation, DEC-0024) | `true` / `false` | `true` |
 | `note` | remarque | | |
 
@@ -164,7 +165,7 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `item_type` | ce qui est prononcé | `word`, `syllable`, `invented` | `word` |
 | `item_ref` | référence | `word_code`, ou écriture pour une syllabe | `W0042` |
 | `voice` | voix | `voice_code` de `voix.csv` | `F1` |
-| `speed` | débit | `slow`, `normal`, `fast` | `slow` |
+| `speed` | débit | `slow`, `normal`, `fast`, `spaced` (mots espacés par des points de suspension, DEC-0058) | `slow` |
 | `source` | origine | `fpt-mkp`, `fpt`, `native`, `recorded` | `fpt-mkp` |
 | `file` | chemin relatif, dans `04_DONNEES/audio/` (DEC-0023) | | `audio/W0042-F1-slow.mp3` |
 | `validated` | écouté et validé (R-AUD-01) | `true` / `false` | `false` |
@@ -298,6 +299,13 @@ fichier et gardées quand le script est relancé.
 | `validated` | relu par un locuteur vietnamien | `true` / `false` | `false` |
 | `note` | remarque ; pour une phrase : sa **traduction**, affichée après la réponse | | `J’aime le café.` |
 
+### 3.17 `appuis_series.csv` — séries dites avec un mot d'appui (DEC-0060)
+
+Produit par `05_PRODUCTION/tools/choisir_appuis.py`. Colonnes : `series_code`,
+`lesson_code`, `carrier` (« hai con »), `classifier` (code de
+`classificateurs.csv`), `note` (termes de la série). Les audios correspondants
+ont pour référence `K-<série>-<position>`.
+
 ## 4. Ce qui n'est pas un fichier source
 
 **Transcription phonétique des mots** : non utilisée (DEC-0021). Seule la
@@ -356,4 +364,4 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.15 | 2026-10-29 | `voix.csv` : colonne `provider_speed_slow` (débit lent propre à chaque voix). |
 | 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
 | 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |
-| 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055). |
+| 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055) ; `mots.csv` : colonne `classifier`, fichier `appuis_series.csv` (DEC-0060). |

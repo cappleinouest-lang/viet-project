@@ -1,0 +1,121 @@
+﻿word_code;written;meaning_fr;classifier;classifier_written;kind;tone;example;in_series;support;certainty;note
+W0004;bàn;table;cai;cái;classifier;sắc;hai cái bàn;oui;oui;fiable;
+W0007;cà phê;café;ly;ly;measure;ngang;hai ly cà phê;;;fiable;mesure : un verre de café
+W0009;cam;orange (fruit);qua;quả;classifier;hỏi;hai quả cam;oui;oui;fiable;"Nord ; trái au Sud"
+W0011;chân;jambe;cai;cái;classifier;sắc;hai cái chân;;;fiable;aussi bàn chân (le pied)
+W0016;công ty;entreprise;;;;;;;;fiable;pas de classificateur courant
+W0017;da;peau;;;;;;oui;oui;fiable;nom de matière
+W0022;đồ;objet;;;;;;oui;oui;à vérifier;món đồ (món absent du corpus)
+W0023;gà;poulet;con;con;classifier;ngang;hai con gà;oui;oui;fiable;
+W0024;gái;fille;co;cô;kinship;ngang;hai cô gái;;;fiable;cô gái
+W0026;hoa;fleur;bong;bông;classifier;ngang;hai bông hoa;oui;oui;fiable;aussi cành, đóa
+W0029;lá;feuille;chiec;chiếc;classifier;sắc;hai chiếc lá;oui;;fiable;chiếc lá
+W0033;má;joue;;;;;;;;à vérifier;partie du corps : « hai má »
+W0036;năm;cinq;;;;;;oui;oui;fiable;unité de temps (année)
+W0038;nhà;maison;can;căn;classifier;ngang;hai căn nhà;oui;oui;fiable;aussi ngôi nhà
+W0040;ô tô;voiture;chiec;chiếc;classifier;sắc;hai chiếc ô tô;;;fiable;
+W0043;rau;légumes;;;;;;;;fiable;nom de matière (bó rau : une botte)
+W0046;tai;oreille;cai;cái;classifier;sắc;hai cái tai;oui;;fiable;
+W0047;tay;main;cai;cái;classifier;sắc;hai cái tay;oui;oui;fiable;aussi bàn tay
+W0048;tên;nom;cai;cái;classifier;sắc;hai cái tên;;;fiable;cái tên
+W0049;tim;cœur;trai;trái;classifier;sắc;hai trái tim;;;à vérifier;trái tim (aussi quả tim)
+W0051;trà;thé;ly;ly;measure;ngang;hai ly trà;;;fiable;"mesure ; aussi tách, cốc"
+W0054;vé;billet;cai;cái;classifier;sắc;hai cái vé;;;à vérifier;aussi tấm vé (tấm absent du corpus)
+W0059;ý;idée;;;;;;;;fiable;
+W0065;bánh;gâteau;cai;cái;classifier;sắc;hai cái bánh;;;fiable;
+W0066;cá;poisson;con;con;classifier;ngang;hai con cá;oui;oui;fiable;
+W0070;xe;véhicule;chiec;chiếc;classifier;sắc;hai chiếc xe;;;fiable;
+W0075;áo;vêtement;cai;cái;classifier;sắc;hai cái áo;oui;oui;fiable;aussi chiếc áo
+W0077;bệnh viện;hôpital;;;;;;;;fiable;
+W0078;bếp;cuisine;cai;cái;classifier;sắc;hai cái bếp;;;fiable;
+W0080;bún;bún (vermicelles de riz);bat;bát;measure;sắc;hai bát bún;;;fiable;mesure : un bol de bún
+W0081;bút;stylo;cai;cái;classifier;sắc;hai cái bút;;;fiable;"Nord ; cây bút au Sud"
+W0085;cánh;aile;cai;cái;classifier;sắc;hai cái cánh;;;à vérifier;aussi đôi cánh (paire)
+W0090;chó;chien;con;con;classifier;ngang;hai con chó;;;fiable;
+W0092;chuối;banane;qua;quả;classifier;hỏi;hai quả chuối;;;fiable;"Nord ; trái au Sud"
+W0094;đất;terre;;;;;;oui;oui;fiable;nom de matière
+W0095;đầu;tête;cai;cái;classifier;sắc;hai cái đầu;oui;oui;fiable;
+W0099;đồ ăn;nourriture;;;;;;;;à vérifier;món ăn
+W0100;đồ uống;boisson;;;;;;;;à vérifier;
+W0106;giá;prix;;;;;;oui;oui;fiable;
+W0109;giây;seconde (temps);;;;;;oui;oui;fiable;unité de temps
+W0110;giờ;heure;;;;;;oui;;fiable;unité de temps
+W0111;gió;vent;;;;;;;;à vérifier;cơn gió (cơn absent du corpus)
+W0119;hôm nay;aujourd'hui;;;;;;;;fiable;adverbe de temps
+W0120;hôm qua;hier;;;;;;;oui;fiable;adverbe de temps
+W0129;kính;lunettes;cai;cái;classifier;sắc;hai cái kính;;;fiable;aussi đôi kính
+W0134;lối;chemin;;;;;;;;à vérifier;
+W0136;mắt;œil;con;con;classifier;ngang;hai con mắt;;;fiable;"con mắt ; aussi đôi mắt"
+W0137;máu;sang;;;;;;;;fiable;nom de matière
+W0139;mèo;chat;con;con;classifier;ngang;hai con mèo;oui;oui;fiable;
+W0143;mưa;pluie;;;;;;;;à vérifier;cơn mưa
+W0144;mùi;odeur;;;;;;oui;;fiable;
+W0145;muối;sel;;;;;;oui;oui;fiable;nom de matière
+W0153;ngày;jour;;;;;;;;fiable;unité de temps
+W0154;ngày mai;demain;;;;;;;;fiable;adverbe de temps
+W0155;nghề;métier;;;;;;;;fiable;
+W0166;ớt;piment;qua;quả;classifier;hỏi;hai quả ớt;;;fiable;
+W0168;phòng;chambre;can;căn;classifier;ngang;hai căn phòng;;;fiable;căn phòng
+W0169;phút;minute;;;;;;;;fiable;unité de temps
+W0171;quán;restaurant;cai;cái;classifier;sắc;hai cái quán;oui;oui;à vérifier;aussi quán sans classificateur
+W0172;quần;pantalon;cai;cái;classifier;sắc;hai cái quần;;;fiable;aussi chiếc quần
+W0174;răng;dent;cai;cái;classifier;sắc;hai cái răng;;;fiable;aussi chiếc răng
+W0177;rượu;alcool;chai;chai;measure;ngang;hai chai rượu;;oui;fiable;mesure : une bouteille
+W0178;sách;livre;cuon;cuốn;classifier;sắc;hai cuốn sách;oui;oui;fiable;aussi quyển
+W0180;sáng;matin;;;;;;;;fiable;moment de la journée
+W0183;siêu thị;supermarché;;;;;;;;fiable;
+W0186;sông;rivière;con;con;classifier;ngang;hai con sông;;;fiable;con sông
+W0193;tết;Têt (Nouvel An vietnamien);;;;;;;;fiable;
+W0194;tháng;mois;;;;;;;;fiable;unité de temps
+W0195;thành phố;ville;;;;;;;;fiable;
+W0197;thuốc;médicament;;;;;;;;à vérifier;viên thuốc (comprimé)
+W0198;tiền;argent;;;;;;;;fiable;
+W0199;tiêu;poivre;;;;;;oui;oui;fiable;nom de matière
+W0200;tóc;cheveux;;;;;;oui;oui;à vérifier;mái tóc, sợi tóc (absents)
+W0201;tối;soir;;;;;;;;fiable;moment de la journée
+W0204;trái;fruit;;;;;;;;fiable;trái est lui-même un classificateur
+W0207;túi;sac;cai;cái;classifier;sắc;hai cái túi;;;fiable;
+W0210;ví;portefeuille;cai;cái;classifier;sắc;hai cái ví;;;fiable;
+W0211;việc;travail;;;;;;;;à vérifier;công việc
+W0214;vườn;jardin;;;;;;;;à vérifier;khu vườn (khu absent)
+W0216;xe đạp;vélo;chiec;chiếc;classifier;sắc;hai chiếc xe đạp;;;fiable;
+W0217;xe máy;moto;chiec;chiếc;classifier;sắc;hai chiếc xe máy;;;fiable;
+W0220;cơm;riz cuit;bat;bát;measure;sắc;hai bát cơm;oui;oui;fiable;mesure : un bol de riz
+W0221;ghế;chaise;cai;cái;classifier;sắc;hai cái ghế;;;fiable;aussi chiếc ghế
+W0222;nước;eau;ly;ly;measure;ngang;hai ly nước;oui;oui;fiable;"mesure : un verre d’eau ; aussi cốc"
+W0223;chợ;marché;;;;;;;;à vérifier;khu chợ
+W0224;đêm;nuit;;;;;;;;fiable;moment de la journée
+W0231;thịt;viande;;;;;;oui;oui;à vérifier;miếng thịt (miếng absent)
+W0233;trời;ciel;;;;;;;;fiable;
+W0234;tuần;semaine;;;;;;;oui;fiable;unité de temps
+W0239;cửa;porte;cai;cái;classifier;sắc;hai cái cửa;;;fiable;
+W0242;trưa;midi;;;;;;;;fiable;moment de la journée
+W0244;bác sĩ;médecin;;;;;;;oui;à vérifier;« hai bác sĩ », ou người bác sĩ
+W0247;biển;mer;;;;;;;;fiable;
+W0249;chiều;après-midi;;;;;;;;fiable;moment de la journée
+W0258;điện thoại;téléphone;chiec;chiếc;classifier;sắc;hai chiếc điện thoại;;oui;fiable;aussi cái điện thoại
+W0261;du lịch;voyage;;;;;;;;fiable;
+W0263;đường;rue;con;con;classifier;ngang;hai con đường;;;fiable;con đường
+W0268;giày;chaussure;doi;đôi;classifier;ngang;hai đôi giày;;;fiable;"đôi giày (la paire) ; chiếc giày (une seule)"
+W0270;hôm kia;avant-hier;;;;;;;;fiable;adverbe de temps
+W0271;khách sạn;hôtel;;;;;;;;fiable;
+W0275;máy bay;avion;chiec;chiếc;classifier;sắc;hai chiếc máy bay;;;fiable;
+W0276;máy tính;ordinateur;cai;cái;classifier;sắc;hai cái máy tính;;;fiable;aussi chiếc máy tính
+W0279;mũi;nez;cai;cái;classifier;sắc;hai cái mũi;oui;oui;fiable;
+W0291;phở;pho (soupe de nouilles);bat;bát;measure;sắc;hai bát phở;oui;oui;fiable;mesure : un bol de phở
+W0292;quê;campagne (rurale);;;;;;oui;oui;fiable;
+W0294;sữa;lait;ly;ly;measure;ngang;hai ly sữa;;;fiable;"mesure ; aussi hộp sữa"
+W0295;tàu hỏa;train;chiec;chiếc;classifier;sắc;hai chiếc tàu hỏa;;;à vérifier;aussi con tàu, đoàn tàu
+W0297;thời tiết;météo;;;;;;;;fiable;
+W0299;trái cây;fruits;;;;;;;;fiable;collectif
+W0301;trứng;œuf;qua;quả;classifier;hỏi;hai quả trứng;;;fiable;quả trứng
+W0303;trường;école;;;;;;;;à vérifier;ngôi trường (ngôi absent)
+W0307;giường;lit;cai;cái;classifier;sắc;hai cái giường;;;fiable;
+W0308;miệng;bouche;cai;cái;classifier;sắc;hai cái miệng;;;fiable;
+W0309;mũ;chapeau;cai;cái;classifier;sắc;hai cái mũ;oui;oui;fiable;aussi chiếc mũ
+W0318;ma;fantôme;con;con;classifier;ngang;hai con ma;oui;;fiable;con ma
+W0321;pin;pile (batterie);;;;;;oui;oui;à vérifier;viên pin, cục pin (absents)
+W0323;môn;matière (scolaire);;;;;;oui;oui;fiable;môn est lui-même un classificateur (môn học)
+W0324;nem;nem (rouleau de printemps);cai;cái;classifier;sắc;hai cái nem;;;à vérifier;cái nem, chiếc nem
+W0326;va li;valise;cai;cái;classifier;sắc;hai cái va li;;oui;à vérifier;aussi chiếc va li
+W0339;chuyện;histoire, affaire, conversation;;;;;;oui;oui;à vérifier;câu chuyện (câu absent)

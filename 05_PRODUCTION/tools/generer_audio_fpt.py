@@ -13,6 +13,10 @@ Ce qui est généré (d'après 04_DONNEES, source unique) :
   - exercice « Combien de fois ? » (DEC-0054) : chaque suite ou phrase de comptage.csv, dite
     d'un seul tenant, avec les voix d'écoute du type de leçon, lent et normal (normal seulement dans les leçons
     de tons, DEC-0043). Fichier : audio/<item_code>-<voix>-<débit>.mp3.
+    Classificateurs (DEC-0062, règle de regle_classificateurs.py) : « con mèo », référence K-<mot>,
+    pour les mots d'exemple d'E1 (leurs deux voix) et les mots supports d'E4 (voix modèle), lent et normal.
+    Pour les PHRASES, en plus, une version « mots espacés » (débit spaced, DEC-0058) : la phrase envoyée
+    avec des points de suspension entre les mots (« Tôi… thích… cà phê. »), au débit normal.
 
 Où vont les fichiers : 04_DONNEES/audio/<référence>-<voix>-<débit>.mp3
 Chaque fichier créé est ajouté à 04_DONNEES/audios.csv avec validated = false :
@@ -37,6 +41,8 @@ Usage (depuis C:\\VIET_PROJECT ; remplacer python par .venv-asr\\Scripts\\python
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py .                      -> plan seulement, rien n'est appelé
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer --lecon M0-L01 --limite 4
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer          -> tout ce qui manque
+    python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer --refaire --voix F3 --debit slow
+        -> refait seulement les audios lents de F3 (filtres --voix et --debit : aussi sans --refaire)
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer --refaire -> refait les audios déjà présents
         (les anciens fichiers sont déplacés dans 04_DONNEES/audio/_anciens/, rien n'est effacé ;
          leurs lignes de audios.csv sont remplacées, avec validated = false)
@@ -170,16 +176,49 @@ def plan(donnees, lecon=None):
     for x in lire(os.path.join(donnees, 'comptage.csv')):           # DEC-0054
         if lecon and x['lesson_code'] != lecon:
             continue
+        if x['kind'] == 'phrase':                                    # DEC-0058 : mots espacés
+            for v in voix_ecoute(x['lesson_code']):
+                ajouter(x['item_code'], phrase_espacee(x, mots), 'sequence', v['voice_code'], 'spaced')
         for v in voix_ecoute(x['lesson_code']):
             for d in VITESSE_FPT:
                 if d == 'slow' and x['lesson_code'] in lecons_tons:
                     continue
                 ajouter(x['item_code'], x['written'], 'sequence', v['voice_code'], d)
+    # Classificateurs en E1 et E4 (DEC-0062) : même règle que generer_lecteur.py.
+    import regle_classificateurs as rc
+    ctx = rc.charger(donnees)
+    for x in lire(os.path.join(donnees, 'exemples_e1.csv')):
+        if (lecon and x['lesson_code'] != lecon) or not x['word_code']:
+            continue
+        a = rc.appui(ctx, x['word_code'], x['lesson_code'], x['element'])
+        if a:
+            for code_voix in (x['voice_f'], x['voice_h']):
+                if code_voix in actives:
+                    for d in VITESSE_FPT:
+                        ajouter(a[1], a[0], 'sequence', code_voix, d)
+    for s in supports:
+        if lecon and s['lesson_code'] != lecon:
+            continue
+        a = rc.appui(ctx, s['word_code'], s['lesson_code'])
+        if a:
+            for d in VITESSE_FPT:
+                ajouter(a[1], a[0], 'sequence', VOIX_MODELE, d)
     voix_fpt = {v['voice_code']: v['provider_voice'] for v in voix}
     MODELE_PAR_VOIX.update({v['voice_code']: (v.get('provider_model') or MODELE) for v in voix})
-    VITESSE_PAR_VOIX.update({v['voice_code']: dict(VITESSE_FPT, **({'slow': float(v['provider_speed_slow'])}
+    VITESSE_PAR_VOIX.update({v['voice_code']: dict(VITESSE_FPT, spaced=1.0, **({'slow': float(v['provider_speed_slow'])}
                              if v.get('provider_speed_slow') else {})) for v in voix})
     return list(items.values()), voix_fpt
+
+
+def phrase_espacee(x, mots):
+    """« Tôi thích cà phê. » -> « Tôi… thích… cà phê. » : points de suspension entre les MOTS
+    (un mot de deux syllabes reste d'un seul tenant), majuscule et ponctuation finale gardées."""
+    ecrits = [mots[w]['written'] if w in mots else w for w in x['word_codes'].split()]
+    if not ecrits:
+        return x['written']
+    ecrits[0] = ecrits[0][:1].upper() + ecrits[0][1:]
+    fin = x['written'].rstrip()[-1:] if x['written'].rstrip()[-1:] in '.?!' else '.'
+    return '… '.join(ecrits) + fin
 
 
 def nom_fichier(item):
@@ -328,6 +367,8 @@ def main():
     a.add_argument('--refaire', action='store_true',
                    help='refaire les audios déjà présents (anciens fichiers mis de côté dans audio/_anciens/)')
     a.add_argument('--doubler', action='store_true', help='envoyer « mot, mot. » et garder la 2e occurrence')
+    a.add_argument('--voix', help='limiter à une ou plusieurs voix, par ex. F3 ou F3,H4')
+    a.add_argument('--debit', help='limiter à un ou plusieurs débits : slow, normal, spaced (séparés par des virgules)')
     args = a.parse_args()
     global DOUBLER
     DOUBLER = args.doubler
@@ -335,6 +376,10 @@ def main():
     donnees = os.path.join(args.racine, '04_DONNEES')
     chemin_audios = os.path.join(donnees, 'audios.csv')
     items, voix_fpt = plan(donnees, args.lecon)
+    if args.voix:
+        items = [i for i in items if i['voix'] in args.voix.split(',')]
+    if args.debit:
+        items = [i for i in items if i['debit'] in args.debit.split(',')]
     if not voix_fpt:
         sys.exit(f"Aucune voix active avec provider = {FOURNISSEUR} dans voix.csv.")
     existants = {r['file'] for r in lire(chemin_audios)}

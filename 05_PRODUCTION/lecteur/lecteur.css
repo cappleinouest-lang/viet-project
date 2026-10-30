@@ -342,3 +342,6 @@ html.grand-texte .ecrit-e4 { font-size: 3rem; }
 .suite-revelee .sens-phrase { display: block; font-size: 0.9rem; color: var(--encre-douce); margin-top: 4px; }
 .info-combien { max-width: 320px; margin: 0 auto; width: 100%; }
 .info-combien:empty { display: none; }
+.ecoutes-combien { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+.ecoutes-combien .ecoute { font-size: 0.95rem; padding-inline: 8px; }
+.tuile .appui { font-size: 0.8rem; color: var(--encre-douce); }

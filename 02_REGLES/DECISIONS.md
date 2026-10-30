@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.50
+version: 1.56
 date: 2026-10-30
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1257,6 +1257,135 @@ qui indique « remplace DEC-NNNN ».
      les suites avant de généraliser.
 - **Impacte** : PROG-ACT (ACT-E3-COMBIEN), DATA-MODELE, lecteur.
 
+### DEC-0057 — « Combien de fois ? » : écoute lente possible, non comptée
+
+- **Date** : 2026-10-30
+- **Question** : en phase 2 (débit normal), pouvoir réécouter la phrase ou la
+  suite lentement.
+- **Décision** (Christophe, option 1) : bouton **« 🐢 Écouter lentement »**
+  en phase 2, **leçons de sons seulement** (leçons de tons : jamais de lent,
+  DEC-0043, inchangé). S'il est utilisé avant la réponse, la réponse est
+  corrigée et gardée dans l'historique (`d = 'aide'`) mais **non comptée** :
+  ni dans le taux, ni dans les réussites par son ; elle ne peut ni faire
+  passer de phase ni valider l'étape. Un message le rappelle.
+- **Raison** : aider sur les phrases longues sans fausser le verrou, qui
+  mesure la reconnaissance au débit normal (R-VOL-07).
+- **Impacte** : PROG-ACT (ACT-E3-COMBIEN), lecteur.
+
+### DEC-0058 — Phrases : trois écoutes au choix, dont « mots espacés »
+
+- **Date** : 2026-10-30
+- **Question** : dans les phrases, peu d'espace entre les mots. Essais
+  (`tools/tester_appui.py`, Thu Minh et Huy Phong) : débit lent (silences
+  doublés), balise SSML `<break>` (respectée par FPT), points de suspension,
+  tiret (sans effet). Christophe : les **points de suspension** sont les
+  meilleurs, pour les deux voix.
+- **Décision** :
+  1. Dans « Combien de fois ? », l'apprenant choisit son écoute :
+     **▶ vitesse normale**, **🐢 vitesse lente** (leçons de sons seulement,
+     DEC-0043), **… mots espacés** (phrases seulement).
+  2. « Mots espacés » : la phrase est envoyée à FPT avec des points de
+     suspension entre les mots (« Tôi… thích… cà phê. »), au débit normal ;
+     débit `spaced` dans `audios.csv` ; fichier `<item>-<voix>-spaced.mp3`.
+     Permise aussi dans les leçons de tons (pas de ralenti de la mélodie).
+  3. Verrou : en phase 2, une réponse donnée après une écoute lente **ou
+     espacée** n'est pas comptée (extension de DEC-0057).
+- **Constat associé** (même essai) : « chiffre au ton ngang + classificateur +
+  nom » (*hai con mèo*) allonge la consonne de début du nom (Thu Minh 48 →
+  94 ms, Huy Phong 46 → 59 ms) et sonne naturel ; décision sur les
+  classificateurs à prendre à part.
+- **Impacte** : PROG-ACT, DATA-MODELE (`speed = spaced`), PROD-AUDIO, lecteur.
+
+### DEC-0059 — Débit lent de Thu Minh : 0,8 au lieu de 0,6
+
+- **Date** : 2026-10-30
+- **Question** : Christophe : les audios lents de Thu Minh (F3) semblent un
+  peu saturés.
+- **Constats** : aucun écrêtage (crêtes entre −4 et −10 dBFS) ; le
+  réencodage de notre égalisation baisse la qualité mp3 (164 → environ
+  50 kbit/s) mais, à l'écoute, le fichier brut de FPT n'est **pas meilleur** :
+  la rugosité vient de la synthèse ralentie à 0,6. Essai à 0,6 / 0,7 / 0,8
+  (`essai_variantes_fpt.py`, *xem*, *khỏe*, *mũ*) : **0,8 très bien**.
+- **Décision** : débit lent de F3 = **0,8** (`voix.csv`,
+  `provider_speed_slow`). Les 606 audios lents de F3 sont regénérés
+  (`generer_audio_fpt.py --refaire --voix F3 --debit slow`, nouvelles
+  options) ; les anciens vont dans `audio/_anciens/`.
+- **Non changé** : Huy Phong (H4) reste à 0,6 tant qu'aucun défaut n'est
+  signalé.
+- **Impacte** : `voix.csv`, PROD-AUDIO.
+
+### DEC-0060 — Classificateurs et mot d'appui « hai + classificateur »
+
+- **Date** : 2026-10-30
+- **Question** : Christophe : aborder tôt les classificateurs, puis les
+  ajouter aux mots étudiés, aussi en E1–E3, dès qu'ils sont connus ; cela
+  réduit le risque de début de mot tronqué.
+- **Constats** : essai `tester_appui.py` (8 noms, Thu Minh et Huy Phong) :
+  « chiffre + classificateur + nom » allonge la consonne de début du nom
+  (48 → 94 ms ; 46 → 59 ms) et sonne naturel ; classificateur seul : peu
+  d'effet. Sur 95 séries, 14 ont des noms au même classificateur, toutes à
+  partir de L04 ; 58 n'ont aucun nom (classificateur impossible).
+- **Décision** :
+  1. `mots.csv`, colonne **`classifier`** : classificateur usuel (Nord) de
+     chaque nom (62 sur 120 ; proposition relue :
+     `07_QUALITE/proposition_classificateurs_2026-10-30.csv`, 24 cas « à
+     vérifier » par un locuteur).
+  2. Séries de noms au même classificateur : chaque terme (syllabes
+     inventées comprises) est dit avec l'appui **« hai + classificateur »**
+     (« hai con mèo / hai con mè ») en E2, E3 et à l'échauffement ;
+     l'écrit montre l'appui au-dessus du mot. Choix des séries :
+     `choisir_appuis.py` → `04_DONNEES/appuis_series.csv`.
+  3. Conditions : ton du classificateur déjà ouvert (règle souple) ; dans
+     les leçons de tons, seulement un classificateur au ton ngang.
+  4. **Essai d'abord sur L04 et L05** (4 séries, 36 audios), puis
+     généralisation selon l'écoute.
+- **À faire ensuite** : E1 (mots d'exemple) et E4 avec appui ; moment où
+  chaque classificateur est présenté ; séries sans nom (phrase-cadre ou mot
+  seul).
+- **Impacte** : DATA-MODELE, PROG-ACT, PROD-AUDIO, lecteur.
+
+### DEC-0061 — Classificateurs : E1, E4, E5 seulement, pas en E2–E3
+
+- **Date** : 2026-10-30
+- **Constat** (essai de DEC-0060, L04–L05, « hai con mèo / hai con mè ») :
+  en E2 et E3, Christophe « ne sait pas trop quoi comparer » : le mot
+  d'appui détourne l'attention de la cible.
+- **Décision** :
+  1. **Aucun mot d'appui en E2, E3 ni à l'échauffement** : le terme est dit
+     seul. Remplace DEC-0060, points 2 à 4 (`appuis_series.csv` vidé,
+     `choisir_appuis.py` gardé pour l'historique ; audios `K-…` éventuels
+     inutilisés).
+  2. Les classificateurs sont introduits **en E1, E4 et E5** ; la colonne
+     `classifier` de `mots.csv` (DEC-0060, point 1) est conservée.
+- **À préciser** : forme en E1 et E4 (« hai con mèo » ou « con mèo »), place
+  dans E4 (à la place du mot seul ou en plus), présentation de chaque
+  classificateur.
+- **Impacte** : lecteur, PROD-AUDIO, PROG-ACT.
+
+### DEC-0062 — Classificateurs en E1 et E4 : « classificateur + nom »
+
+- **Date** : 2026-10-30
+- **Décision** (Christophe, suite de DEC-0061) :
+  1. **E1** : les noms des mots d'exemple sont dits **« classificateur +
+     nom »** (« con mèo »), sans chiffre ; la case indique « avec son
+     classificateur » (pas d'écrit vietnamien en E1, R-ECR-01).
+  2. **E4** : chaque nom supports concerné est répété **seul, puis avec son
+     classificateur** (« mèo », puis « con mèo » comme item suivant, modèle
+     Ban Mai, courbes calculées par `courbes_modele.py`).
+  3. **E5** (à construire) : les classificateurs viendront dans les
+     enchaînements.
+- **Règle** (`tools/regle_classificateurs.py`, commune à l'audio et au
+  lecteur) : classificateur de `mots.csv` ; son ton déjà ouvert dans la leçon ;
+  leçon de tons : ton ngang seulement ; en E1, le classificateur ne contient
+  pas le son ou le ton étudié sur l'écran (pas de « con » pour o ni pour -n).
+  Sans audio, le mot reste seul.
+- **Volume** (2026-10-30) : 100 audios (référence `K-<mot>`), de L01 (*con
+  ma*) à L13 ; aucun en L02, L03, L07, L11 (leçons de tons sans
+  classificateur ngang disponible).
+- **Reste à décider** : présentation de chaque classificateur la première
+  fois qu'il apparaît.
+- **Impacte** : PROG-ACT, PROD-AUDIO, PROD-LECT, lecteur.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1312,6 +1441,12 @@ qui indique « remplace DEC-NNNN ».
 | 1.48 | 2026-10-30 | Ajout de DEC-0054 (exercice « Combien de fois ? » en fin d'E3). |
 | 1.49 | 2026-10-30 | Ajout de DEC-0055 (voix d'écoute des leçons de sons : Thu Minh et Huy Phong). |
 | 1.50 | 2026-10-30 | Ajout de DEC-0056 (« Combien de fois ? » : phrases, règle souple). |
+| 1.51 | 2026-10-30 | Ajout de DEC-0057 (écoute lente possible, non comptée). |
+| 1.52 | 2026-10-30 | Ajout de DEC-0058 (phrases : trois écoutes, dont mots espacés). |
+| 1.53 | 2026-10-30 | Ajout de DEC-0059 (débit lent de Thu Minh : 0,8). |
+| 1.54 | 2026-10-30 | Ajout de DEC-0060 (classificateurs, mot d'appui « hai + classificateur »). |
+| 1.55 | 2026-10-30 | Ajout de DEC-0061 (classificateurs en E1, E4, E5 seulement). |
+| 1.56 | 2026-10-30 | Ajout de DEC-0062 (classificateurs en E1 et E4). |
 
 ## Liens
 

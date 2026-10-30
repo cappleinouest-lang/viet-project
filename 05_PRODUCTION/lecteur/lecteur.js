@@ -266,8 +266,9 @@
     var v = D.voix.filter(function (x) { return x.code === codeVoix; })[0] || {};
     var genre = v.genre === 'female' ? 'F' : v.genre === 'male' ? 'H' : '?';
     var qui = (v.nom || codeVoix) + ' · ' + genre + ' · ' + codeVoix;
-    var vitesse = (debit === 'slow' ? 'lent' : 'normal') + (v.vitesse_fpt ? ' · speed ' + String(v.vitesse_fpt[debit]).replace('.', ',') : '');
-    if (!fichier) return ['synthèse de l’appareil (aucun fichier)', qui, debit === 'slow' ? 'lent' : 'normal'];
+    var nomDebit = { slow: 'lent', normal: 'normal', spaced: 'mots espacés' }[debit] || debit;
+    var vitesse = nomDebit + (v.vitesse_fpt && v.vitesse_fpt[debit] != null ? ' · speed ' + String(v.vitesse_fpt[debit]).replace('.', ',') : '');
+    if (!fichier) return ['synthèse de l’appareil (aucun fichier)', qui, nomDebit];
     return [fichier.split('/').pop(), qui, (v.modele ? v.modele + ' · ' : '') + vitesse];
   }
   function noterInfoSon(caseMot, terme, codeVoix, debit) {
@@ -302,7 +303,7 @@
       //    simulée et une vitesse = débit × vitesse de la voix × réglage de l'apprenant.
       if (!('speechSynthesis' in window)) { fin(); return; }
       var v = D.voix.filter(function (x) { return x.code === codeVoix; })[0] || D.voix[0];
-      var u = new SpeechSynthesisUtterance(terme.ecrit);
+      var u = new SpeechSynthesisUtterance((terme.appui ? terme.appui + ' ' : '') + terme.ecrit);
       u.lang = 'vi-VN';
       if (voixVi) u.voice = voixVi;
       u.pitch = v.hauteur || 1;
@@ -351,6 +352,7 @@
     var img = t.image ? el('span', { class: 'image', text: t.image, 'aria-hidden': 'true' }) : null;
     if (mode === 'ecrit') {
       if (img) morceaux.push(img);
+      if (t.appui) morceaux.push(el('span', { class: 'appui', text: t.appui }));   // mot d'appui (DEC-0060)
       morceaux.push(t.invente ? el('span', { class: 'ecrit', text: '🔊' }) : el('span', { class: 'ecrit', text: t.ecrit }));
       morceaux.push(el('span', { class: 'sens', text: t.invente ? 'syllabe inventée (jamais écrite)' : t.sens }));
       return morceaux;
@@ -709,7 +711,7 @@
       var b = el('button', { class: 'tuile', type: 'button', 'aria-label': 'mot ' + (i + 1) + (m.sens ? ', ' + m.sens : ''),
         onclick: function () { surligner(i); dire(m, tuiles[i]).then(function () { surligner(-1); }); } }, [
         el('span', { class: 'image', text: m.image || '🔊', 'aria-hidden': 'true' }),
-        m.sens ? el('span', { class: 'sens', text: m.sens }) : null
+        m.sens ? el('span', { class: 'sens', text: m.sens + (m.appui ? ' · avec son classificateur' : '') }) : null   // DEC-0062
       ]);
       grille.appendChild(b);
       return b;
@@ -1031,15 +1033,21 @@
       // Mode test (DEC-0047) : l'info sur le son (fichier, locuteur, débit) est affichée DÈS L'ÉCOUTE,
       // sous le bouton : contrairement à E2/E3, elle ne trahit pas la réponse (le nombre).
       var infoSon = el('div', { class: 'info-combien' });
-      var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(x, voix, son, infoSon); } });
-      // Aide « Écouter lentement » (DEC-0057) : leçons de sons, phase 2 seulement. Si elle est
-      // utilisée avant de répondre, la réponse est corrigée mais NON COMPTÉE pour le verrou.
+      // Trois écoutes au choix (DEC-0058) : vitesse normale, vitesse lente (leçons de sons seulement,
+      // DEC-0043), mots espacés (phrases : points de suspension entre les mots, débit normal).
+      // En phase 2, une réponse donnée après une écoute lente ou espacée n'est pas comptée (DEC-0057).
       var aideLente = false;
-      var lente = (!l.tons && debit === 'normal') ? el('button', { class: 'ecoute', type: 'button', text: '🐢 Écouter lentement',
-        onclick: function () { if (!repondu) aideLente = true; jouer(x, voix, 'slow', infoSon); } }) : null;
-      app.appendChild(lente ? el('div', { class: 'deux-ecoutes' }, [ecoute, lente]) : ecoute);
+      var aide = function () { if (!repondu && debit === 'normal') aideLente = true; };
+      var boutonsEcoute = [el('button', { class: 'ecoute', type: 'button', text: '▶ Vitesse normale',
+        onclick: function () { jouer(x, voix, 'normal', infoSon); } })];
+      if (!l.tons) boutonsEcoute.push(el('button', { class: 'ecoute', type: 'button', text: '🐢 Vitesse lente',
+        onclick: function () { aide(); jouer(x, voix, 'slow', infoSon); } }));
+      if (x.nature === 'phrase') boutonsEcoute.push(el('button', { class: 'ecoute', type: 'button', text: '… Mots espacés',
+        onclick: function () { aide(); jouer(x, voix, 'spaced', infoSon); } }));
+      app.appendChild(el('div', { class: 'ecoutes-combien' }, boutonsEcoute));
       app.appendChild(infoSon);
-      if (lente) app.appendChild(el('p', { class: 'petit centre', text: 'L’écoute lente aide, mais la réponse qui suit n’est pas comptée pour valider l’étape.' }));
+      if (debit === 'normal' && boutonsEcoute.length > 1) app.appendChild(el('p', { class: 'petit centre',
+        text: 'Les écoutes lente et espacée aident, mais la réponse qui suit n’est pas comptée pour valider l’étape.' }));
       var retour = el('p', { class: 'retour-reponse', role: 'status' });
       var revele = el('div', { class: 'suite-revelee', hidden: true });
       var suivant = el('button', { class: 'bouton', type: 'button', text: 'Suivant', hidden: true, onclick: nouvelItem });
@@ -1060,7 +1068,7 @@
           if (!ok) this.classList.add('faux');
           retour.className = 'retour-reponse ' + (ok ? 'juste' : 'faux');
           retour.textContent = (ok ? 'Juste : ' + x.nombre + ' fois.' : 'Il fallait ' + x.nombre + '. Réécoutez en suivant les mots.') +
-            (aideLente ? ' (Écoute lente utilisée : réponse non comptée.)' : '');
+            (aideLente ? ' (Écoute lente ou espacée utilisée : réponse non comptée.)' : '');
           // Révélation de l'écrit (après la réponse seulement), cibles en évidence.
           // Suite : mots séparés par « · » ; phrase (DEC-0056) : syllabes séparées par des espaces,
           // majuscule et ponctuation de la phrase, puis sa traduction.
@@ -1194,7 +1202,7 @@
     btnRetour.onclick = function () { arreterSon(); if (micro) micro.arreter(); ecranLecon(code); };
     titreBarre.textContent = 'Leçon ' + l.numero + ' · E4 Répéter';
     app.appendChild(el('div', { class: 'consigne' }, [
-      el('span', { class: 'etiquette', text: 'Mot ' + (index + 1) + ' sur ' + l.production.length +
+      el('span', { class: 'etiquette', text: (m.avec_classificateur ? 'Avec son classificateur · ' : '') + 'Mot ' + (index + 1) + ' sur ' + l.production.length +
         ' · modèle ' + (debit === 'slow' ? 'lent (passage 1)' : 'normal (passage 2)') }),
       el('h1', { text: 'Écoutez, répétez, comparez' }),
       el('p', { class: 'petit', text: 'Écoutez le modèle, enregistrez-vous, réécoutez-vous à côté du modèle, puis notez-vous honnêtement.' })

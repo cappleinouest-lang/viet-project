@@ -2,7 +2,7 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.13
+version: 0.15
 date: 2026-10-30
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
@@ -97,6 +97,7 @@ tirée au hasard.
 | Correction | juste / faux, puis **l'écrit est révélé**, syllabes cibles en évidence, avec la traduction de la phrase ; réécoute libre |
 | Contenu | `04_DONNEES/comptage.csv` : nombre attendu **calculé** à partir de `syllabes.csv` ; mots dont tous les éléments sont ouverts (atomicité) ; autres mots pris de préférence parmi les éléments proches |
 | Verrou | compte pour le verrou d'écoute, comme ACT-E3-LEQUEL : même seuil, 2 voix au moins |
+| Aide | trois écoutes au choix : vitesse normale, vitesse lente (leçons de sons), mots espacés (phrases) ; en phase 2, la réponse qui suit une écoute lente ou espacée n'est pas comptée (DEC-0057, DEC-0058) |
 
 ### ACT-E3-ECRIT — Révélation de l'écrit
 
@@ -191,6 +192,8 @@ calibrés.
 | 0.11 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
 | 0.12 | 2026-10-30 | ACT-E3-COMBIEN « Combien de fois ? » (DEC-0054). |
 | 0.13 | 2026-10-30 | Phrases plutôt que suites, règle souple (DEC-0056). |
+| 0.14 | 2026-10-30 | Écoute lente non comptée (DEC-0057). |
+| 0.15 | 2026-10-30 | Trois écoutes, dont mots espacés (DEC-0058). |
 
 ## Liens
 

@@ -94,7 +94,7 @@ VOIX_PROVISOIRES = {
 }
 # Vitesse de la voix de synthèse pour chaque débit (n'agit pas sur les fichiers audio).
 # Les clés 'slow' et 'normal' sont aussi celles de audios.csv (colonne speed).
-DEBITS = {'slow': 0.55, 'normal': 0.9}
+DEBITS = {'slow': 0.55, 'normal': 0.9, 'spaced': 0.9}   # spaced : mots espacés (DEC-0058)
 # Voix modèle des étapes de production E4–E5 (R-AUD-03) : Ban Mai.
 VOIX_MODELE = 'F1'
 
@@ -170,6 +170,9 @@ def main():
     exemples = lire('exemples_e1.csv')                              # DEC-0039
     mots_lecons = lire('mots_lecons.csv')                           # E4 : mots supports
     comptage = lire('comptage.csv')                                 # DEC-0054
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import regle_classificateurs as rc                              # DEC-0062 : même règle que l'audio
+    ctx_clf = rc.charger(DONNEES)
     syllabe = {}
     for s_ in lire('syllabes.csv'):
         syllabe.setdefault(s_['word_code'], []).append(s_)
@@ -259,6 +262,10 @@ def main():
                 if m and m['imageable'] == 'true' and not invente:
                     image = images_prov.get(m['word_code'], '')  # images.csv vide : emoji provisoire
                 ref = t['word_code'] or t['written']
+                # Pas de mot d'appui dans les séries (E2, E3, échauffement) : DEC-0061 (essai de DEC-0060
+                # abandonné : « on ne sait pas trop quoi comparer »). Le mot est toujours dit seul.
+                aud = audio(ref)
+                appui = ''
                 sortie_termes.append({
                     'position': int(t['position']),
                     'ecrit': t['written'],          # jamais affiché si invente (R-LEX-06)
@@ -267,7 +274,8 @@ def main():
                     'element': t['element'],
                     'symbole': symbole(t['element']),
                     'image': image,
-                    'audio': audio(ref),
+                    'audio': aud,
+                    'appui': appui,                 # « hai con » : affiché avec l'écrit, lu par la synthèse
                 })
             liste.append({'code': sc, 'type': termes[0]['contrast_type'], 'groupe': groupe,
                           'place': sortie_termes[0]['symbole']['place'],   # ce qu'il faut écouter (DEC-0042)
@@ -281,12 +289,16 @@ def main():
             for x in sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e and x['word_code']),
                             key=lambda x: int(x['rank'])):
                 m = mots[x['word_code']]
+                # Classificateur (DEC-0062) : « con mèo » si la règle l'autorise et que l'audio existe.
+                a = rc.appui(ctx_clf, x['word_code'], code, e)
+                aud_clf = audio(a[1]) if a else {}
                 mots_e.append({
                     'ecrit': m['written'],          # pour la voix de synthèse seulement : jamais affiché en E1 (R-ECR-01)
                     'sens': m['meaning_fr'].split(' / ')[0],
                     'image': images_prov.get(m['word_code'], '') if m['imageable'] == 'true' else '',
                     'voix': [x['voice_f'], x['voice_h']],
-                    'audio': audio(m['word_code']),
+                    'audio': aud_clf or audio(m['word_code']),
+                    'appui': a[0].split(' ')[0] if aud_clf else '',
                 })
             decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e}
         # E4 « Écoute et répète » (DEC-0049, DEC-0050) : les mots supports de la leçon, dans
@@ -305,6 +317,18 @@ def main():
                         if t['position'] == '1' and t['word_code'] == m['word_code'] and t['element'] not in cibles:
                             cibles.append(t['element'])
             aud = {d: f for d, f in audio(m['word_code']).get(VOIX_MODELE, {}).items()}
+            # Classificateur en E4 (DEC-0062) : « con mèo » répété APRÈS le mot seul, comme un item de plus.
+            a = rc.appui(ctx_clf, m['word_code'], code)
+            aud_clf = {d: f for d, f in audio(a[1]).get(VOIX_MODELE, {}).items()} if a else {}
+            suite = None
+            if aud_clf:
+                suite = {
+                    'code': m['word_code'] + '+clf', 'ecrit': a[0], 'sens': m['meaning_fr'].split(' / ')[0],
+                    'image': images_prov.get(m['word_code'], '') if m['imageable'] == 'true' else '',
+                    'cibles': [symbole(e) for e in cibles], 'audio': {VOIX_MODELE: aud_clf},
+                    'courbes': {d: courbes[f] for d, f in aud_clf.items() if f in courbes},
+                    'avec_classificateur': True,
+                }
             production.append({
                 'code': m['word_code'],
                 'ecrit': m['written'],
@@ -314,6 +338,8 @@ def main():
                 'audio': {VOIX_MODELE: aud} if aud else {},
                 'courbes': {d: courbes[f] for d, f in aud.items() if f in courbes},
             })
+            if suite:
+                production.append(suite)
         # « Combien de fois ? » (DEC-0054) : chaque suite, rattachée à la partie qui contient sa
         # cible ; pour chaque mot, « cible » dit s'il contient le son ou le ton à compter.
         sections = parties(liste, l.get('split_parts') == 'true')
@@ -375,7 +401,7 @@ def main():
         'voix': [{'code': v['voice_code'], 'genre': v['gender'], **VOIX_PROVISOIRES.get(v['voice_code'], {}),
                   'nom': nom_personnage(v), 'voix_fpt': v.get('provider_voice', ''),
                   'modele': v.get('provider_model', ''),
-                  'vitesse_fpt': {'slow': float(v.get('provider_speed_slow') or 0.8), 'normal': 1.0}}
+                  'vitesse_fpt': {'slow': float(v.get('provider_speed_slow') or 0.8), 'normal': 1.0, 'spaced': 1.0}}
                  for v in voix],
         'debits': DEBITS,
         'lecons': sortie_lecons,
