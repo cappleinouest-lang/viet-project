@@ -345,3 +345,8 @@ html.grand-texte .ecrit-e4 { font-size: 3rem; }
 .ecoutes-combien { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
 .ecoutes-combien .ecoute { font-size: 0.95rem; padding-inline: 8px; }
 .tuile .appui { font-size: 0.8rem; color: var(--encre-douce); }
+
+/* Lettres vietnamiennes du son (DEC-0063) */
+.lettres { font-family: var(--police-texte); font-weight: 700; font-size: 1.05rem; color: var(--accent);
+  border: 1px solid var(--accent-doux); background: var(--accent-doux); border-radius: 8px; padding: 1px 8px; }
+.carte-son .lettres { font-size: 1.4rem; padding: 2px 12px; }

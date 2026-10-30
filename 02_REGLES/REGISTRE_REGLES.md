@@ -2,8 +2,8 @@
 id: REG-REGLES
 titre: Registre des règles
 statut: BROUILLON
-version: 0.17
-date: 2026-10-29
+version: 0.18
+date: 2026-10-30
 resume: >
   Toutes les règles opposables de la formation, une par ligne, numérotées et
   vérifiables : parcours et étapes, volets et verrous, atomicité, sons et
@@ -117,7 +117,7 @@ de l'élève.
 
 | ID | Règle | Vérification | Source |
 |---|---|---|---|
-| **R-ECR-01** | **E1, E2** : aucun écrit visible. | auto | DEC-0011 |
+| **R-ECR-01** | **E1, E2** : aucun **mot** écrit visible. Exception : les **lettres du son étudié** (toutes ses graphies) ou la marque du ton, en E1 et en phase 1 d'E2–E3, jamais en phase 2 ; masquables (réglage). | auto | DEC-0011 ; DEC-0063 |
 | **R-ECR-02** | **E3** : écrit absent au début, visible **en fin d'étape** (sauf syllabe inventée : R-LEX-06). | auto | DEC-0011 ; DEC-0013 |
 | **R-ECR-03** | **E4, E5** : écrit visible, **à l'appui** de l'audio. | auto | DEC-0011 |
 | **R-ECR-04** | Aucune transcription phonétique des **mots**. La notation phonétique des **sons** (`sons.csv`) peut accompagner l'écrit en production ; elle n'est jamais exigée de l'élève. Exception : le symbole court (`ipa_main`) du son contrasté sert d'étiquette de réponse dès E1 (DEC-0029). | revue | FOND-04 § 7 ; DEC-0021 ; DEC-0029 |
@@ -189,6 +189,7 @@ de l'élève.
 | 0.15 | 2026-10-29 | R-PARC-04 : échauffement « Pareil ou différent ? » non noté avant le « Lequel ? » (DEC-0041). |
 | 0.16 | 2026-10-29 | R-AUD-02 : exception des leçons de tons (DEC-0045). |
 | 0.17 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
+| 0.18 | 2026-10-30 | R-ECR-01 : lettres du son permises en E1 et phase 1 d'E2–E3 (DEC-0063). |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.56
+version: 1.57
 date: 2026-10-30
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1386,6 +1386,29 @@ qui indique « remplace DEC-NNNN ».
   fois qu'il apparaît.
 - **Impacte** : PROG-ACT, PROD-AUDIO, PROD-LECT, lecteur.
 
+### DEC-0063 — Lettres vietnamiennes du son dès E1
+
+- **Date** : 2026-10-30
+- **Question** : Christophe : montrer, dès l'apprentissage des sons, les
+  lettres vietnamiennes qui écrivent le son étudié ; toutes, si plusieurs
+  lettres donnent le même son ; idem pour les diphtongues.
+- **Décision** :
+  1. **Assouplit DEC-0011 / R-ECR-01** : en E1–E2, aucun **mot** écrit, mais
+     les **lettres du son étudié** peuvent apparaître.
+  2. Où : dans la **carte d'E1**, sous le symbole ; dans les cases d'E2–E3
+     (et « Combien de fois ? ») en **phase 1 seulement** ; jamais en phase 2,
+     où l'oreille doit suffire.
+  3. Quoi : toutes les graphies (`sons.csv`, colonne `spellings` : « d · gi ·
+     r », « x · s », « ch · tr », « iê · ia · yê ») ; une finale garde son
+     tiret (« -m ») ; pour un ton, la marque d'accent (« accent ◌́ ») ou
+     « sans accent ».
+  4. Réglage « Lettres vietnamiennes du son » pour les masquer (affichées
+     par défaut).
+- **Raison** : relier tôt le son à son écriture ; montrer que des lettres
+  différentes se prononcent pareil à Hanoï. Le risque d'une lecture « à la
+  française » est limité : on ne montre que le son, jamais le mot.
+- **Impacte** : REG-REGLES (R-ECR-01), PROG-ACT, lecteur.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1447,6 +1470,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.54 | 2026-10-30 | Ajout de DEC-0060 (classificateurs, mot d'appui « hai + classificateur »). |
 | 1.55 | 2026-10-30 | Ajout de DEC-0061 (classificateurs en E1, E4, E5 seulement). |
 | 1.56 | 2026-10-30 | Ajout de DEC-0062 (classificateurs en E1 et E4). |
+| 1.57 | 2026-10-30 | Ajout de DEC-0063 (lettres vietnamiennes du son dès E1). |
 
 ## Liens
 

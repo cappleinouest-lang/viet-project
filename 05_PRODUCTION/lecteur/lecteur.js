@@ -163,7 +163,7 @@
   var prog = migrer(Stockage.charger());
   // Réglages par défaut (écran Réglages). Ajouter un réglage : l'ajouter ici,
   // puis une ligne dans ecranReglages().
-  var REGLAGES_DEFAUT = { vitesse: 1, suivantAuto: false, aides: true, grandTexte: false, infoTest: true, toutOuvert: true };
+  var REGLAGES_DEFAUT = { vitesse: 1, suivantAuto: false, aides: true, grandTexte: false, infoTest: true, toutOuvert: true, lettres: true };
   function reglages() {
     prog.reglages = prog.reglages || {};
     Object.keys(REGLAGES_DEFAUT).forEach(function (k) { if (prog.reglages[k] === undefined) prog.reglages[k] = REGLAGES_DEFAUT[k]; });
@@ -359,6 +359,14 @@
     }
     if (img) morceaux.push(img);
     morceaux.push(sym);
+    // Lettres vietnamiennes du son (DEC-0063) : en E1 et en phase 1 d'E2–E3 seulement (pas au débit
+    // normal, où l'oreille doit suffire) ; toutes les graphies (d · gi · r) ; pour un ton, la marque.
+    if (avecIndices && reglages().lettres && t.symbole.lettres) {
+      var lt = t.symbole.place === 'ton'
+        ? (t.symbole.lettres.length ? 'accent ' + t.symbole.lettres.join(' ') : 'sans accent')
+        : t.symbole.lettres.join(' · ');
+      morceaux.push(el('span', { class: 'lettres', title: 'lettres vietnamiennes', text: lt }));
+    }
     var r = t.symbole.repere;
     if (r && r.image && avecIndices && reglages().aides) {
       // Mot repère (DEC-0038) : français écrit ; vietnamien en image seulement (pas d'écrit en E1–E2).
@@ -1582,6 +1590,7 @@
       ligne('reglage-aides', 'Aides sous les symboles', 'Mot repère et indice d’écoute en E1, repère au débit lent. La catégorie (= ≈ ★) reste affichée.', interrupteur('reglage-aides', 'aides')),
       ligne('reglage-texte', 'Grand texte', 'Agrandit le texte et les symboles.', interrupteur('reglage-texte', 'grandTexte')),
       ligne('reglage-ouvert', 'Mode essai : tout ouvert', 'Toutes les leçons et toutes les étapes accessibles, sans attendre les verrous. Les scores restent calculés. À couper avant d’ouvrir la formation à d’autres apprenants.', interrupteur('reglage-ouvert', 'toutOuvert')),
+      ligne('reglage-lettres', 'Lettres vietnamiennes du son', 'En E1 et en phase 1 d’E2–E3 : les lettres qui écrivent le son étudié (toutes, s’il y en a plusieurs), ou l’accent du ton. Jamais le mot entier.', interrupteur('reglage-lettres', 'lettres')),
       ligne('reglage-info', 'Infos de test sur le son', 'Pendant les essais : dans la case du mot joué, fichier, personnage, femme ou homme, modèle FPT et vitesse (en E2–E3, après la réponse).', interrupteur('reglage-info', 'infoTest'))
     ]));
   }

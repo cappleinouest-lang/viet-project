@@ -200,7 +200,9 @@ def main():
         if element in tons:
             t = tons[element]
             return {'texte': t['pictogram'], 'couleur': t['color_hex'], 'nom': t['name_vi'],
-                    'indication': 'ton ' + t['name_vi'] + ' : ' + t['contour_fr'], 'place': 'ton'}
+                    'indication': 'ton ' + t['name_vi'] + ' : ' + t['contour_fr'], 'place': 'ton',
+                    # Lettres (DEC-0063) : pour un ton, la marque d'accent (◌́), ou « sans accent ».
+                    'lettres': [t['mark']] if t.get('mark') else []}
         s = sons.get(element)
         if not s:
             raise SystemExit('Élément inconnu : ' + element)
@@ -214,7 +216,12 @@ def main():
         categorie = {'exact': 'identique', 'proche': 'proche'}.get(r['match'], 'nouveau')
         # Place dans la syllabe (DEC-0042) : une consonne se dit en début ou en fin de mot.
         place = {'initial': 'debut', 'final': 'fin'}.get(s['position'], 'voyelle')
-        return {'texte': '/' + principal + '/', 'couleur': '', 'nom': s['grapheme'],
+        # Lettres vietnamiennes du son (DEC-0063) : toutes ses graphies (spellings « d|gi|r »), sinon
+        # grapheme ; une finale garde son tiret (« -m »).
+        lettres = [x.strip() for x in (s.get('spellings') or s['grapheme']).split('|') if x.strip()]
+        if s['position'] == 'final':
+            lettres = [x if x.startswith('-') else '-' + x for x in lettres]
+        return {'texte': '/' + principal + '/', 'couleur': '', 'nom': s['grapheme'], 'lettres': lettres,
                 'indication': r['listening_cue'], 'categorie': categorie, 'place': place,
                 'repere': {'langue': r['language'], 'mot': r['keyword'] if r['language'] == 'fr' else '',
                            'image': r['picture']},

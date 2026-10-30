@@ -48,7 +48,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0062) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0063) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -69,7 +69,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | E2–E3 | échauffement « Pareil ou différent ? » non noté au début d'E2 (DEC-0041) ; place du son indiquée (début ▸, ◂ fin, voyelle, ton) et consigne « quoi écouter » (DEC-0042) |
 | Leçons de tons | **jamais d'audio lent** (DEC-0043) ; une seule voix (F1) à l'échauffement et en phase « avec images », plusieurs voix en phase « symboles seuls » (DEC-0045) |
 | Verrous | 85 %, 90 % pour les tons, sur ≥ 2 voix ; chaque série réussie au moins 2 fois au débit normal (DEC-0012, 0032) ; finales : 85 % par leçon, 80 % en sortie (DEC-0036) |
-| Écrit | jamais en E1–E2, fin d'E3, visible en E4–E5 ; **images** pour donner le sens sans écrit (DEC-0011, 0024) |
+| Écrit | aucun **mot** écrit en E1–E2 (mais lettres du son étudié en E1 et phase 1, DEC-0063), mots à la fin d'E3, visibles en E4–E5 ; **images** pour donner le sens sans écrit (DEC-0011, 0024) |
 | Étiquettes E2–E3 | débit lent : image + symbole ; débit normal : symbole seul. Ton → pictogramme + couleur ; son → `ipa_main` du son contrasté ; symboles présentés dès E1 (DEC-0028, 0029) ; mots repères et catégories de sons (DEC-0038), repères propres aux finales -m « pomme », -n « laine » (DEC-0046) |
 | Accent | courant de Hanoï : tr/ch, s/x, d/gi/r = orthographe, pas écoute ; **un code par son** (76 sons) (DEC-0009, 0018) |
 | Mots | **100 mots supports** en M0 ; 9 sons rares reportés en A1–A2 (DEC-0031) ; séries minimales de **2 à 4 termes**, paire en E2, série complète en E3 ; contraste de ton ou de son (DEC-0020, 0024 à 0026, 0031) |
