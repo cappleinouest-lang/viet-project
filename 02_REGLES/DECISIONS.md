@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.42
+version: 1.43
 date: 2026-10-30
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1086,6 +1086,27 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : `voix.csv`, `exemples_e1.csv`, `choisir_exemples_e1.py`,
   PROD-AUDIO, PROD-LECT, PROG-M0, lecteur.
 
+### DEC-0049 — Volet production : E4 d'abord, sur PC
+
+- **Date** : 2026-10-30
+- **Question** : par où commencer le volet production (E4–E5) ?
+- **Décision** (Christophe) :
+  1. **E4 « Écoute et répète » seul** d'abord ; E5 ensuite, avec les mêmes
+     briques (micro, courbe mélodique).
+  2. **Sur PC d'abord** (navigateur Chrome ou Edge, lecteur ouvert par
+     double-clic) ; téléphones quand le lecteur sera hébergé en https.
+  3. Première brique : une **page d'essai** (`05_PRODUCTION/lecteur/
+     essai_micro.html`, code commun `prononciation.js`) qui vérifie le micro
+     et la courbe mélodique avant toute intégration au lecteur.
+- **Constats** (essai du 2026-10-30, Chromium) : la page ouverte par
+  double-clic est un « contexte sûr » : le micro y est autorisé. Sur les
+  audios F1 de *ba, lá, là, mở, mũ, mẹ*, les courbes ont la forme attendue
+  (sắc : montée finale d'environ 8 demi-tons ; ngã : cassure puis montée).
+- **Non décidé** : mesure du verrou de production (R-VOL-08). Proposition :
+  auto-évaluation « proche / à reprendre », courbe comme aide sans seuil
+  automatique tant qu'elle n'est pas calibrée.
+- **Impacte** : PROD-LECT, PROD-ARCH, lecteur.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1133,6 +1154,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.40 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
 | 1.41 | 2026-10-30 | Ajout de DEC-0047 (mode test : afficher ce qui est joué). |
 | 1.42 | 2026-10-30 | Ajout de DEC-0048 (voix F3 Thu Minh écartée). |
+| 1.43 | 2026-10-30 | Ajout de DEC-0049 (volet production : E4 d'abord, sur PC). |
 
 ## Liens
 

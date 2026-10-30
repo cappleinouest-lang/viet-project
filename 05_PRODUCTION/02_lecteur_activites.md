@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.13
+version: 0.14
 date: 2026-10-30
 resume: >
   Décrit la première version du lecteur d'activités (volet écoute E1 → E3,
@@ -106,6 +106,12 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 ## 5. Reste à faire
 
 1. Volet production (E4–E5) : micro, comparaison au modèle, courbe mélodique.
+   **En cours** (DEC-0049) : E4 d'abord, sur PC. Étape 1 faite : page d'essai
+   `05_PRODUCTION/lecteur/essai_micro.html` (double-clic ; code commun
+   `prononciation.js` : micro, courbe mélodique par l'algorithme YIN, demi-tons
+   autour de la hauteur médiane, temps ramené de 0 à 1). Limite connue : chaque
+   courbe est rapportée à SA propre médiane, elle montre la forme du ton, pas
+   son registre (haut / bas).
 2. Leçon L14 (recyclage) : construite à partir de toutes les séries.
 3. Écart de 3 leçons entre écoute et production (R-VOL-04) : à contrôler
    quand le volet production existera.
@@ -128,3 +134,4 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.11 | 2026-10-29 | Code du lecteur commenté (index.html, lecteur.css, lecteur.js) : guide en tête de chaque fichier, sections numérotées, rôle de chaque fonction. Aucune instruction modifiée (vérifié par comparaison du code sans commentaires). |
 | 0.12 | 2026-10-30 | Mode test : informations sur le son joué (DEC-0047). |
 | 0.13 | 2026-10-30 | Voix F3 écartée : 3 voix actives (DEC-0048). |
+| 0.14 | 2026-10-30 | Volet production, étape 1 : page d'essai du micro et de la courbe (DEC-0049). |

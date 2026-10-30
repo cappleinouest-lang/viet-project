@@ -48,7 +48,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0048) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0049) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -87,7 +87,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Programme du Module 0 (`progression_M0.md`) | brouillon ; points P1 à P6 décidés (DEC-0031 à 0036) |
 | Audios | **2 237 générés** chez FPT (mots, syllabes, syllabes inventées ; 2 débits) ; **aucun validé** (`validated = false`). Depuis DEC-0048, 56 mots d'exemple d'E1 attendent leur audio F1 (112 fichiers) ; outil de validation par l'écoute **à faire** |
 | Images | emoji provisoires ; OpenMoji **à choisir** |
-| Lecteur d'activités | **version d'essai 0.13** : volet écoute E1–E3 de toutes les leçons, réglages, « Mes progrès », mode test ; audios FPT lus en mode d'essai (`generer_lecteur.py . --non-valides`) ; version autonome en un fichier dans `06_LIVRABLES/lecteur/`. Volet production, L14, page de prononciation, paquets Anki **à développer** |
+| Lecteur d'activités | **version d'essai 0.13** : volet écoute E1–E3 de toutes les leçons, réglages, « Mes progrès », mode test ; audios FPT lus en mode d'essai (`generer_lecteur.py . --non-valides`) ; version autonome en un fichier dans `06_LIVRABLES/lecteur/`. Volet production **commencé** (DEC-0049 : E4 d'abord, sur PC ; page d'essai `essai_micro.html` + `prononciation.js`) ; L14, paquets Anki **à développer** |
 | Règles de code (SQL, Python, PowerShell) | hors périmètre pour l'instant |
 
 ## 6. Points ouverts
@@ -106,8 +106,9 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
   (*chưng*, *à*, *chi*, *lẽ*) ; étymologies manquantes.
 - Termes hors corpus vérifiés (DEC-0027) : 74 mots réels dont le sens reste à vérifier ; 9 séries utilisent une syllabe inventée dès E2.
 - Valeurs `imageable` à corriger ; choix des images (OpenMoji privilégié).
-- Le raccourci « VIET_PROJECT » épinglé dans l'Explorateur pointe vers
-  `D:\VIET_PROJECT`, qui n'existe plus.
+- Le seul emplacement du projet est **`C:\VIET_PROJECT`** : ne jamais
+  utiliser `D:\VIET_PROJECT` (n'existe plus). Le raccourci épinglé dans
+  l'Explorateur doit être refait vers `C:\VIET_PROJECT`.
 
 ## Historique
 
@@ -125,4 +126,4 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | 1.9 | 2026-10-28 | Lecteur d'activités, version d'essai 0.1 (volet écoute). |
 | 1.10 | 2026-10-29 | L01 en deux parties (DEC-0037). |
 | 1.11 | 2026-10-29 | Mots repères et catégories de sons (DEC-0038). |
-| 1.12 | 2026-10-30 | Mise à jour d'ensemble : décisions DEC-0039 à DEC-0048 (E1 découverte, échauffement E2, place du son, leçons de tons, L01, repères des finales, mode test, voix F3 écartée) ; état au 2026-10-30 (audios générés non validés, lecteur 0.13) ; documents PROD-AUDIO et PROD-AF-LECT ajoutés au § 3 ; points ouverts revus. |
+| 1.12 | 2026-10-30 | Mise à jour d'ensemble : décisions DEC-0039 à DEC-0048 (E1 découverte, échauffement E2, place du son, leçons de tons, L01, repères des finales, mode test, voix F3 écartée) ; état au 2026-10-30 (audios générés non validés, lecteur 0.13) ; documents PROD-AUDIO et PROD-AF-LECT ajoutés au § 3 ; points ouverts revus ; emplacement unique C:\VIET_PROJECT. |
