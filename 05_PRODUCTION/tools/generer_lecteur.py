@@ -323,12 +323,14 @@ def main():
             pc = next((pa['code'] for pa in sections if e in pa['elements']), None)
             if not pc:
                 continue
-            mots_x = []
+            mots_x = []    # une case par SYLLABE (un mot de 2 syllabes peut contenir 2 cibles)
             for w in x['word_codes'].split():
-                els = [v for sy in syllabe.get(w, []) for k, v in sy.items() if k in ('initial', 'glide', 'nucleus', 'final', 'tone') and v]
-                mots_x.append({'ecrit': mots[w]['written'] if w in mots else w, 'cible': e in els})
+                for sy in sorted(syllabe.get(w, []), key=lambda s: int(s['position'])):
+                    els = [sy[k] for k in ('initial', 'glide', 'nucleus', 'final', 'tone') if sy.get(k)]
+                    mots_x.append({'ecrit': sy['written'], 'cible': e in els})
             combien.append({'code': x['item_code'], 'element': e, 'partie': pc, 'symbole': symbole(e),
                             'ecrit': x['written'], 'mots': mots_x, 'nombre': int(x['count']),
+                            'nature': x['kind'], 'sens': x['note'] if x['kind'] == 'phrase' else '',
                             'audio': audio(x['item_code'])})
         # Ce que reçoit le lecteur pour une leçon (voir le « vocabulaire » en tête de lecteur.js).
         sortie_lecons.append({

@@ -1028,8 +1028,18 @@
       // Ce qu'il faut compter : le symbole (avec repère en phase 1), sans aucun écrit vietnamien.
       app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: consigneCombien(x.symbole) })]));
       app.appendChild(el('div', { class: 'carte-son' }, contenuTerme({ symbole: x.symbole, image: '', sens: '' }, debit === 'slow' ? 'lent' : 'normal')));
-      var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(x, voix, son); } });
-      app.appendChild(ecoute);
+      // Mode test (DEC-0047) : l'info sur le son (fichier, locuteur, débit) est affichée DÈS L'ÉCOUTE,
+      // sous le bouton : contrairement à E2/E3, elle ne trahit pas la réponse (le nombre).
+      var infoSon = el('div', { class: 'info-combien' });
+      var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(x, voix, son, infoSon); } });
+      // Aide « Écouter lentement » (DEC-0057) : leçons de sons, phase 2 seulement. Si elle est
+      // utilisée avant de répondre, la réponse est corrigée mais NON COMPTÉE pour le verrou.
+      var aideLente = false;
+      var lente = (!l.tons && debit === 'normal') ? el('button', { class: 'ecoute', type: 'button', text: '🐢 Écouter lentement',
+        onclick: function () { if (!repondu) aideLente = true; jouer(x, voix, 'slow', infoSon); } }) : null;
+      app.appendChild(lente ? el('div', { class: 'deux-ecoutes' }, [ecoute, lente]) : ecoute);
+      app.appendChild(infoSon);
+      if (lente) app.appendChild(el('p', { class: 'petit centre', text: 'L’écoute lente aide, mais la réponse qui suit n’est pas comptée pour valider l’étape.' }));
       var retour = el('p', { class: 'retour-reponse', role: 'status' });
       var revele = el('div', { class: 'suite-revelee', hidden: true });
       var suivant = el('button', { class: 'bouton', type: 'button', text: 'Suivant', hidden: true, onclick: nouvelItem });
@@ -1039,23 +1049,33 @@
           if (repondu) return;
           repondu = true;
           var ok = n === x.nombre;
-          e.hist.push({ s: x.element, i: x.code, ok: ok, v: voix, d: debit, t: Date.now(), c: x.nombre, r: n });
+          // Avec l'aide lente, la réponse est gardée dans l'historique (d = 'aide') mais ne compte
+          // ni dans le taux de la phase, ni dans les réussites par son (DEC-0057).
+          e.hist.push({ s: x.element, i: x.code, ok: ok, v: voix, d: aideLente ? 'aide' : debit, t: Date.now(), c: x.nombre, r: n });
           if (e.hist.length > 3000) e.hist = e.hist.slice(-3000);
-          if (ok && debit === 'normal') e.reussites[x.element] = (e.reussites[x.element] || 0) + 1;
-          var passage = verifierPassages(l.seuil, cibles, e);
+          if (ok && debit === 'normal' && !aideLente) e.reussites[x.element] = (e.reussites[x.element] || 0) + 1;
+          var passage = aideLente ? null : verifierPassages(l.seuil, cibles, e);
           sauver();
           boutons[NOMBRES_COMBIEN.indexOf(x.nombre)].classList.add('juste');
           if (!ok) this.classList.add('faux');
           retour.className = 'retour-reponse ' + (ok ? 'juste' : 'faux');
-          retour.textContent = ok ? 'Juste : ' + x.nombre + ' fois.' : 'Il fallait ' + x.nombre + '. Réécoutez en suivant les mots.';
+          retour.textContent = (ok ? 'Juste : ' + x.nombre + ' fois.' : 'Il fallait ' + x.nombre + '. Réécoutez en suivant les mots.') +
+            (aideLente ? ' (Écoute lente utilisée : réponse non comptée.)' : '');
           // Révélation de l'écrit (après la réponse seulement), cibles en évidence.
+          // Suite : mots séparés par « · » ; phrase (DEC-0056) : syllabes séparées par des espaces,
+          // majuscule et ponctuation de la phrase, puis sa traduction.
           revele.innerHTML = '';
+          var phrase = x.nature === 'phrase';
           x.mots.forEach(function (w, k) {
-            if (k) revele.appendChild(document.createTextNode(' · '));
-            revele.appendChild(el('span', { class: w.cible ? 'mot-cible' : 'mot', text: w.ecrit }));
+            if (k) revele.appendChild(document.createTextNode(phrase ? ' ' : ' · '));
+            var t = phrase && k === 0 ? w.ecrit.charAt(0).toUpperCase() + w.ecrit.slice(1) : w.ecrit;
+            revele.appendChild(el('span', { class: w.cible ? 'mot-cible' : 'mot', text: t }));
           });
+          var ponct = phrase ? (x.ecrit.match(/[.?!]$/) || [''])[0] : '';
+          if (ponct) revele.appendChild(document.createTextNode(ponct));
+          if (x.sens) revele.appendChild(el('span', { class: 'sens-phrase', text: x.sens }));
           revele.hidden = false;
-          jouer(x, voix, son);
+          jouer(x, voix, son, infoSon);
           suivant.hidden = false;
           if (passage === 'normal') retour.textContent += l.tons ? ' Seuil atteint : on passe aux symboles seuls, avec plusieurs voix.' : ' Seuil atteint au débit lent : on passe au débit normal.';
           if (passage === 'validee') {
@@ -1070,8 +1090,8 @@
       app.appendChild(retour);
       app.appendChild(revele);
       app.appendChild(el('div', { class: 'actions' }, [suivant]));
-      app.appendChild(el('p', { class: 'petit', text: 'Réécouter ne coûte rien. Les mots sont dits d’affilée ; comptez ceux qui contiennent le son.' }));
-      setTimeout(function () { jouer(x, voix, son); }, 300);
+      app.appendChild(el('p', { class: 'petit', text: 'Réécouter ne coûte rien. Comptez les syllabes qui contiennent le son ou le ton.' }));
+      setTimeout(function () { jouer(x, voix, son, infoSon); }, 300);
     }
 
     if (!items.length) { ecranLecon(code); return; }
@@ -1181,11 +1201,12 @@
     ]));
 
     // Le mot : image, écrit (visible en E4, R-ECR-03), sens.
-    app.appendChild(el('div', { class: 'carte-son carte-e4' }, [
+    var carteMot = el('div', { class: 'carte-son carte-e4' }, [
       m.image ? el('span', { class: 'image', text: m.image, 'aria-hidden': 'true' }) : null,
       el('span', { class: 'ecrit-e4', text: m.ecrit }),
       el('span', { class: 'sens', text: m.sens })
-    ]));
+    ]);
+    app.appendChild(carteMot);   // mode test (DEC-0047) : l'info sur le son du modèle s'y affiche
 
     // Ce qu'il faut réussir : son ou ton de la leçon, et chemin de prononciation (DEC-0038).
     m.cibles.forEach(function (s) {
@@ -1210,11 +1231,11 @@
     var modele = { ecrit: m.ecrit, audio: m.audio };
     var vm = voixModele();
     var bModele = el('button', { class: 'ecoute choisi', type: 'button', text: '▶ Modèle' + (debit === 'slow' ? ' (lent)' : ''),
-      onclick: function () { jouer(modele, vm, debit); } });
+      onclick: function () { jouer(modele, vm, debit, carteMot); } });
     var bEnreg = el('button', { class: 'ecoute enreg', type: 'button', text: '🎤 M’enregistrer', onclick: basculer });
     var bMoi = el('button', { class: 'ecoute', type: 'button', text: '▶ Moi', disabled: true, onclick: function () { jouerMoi(); } });
     var bLesDeux = el('button', { class: 'ecoute', type: 'button', text: '▶ Moi puis le modèle', disabled: true,
-      onclick: function () { jouerMoi().then(function () { return pause(500); }).then(function () { return jouer(modele, vm, debit); }); } });
+      onclick: function () { jouerMoi().then(function () { return pause(500); }).then(function () { return jouer(modele, vm, debit, carteMot); }); } });
     var etat = el('p', { class: 'retour-reponse', text: '' });
     app.appendChild(el('div', { class: 'boutons-e4' }, [bModele, bEnreg, bMoi, bLesDeux]));
     app.appendChild(etat);
@@ -1341,7 +1362,7 @@
         var i = (index + 1) % l.production.length; ecranE4(code, i); } })
     ]));
     // Le modèle est joué une fois en arrivant.
-    setTimeout(function () { jouer(modele, vm, debit); }, 300);
+    setTimeout(function () { jouer(modele, vm, debit, carteMot); }, 300);
   }
 
   // Fin d'un passage d'E4 : bilan, et suite.
@@ -1507,7 +1528,7 @@
     app.appendChild(el('div', { class: 'actions centre' }, [tous]));
     app.appendChild(grille);
 
-    function dire(i) { var t = R[i]; return jouer({ ecrit: t.ecrit, audio: t.audio }, codeVoix, debit); }
+    function dire(i) { var t = R[i]; return jouer({ ecrit: t.ecrit, audio: t.audio }, codeVoix, debit, cartes[i]); }   // info de test dans la carte
     function choisir(i) {
       choisi = i;
       cartes.forEach(function (b, k) { b.classList.toggle('joue', k === i); });

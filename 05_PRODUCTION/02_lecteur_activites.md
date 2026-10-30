@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.19
+version: 0.20
 date: 2026-10-30
 resume: >
   Décrit la première version du lecteur d'activités (volet écoute E1 → E3,
@@ -151,3 +151,4 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.17 | 2026-10-30 | Écran « Les 6 tons » : série ma… mạ, courbes sur une même échelle (DEC-0052). |
 | 0.18 | 2026-10-30 | « Les 6 tons » : schéma de chaque ton à la place des courbes mesurées (DEC-0053). |
 | 0.19 | 2026-10-30 | Voix d'écoute propres à chaque leçon (`l.voix`, DEC-0055). |
+| 0.20 | 2026-10-30 | Écran « Combien de fois ? » en fin d'E3 (DEC-0054) : deux phases, verrou comme E2/E3, écrit de la suite révélé après la réponse ; l'écrit d'E3 s'ouvre après sa validation. |

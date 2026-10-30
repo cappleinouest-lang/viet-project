@@ -48,7 +48,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0055) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0056) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |

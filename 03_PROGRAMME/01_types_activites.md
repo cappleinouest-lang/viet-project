@@ -2,7 +2,7 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.12
+version: 0.13
 date: 2026-10-30
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
@@ -91,10 +91,10 @@ tirée au hasard.
 | Point | Règle |
 |---|---|
 | Place | fin d'E3, après ACT-E3-LEQUEL, avant l'écrit |
-| Entend | une **suite de 3 à 5 mots connus** dite d'affilée (« ba, mẹ, ma »), plus tard une **petite phrase** ; une voix au hasard ; débit lent puis normal (normal seul dans les leçons de tons) |
+| Entend | une **petite phrase** (DEC-0056 : ton de chaque mot déjà ouvert, autres sons libres) ou, à défaut, une **suite de 3 à 5 mots connus** ; une voix au hasard ; débit lent puis normal (normal seul dans les leçons de tons) |
 | Voit | le son ou le ton à compter (symbole, place) ; **aucun écrit** avant la réponse |
 | Répond | combien de fois il entend la cible : 0, 1, 2, 3, 4 ou 5 |
-| Correction | juste / faux, puis **l'écrit de la suite est révélé**, cibles en évidence ; réécoute libre |
+| Correction | juste / faux, puis **l'écrit est révélé**, syllabes cibles en évidence, avec la traduction de la phrase ; réécoute libre |
 | Contenu | `04_DONNEES/comptage.csv` : nombre attendu **calculé** à partir de `syllabes.csv` ; mots dont tous les éléments sont ouverts (atomicité) ; autres mots pris de préférence parmi les éléments proches |
 | Verrou | compte pour le verrou d'écoute, comme ACT-E3-LEQUEL : même seuil, 2 voix au moins |
 
@@ -190,6 +190,7 @@ calibrés.
 | 0.10 | 2026-10-29 | Tons : une seule voix en première phase (DEC-0045). |
 | 0.11 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
 | 0.12 | 2026-10-30 | ACT-E3-COMBIEN « Combien de fois ? » (DEC-0054). |
+| 0.13 | 2026-10-30 | Phrases plutôt que suites, règle souple (DEC-0056). |
 
 ## Liens
 

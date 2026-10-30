@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.49
+version: 1.50
 date: 2026-10-30
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1235,6 +1235,28 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : DATA-MODELE, PROD-AUDIO, PROD-LECT, `choisir_exemples_e1.py`,
   `generer_audio_fpt.py`, `generer_lecteur.py`, lecteur.
 
+### DEC-0056 — « Combien de fois ? » : de vraies phrases, règle souple
+
+- **Date** : 2026-10-30
+- **Question** : Christophe : pour « Combien de fois ? », une phrase vaut
+  mieux qu'une suite de mots.
+- **Décision** :
+  1. Les items deviennent de **vraies petites phrases** (`kind = phrase` dans
+     `comptage.csv`) ; les suites restent là où aucune phrase n'est possible.
+  2. **Règle souple** (comme E1, DEC-0039) : le **ton** de chaque mot est
+     déjà ouvert ; les autres sons sont libres ; tous les mots sont dans le
+     corpus (décomposition dans `syllabes.csv`).
+  3. Nombre attendu **recalculé** par `choisir_suites_comptage.py` ; une
+     phrase est **ambiguë**, donc non utilisée pour cette cible, si un mot y
+     contient la cible à l'intérieur d'un autre son (ô dans ôi, a dans ai,
+     n dans nh).
+  4. Après la réponse : la phrase écrite, syllabes cibles en évidence, et sa
+     traduction.
+  5. **Essai** : 19 phrases pour L01, L02, L04 (`P-L01-01` …), à relire par un
+     locuteur vietnamien (`validated = false`) ; comparaison à l'oreille avec
+     les suites avant de généraliser.
+- **Impacte** : PROG-ACT (ACT-E3-COMBIEN), DATA-MODELE, lecteur.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1289,6 +1311,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.47 | 2026-10-30 | Ajout de DEC-0053 (schémas des tons plutôt que courbes mesurées). |
 | 1.48 | 2026-10-30 | Ajout de DEC-0054 (exercice « Combien de fois ? » en fin d'E3). |
 | 1.49 | 2026-10-30 | Ajout de DEC-0055 (voix d'écoute des leçons de sons : Thu Minh et Huy Phong). |
+| 1.50 | 2026-10-30 | Ajout de DEC-0056 (« Combien de fois ? » : phrases, règle souple). |
 
 ## Liens
 

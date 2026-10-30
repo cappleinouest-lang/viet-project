@@ -16,7 +16,11 @@ Règles appliquées :
   - pas deux fois le même mot à la suite ; tirage reproductible (graine fixe).
 
 Le fichier produit peut être corrigé à la main ; relancer ce script le RÉÉCRIT, sauf les lignes
-kind = phrase (gardées telles quelles). --verifier : compare sans écrire.
+kind = phrase (saisies à la main, gardées). Pour chaque phrase, le script RECALCULE le nombre attendu
+d'après word_codes et syllabes.csv, le corrige s'il diffère, et signale une phrase AMBIGUË : un mot y
+contient la cible à l'intérieur d'un autre son (ô dans ôi, a dans ai, n dans nh) — l'oreille
+l'entendrait, le compte ne le compterait pas. Règle des phrases (DEC-0056) : le TON de chaque mot est
+déjà ouvert ; les autres sons sont libres. --verifier : compare sans écrire.
 
 Usage (depuis C:\\VIET_PROJECT) :
     python 05_PRODUCTION\\tools\\choisir_suites_comptage.py .
@@ -51,6 +55,33 @@ def elements_du_mot(s):
 def compter(element, mots, syllabe):
     """Nombre de mots de la suite qui contiennent l'élément (calcul, jamais à la main)."""
     return sum(1 for w in mots if element in elements_du_mot(syllabe[w]))
+
+
+def verifier_phrases(donnees, phrases):
+    """Recalcule le nombre attendu des phrases ; signale les ambiguïtés et les tons non ouverts."""
+    lecons = {l['lesson_code']: int(l['sort_order']) for l in lire(donnees, 'lecons.csv')}
+    ouv = {o['element_code']: lecons.get(o['listen_lesson'], 99) for o in lire(donnees, 'ouvertures.csv')}
+    graphie = {s['sound_code']: s['grapheme'].strip('-') for s in lire(donnees, 'sons.csv')}
+    syl = {}
+    for s in lire(donnees, 'syllabes.csv'):
+        syl.setdefault(s['word_code'], []).append(s)
+    alertes = []
+    for x in phrases:
+        e, rang = x['element'], lecons.get(x['lesson_code'], 99)
+        sy = [s for w in x['word_codes'].split() for s in syl.get(w, [])]
+        manquants = [w for w in x['word_codes'].split() if w not in syl]
+        if manquants:
+            alertes.append(f"{x['item_code']} : mot(s) absent(s) de syllabes.csv : {' '.join(manquants)}")
+            continue
+        n = sum(1 for s in sy if e in elements_du_mot(s))
+        if str(n) != x['count']:
+            alertes.append(f"{x['item_code']} : nombre corrigé {x['count']} -> {n}")
+            x['count'] = str(n)
+        if e in graphie and any(c != e and graphie[e] in graphie.get(c, '') for s in sy for c in elements_du_mot(s)):
+            alertes.append(f"{x['item_code']} : AMBIGUË (la cible est aussi dans un autre son)")
+        if any(ouv.get(s['tone'], 99) > rang for s in sy):
+            alertes.append(f"{x['item_code']} : ton pas encore ouvert dans cette leçon")
+    return alertes
 
 
 def composer(donnees):
@@ -117,6 +148,8 @@ def main():
     chemin = os.path.join(donnees, 'comptage.csv')
     lignes, absents = composer(donnees)
     phrases = [x for x in lire(donnees, 'comptage.csv') if x.get('kind') == 'phrase']
+    for a in verifier_phrases(donnees, phrases):
+        print('  ' + a)
     print(f'{len(lignes)} suites ; {len(phrases)} phrase(s) gardée(s) ; '
           f'{len(absents)} cible(s) sans mot utilisable : ' + (', '.join(absents) or 'aucune'))
     if '--verifier' in sys.argv:

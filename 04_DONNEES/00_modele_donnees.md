@@ -296,7 +296,7 @@ fichier et gardées quand le script est relancé.
 | `written` | texte envoyé à FPT et révélé après la réponse | | `nem, tim, xem, ho` |
 | `count` | nombre attendu, **calculé** d'après `syllabes.csv` | entier | `2` |
 | `validated` | relu par un locuteur vietnamien | `true` / `false` | `false` |
-| `note` | remarque | | |
+| `note` | remarque ; pour une phrase : sa **traduction**, affichée après la réponse | | `J’aime le café.` |
 
 ## 4. Ce qui n'est pas un fichier source
 

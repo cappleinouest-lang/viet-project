@@ -435,3 +435,22 @@ C-L13-PH-DP-iu-1;M0-L13;PH-DP-iu;suite;W0327 W0294 W0073;dịu, sữa, làm;1;fa
 C-L13-PH-DP-iu-2;M0-L13;PH-DP-iu;suite;W0098 W0327 W0190 W0327;đó, dịu, tám, dịu;2;false;
 C-L13-PH-DP-iu-3;M0-L13;PH-DP-iu;suite;W0327 W0327 W0327 W0305;dịu, dịu, dịu, yêu;3;false;
 C-L13-PH-DP-iu-4;M0-L13;PH-DP-iu;suite;W0327 W0199 W0327 W0323 W0115;dịu, tiêu, dịu, môn, họ;2;false;
+P-L01-01;M0-L01;PH-VS-e;phrase;W0064 W0074 W0324;Tôi ăn nem.;1;false;Je mange des nems.
+P-L01-02;M0-L01;PH-VS-e;phrase;W0063 W0062 W0070;Em đi xe.;2;false;Je (le cadet) prends le véhicule.
+P-L01-03;M0-L01;PH-FI-m;phrase;W0063 W0074 W0009;Em ăn cam.;2;false;Je (le cadet) mange une orange.
+P-L01-04;M0-L01;PH-IN-dd;phrase;W0119 W0064 W0062 W0251;Hôm nay tôi đi chơi.;1;false;Aujourd’hui je sors.
+P-L01-05;M0-L01;PH-VS-oo;phrase;W0060 W0074 W0220 W0127;Anh ăn cơm không?;1;false;Tu manges (du riz) ?
+P-L01-06;M0-L01;PH-FI-m;phrase;W0010 W0064 W0074 W0220;Cha tôi ăn cơm.;1;false;Mon père mange.
+P-L02-01;M0-L02;sac;phrase;W0064 W0230 W0007;Tôi thích cà phê.;1;false;J’aime le café.
+P-L02-02;M0-L02;sac;phrase;W0060 W0076 W0066;Anh bán cá.;2;false;Il vend du poisson.
+P-L02-03;M0-L02;huyen;phrase;W0015 W0090 W0038 W0064;Con chó nhà tôi.;1;false;Le chien de ma famille.
+P-L02-04;M0-L02;sac;phrase;W0064 W0147 W0243 W0051;Tôi muốn uống trà.;2;false;Je veux boire du thé.
+P-L02-05;M0-L02;huyen;phrase;W0119 W0233 W0149;Hôm nay trời nắng.;1;false;Aujourd’hui il fait beau.
+P-L02-06;M0-L02;huyen;phrase;W0008 W0037 W0237 W0198;Cái này bao nhiêu tiền?;2;false;Combien coûte ceci ?
+P-L02-07;M0-L02;sac;phrase;W0064 W0230 W0074 W0080;Tôi thích ăn bún.;2;false;J’aime manger du bún.
+P-L04-01;M0-L04;PH-DP-ai;phrase;W0064 W0072 W0025 W0015 W0139;Tôi có hai con mèo.;1;false;J’ai deux chats.
+P-L04-02;M0-L04;PH-DP-ooi;phrase;W0138 W0064 W0062 W0223;Mẹ tôi đi chợ.;1;false;Ma mère va au marché.
+P-L04-03;M0-L04;PH-DP-ui;phrase;W0071 W0064 W0175 W0055;Bạn tôi rất vui.;1;false;Mon ami est très joyeux.
+P-L04-04;M0-L04;PH-DP-ooi;phrase;W0064 W0312 W0250 W0071;Tôi ngồi chờ bạn.;2;false;Je suis assis à t’attendre.
+P-L04-05;M0-L04;PH-DP-ao;phrase;W0075 W0037 W0097 W0170;Áo này đẹp quá.;1;false;Ce vêtement est très beau.
+P-L04-06;M0-L04;PH-DP-ooi;phrase;W0119 W0064 W0140 W0130;Hôm nay tôi mệt lắm.;1;false;Aujourd’hui je suis très fatigué.
