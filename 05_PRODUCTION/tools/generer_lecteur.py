@@ -27,7 +27,11 @@ ENTRÉES (04_DONNEES, sauf mention)
     mots.csv, sons.csv, tons.csv, reperes_sons.csv
                           sens des mots, symboles, place, repères (DEC-0038, DEC-0042)
     exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039)
-    voix.csv              voix actives (F1, H3, H4 ; F3 écartée, DEC-0048)
+    voix.csv              voix actives ; voix d'écoute par type de leçon (listen_sounds / listen_tones, DEC-0055)
+    mots_lecons.csv       mots supports de chaque leçon : les mots d'E4 (DEC-0050)
+    courbes_modele.csv    courbes mélodiques du modèle F1, calculées par courbes_modele.py (DEC-0050)
+    reference_tons.csv    série ma, má, mà, mả, mã, mạ de la page « Les 6 tons » (DEC-0052)
+    comptage.csv          suites de l'exercice « Combien de fois ? » (DEC-0054) ; syllabes.csv pour repérer les cibles
     audios.csv            fichiers audio déclarés et leur validation
     05_PRODUCTION/lecteur/images_provisoires.csv   emoji en attendant images.csv
 
@@ -71,6 +75,7 @@ PARAMETRES = {
     'min_voix': 2,                # R-VOL-05
     'max_meme_position': 3,       # PROG-ACT § 4 : pas plus de 3 fois de suite la même bonne réponse
     'ecart_max_lecons': 3,        # R-VOL-04 (non contrôlé tant que le volet production n'existe pas)
+    'essais_max_e4': 3,           # PROG-ACT : 3 essais au plus par mot en E4, puis mot suivant
 }
 
 # Quand un fichier audio manque, le lecteur fait lire le mot par la voix de synthèse de
@@ -90,6 +95,8 @@ VOIX_PROVISOIRES = {
 # Vitesse de la voix de synthèse pour chaque débit (n'agit pas sur les fichiers audio).
 # Les clés 'slow' et 'normal' sont aussi celles de audios.csv (colonne speed).
 DEBITS = {'slow': 0.55, 'normal': 0.9}
+# Voix modèle des étapes de production E4–E5 (R-AUD-03) : Ban Mai.
+VOIX_MODELE = 'F1'
 
 # Ordre d'affichage des séries d'une leçon selon la place de l'élément contrasté :
 # 0 voyelles (et tons), 1 consonnes de début, 2 finales. Sert aussi au découpage en parties
@@ -161,6 +168,16 @@ def main():
     images_prov = {i['word_code']: i['emoji'] for i in lire('images_provisoires.csv', LECTEUR)}
     reperes = {r['symbol']: r for r in lire('reperes_sons.csv')}   # DEC-0038
     exemples = lire('exemples_e1.csv')                              # DEC-0039
+    mots_lecons = lire('mots_lecons.csv')                           # E4 : mots supports
+    comptage = lire('comptage.csv')                                 # DEC-0054
+    syllabe = {}
+    for s_ in lire('syllabes.csv'):
+        syllabe.setdefault(s_['word_code'], []).append(s_)
+    # Courbes du modèle (DEC-0050) : fichier audio -> { 'm': médiane Hz, 'p': [demi-tons ou None] }.
+    courbes = {}
+    for c in lire('courbes_modele.csv'):
+        courbes[c['file']] = {'m': float(c['median_hz']) if c['median_hz'] else None,
+                              'p': [None if x == '_' else float(x) for x in c['points'].split()]}
 
     # --- 4.2 Audios utilisables : clé (référence du terme, voix, débit) -> chemin du fichier.
     # Référence = code du mot (W0057) ou, pour une syllabe sans code, son écriture (xêm).
@@ -197,7 +214,10 @@ def main():
         return {'texte': '/' + principal + '/', 'couleur': '', 'nom': s['grapheme'],
                 'indication': r['listening_cue'], 'categorie': categorie, 'place': place,
                 'repere': {'langue': r['language'], 'mot': r['keyword'] if r['language'] == 'fr' else '',
-                           'image': r['picture']}}
+                           'image': r['picture']},
+                # Chemin de prononciation (DEC-0038), affiché en E4 : départ, un seul changement, vérification.
+                'chemin': {'depart': r['start'], 'partie': r['body_part'], 'changement': r['change'],
+                           'verification': r['check'], 'certitude': r['certainty']} if r.get('change') else None}
 
     # --- 4.4 audio(référence) : fichiers disponibles pour un terme, rangés par voix puis débit :
     #   { 'F1': { 'slow': 'audio/W0057-F1-slow.mp3', 'normal': ... }, 'H3': {...} }
@@ -269,6 +289,47 @@ def main():
                     'audio': audio(m['word_code']),
                 })
             decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e}
+        # E4 « Écoute et répète » (DEC-0049, DEC-0050) : les mots supports de la leçon, dans
+        # l'ordre de mots_lecons.csv, avec la voix modèle seule (R-AUD-03), ses deux débits et
+        # la courbe mélodique de chaque fichier. Cibles = sons (ou tons) des séries dont le mot
+        # est le terme 1 ; mot support hors séries : pas de cible affichée.
+        production = []
+        for ml in (x for x in mots_lecons if x['lesson_code'] == code):
+            m = mots.get(ml['word_code'])
+            if not m:
+                continue
+            cibles = []
+            for termes in series.values():
+                if termes[0]['lesson_code'] == code:
+                    for t in termes:
+                        if t['position'] == '1' and t['word_code'] == m['word_code'] and t['element'] not in cibles:
+                            cibles.append(t['element'])
+            aud = {d: f for d, f in audio(m['word_code']).get(VOIX_MODELE, {}).items()}
+            production.append({
+                'code': m['word_code'],
+                'ecrit': m['written'],
+                'sens': m['meaning_fr'].split(' / ')[0],
+                'image': images_prov.get(m['word_code'], '') if m['imageable'] == 'true' else '',
+                'cibles': [symbole(e) for e in cibles],
+                'audio': {VOIX_MODELE: aud} if aud else {},
+                'courbes': {d: courbes[f] for d, f in aud.items() if f in courbes},
+            })
+        # « Combien de fois ? » (DEC-0054) : chaque suite, rattachée à la partie qui contient sa
+        # cible ; pour chaque mot, « cible » dit s'il contient le son ou le ton à compter.
+        sections = parties(liste, l.get('split_parts') == 'true')
+        combien = []
+        for x in (c for c in comptage if c['lesson_code'] == code):
+            e = x['element']
+            pc = next((pa['code'] for pa in sections if e in pa['elements']), None)
+            if not pc:
+                continue
+            mots_x = []
+            for w in x['word_codes'].split():
+                els = [v for sy in syllabe.get(w, []) for k, v in sy.items() if k in ('initial', 'glide', 'nucleus', 'final', 'tone') and v]
+                mots_x.append({'ecrit': mots[w]['written'] if w in mots else w, 'cible': e in els})
+            combien.append({'code': x['item_code'], 'element': e, 'partie': pc, 'symbole': symbole(e),
+                            'ecrit': x['written'], 'mots': mots_x, 'nombre': int(x['count']),
+                            'audio': audio(x['item_code'])})
         # Ce que reçoit le lecteur pour une leçon (voir le « vocabulaire » en tête de lecteur.js).
         sortie_lecons.append({
             'code': code,
@@ -278,8 +339,29 @@ def main():
             'tons': l['is_tone_lesson'] == 'true',
             'recyclage': l['is_recycling'] == 'true',
             'series': liste,
-            'parties': parties(liste, l.get('split_parts') == 'true'),
+            'parties': sections,
+            'combien': combien,
             'decouverte': decouverte,
+            'production': production,
+            # Voix d'écoute de la leçon (DEC-0055) : E2, E3, échauffement, « Combien de fois ? ».
+            'voix': [v['voice_code'] for v in voix
+                     if v.get('listen_tones' if l['is_tone_lesson'] == 'true' else 'listen_sounds', 'true') == 'true'],
+        })
+
+    # --- 4.6 bis Page « Les 6 tons » (DEC-0052) : pour chaque ton, la syllabe de la série, son
+    # ton (pictogramme, couleur, contour), ses audios et ses courbes par voix et par débit.
+    reference_tons = []
+    for x in lire('reference_tons.csv'):
+        t = tons.get(x['tone_code'])
+        if not t:
+            continue
+        aud = audio(x['word_code'] or x['written'])
+        reference_tons.append({
+            'ton': x['tone_code'], 'nom': t['name_vi'], 'pictogramme': t['pictogram'], 'couleur': t['color_hex'],
+            'contour': t['contour_fr'], 'chao': t['chao'], 'glottal': t['glottalization'],
+            'ecrit': x['written'], 'sens': x['meaning_fr'],
+            'audio': aud,
+            'courbes': {v: {d: courbes[f] for d, f in fd.items() if f in courbes} for v, fd in aud.items()},
         })
 
     # --- 4.7 Le contenu complet de donnees.js.
@@ -295,6 +377,7 @@ def main():
                  for v in voix],
         'debits': DEBITS,
         'lecons': sortie_lecons,
+        'reference_tons': reference_tons,
     }
 
     # --- 4.8 Écriture des fichiers dans 06_LIVRABLES/lecteur/.
@@ -302,7 +385,7 @@ def main():
     js = 'window.DONNEES_LECTEUR = ' + json.dumps(donnees, ensure_ascii=False, indent=1) + ';\n'
     with open(os.path.join(SORTIE, 'donnees.js'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(js)
-    for nom in ['index.html', 'lecteur.css', 'lecteur.js']:
+    for nom in ['index.html', 'lecteur.css', 'prononciation.js', 'lecteur.js']:
         shutil.copyfile(os.path.join(LECTEUR, nom), os.path.join(SORTIE, nom))
     # Audios validés copiés à côté du lecteur
     for f in set(fichiers_audio.values()):
@@ -323,6 +406,9 @@ def main():
         code = f.read()
     page = page.replace('<link rel="stylesheet" href="lecteur.css">', '<style>\n' + css + '\n</style>')
     page = page.replace('<script src="donnees.js"></script>', '<script>\n' + js + '</script>')
+    with open(os.path.join(LECTEUR, 'prononciation.js'), encoding='utf-8') as f:
+        prono = f.read()
+    page = page.replace('<script src="prononciation.js"></script>', '<script>\n' + prono + '\n</script>')
     page = page.replace('<script src="lecteur.js"></script>', '<script>\n' + code + '\n</script>')
     with open(os.path.join(SORTIE, 'lecteur_autonome.html'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(page)
@@ -331,6 +417,15 @@ def main():
     nb_series = sum(len(l['series']) for l in sortie_lecons)
     print(f"{len(sortie_lecons)} leçons, {nb_series} séries, {len(fichiers_audio)} audios "
           f"{'(validés ou non : ESSAI)' if NON_VALIDES else 'validés'} -> {SORTIE}")
+    nb_c = sum(len(l['combien']) for l in sortie_lecons)
+    nb_c_audio = sum(1 for l in sortie_lecons for x in l['combien'] if x['audio'])
+    print(f"« Combien de fois ? » : {nb_c} suites, dont {nb_c_audio} avec audio")
+    nb_e4 = sum(len(l['production']) for l in sortie_lecons)
+    nb_courbes = sum(len(p['courbes']) for l in sortie_lecons for p in l['production'])
+    nb_ref = sum(1 for x in reference_tons if x['courbes'].get(VOIX_MODELE, {}).get('normal'))
+    print(f"Page « Les 6 tons » : {nb_ref} / {len(reference_tons)} tons avec audio et courbe (voix modèle)")
+    print(f"E4 : {nb_e4} mots supports, {nb_courbes} courbes du modèle"
+          f"{'' if courbes else ' (courbes_modele.csv absent : lancer courbes_modele.py)'}")
 
 
 # Lancement quand le fichier est exécuté directement (et non importé par un autre script).

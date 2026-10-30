@@ -10,6 +10,13 @@ _ARCHIVES/
 # Secrets : cles d'acces aux services (DOC-04)
 .env
 *.env
+cle*api*.txt
+*cle*FPT*.txt
+
+# Audios intermediaires : bruts recus de FPT (doublons), essais de voix, anciennes versions
+04_DONNEES/audio/_bruts/
+04_DONNEES/audio/_essais/
+04_DONNEES/audio/_anciens/
 
 # Journaux techniques (DOC-05)
 07_QUALITE/journaux/

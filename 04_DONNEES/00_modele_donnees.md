@@ -2,8 +2,8 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.17
-date: 2026-10-29
+version: 0.18
+date: 2026-10-30
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
   et les liens entre fichiers. Sert de référence au générateur et au script
@@ -206,6 +206,8 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `provider_model` | modèle de synthèse chez le fournisseur | `FPT.TTS-pro`, `FPT.AI-VITs`, vide | `FPT.AI-VITs` |
 | `provider_speed_slow` | valeur `speed` du débit lent pour cette voix (vide : 0,8) | nombre | `0.6` |
 | `status` | état | `active`, `planned`, `inactive` (écartée, gardée pour l'historique) | `active` |
+| `listen_sounds` | voix d'écoute des leçons de sons (DEC-0055) | `true` / `false` | `true` |
+| `listen_tones` | voix d'écoute des leçons de tons (DEC-0055) | `true` / `false` | `false` |
 | `note` | remarque | | |
 
 ### 3.11 bis `exemples_e1.csv` — mots d'exemple de l'étape E1 (DEC-0039)
@@ -256,6 +258,45 @@ consonne **finale** peut avoir sa propre ligne, symbole précédé de `-`
 | `change` | le changement, un seul | | |
 | `check` | comment vérifier | | |
 | `certainty` | fiabilité de la description | `fiable`, `à vérifier` | `fiable` |
+
+### 3.14 `reference_tons.csv` — série de la page « Les 6 tons » (DEC-0052)
+
+Une même syllabe dite avec les 6 tons, pour comparer les tons sur une même
+échelle. Audios : voix F1 et H3, lent et normal (`generer_audio_fpt.py`) ;
+courbes : `courbes_modele.py`.
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `tone_code` | ton | `tone_code` de `tons.csv` | `huyen` |
+| `written` | syllabe écrite | | `mà` |
+| `word_code` | code du mot s'il est dans `mots.csv` (sinon vide : syllabe hors corpus) | | `W0318` |
+| `meaning_fr` | sens, pour information | | `mais` |
+
+### 3.15 `courbes_modele.csv` — courbes mélodiques calculées (DEC-0050)
+
+Fichier **produit** par `05_PRODUCTION/tools/courbes_modele.py`, à ne pas
+saisir à la main : une ligne par audio de la voix modèle F1 et de la série
+des tons. Colonnes : `audio_code`, `file`, `size` (taille du fichier, pour
+repérer un audio regénéré), `median_hz`, `voiced_s`, `points` (demi-tons
+autour de la médiane, toutes les 10 ms ; `_` = pas de voix mesurable).
+
+### 3.16 `comptage.csv` — exercice « Combien de fois ? » (DEC-0054)
+
+Produit par `05_PRODUCTION/tools/choisir_suites_comptage.py` pour les suites ;
+les petites phrases (`kind = phrase`) sont saisies à la main dans le même
+fichier et gardées quand le script est relancé.
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `item_code` | code | `C-L01-<élément>-<n>` | `C-L01-PH-VS-e-2` |
+| `lesson_code` | leçon | | `M0-L01` |
+| `element` | son ou ton à compter | code de `sons.csv` ou `tons.csv` | `PH-VS-e` |
+| `kind` | nature | `suite`, `phrase` | `suite` |
+| `word_codes` | mots, dans l'ordre | codes de `mots.csv` séparés par des espaces | `W0324 W0270 W0057 W0083` |
+| `written` | texte envoyé à FPT et révélé après la réponse | | `nem, tim, xem, ho` |
+| `count` | nombre attendu, **calculé** d'après `syllabes.csv` | entier | `2` |
+| `validated` | relu par un locuteur vietnamien | `true` / `false` | `false` |
+| `note` | remarque | | |
 
 ## 4. Ce qui n'est pas un fichier source
 
@@ -315,3 +356,4 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.15 | 2026-10-29 | `voix.csv` : colonne `provider_speed_slow` (débit lent propre à chaque voix). |
 | 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
 | 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |
+| 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055). |

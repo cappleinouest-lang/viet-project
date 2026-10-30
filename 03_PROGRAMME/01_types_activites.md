@@ -2,8 +2,8 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.11
-date: 2026-10-29
+version: 0.12
+date: 2026-10-30
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
   pour chaque étape E1 à E5, ce que l'élève entend et voit, comment il
@@ -30,6 +30,7 @@ sources:
 | E2 Distinguer | **ACT-E2-PAREIL** | Pareil ou différent ? (échauffement) | entend deux mots, dit s'ils ont le même son | non |
 | E2 Distinguer | **ACT-E2-LEQUEL** | Lequel ? (2 choix) | entend un terme, choisit A ou B | **oui** |
 | E3 Opposer | **ACT-E3-LEQUEL** | Lequel ? (2 à 4 choix) | entend un terme, choisit dans la série | **oui** |
+| E3 Opposer | **ACT-E3-COMBIEN** | Combien de fois ? | entend une suite de mots (puis une petite phrase), dit combien de fois il entend le son ou le ton | **oui** |
 | E3 Opposer | **ACT-E3-ECRIT** | Révélation de l'écrit | voit l'écrit des termes réels, réécoute | non |
 | E4 Répéter | **ACT-E4-REPETE** | Écoute et répète | imite le modèle, s'enregistre, compare | auto-évaluation |
 | E5 Stabiliser | **ACT-E5-ENCHAINE** | Enchaînement | répète des séries mêlant leçons actuelle et précédentes | auto-évaluation |
@@ -84,6 +85,18 @@ sources:
 Même mécanique qu'E2, avec la **série complète** (2 à 4 termes, R-PARC-05).
 Les séries de la leçon sont mêlées ; la position de la bonne réponse est
 tirée au hasard.
+
+### ACT-E3-COMBIEN — Combien de fois ? (DEC-0054)
+
+| Point | Règle |
+|---|---|
+| Place | fin d'E3, après ACT-E3-LEQUEL, avant l'écrit |
+| Entend | une **suite de 3 à 5 mots connus** dite d'affilée (« ba, mẹ, ma »), plus tard une **petite phrase** ; une voix au hasard ; débit lent puis normal (normal seul dans les leçons de tons) |
+| Voit | le son ou le ton à compter (symbole, place) ; **aucun écrit** avant la réponse |
+| Répond | combien de fois il entend la cible : 0, 1, 2, 3, 4 ou 5 |
+| Correction | juste / faux, puis **l'écrit de la suite est révélé**, cibles en évidence ; réécoute libre |
+| Contenu | `04_DONNEES/comptage.csv` : nombre attendu **calculé** à partir de `syllabes.csv` ; mots dont tous les éléments sont ouverts (atomicité) ; autres mots pris de préférence parmi les éléments proches |
+| Verrou | compte pour le verrou d'écoute, comme ACT-E3-LEQUEL : même seuil, 2 voix au moins |
 
 ### ACT-E3-ECRIT — Révélation de l'écrit
 
@@ -176,6 +189,7 @@ calibrés.
 | 0.9 | 2026-10-29 | Leçons de tons sans audio lent (DEC-0043). |
 | 0.10 | 2026-10-29 | Tons : une seule voix en première phase (DEC-0045). |
 | 0.11 | 2026-10-29 | Liens : ajout de PROD-AF-LECT en sorties (DOC-32). |
+| 0.12 | 2026-10-30 | ACT-E3-COMBIEN « Combien de fois ? » (DEC-0054). |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.14
+version: 0.19
 date: 2026-10-30
 resume: >
   Décrit la première version du lecteur d'activités (volet écoute E1 → E3,
@@ -111,7 +111,18 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
    `prononciation.js` : micro, courbe mélodique par l'algorithme YIN, demi-tons
    autour de la hauteur médiane, temps ramené de 0 à 1). Limite connue : chaque
    courbe est rapportée à SA propre médiane, elle montre la forme du ton, pas
-   son registre (haut / bas).
+   son registre (haut / bas). Étape 2 (DEC-0050) : courbes du modèle F1
+   calculées à l'avance par `tools/courbes_modele.py` (même calcul que
+   `prononciation.js`) dans `04_DONNEES/courbes_modele.csv`. Étape 3 : **E4 intégré
+   au lecteur** (version 0.15) : mots supports de la leçon (`mots_lecons.csv`),
+   ouverts quand l'écoute de la leçon est validée ; passage 1 avec le modèle F1
+   lent, passage 2 avec le modèle normal ; pour chaque mot : écrit, image, son ou
+   ton visé avec son chemin de prononciation, modèle, enregistrement, « Moi »,
+   « Moi puis le modèle », courbes, note « proche » / « à reprendre » (3 essais
+   au plus, paramètre `essais_max_e4`). E4 est marquée « parcourue », sans verrou
+   (R-VOL-08 non décidé). Les enregistrements ne sont ni gardés ni envoyés.
+   Non contrôlé : l'écart de 3 leçons entre écoute et production (R-VOL-04).
+   Avant de générer : lancer `courbes_modele.py` (voir PROD-AUDIO).
 2. Leçon L14 (recyclage) : construite à partir de toutes les séries.
 3. Écart de 3 leçons entre écoute et production (R-VOL-04) : à contrôler
    quand le volet production existera.
@@ -135,3 +146,8 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.12 | 2026-10-30 | Mode test : informations sur le son joué (DEC-0047). |
 | 0.13 | 2026-10-30 | Voix F3 écartée : 3 voix actives (DEC-0048). |
 | 0.14 | 2026-10-30 | Volet production, étape 1 : page d'essai du micro et de la courbe (DEC-0049). |
+| 0.15 | 2026-10-30 | E4 « Écoute et répète » intégré au lecteur (DEC-0050) ; courbes du modèle dans donnees.js ; prononciation.js chargé par index.html et inclus dans lecteur_autonome.html. |
+| 0.16 | 2026-10-30 | Réglage « Mode essai : tout ouvert », activé par défaut (DEC-0051). |
+| 0.17 | 2026-10-30 | Écran « Les 6 tons » : série ma… mạ, courbes sur une même échelle (DEC-0052). |
+| 0.18 | 2026-10-30 | « Les 6 tons » : schéma de chaque ton à la place des courbes mesurées (DEC-0053). |
+| 0.19 | 2026-10-30 | Voix d'écoute propres à chaque leçon (`l.voix`, DEC-0055). |

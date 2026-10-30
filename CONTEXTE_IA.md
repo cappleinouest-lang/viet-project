@@ -48,7 +48,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0049) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0055) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -75,7 +75,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Mots | **100 mots supports** en M0 ; 9 sons rares reportés en A1–A2 (DEC-0031) ; séries minimales de **2 à 4 termes**, paire en E2, série complète en E3 ; contraste de ton ou de son (DEC-0020, 0024 à 0026, 0031) |
 | Outils | **Lecteur d'activités** + page de prononciation (courbe mélodique), développés d'abord en **site statique** ; enveloppe définitive **WordPress ou Firebase** choisie quand le lecteur fonctionne ; **Anki** pour les révisions (DEC-0015, 0016, 0030) ; mode test qui affiche ce qui est joué (DEC-0047) |
 | Données | **CSV** comme source de vérité, contrôle par SQLite temporaire (DEC-0017) |
-| Audio | FPT AI Marketplace, mot envoyé seul, volume égalisé à −20 dBFS (DEC-0040). **Voix actives : F1 Ban Mai** (femme, voix modèle, FPT.TTS-pro), **H3 Le Minh**, **H4 Huy Phong** (hommes, FPT.AI-VITs). **F3 Thu Minh écartée** le 2026-10-30, fichiers gardés (DEC-0048). Débit lent : F1 0,7 ; H3, H4 0,6 |
+| Audio | FPT AI Marketplace, mot envoyé seul, volume égalisé à −20 dBFS (DEC-0040). Écoute des **leçons de sons** : **F3 Thu Minh** et **H4 Huy Phong** ; **leçons de tons** : F1, H3, H4 provisoirement, choix à faire (DEC-0055, mesure dans `07_QUALITE/contraste_tons_voix_2026-10-30.md`). **Modèle d'E4 : F1 Ban Mai**. Débit lent : F1 0,7 ; H3, H4 0,6 |
 
 ## 5. État au 2026-10-30
 
@@ -87,7 +87,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Programme du Module 0 (`progression_M0.md`) | brouillon ; points P1 à P6 décidés (DEC-0031 à 0036) |
 | Audios | **2 237 générés** chez FPT (mots, syllabes, syllabes inventées ; 2 débits) ; **aucun validé** (`validated = false`). Depuis DEC-0048, 56 mots d'exemple d'E1 attendent leur audio F1 (112 fichiers) ; outil de validation par l'écoute **à faire** |
 | Images | emoji provisoires ; OpenMoji **à choisir** |
-| Lecteur d'activités | **version d'essai 0.13** : volet écoute E1–E3 de toutes les leçons, réglages, « Mes progrès », mode test ; audios FPT lus en mode d'essai (`generer_lecteur.py . --non-valides`) ; version autonome en un fichier dans `06_LIVRABLES/lecteur/`. Volet production **commencé** (DEC-0049 : E4 d'abord, sur PC ; page d'essai `essai_micro.html` + `prononciation.js`) ; L14, paquets Anki **à développer** |
+| Lecteur d'activités | **version d'essai 0.13** : volet écoute E1–E3 de toutes les leçons, réglages, « Mes progrès », mode test ; audios FPT lus en mode d'essai (`generer_lecteur.py . --non-valides`) ; version autonome en un fichier dans `06_LIVRABLES/lecteur/`. Volet production **commencé** (DEC-0049 : E4 d'abord, sur PC ; page d'essai `essai_micro.html` + `prononciation.js` ; DEC-0050 : modèle lent FPT puis normal, courbe partout, courbes du modèle calculées par `tools/courbes_modele.py` ; **E4 intégré au lecteur**, sans verrou ; page « Les 6 tons » avec schémas, DEC-0052, DEC-0053) ; L14, paquets Anki **à développer** |
 | Règles de code (SQL, Python, PowerShell) | hors périmètre pour l'instant |
 
 ## 6. Points ouverts
@@ -100,8 +100,8 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
   (test « ma » juste / faux concluant ; paires 2 à 5 à enregistrer).
 - Reconnaissance vocale en complément (FPT.AI ou PhoWhisper) : plus tard ;
   Azure jugé peu performant en vietnamien.
-- Mode test (DEC-0047) : à désactiver par défaut avant d'ouvrir la
-  formation à d'autres apprenants.
+- Mode test (DEC-0047) et mode essai « tout ouvert » (DEC-0051) : à
+  désactiver par défaut avant d'ouvrir la formation à d'autres apprenants.
 - Liste de fréquence de référence (R-LEX-07), pour A1 (en M0 : « mot courant », DEC-0035) ; traductions à relire
   (*chưng*, *à*, *chi*, *lẽ*) ; étymologies manquantes.
 - Termes hors corpus vérifiés (DEC-0027) : 74 mots réels dont le sens reste à vérifier ; 9 séries utilisent une syllabe inventée dès E2.

@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.43
+version: 1.49
 date: 2026-10-30
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1107,6 +1107,134 @@ qui indique « remplace DEC-NNNN ».
   automatique tant qu'elle n'est pas calibrée.
 - **Impacte** : PROD-LECT, PROD-ARCH, lecteur.
 
+### DEC-0050 — E4 : modèle lent puis normal, courbe partout
+
+- **Date** : 2026-10-30
+- **Question** : en E4, quel débit pour le modèle, surtout dans les leçons de
+  tons (DEC-0043 : pas d'audio lent en écoute) ? Où afficher la courbe ?
+- **Mesures** (2026-10-30, 6 mots de Ban Mai, un par ton) : les audios
+  **lents de FPT n'aplatissent pas** la mélodie (écart de hauteur égal ou
+  plus grand qu'au débit normal : sắc 10,3 demi-tons contre 8,6), mais la
+  forme change un peu (hỏi : creux plus tôt ; ngã : cassure plus longue).
+  L'audio normal ralenti par le navigateur (×0,7, hauteur gardée) garde
+  exactement la mélodie du normal, mais Christophe le juge **moins bon** à
+  l'écoute que le lent de FPT.
+- **Décision** (Christophe) :
+  1. E4 : modèle F1 au **débit lent (fichier lent FPT) puis normal**, dans
+     **toutes** les leçons, leçons de tons comprises.
+  2. Le ralenti par le navigateur est écarté.
+  3. **Courbe mélodique affichée dans toutes les leçons** ; dans les leçons
+     de sons, une ligne précise qu'elle montre la mélodie, pas la voyelle
+     ni la consonne.
+  4. La courbe du modèle est **calculée à l'avance** (`tools/courbes_modele.py`
+     → `04_DONNEES/courbes_modele.csv`) : ouvert par double-clic, le lecteur
+     ne peut pas analyser un mp3. Même calcul que dans le navigateur
+     (contrôlé : écart < 0,01 demi-ton sur 8 audios) ; la courbe affichée est
+     celle du débit joué (lent ou normal).
+- **Non changé** : DEC-0043 (écoute des leçons de tons au débit normal)
+  reste en vigueur ; les mesures ci-dessus n'en confirment pas la raison
+  (« le lent aplatit »), à revoir si besoin.
+- **Impacte** : PROG-ACT (ACT-E4-REPETE), DATA-MODELE, PROD-LECT, lecteur.
+
+### DEC-0051 — Mode essai : toutes les leçons et étapes ouvertes
+
+- **Date** : 2026-10-30
+- **Question** : Christophe, en phase de test : pouvoir accéder à toutes les
+  leçons et à toutes les étapes sans attendre les verrous.
+- **Décision** : réglage « **Mode essai : tout ouvert** » du lecteur,
+  **activé par défaut** pendant la phase de test. Il lève l'ouverture
+  progressive des leçons (R-VOL-02), des parties (DEC-0037), des étapes
+  E2, E3, l'écrit et E4 (R-VOL-03). Les scores, validations et dates de
+  validation restent calculés normalement. Rappel affiché sur l'accueil.
+- **Limite** : une leçon sans série (L14, à construire) reste « À venir ».
+- **À décider** : couper ce réglage par défaut avant d'ouvrir la formation à
+  d'autres apprenants (comme le mode test DEC-0047).
+- **Impacte** : lecteur, PROD-LECT.
+
+### DEC-0052 — Page de référence « Les 6 tons »
+
+- **Date** : 2026-10-30
+- **Question** : Christophe veut revoir les courbes des 6 tons côte à côte,
+  pour apprendre à les reconnaître.
+- **Décision** :
+  1. Écran « **Les 6 tons** » dans le lecteur, accessible depuis l'accueil
+     et depuis les leçons de tons : les 6 courbes superposées, une carte par
+     ton (pictogramme, couleur, contour), écoute d'un ton ou des 6 à la suite.
+  2. **Une même syllabe** pour les 6 tons : *ma, má, mà, mả, mã, mạ*
+     (`04_DONNEES/reference_tons.csv`), pour que seule la mélodie change.
+  3. Voix **F1 Ban Mai** et **H3 Le Minh**, débits lent et normal : 20
+     audios à générer (*ma* existe déjà).
+  4. Courbes sur une **même échelle**, contrairement à E4 : hauteur en
+     demi-tons par rapport au ton ngang de la même voix (on voit haut / bas),
+     temps réel en secondes (on voit long / court).
+- **Hypothèse** : les courbes sont mesurées sur une voix de synthèse ; elles
+  donnent l'allure des tons, un locuteur natif peut s'en écarter.
+- **Impacte** : DATA-MODELE, PROD-AUDIO, PROD-LECT, lecteur.
+
+### DEC-0053 — « Les 6 tons » : schémas plutôt que courbes mesurées
+
+- **Date** : 2026-10-30
+- **Question** : Christophe préfère, pour chaque ton, un schéma simple montrant
+  l'évolution du ton plutôt que la courbe mesurée.
+- **Décision** : sur la page « Les 6 tons », chaque ton est un **schéma**
+  tracé d'après `tons.csv` (colonne `chao`, échelle 1 grave à 5 aigu) :
+  ngang 33 plat ; sắc 35 montant ; huyền 21 descendant doucement ; hỏi 31,
+  remontée finale en pointillés (faible ou absente à Hanoï) ; ngã 3ˀ5 cassé
+  au milieu (ˀ) puis montant ; nặng 21ʔ descendant, plus court, arrêt net (ʔ).
+  Un grand schéma superpose les 6 ; chaque carte a le sien. Remplace DEC-0052,
+  point 4 (courbes mesurées sur une même échelle).
+- **Non changé** : les courbes mesurées restent en E4 (comparaison de ma voix
+  avec le modèle) ; la série *ma… mạ* et ses audios servent à l'écoute.
+- **Impacte** : lecteur, PROD-LECT.
+
+### DEC-0054 — Exercice « Combien de fois ? » en fin d'E3
+
+- **Date** : 2026-10-30
+- **Question** : Christophe propose un exercice où l'apprenant dit combien de
+  fois il entend le son ou le ton travaillé, dans de petites phrases.
+- **Décision** (Christophe) :
+  1. Nouvelle activité **ACT-E3-COMBIEN**, en **fin d'E3** (après le
+     « Lequel ? », avant l'écrit).
+  2. Contenu : d'abord des **suites de 3 à 5 mots connus** dites d'affilée,
+     puis de **vraies petites phrases** quand le vocabulaire le permet.
+  3. **Aucun écrit** avant la réponse ; l'écrit est révélé ensuite.
+  4. Contenus proposés par Claude (script `choisir_suites_comptage.py` →
+     `04_DONNEES/comptage.csv`), à faire relire si possible par un locuteur
+     vietnamien (colonne `validated`).
+  5. L'exercice **compte pour le verrou d'écoute**.
+- **Règles techniques** : nombre attendu **calculé** d'après `syllabes.csv` ;
+  atomicité stricte (tous les éléments des mots ouverts) ; mots proches de la
+  cible privilégiés ; 4 suites par cible (436 au total, 2026-10-30) ; audio
+  d'un seul tenant, 3 voix, lent et normal (normal seul pour les tons) :
+  2 412 fichiers, environ 43 000 caractères (≈ 0,70 $ au tarif du 2026-10-29).
+- **Écart** : L01, son *v* : aucun mot utilisable, pas d'item.
+- **Impacte** : PROG-ACT, DATA-MODELE, PROD-AUDIO, PROD-LECT, R-VOL-05, lecteur.
+
+### DEC-0055 — Voix d'écoute : Thu Minh et Huy Phong pour les leçons de sons
+
+- **Date** : 2026-10-30
+- **Question** : quelles voix pour l'écoute, après la mesure du contraste des
+  tons (`07_QUALITE/contraste_tons_voix_2026-10-30.md`) ?
+- **Constats** : Thu Minh (F3) sépare le mieux les tons (94 %), mais ses
+  consonnes de début sont brèves (51 ms contre 79 ms pour Ban Mai) ; la
+  méthode « mot, mot. » ne les allonge pas et dégrade ses tons (écartée).
+  Huy Phong (H4) : 81 %, consonnes brèves aussi. Quang Anh (H1) et Minh Quan
+  (H5) : 61 % et 58 %.
+- **Décision** (Christophe) :
+  1. **Leçons de sons** : tout le volet écoute (E1, échauffement, E2, E3,
+     « Combien de fois ? ») avec **Thu Minh (F3)** et **Huy Phong (H4)**
+     seulement. F3 redevient active : remplace DEC-0048 pour ces leçons.
+  2. **Leçons de tons** : voix à choisir plus tard (« le locuteur le plus
+     adapté ») ; **provisoirement** inchangées : F1, H3, H4.
+  3. Voix modèle d'E4 : **Ban Mai (F1)** gardée (pas de préférence exprimée ;
+     ses audios et courbes existent ; consonnes de début les plus complètes).
+- **Données** : `voix.csv`, colonnes `listen_sounds` et `listen_tones` ;
+  `exemples_e1.csv` : F3 + H4 dans les leçons de sons (251 lignes).
+- **Audios** : 1 728 à générer (suites de comptage, 52 mots d'E1 pour H4),
+  environ 30 000 caractères.
+- **Impacte** : DATA-MODELE, PROD-AUDIO, PROD-LECT, `choisir_exemples_e1.py`,
+  `generer_audio_fpt.py`, `generer_lecteur.py`, lecteur.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1155,6 +1283,12 @@ qui indique « remplace DEC-NNNN ».
 | 1.41 | 2026-10-30 | Ajout de DEC-0047 (mode test : afficher ce qui est joué). |
 | 1.42 | 2026-10-30 | Ajout de DEC-0048 (voix F3 Thu Minh écartée). |
 | 1.43 | 2026-10-30 | Ajout de DEC-0049 (volet production : E4 d'abord, sur PC). |
+| 1.44 | 2026-10-30 | Ajout de DEC-0050 (E4 : modèle lent puis normal, courbe partout). |
+| 1.45 | 2026-10-30 | Ajout de DEC-0051 (mode essai : tout ouvert). |
+| 1.46 | 2026-10-30 | Ajout de DEC-0052 (page « Les 6 tons »). |
+| 1.47 | 2026-10-30 | Ajout de DEC-0053 (schémas des tons plutôt que courbes mesurées). |
+| 1.48 | 2026-10-30 | Ajout de DEC-0054 (exercice « Combien de fois ? » en fin d'E3). |
+| 1.49 | 2026-10-30 | Ajout de DEC-0055 (voix d'écoute des leçons de sons : Thu Minh et Huy Phong). |
 
 ## Liens
 

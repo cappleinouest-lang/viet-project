@@ -137,18 +137,31 @@
     });
   }
 
-  // Réduction de fréquence simple (moyenne de k échantillons) : suffit pour la
-  // hauteur de la voix, qui reste bien en dessous de 8 kHz.
+  // Passage à EXACTEMENT 16 kHz, quelle que soit la fréquence de départ (48 kHz dans le
+  // navigateur, 22,05 ou 24 kHz quand Python lit le mp3) : ainsi le navigateur et
+  // tools/courbes_modele.py, qui fait le même calcul à l'avance pour le modèle, donnent
+  // la même courbe. Deux temps : moyenne glissante sur k échantillons (adoucit les aigus),
+  // puis lecture à intervalles réguliers avec interpolation linéaire.
+  // NE PAS MODIFIER sans modifier pareil la fonction reduire() de courbes_modele.py.
   function reduire(d, frequence) {
-    var k = Math.max(1, Math.floor(frequence / PARAM.frequenceTravail));
-    if (k === 1) return { d: d, f: frequence };
-    var n = Math.floor(d.length / k), r = new Float32Array(n);
-    for (var i = 0; i < n; i++) {
+    var fc = PARAM.frequenceTravail;
+    if (frequence === fc) return { d: d, f: fc };
+    var k = Math.max(1, Math.round(frequence / fc)), m = d;
+    if (k > 1) {
+      m = new Float32Array(d.length);
       var s = 0;
-      for (var j = 0; j < k; j++) s += d[i * k + j];
-      r[i] = s / k;
+      for (var i = 0; i < d.length; i++) {
+        s += d[i];
+        if (i >= k) s -= d[i - k];
+        m[i] = s / Math.min(i + 1, k);
+      }
     }
-    return { d: r, f: frequence / k };
+    var n = Math.floor((d.length - 1) * fc / frequence) + 1, r = new Float32Array(n);
+    for (var j = 0; j < n; j++) {
+      var x = j * frequence / fc, i0 = Math.floor(x), a = x - i0;
+      r[j] = i0 + 1 < m.length ? m[i0] * (1 - a) + m[i0 + 1] * a : m[i0];
+    }
+    return { d: r, f: fc };
   }
 
   // ---------------------------------------------------------------------------
@@ -292,7 +305,7 @@
   // ---------------------------------------------------------------------------
   // 5. Dessin
   // ---------------------------------------------------------------------------
-  // dessiner(canvas, [{ courbe, couleur, nom }], options)
+  // dessiner(canvas, [{ courbe, couleur, epaisseur, opacite }], { ecart, gauche, droite })
   // Axe vertical : demi-tons de -12 à +12 autour de la hauteur médiane de chacun.
   // Axe horizontal : début à fin de la partie voisée du mot.
   // Un trou dans la courbe = pas de voix mesurable (coup de glotte, voix grinçante,
@@ -322,12 +335,16 @@
       c.fillText((v > 0 ? '+' : '') + v, 6, Y(v) + 4);
     }
     c.setLineDash([]);
-    c.fillText('début', mg, H - 6);
-    c.fillText('fin', L - 30, H - 6);
+    // Étiquettes de l'axe horizontal : « début » / « fin » par défaut, ou options.gauche / options.droite
+    // (page « Les 6 tons » : temps réel, « 0 s » à gauche, durée à droite).
+    var gauche = options.gauche || 'début', droite = options.droite || 'fin';
+    c.fillText(gauche, mg, H - 6);
+    c.fillText(droite, L - 10 - c.measureText(droite).width, H - 6);
 
     series.forEach(function (s) {
       if (!s.courbe || !s.courbe.points.length) return;
       c.strokeStyle = s.couleur;
+      c.globalAlpha = s.opacite == null ? 1 : s.opacite;    // courbes en retrait : opacite < 1
       c.lineWidth = s.epaisseur || 3;
       c.lineJoin = 'round'; c.lineCap = 'round';
       c.beginPath();
@@ -338,6 +355,7 @@
         if (leve) { c.moveTo(X(p.x), y); leve = false; } else c.lineTo(X(p.x), y);
       });
       c.stroke();
+      c.globalAlpha = 1;
     });
   }
 

@@ -82,7 +82,8 @@
       <tr><td>mẹ</td><td>nặng</td><td><code>W0138-F1-normal.mp3</code></td></tr>
     </table>
     <p><input type="file" id="fichier" accept="audio/*">
-       <button id="ecouterModele" disabled>▶ Écouter le modèle</button></p>
+       <button id="ecouterModele" disabled>▶ Écouter le modèle</button>
+       <button id="ecouterLent" disabled>🐢 Écouter ralenti (×0,7, mélodie gardée)</button></p>
     <p class="info" id="infoModele"></p>
   </section>
 
@@ -161,10 +162,19 @@
       modele = r;
       $('infoModele').textContent = f.name + ' — ' + resume(r);
       $('ecouterModele').disabled = false;
+      $('ecouterLent').disabled = false;
       redessiner();
     }).catch(function (e) { $('infoModele').textContent = 'Lecture impossible : ' + e; });
   });
   $('ecouterModele').addEventListener('click', function () { new Audio(urlModele).play(); });
+  // Ralenti du lecteur (proposition pour le débit lent d'E4) : même fichier, joué à 0,7,
+  // le navigateur garde la hauteur (preservesPitch) : la mélodie est celle du débit normal.
+  $('ecouterLent').addEventListener('click', function () {
+    var a = new Audio(urlModele);
+    a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
+    a.playbackRate = 0.7;
+    a.play();
+  });
 
   // 3. Micro
   function niveauEnDirect() {

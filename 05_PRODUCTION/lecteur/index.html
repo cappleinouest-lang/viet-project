@@ -21,12 +21,13 @@
       python 05_PRODUCTION\tools\generer_lecteur.py . --non-valides
 
   ATTENTION : le générateur fabrique aussi « lecteur_autonome.html » (tout en
-  un seul fichier) en REMPLAÇANT mot pour mot trois lignes de cette page :
-  la ligne « link » qui charge lecteur.css, et les deux lignes « script »
-  qui chargent donnees.js et lecteur.js (repérées plus bas par un commentaire).
+  un seul fichier) en REMPLAÇANT mot pour mot quatre lignes de cette page :
+  la ligne « link » qui charge lecteur.css, et les trois lignes « script »
+  qui chargent donnees.js, prononciation.js et lecteur.js (repérées plus bas
+  par un commentaire).
   Ne pas les modifier (ni ajouter d'attribut), sinon la version autonome
   ne contiendra plus la présentation, les données ou le programme.
-  Et ne jamais recopier ces trois lignes telles quelles dans un commentaire :
+  Et ne jamais recopier ces quatre lignes telles quelles dans un commentaire :
   le générateur les remplacerait là aussi.
   Documentation : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
 -->
@@ -68,6 +69,8 @@
 <footer class="pied" id="pied"></footer>
 <!-- 1) Les données (générées) doivent être chargées AVANT le programme qui les utilise. -->
 <script src="donnees.js"></script>
+<!-- 2) Micro et courbe mélodique du volet production E4 (ligne remplacée par le générateur). -->
+<script src="prononciation.js"></script>
 <!-- 2) Le programme du lecteur : il démarre tout seul et affiche l'accueil. -->
 <script src="lecteur.js"></script>
 </body>

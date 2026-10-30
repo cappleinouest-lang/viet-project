@@ -2,7 +2,7 @@
 id: PROD-AUDIO
 titre: Génération des audios avec FPT.TTS-pro (FPT AI Marketplace)
 statut: BROUILLON
-version: 0.9
+version: 0.10
 date: 2026-10-30
 resume: >
   Explique comment générer, avec FPT.AI, les audios du Module 0 décrits par
@@ -59,7 +59,7 @@ sera ajouté avec le volet production.
 | H3 | `std_leminh` | FPT.AI-VITs | gardée : claire en mot seul (« x » d'environ 140 ms) |
 | H4 | `std_huyphong` | FPT.AI-VITs | gardée |
 | H5 | `std_minhquan` | FPT.AI-VITs | claire, non retenue (choix : 2 femmes et 2 hommes) |
-| F3 | `std_thuminh` | FPT.AI-VITs | gardée le 2026-10-29, **écartée le 2026-10-30** : la moins bonne des voix à l'écoute (DEC-0048) ; code F2 réservé à l'ancienne voix *thuminh* de l'API FPT.AI |
+| F3 | `std_thuminh` | FPT.AI-VITs | gardée le 2026-10-29, écartée (DEC-0048), puis **réintégrée le 2026-10-30 pour l'écoute des leçons de sons** : tons les plus nets à la mesure (DEC-0055) ; code F2 réservé à l'ancienne voix *thuminh* de l'API FPT.AI |
 
 Le modèle de chaque voix est dans la colonne `provider_model` de `voix.csv`.
 Les mots sont envoyés **seuls**.
@@ -136,3 +136,4 @@ acceptés).
 | 0.7 | 2026-10-29 | Débit lent propre à chaque voix (F1 0,7 ; F3, H3, H4 0,6). |
 | 0.8 | 2026-10-29 | Mots d'exemple d'E1 ajoutés au plan (DEC-0039) ; décisions des voix : DEC-0040. |
 | 0.9 | 2026-10-30 | F3 Thu Minh écartée (DEC-0048). |
+| 0.10 | 2026-10-30 | Voix d'écoute par type de leçon : sons F3 + H4, tons F1 + H3 + H4 provisoirement (DEC-0055). |

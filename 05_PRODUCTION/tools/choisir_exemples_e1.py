@@ -9,7 +9,8 @@ Pour chaque leçon et chaque son (ou ton) de ses séries minimales, au plus NB_M
     les autres sons du mot sont libres ;
   - d'abord le mot support de la série (s'il convient), puis des mots dont le début varie
     (ou, pour un son de début, dont la voyelle varie), du plus fréquent au moins fréquent ;
-  - chaque mot reçoit une voix de femme et une voix d'homme (PAIRES_VOIX, en alternance).
+  - chaque mot reçoit une voix de femme et une voix d'homme, prises parmi les voix d'écoute du
+    type de leçon (voix.csv, colonnes listen_sounds / listen_tones, DEC-0055), en alternance.
 
 Le fichier produit peut ensuite être corrigé à la main : relancer ce script le RÉÉCRIT
 (utiliser --verifier pour seulement comparer, sans écrire).
@@ -23,7 +24,6 @@ import os
 import sys
 
 NB_MOTS = 3
-PAIRES_VOIX = [('F1', 'H3'), ('F1', 'H4'), ('F1', 'H3')]   # rang 1, 2, 3 : femme, homme (F3 écartée, DEC-0048)
 COLONNES = ['lesson_code', 'element', 'rank', 'word_code', 'voice_f', 'voice_h', 'note']
 PLACES = ['initial', 'glide', 'nucleus', 'final']
 
@@ -44,6 +44,13 @@ def choisir(donnees):
         syl.setdefault(s['word_code'], []).append(s)
     monosyllabes = {w: s[0] for w, s in syl.items() if len(s) == 1 and w in mots}
     paires = lire(donnees, 'paires_minimales.csv')
+    # Voix d'écoute par type de leçon (DEC-0055) : femmes et hommes, alternés d'un mot à l'autre.
+    voix = [v for v in lire(donnees, 'voix.csv') if v['status'] == 'active']
+    def voix_de(tons):
+        col = 'listen_tones' if tons else 'listen_sounds'
+        f = [v['voice_code'] for v in voix if v.get(col) == 'true' and v['gender'] == 'female']
+        h = [v['voice_code'] for v in voix if v.get(col) == 'true' and v['gender'] == 'male']
+        return f or ['F1'], h or ['H3']
 
     def frequence(w):
         r = mots[w].get('frequency_rank') or ''
@@ -52,6 +59,7 @@ def choisir(donnees):
     lignes = []
     for l in lecons:
         code, rang = l['lesson_code'], int(l['sort_order'])
+        femmes, hommes = voix_de(l['is_tone_lesson'] == 'true')
         series = [p for p in paires if p['lesson_code'] == code]
         elements = []
         for p in series:
@@ -94,7 +102,7 @@ def choisir(donnees):
                 lignes.append({'lesson_code': code, 'element': e, 'rank': '', 'word_code': '',
                                'voice_f': '', 'voice_h': '', 'note': 'aucun mot du corpus ne convient'})
             for i, w in enumerate(choisis):
-                f, h = PAIRES_VOIX[i % len(PAIRES_VOIX)]
+                f, h = femmes[i % len(femmes)], hommes[i % len(hommes)]
                 lignes.append({'lesson_code': code, 'element': e, 'rank': str(i + 1), 'word_code': w,
                                'voice_f': f, 'voice_h': h, 'note': mots[w]['written']})
     return lignes

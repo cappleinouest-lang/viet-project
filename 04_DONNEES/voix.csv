@@ -1,10 +1,10 @@
-voice_code;gender;age;region;provider;provider_voice;provider_model;provider_speed_slow;status;note
-F1;female;adult;north;fpt-mkp;std_banmai;FPT.TTS-pro;0.7;active;Ban Mai (marketplace.fptcloud.com) ; voix modèle ; claire en mot seul (écoute du 2026-10-29)
-F2;female;adult;north;fpt;thuminh;;;inactive;ancienne API FPT.AI (existe aussi en FPT.AI-VITs : std_thuminh)
-H1;male;adult;north;fpt-mkp;std_quanganh;FPT.TTS-pro;;inactive;Quang Anh : consonne de départ avalée en mot isolé (écoute du 2026-10-29)
-H2;male;adult;north;fpt-mkp;fci_vietkhoa;FPT.TTS-pro;;inactive;Viet Khoa : consonne de départ avalée en mot isolé (écoute du 2026-10-29)
-H3;male;adult;north;fpt-mkp;std_leminh;FPT.AI-VITs;0.6;active;Le Minh : claire en mot seul (écoute du 2026-10-29)
-H4;male;adult;north;fpt-mkp;std_huyphong;FPT.AI-VITs;0.6;active;Huy Phong : claire en mot seul (écoute du 2026-10-29)
-H5;male;adult;north;fpt-mkp;std_minhquan;FPT.AI-VITs;;inactive;Minh Quan : claire en mot seul, non retenue (choix 2 femmes + 2 hommes, 2026-10-29)
-F3;female;adult;north;fpt-mkp;std_thuminh;FPT.AI-VITs;0.6;inactive;Thu Minh : jugée la moins bonne des voix à l'écoute du 2026-10-30, écartée (DEC-0048) ; fichiers gardés
-E1;;child;north;;;;;planned;"voix d’enfant : aucune chez FPT.AI ; source à trouver (DEC-0023)"
+voice_code;gender;age;region;provider;provider_voice;provider_model;provider_speed_slow;status;listen_sounds;listen_tones;note
+F1;female;adult;north;fpt-mkp;std_banmai;FPT.TTS-pro;0.7;active;false;true;Ban Mai (marketplace.fptcloud.com) ; voix modèle ; claire en mot seul (écoute du 2026-10-29) ; voix modèle d'E4 ; écoute des leçons de tons (provisoire, DEC-0055)
+F2;female;adult;north;fpt;thuminh;;;inactive;false;false;ancienne API FPT.AI (existe aussi en FPT.AI-VITs : std_thuminh)
+H1;male;adult;north;fpt-mkp;std_quanganh;FPT.TTS-pro;;inactive;false;false;Quang Anh : consonne de départ avalée en mot isolé (écoute du 2026-10-29)
+H2;male;adult;north;fpt-mkp;fci_vietkhoa;FPT.TTS-pro;;inactive;false;false;Viet Khoa : consonne de départ avalée en mot isolé (écoute du 2026-10-29)
+H3;male;adult;north;fpt-mkp;std_leminh;FPT.AI-VITs;0.6;active;false;true;Le Minh : claire en mot seul (écoute du 2026-10-29) ; écoute des leçons de tons (provisoire) et page « Les 6 tons » (DEC-0055)
+H4;male;adult;north;fpt-mkp;std_huyphong;FPT.AI-VITs;0.6;active;true;true;Huy Phong : claire en mot seul (écoute du 2026-10-29) ; écoute des leçons de sons et de tons (DEC-0055)
+H5;male;adult;north;fpt-mkp;std_minhquan;FPT.AI-VITs;;inactive;false;false;Minh Quan : claire en mot seul, non retenue (choix 2 femmes + 2 hommes, 2026-10-29)
+F3;female;adult;north;fpt-mkp;std_thuminh;FPT.AI-VITs;0.6;active;true;false;Thu Minh : tons les plus nets à la mesure (07_QUALITE, 2026-10-30), consonnes de début brèves ; écartée (DEC-0048) puis réintégrée pour l'écoute des leçons de sons (DEC-0055)
+E1;;child;north;;;;;planned;false;false;"voix d’enfant : aucune chez FPT.AI ; source à trouver (DEC-0023)"

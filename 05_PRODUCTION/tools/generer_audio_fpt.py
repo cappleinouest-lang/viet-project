@@ -3,11 +3,16 @@
 Génère les audios du Module 0 avec FPT.TTS-pro (FPT AI Marketplace, marketplace.fptcloud.com) — DEC-0023.
 
 Ce qui est généré (d'après 04_DONNEES, source unique) :
-  - volet écoute : chaque terme des séries minimales, avec chaque voix active
-    de voix.csv (provider = fpt-mkp), aux débits lent et normal ;
+  - volet écoute : chaque terme des séries minimales, avec chaque voix d'écoute du type de leçon
+    (voix.csv, colonnes listen_sounds / listen_tones, DEC-0055), aux débits lent et normal ;
   - volet production : chaque mot support, avec la voix modèle (F1), lent et normal ;
   - étape E1 « Découverte » (DEC-0039) : chaque mot d'exemple de exemples_e1.csv, avec sa voix
-    de femme et sa voix d'homme, lent et normal.
+    de femme et sa voix d'homme, lent et normal ;
+  - page « Les 6 tons » (DEC-0052) : la série de reference_tons.csv (ma, má, mà, mả, mã, mạ),
+    avec les voix VOIX_REFERENCE_TONS, lent et normal ;
+  - exercice « Combien de fois ? » (DEC-0054) : chaque suite ou phrase de comptage.csv, dite
+    d'un seul tenant, avec les voix d'écoute du type de leçon, lent et normal (normal seulement dans les leçons
+    de tons, DEC-0043). Fichier : audio/<item_code>-<voix>-<débit>.mp3.
 
 Où vont les fichiers : 04_DONNEES/audio/<référence>-<voix>-<débit>.mp3
 Chaque fichier créé est ajouté à 04_DONNEES/audios.csv avec validated = false :
@@ -67,6 +72,7 @@ FOURNISSEUR = 'fpt-mkp'                       # valeur de la colonne provider de
 VITESSE_FPT = {'slow': 0.8, 'normal': 1.0}    # valeurs par défaut ; « lent » propre à chaque voix : colonne provider_speed_slow de voix.csv
 VITESSE_PAR_VOIX = {}                         # rempli par plan()
 VOIX_MODELE = 'F1'                            # voix unique du volet production (R-AUD-03)
+VOIX_REFERENCE_TONS = ['F1', 'H3']            # page « Les 6 tons » : une voix de femme, une d'homme (DEC-0052)
 DELAI_ENTRE_APPELS = 1.5                      # secondes, pour ne pas surcharger le service
 ATTENTES_SI_LIMITE = [10, 30]                 # secondes d'attente successives si le service répond 429
 DOUBLER = False                               # --doubler : envoyer « mot, mot. » et garder la 2e occurrence
@@ -122,6 +128,11 @@ def plan(donnees, lecon=None):
     voix = [v for v in lire(os.path.join(donnees, 'voix.csv'))
             if v['status'] == 'active' and v['provider'] == FOURNISSEUR]
     items = {}   # (référence, voix, débit) -> description
+    # Voix d'écoute selon le type de leçon (DEC-0055) : colonnes listen_sounds / listen_tones de voix.csv.
+    lecons_tons = {l['lesson_code'] for l in lire(os.path.join(donnees, 'lecons.csv')) if l['is_tone_lesson'] == 'true'}
+    def voix_ecoute(code_lecon):
+        col = 'listen_tones' if code_lecon in lecons_tons else 'listen_sounds'
+        return [v for v in voix if v.get(col, 'true') == 'true']
 
     def ajouter(ref, ecrit, type_item, code_voix, debit):
         cle = (ref, code_voix, debit)
@@ -133,7 +144,7 @@ def plan(donnees, lecon=None):
             continue
         ref = p['word_code'] or p['written']
         type_item = 'word' if p['word_code'] else ('invented' if p['invented'] == 'true' else 'syllable')
-        for v in voix:
+        for v in voix_ecoute(p['lesson_code']):
             for d in VITESSE_FPT:
                 ajouter(ref, p['written'], type_item, v['voice_code'], d)
     for s in supports:
@@ -149,6 +160,21 @@ def plan(donnees, lecon=None):
             if code_voix in actives:
                 for d in VITESSE_FPT:
                     ajouter(x['word_code'], mots[x['word_code']]['written'], 'word', code_voix, d)
+    if not lecon:                                                  # DEC-0052 : série des 6 tons
+        for x in lire(os.path.join(donnees, 'reference_tons.csv')):
+            ref = x['word_code'] or x['written']
+            for code_voix in VOIX_REFERENCE_TONS:
+                if code_voix in actives:
+                    for d in VITESSE_FPT:
+                        ajouter(ref, x['written'], 'word' if x['word_code'] else 'syllable', code_voix, d)
+    for x in lire(os.path.join(donnees, 'comptage.csv')):           # DEC-0054
+        if lecon and x['lesson_code'] != lecon:
+            continue
+        for v in voix_ecoute(x['lesson_code']):
+            for d in VITESSE_FPT:
+                if d == 'slow' and x['lesson_code'] in lecons_tons:
+                    continue
+                ajouter(x['item_code'], x['written'], 'sequence', v['voice_code'], d)
     voix_fpt = {v['voice_code']: v['provider_voice'] for v in voix}
     MODELE_PAR_VOIX.update({v['voice_code']: (v.get('provider_model') or MODELE) for v in voix})
     VITESSE_PAR_VOIX.update({v['voice_code']: dict(VITESSE_FPT, **({'slow': float(v['provider_speed_slow'])}
@@ -157,7 +183,7 @@ def plan(donnees, lecon=None):
 
 
 def nom_fichier(item):
-    base = item['ref'] if item['type'] == 'word' else 'S-' + telex(item['ecrit'])
+    base = item['ref'] if item['type'] in ('word', 'sequence') else 'S-' + telex(item['ecrit'])
     return 'audio/' + base + '-' + item['voix'] + '-' + item['debit'] + '.mp3'
 
 
