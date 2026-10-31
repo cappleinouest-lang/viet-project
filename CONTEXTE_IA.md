@@ -2,8 +2,8 @@
 id: CTX-IA
 titre: Contexte du projet pour une IA
 statut: VALIDE
-version: 1.12
-date: 2026-10-30
+version: 1.13
+date: 2026-10-31
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
   en une page, son état, la manière de travailler avec Christophe, les
@@ -48,7 +48,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0063) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0065) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -85,15 +85,16 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Règles documentaires, registre des règles, architecture des outils | brouillons |
 | Données (`04_DONNEES`, 15 fichiers CSV) | reprises ; mots hors corpus à confirmer |
 | Programme du Module 0 (`progression_M0.md`) | brouillon ; points P1 à P6 décidés (DEC-0031 à 0036) |
-| Audios | **2 237 générés** chez FPT (mots, syllabes, syllabes inventées ; 2 débits) ; **aucun validé** (`validated = false`). Depuis DEC-0048, 56 mots d'exemple d'E1 attendent leur audio F1 (112 fichiers) ; outil de validation par l'écoute **à faire** |
+| Audios | **2 237 générés** chez FPT (mots, syllabes, syllabes inventées ; 2 débits) ; **aucun validé** (`validated = false`). Depuis DEC-0048, 56 mots d'exemple d'E1 attendent leur audio F1 (112 fichiers) ; outil de validation par l'écoute prêt (DEC-0065) |
 | Images | emoji provisoires ; OpenMoji **à choisir** |
 | Lecteur d'activités | **version d'essai 0.13** : volet écoute E1–E3 de toutes les leçons, réglages, « Mes progrès », mode test ; audios FPT lus en mode d'essai (`generer_lecteur.py . --non-valides`) ; version autonome en un fichier dans `06_LIVRABLES/lecteur/`. Volet production **commencé** (DEC-0049 : E4 d'abord, sur PC ; page d'essai `essai_micro.html` + `prononciation.js` ; DEC-0050 : modèle lent FPT puis normal, courbe partout, courbes du modèle calculées par `tools/courbes_modele.py` ; **E4 intégré au lecteur**, sans verrou ; page « Les 6 tons » avec schémas, DEC-0052, DEC-0053) ; L14, paquets Anki **à développer** |
 | Règles de code (SQL, Python, PowerShell) | hors périmètre pour l'instant |
 
 ## 6. Points ouverts
 
-- **Validation des audios** : écouter et passer `validated = true` ;
-  outil d'écoute à faire (R-AUD-01).
+- **Validation des audios** : outil prêt (DEC-0065, `tools/valider_audios.py`,
+  mode d'emploi dans `05_PRODUCTION/03_audio.md` § 5) ; écoute à faire
+  (3 664 audios du plan actuel).
 - **Deuxième voix de femme du Nord** à trouver depuis l'écartement de F3
   (DEC-0048) ; voix d'enfant : source à trouver.
 - Mesure du verrou de production : seuils de la courbe mélodique à calibrer
@@ -127,3 +128,4 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | 1.10 | 2026-10-29 | L01 en deux parties (DEC-0037). |
 | 1.11 | 2026-10-29 | Mots repères et catégories de sons (DEC-0038). |
 | 1.12 | 2026-10-30 | Mise à jour d'ensemble : décisions DEC-0039 à DEC-0048 (E1 découverte, échauffement E2, place du son, leçons de tons, L01, repères des finales, mode test, voix F3 écartée) ; état au 2026-10-30 (audios générés non validés, lecteur 0.13) ; documents PROD-AUDIO et PROD-AF-LECT ajoutés au § 3 ; points ouverts revus ; emplacement unique C:\VIET_PROJECT. |
+| 1.13 | 2026-10-31 | Outil de validation des audios (DEC-0065). |

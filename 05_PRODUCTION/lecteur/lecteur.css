@@ -350,3 +350,10 @@ html.grand-texte .ecrit-e4 { font-size: 3rem; }
 .lettres { font-family: var(--police-texte); font-weight: 700; font-size: 1.05rem; color: var(--accent);
   border: 1px solid var(--accent-doux); background: var(--accent-doux); border-radius: 8px; padding: 1px 8px; }
 .carte-son .lettres { font-size: 1.4rem; padding: 2px 12px; }
+
+/* Séries de la page « Les 6 tons » (DEC-0064) */
+.series-tons { display: flex; flex-direction: column; gap: 6px; }
+.groupe-series .actions { gap: 6px; }
+.groupe-series .choix-voix { padding: 4px 10px; font-size: 0.9rem; }
+.regle-tons { background: var(--surbrillance); border-radius: 8px; padding: 8px 12px; margin: 0; font-size: 0.9rem; }
+.carte-ton .sens-mot { font-style: italic; }

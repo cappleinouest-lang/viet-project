@@ -2,8 +2,8 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.57
-date: 2026-10-30
+version: 1.59
+date: 2026-10-31
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
   décision et sa raison. Une décision ne se modifie pas : on en prend une
@@ -1409,6 +1409,59 @@ qui indique « remplace DEC-NNNN ».
   française » est limité : on ne montre que le son, jamais le mot.
 - **Impacte** : REG-REGLES (R-ECR-01), PROG-ACT, lecteur.
 
+### DEC-0064 — « Les 6 tons » : autres voyelles, diphtongues, triphtongue, syllabes fermées
+
+- **Date** : 2026-10-30
+- **Question** : Christophe : ajouter à la page des tons d'autres voyelles,
+  des diphtongues et des triphtongues, et les règles d'incompatibilité entre
+  tons et lettres.
+- **Décision** :
+  1. `reference_tons.csv` devient une liste de **séries** (colonnes
+     `series`, `label`, `kind`, `invented`) : voyelles **a** (ma), **i** (bi),
+     **u** (tu), **o** (co), **ơ** (bơ) ; diphtongues **ai** (hai), **ao**
+     (bao) ; triphtongue **uôi** (muôi) ; syllabes fermées **-t** (mát,
+     mạt) et **-c** (hóc, học).
+  2. Trois tons sans mot réel : syllabes inventées signalées (*tũ*, *cõ*,
+     *muổi*). Sens des mots à faire relire par un locuteur.
+  3. **Règle affichée** (fait établi) : une syllabe qui se termine par -p,
+     -t, -c ou -ch ne porte que **sắc** ou **nặng** ; les séries fermées
+     n'ont donc que 2 cartes.
+  4. La page propose le choix de la série, groupée par nature ; chaque carte
+     montre le schéma, le contour et le sens du mot.
+- **Audios** : voix F1 et H3 (page), lent et normal : 144 à créer
+  (376 caractères).
+- **Impacte** : DATA-MODELE, lecteur.
+
+### DEC-0065 — Validation des audios par l'écoute : page d'écoute et export
+
+- **Date** : 2026-10-31
+- **Question** : comment écouter et valider les audios (R-AUD-01) sans
+  saisir à la main 3 664 lignes de `audios.csv` ?
+- **Décision** :
+  1. Script `tools/valider_audios.py` : il fabrique une **page d'écoute**
+     (`06_LIVRABLES/validation/validation_audios.html`), rangée par leçon puis
+     par **carte** (un mot, une syllabe, une suite ou une phrase, avec toutes
+     ses voix et tous ses débits).
+  2. Seuls les audios **du plan de génération actuel** sont proposés
+     (3 664) ; les 827 audios abandonnés (anciennes voix, essai « hai con… »)
+     ne sont pas à écouter.
+  3. Pour chaque audio : « Bon » ou « À refaire » avec une raison (début
+     tronqué, ton faux, son faux, bruit, débit, autre). Raccourcis clavier.
+     Les décisions restent dans le navigateur jusqu'à l'**export** (fichier
+     `validations_audios_<date>.csv`, dossier Téléchargements).
+  4. `valider_audios.py . --appliquer` reporte l'export : `validated = true`
+     pour les bons ; les autres vont dans `07_QUALITE/audios_a_refaire.csv`.
+     L'export est gardé dans `07_QUALITE/validations/` (trace).
+  5. Une décision ne vaut que pour la **version écoutée** du fichier (date du
+     fichier) : un audio refait redevient « à écouter ».
+  6. `generer_audio_fpt.py --refaire --liste 07_QUALITE\audios_a_refaire.csv`
+     regénère seulement les audios refusés.
+- **Raison** : écoute rapide (une touche par carte) et sans risque d'erreur
+  de saisie ; Git garde l'historique de `audios.csv`.
+- **Impacte** : PROD-AUDIO, données (`audios.csv`), lecteur (audios
+  validés).
+
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1471,6 +1524,8 @@ qui indique « remplace DEC-NNNN ».
 | 1.55 | 2026-10-30 | Ajout de DEC-0061 (classificateurs en E1, E4, E5 seulement). |
 | 1.56 | 2026-10-30 | Ajout de DEC-0062 (classificateurs en E1 et E4). |
 | 1.57 | 2026-10-30 | Ajout de DEC-0063 (lettres vietnamiennes du son dès E1). |
+| 1.58 | 2026-10-30 | Ajout de DEC-0064 (« Les 6 tons » : autres séries, syllabes fermées). |
+| 1.59 | 2026-10-31 | Ajout de DEC-0065 (validation des audios par l'écoute). |
 
 ## Liens
 

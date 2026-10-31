@@ -1470,9 +1470,17 @@
     return { racine: racine, X: X, Y: Y };
   }
 
-  function ecranTons(retour) {
+  // Séries de la page (DEC-0064) : une même syllabe aux 6 tons (voyelles, diphtongues, triphtongues),
+  // ou aux 2 seuls tons possibles d'une syllabe fermée (-p, -t, -c, -ch : sắc et nặng).
+  var serieTons = null;
+  function ecranTons(retour, serie) {
     arreterSon();
-    var R = D.reference_tons || [];
+    var toutes = D.reference_tons || [];
+    var series = [];
+    toutes.forEach(function (t) { if (series.indexOf(t.serie) < 0) series.push(t.serie); });
+    serieTons = serie || serieTons || series[0];
+    if (series.indexOf(serieTons) < 0) serieTons = series[0];
+    var R = toutes.filter(function (t) { return t.serie === serieTons; });
     var voixDispo = ['F1', 'H3'].filter(function (v) { return R.some(function (t) { return t.audio && t.audio[v]; }); });
     var codeVoix = voixDispo[0] || 'F1', debit = 'normal', choisi = -1;
     vider();
@@ -1481,10 +1489,22 @@
     titreBarre.textContent = 'Les 6 tons';
     app.appendChild(el('div', { class: 'consigne' }, [
       el('span', { class: 'etiquette', text: 'Référence' }),
-      el('h1', { text: 'Les 6 tons sur une même syllabe' }),
-      el('p', { class: 'petit', text: 'Seule la mélodie change : ma, má, mà, mả, mã, mạ. Chaque schéma montre comment la voix évolue, du début à la fin du mot, entre grave (1) et aigu (5).' })
+      el('h1', { text: R.length < 6 ? 'Les ' + R.length + ' tons possibles d’une syllabe fermée' : 'Les 6 tons sur une même syllabe' }),
+      el('p', { class: 'petit', text: 'Seule la mélodie change : ' + R.map(function (t) { return t.ecrit; }).join(', ') + '. Chaque schéma montre comment la voix évolue, du début à la fin du mot, entre grave (1) et aigu (5).' })
     ]));
     if (!R.length) { app.appendChild(el('p', { text: 'Série des tons absente des données (reference_tons.csv).' })); return; }
+    // Choix de la série : voyelles, diphtongues, triphtongue, syllabes fermées.
+    var natures = [];
+    toutes.forEach(function (t) { if (natures.indexOf(t.nature) < 0) natures.push(t.nature); });
+    app.appendChild(el('div', { class: 'series-tons' }, natures.map(function (n) {
+      var de = series.filter(function (sc) { return toutes.some(function (t) { return t.serie === sc && t.nature === n; }); });
+      return el('div', { class: 'groupe-series' }, [el('span', { class: 'petit', text: n }), el('div', { class: 'actions' }, de.map(function (sc) {
+        var t0 = toutes.filter(function (t) { return t.serie === sc; })[0];
+        return el('button', { class: 'choix-voix' + (sc === serieTons ? ' choisi' : ''), type: 'button', 'aria-pressed': sc === serieTons ? 'true' : 'false',
+          text: t0.libelle + ' · ' + t0.ecrit, onclick: function () { ecranTons(retour, sc); } });
+      }))]);
+    })));
+    if (R.length < 6) app.appendChild(el('p', { class: 'regle-tons', text: 'Règle : une syllabe qui se termine par -p, -t, -c ou -ch ne peut porter que deux tons, sắc ou nặng.' }));
 
     // Choix de la voix et du débit (pour l'écoute).
     function groupe(options, valeur, choisir) {
@@ -1526,16 +1546,17 @@
       var b = el('button', { class: 'tuile carte-ton', type: 'button', 'aria-label': 'ton ' + t.nom + ', ' + t.ecrit,
         onclick: function () { choisir(i); dire(i); } }, [
         petit.racine,
-        el('span', { class: 'ecrit', text: t.ecrit }),
+        el('span', { class: 'ecrit', text: t.ecrit + (t.invente ? ' *' : '') }),
         el('span', { class: 'nom-ton', text: t.pictogramme + ' ' + t.nom }),
-        el('span', { class: 'sens', text: t.contour })
+        el('span', { class: 'sens', text: t.contour }),
+        el('span', { class: 'sens sens-mot', text: t.invente ? '* syllabe inventée' : '« ' + t.sens + ' »' })
       ]);
       b.querySelector('.nom-ton').style.color = t.couleur;
       b.style.borderTopColor = t.couleur;
       grille.appendChild(b);
       return b;
     });
-    var tous = el('button', { class: 'ecoute', type: 'button', text: '▶ Les 6 à la suite', onclick: function () {
+    var tous = el('button', { class: 'ecoute', type: 'button', text: '▶ Les ' + R.length + ' à la suite', onclick: function () {
       tous.disabled = true;
       var seq = Promise.resolve();
       R.forEach(function (t, i) { seq = seq.then(function () { choisir(i); return dire(i); }).then(function () { return pause(600); }); });

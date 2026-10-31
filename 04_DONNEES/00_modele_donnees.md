@@ -268,10 +268,15 @@ courbes : `courbes_modele.py`.
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
+| `series` | série (DEC-0064) | | `hai` |
+| `label` | voyelle, diphtongue ou finale de la série | | `ai` |
+| `kind` | nature | `voyelle`, `diphtongue`, `triphtongue`, `syllabe fermée` | `diphtongue` |
 | `tone_code` | ton | `tone_code` de `tons.csv` | `huyen` |
 | `written` | syllabe écrite | | `mà` |
 | `word_code` | code du mot s'il est dans `mots.csv` (sinon vide : syllabe hors corpus) | | `W0318` |
 | `meaning_fr` | sens, pour information | | `mais` |
+| `invented` | syllabe inventée (pas de mot réel avec ce ton) | `true` / `false` | `false` |
+| `note` | remarque | | |
 
 ### 3.15 `courbes_modele.csv` — courbes mélodiques calculées (DEC-0050)
 

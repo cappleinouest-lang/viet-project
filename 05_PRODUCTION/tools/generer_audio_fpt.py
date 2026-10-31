@@ -43,6 +43,8 @@ Usage (depuis C:\\VIET_PROJECT ; remplacer python par .venv-asr\\Scripts\\python
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer          -> tout ce qui manque
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer --refaire --voix F3 --debit slow
         -> refait seulement les audios lents de F3 (filtres --voix et --debit : aussi sans --refaire)
+    python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer --refaire --liste 07_QUALITE\\audios_a_refaire.csv
+        -> refait les audios jugés « à refaire » à l'écoute (valider_audios.py, DEC-0065)
     python 05_PRODUCTION\\tools\\generer_audio_fpt.py . --executer --refaire -> refait les audios déjà présents
         (les anciens fichiers sont déplacés dans 04_DONNEES/audio/_anciens/, rien n'est effacé ;
          leurs lignes de audios.csv sont remplacées, avec validated = false)
@@ -369,6 +371,7 @@ def main():
     a.add_argument('--doubler', action='store_true', help='envoyer « mot, mot. » et garder la 2e occurrence')
     a.add_argument('--voix', help='limiter à une ou plusieurs voix, par ex. F3 ou F3,H4')
     a.add_argument('--debit', help='limiter à un ou plusieurs débits : slow, normal, spaced (séparés par des virgules)')
+    a.add_argument('--liste', help="limiter aux audios d'un fichier CSV (colonne file), par ex. 07_QUALITE/audios_a_refaire.csv")
     args = a.parse_args()
     global DOUBLER
     DOUBLER = args.doubler
@@ -380,6 +383,10 @@ def main():
         items = [i for i in items if i['voix'] in args.voix.split(',')]
     if args.debit:
         items = [i for i in items if i['debit'] in args.debit.split(',')]
+    if args.liste:   # DEC-0065 : seulement les audios d'une liste (colonne file), par ex. 07_QUALITE/audios_a_refaire.csv
+        voulus = {r['file'] for r in lire(args.liste)}
+        items = [i for i in items if nom_fichier(i) in voulus]
+        print(f"Liste {args.liste} : {len(voulus)} audio(s) demandé(s), {len(items)} trouvé(s) dans le plan.")
     if not voix_fpt:
         sys.exit(f"Aucune voix active avec provider = {FOURNISSEUR} dans voix.csv.")
     existants = {r['file'] for r in lire(chemin_audios)}

@@ -392,6 +392,9 @@ def main():
             continue
         aud = audio(x['word_code'] or x['written'])
         reference_tons.append({
+            # Série (DEC-0064) : ma, bi, hai… ; libellé (a, ai, -t), nature (voyelle, diphtongue…).
+            'serie': x.get('series') or 'ma', 'libelle': x.get('label') or 'a', 'nature': x.get('kind') or 'voyelle',
+            'invente': x.get('invented') == 'true',
             'ton': x['tone_code'], 'nom': t['name_vi'], 'pictogramme': t['pictogram'], 'couleur': t['color_hex'],
             'contour': t['contour_fr'], 'chao': t['chao'], 'glottal': t['glottalization'],
             'ecrit': x['written'], 'sens': x['meaning_fr'],

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validation des audios</title>
+<!-- Modèle : valider_audios.py y insère les données et l'écrit dans 06_LIVRABLES/validation/. -->
+<style>
+  :root { --fond:#f6f5f2; --carte:#fff; --texte:#222; --doux:#666; --bord:#ddd;
+          --ok:#1e7d3a; --ok-fond:#e3f3e7; --ko:#b3261e; --ko-fond:#fbe5e3; --actif:#2f5fb3; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,"Segoe UI",sans-serif; background:var(--fond); color:var(--texte); }
+  header { position:sticky; top:0; z-index:5; background:#fff; border-bottom:1px solid var(--bord);
+           padding:10px 16px; display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; }
+  header h1 { font-size:18px; margin:0 8px 0 0; }
+  .compte { font-size:14px; color:var(--doux); }
+  .compte b { color:var(--texte); }
+  select, button { font:inherit; font-size:14px; }
+  button { cursor:pointer; border:1px solid var(--bord); background:#fff; border-radius:6px; padding:5px 10px; }
+  button:hover { border-color:#999; }
+  #exporter { background:var(--actif); color:#fff; border-color:var(--actif); font-weight:600; }
+  #exporter.a-jour { background:#fff; color:var(--actif); }
+  .aide { width:100%; font-size:13px; color:var(--doux); }
+  kbd { border:1px solid #bbb; border-bottom-width:2px; border-radius:4px; padding:0 4px; font-size:12px; background:#fafafa; }
+  main { max-width:880px; margin:0 auto; padding:14px 16px 80px; }
+  h2 { font-size:16px; margin:26px 0 8px; color:var(--doux); }
+  .carte { background:var(--carte); border:2px solid var(--bord); border-radius:10px; padding:10px 14px; margin:8px 0; }
+  .carte.active { border-color:var(--actif); box-shadow:0 0 0 3px #2f5fb322; }
+  .carte.finie { opacity:.7; }
+  .tete { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; }
+  .ecrit { font-size:24px; font-weight:600; }
+  .sens { color:var(--doux); }
+  .nature { font-size:12px; color:var(--doux); border:1px solid var(--bord); border-radius:10px; padding:0 8px; }
+  .actions { margin-left:auto; display:flex; gap:6px; }
+  table { width:100%; border-collapse:collapse; margin-top:6px; font-size:14px; }
+  td { padding:4px 6px; border-top:1px solid #eee; vertical-align:middle; }
+  td.n { width:22px; color:var(--doux); }
+  tr.joue td { background:#eef3fc; }
+  tr.ok td.etat { color:var(--ok); font-weight:600; }
+  tr.ko td.etat { color:var(--ko); font-weight:600; }
+  td.etat { width:170px; }
+  td.boutons { width:250px; text-align:right; white-space:nowrap; }
+  .b-ok.choisi { background:var(--ok-fond); border-color:var(--ok); color:var(--ok); }
+  .b-ko.choisi { background:var(--ko-fond); border-color:var(--ko); color:var(--ko); }
+  tr.ligne-raisons { display:none; }
+  tr.choix-raison + tr.ligne-raisons { display:table-row; }
+  tr.ligne-raisons td { border-top:none; padding-top:0; }
+  .raisons { margin:0 0 6px 28px; padding:8px 10px; text-align:left; white-space:normal;
+             border:1px solid var(--ko); border-radius:8px; background:var(--ko-fond); }
+  .raisons label { display:inline-block; margin:2px 12px 2px 0; font-size:13px; cursor:pointer; }
+  .raisons .pied { margin-top:6px; text-align:right; }
+  .vide { color:var(--doux); padding:30px 0; text-align:center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Validation des audios</h1>
+  <label>Leçon <select id="f-lecon"></select></label>
+  <label>Voix <select id="f-voix"></select></label>
+  <label><input type="checkbox" id="f-finies" checked> masquer les cartes terminées</label>
+  <span class="compte" id="compte"></span>
+  <button id="exporter">Exporter mes décisions</button>
+  <div class="aide">
+    <kbd>Espace</kbd> tout écouter · <kbd>Entrée</kbd> tout le reste est bon, carte suivante ·
+    <kbd>1</kbd>…<kbd>9</kbd> écouter un audio · <kbd>↓</kbd> <kbd>↑</kbd> carte suivante / précédente ·
+    « À refaire » : cocher une ou plusieurs raisons, puis « Enregistrer ». Les décisions restent dans ce navigateur jusqu'à
+    l'export ; exportez à la fin de chaque séance.
+  </div>
+</header>
+<main id="liste"></main>
+<audio id="lecteur" preload="none"></audio>
+
+<script>
+"use strict";
+const D = /*DONNEES*/null;
+const CLE = 'viet-validation-audios-v1';
+// Raisons d'un refus : plusieurs peuvent être cochées (enregistrées séparées par « + »).
+const RAISONS = ['début du mot tronqué', 'ton faux ou peu net', 'son faux (voyelle, consonne)',
+                 'trop numérique', 'trop lent', 'trop rapide', 'espace entre les mots trop faible',
+                 'bruit, saturation, coupure', 'autre'];
+const SEP = ' + ';
+
+// --- Décisions gardées dans le navigateur : code audio -> {d:'ok'|'ko', r:raison, v:version, t:date}
+let decisions = {};
+try { decisions = JSON.parse(localStorage.getItem(CLE) || '{}'); } catch (e) { decisions = {}; }
+let exporte = (() => { try { return localStorage.getItem(CLE + '-exporte') || ''; } catch (e) { return ''; } })();
+function sauver() {
+  try { localStorage.setItem(CLE, JSON.stringify(decisions)); } catch (e) { /* stockage indisponible */ }
+}
+// Décision valable seulement pour la version écoutée du fichier (un audio refait redevient « à écouter »).
+function decision(a) {
+  const x = decisions[a.code];
+  return x && x.v === a.version ? x : null;
+}
+// État affiché : décision de cette séance, sinon état venu de audios.csv / audios_a_refaire.csv.
+function etat(a) {
+  const x = decision(a);
+  if (x) return x.d;
+  return a.etat === 'valide' ? 'ok' : a.etat === 'a_refaire' ? 'ko' : '';
+}
+function raison(a) { const x = decision(a); return x ? x.r : a.raison; }
+
+// --- Filtres
+const fLecon = document.getElementById('f-lecon'), fVoix = document.getElementById('f-voix');
+const fFinies = document.getElementById('f-finies');
+fLecon.innerHTML = '<option value="">toutes</option>' +
+  D.lecons.filter(l => D.cartes.some(c => c.lecon === l.code))
+    .map(l => `<option value="${l.code}">${l.titre}</option>`).join('');
+const voix = [...new Map(D.cartes.flatMap(c => c.audios).map(a => [a.voix, a.nom_voix])).entries()].sort();
+fVoix.innerHTML = '<option value="">toutes</option>' + voix.map(([c, n]) => `<option value="${c}">${c} ${n}</option>`).join('');
+try {
+  const f = JSON.parse(localStorage.getItem(CLE + '-filtres') || '{}');
+  if (f.lecon !== undefined) fLecon.value = f.lecon;
+  if (f.voix !== undefined) fVoix.value = f.voix;
+  if (f.finies !== undefined) fFinies.checked = f.finies;
+} catch (e) {}
+for (const el of [fLecon, fVoix, fFinies]) el.addEventListener('change', () => {
+  try { localStorage.setItem(CLE + '-filtres', JSON.stringify({lecon: fLecon.value, voix: fVoix.value, finies: fFinies.checked})); } catch (e) {}
+  afficher();
+});
+
+// --- Affichage
+let visibles = [], active = 0;
+function audiosVisibles(c) { return c.audios.filter(a => !fVoix.value || a.voix === fVoix.value); }
+function finie(c) { return audiosVisibles(c).every(a => etat(a)); }
+function echapper(s) { return String(s).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+
+function afficher() {
+  const liste = document.getElementById('liste');
+  visibles = D.cartes.filter(c => (!fLecon.value || c.lecon === fLecon.value) && audiosVisibles(c).length
+                                  && !(fFinies.checked && finie(c)));
+  active = Math.min(active, Math.max(visibles.length - 1, 0));
+  let html = '', lecon = null;
+  visibles.forEach((c, k) => {
+    if (c.lecon !== lecon) {
+      lecon = c.lecon;
+      html += `<h2>${echapper((D.lecons.find(l => l.code === lecon) || {}).titre || lecon)}</h2>`;
+    }
+    html += `<section class="carte" data-k="${k}">
+      <div class="tete"><span class="ecrit">${echapper(c.ecrit)}</span>
+        <span class="sens">${echapper(c.sens)}</span><span class="nature">${echapper(c.nature)}</span>
+        <span class="actions"><button data-act="tout">▶ Tout écouter</button>
+        <button data-act="bon">✓ Le reste est bon</button></span></div>
+      <table>${audiosVisibles(c).map((a, n) => ligne(a, n)).join('')}</table></section>`;
+  });
+  liste.innerHTML = html || '<p class="vide">Plus rien à écouter avec ces filtres. Pensez à exporter.</p>';
+  marquerActive(false);
+  compter();
+}
+function ligne(a, n) {
+  const e = etat(a);
+  const txt = e === 'ok' ? '✓ bon' : e === 'ko' ? '✗ ' + echapper(raison(a) || 'à refaire') : '';
+  return `<tr class="${e}" data-code="${a.code}">
+    <td class="n">${n + 1}</td>
+    <td><button data-act="jouer">▶</button> ${a.voix} ${echapper(a.nom_voix)} · ${a.debit_fr}</td>
+    <td class="etat">${txt}</td>
+    <td class="boutons"><button class="b-ok ${e === 'ok' ? 'choisi' : ''}" data-act="ok">✓ Bon</button>
+      <button class="b-ko ${e === 'ko' ? 'choisi' : ''}" data-act="ko">✗ À refaire</button></td></tr>
+    <tr class="ligne-raisons"><td colspan="4"><div class="raisons">${RAISONS.map(r => `<label><input type="checkbox" value="${r}"
+        ${e === 'ko' && (raison(a) || '').split(SEP).includes(r) ? 'checked' : ''}> ${r}</label>`).join('')}
+        <div class="pied"><button data-act="fermer">Fermer</button>
+        <button data-act="enregistrer">Enregistrer « à refaire »</button></div></div></td></tr>`;
+}
+function compter() {
+  const tous = D.cartes.flatMap(c => c.audios);
+  const ok = tous.filter(a => etat(a) === 'ok').length, ko = tous.filter(a => etat(a) === 'ko').length;
+  const nouvelles = Object.values(decisions).filter(x => x.t > exporte).length;
+  document.getElementById('compte').innerHTML =
+    `<b>${ok}</b> bons · <b>${ko}</b> à refaire · <b>${tous.length - ok - ko}</b> à écouter (sur ${tous.length})`;
+  const b = document.getElementById('exporter');
+  b.textContent = nouvelles ? `Exporter mes décisions (${nouvelles} nouvelles)` : 'Exporter mes décisions';
+  b.classList.toggle('a-jour', !nouvelles);
+}
+function marquerActive(defiler) {
+  document.querySelectorAll('.carte').forEach(el => el.classList.toggle('active', +el.dataset.k === active));
+  const el = document.querySelector(`.carte[data-k="${active}"]`);
+  if (el && defiler) el.scrollIntoView({block: 'center', behavior: 'smooth'});
+}
+function rafraichirCarte(k) {
+  const c = visibles[k], el = document.querySelector(`.carte[data-k="${k}"]`);
+  if (!c || !el) return;
+  el.querySelector('table').innerHTML = audiosVisibles(c).map((a, n) => ligne(a, n)).join('');
+  el.classList.toggle('finie', finie(c));
+  compter();
+}
+
+// --- Écoute
+const lecteur = document.getElementById('lecteur');
+let file = [], jeton = 0;
+function jouerListe(liste) {
+  const mien = ++jeton;
+  file = liste.slice();
+  const suivant = () => {
+    if (mien !== jeton) return;
+    document.querySelectorAll('tr.joue').forEach(tr => tr.classList.remove('joue'));
+    const a = file.shift();
+    if (!a) return;
+    const tr = document.querySelector(`tr[data-code="${a.code}"]`);
+    if (tr) tr.classList.add('joue');
+    lecteur.src = '../../04_DONNEES/' + a.fichier;
+    lecteur.onended = () => setTimeout(suivant, 450);
+    lecteur.onerror = () => { if (tr) tr.querySelector('.etat').textContent = 'fichier introuvable'; setTimeout(suivant, 100); };
+    lecteur.play().catch(() => {});
+  };
+  lecteur.pause();
+  suivant();
+}
+
+// --- Décisions
+function decider(a, d, r) {
+  const x = decision(a);
+  if (x && x.d === d && (d === 'ok' || r === undefined)) { delete decisions[a.code]; }   // second clic : annule
+  else decisions[a.code] = {d, r: r || '', v: a.version, t: new Date().toISOString()};
+  sauver();
+}
+function trouver(code) {
+  for (const c of D.cartes) for (const a of c.audios) if (a.code === code) return a;
+}
+function resteBon(k) {
+  const c = visibles[k];
+  if (!c) return;
+  for (const a of audiosVisibles(c)) if (!etat(a)) decisions[a.code] = {d: 'ok', r: '', v: a.version, t: new Date().toISOString()};
+  sauver();
+  rafraichirCarte(k);
+}
+
+document.getElementById('liste').addEventListener('click', ev => {
+  const b = ev.target.closest('button');
+  const carte = ev.target.closest('.carte');
+  if (carte) { active = +carte.dataset.k; marquerActive(false); }
+  if (!b || !carte) return;
+  const c = visibles[active];
+  let tr = b.closest('tr');
+  if (tr && tr.classList.contains('ligne-raisons')) tr = tr.previousElementSibling;   // ligne de l'audio
+  const a = tr && trouver(tr.dataset.code);
+  if (b.dataset.act === 'tout') jouerListe(audiosVisibles(c));
+  else if (b.dataset.act === 'bon') resteBon(active);
+  else if (b.dataset.act === 'jouer') jouerListe([a]);
+  else if (b.dataset.act === 'ok') { decider(a, 'ok'); rafraichirCarte(active); }
+  else if (b.dataset.act === 'ko') tr.classList.toggle('choix-raison');     // ouvre la liste des raisons
+  else if (b.dataset.act === 'fermer') tr.classList.remove('choix-raison');
+  else if (b.dataset.act === 'enregistrer') {
+    const r = [...tr.nextElementSibling.querySelectorAll('.raisons input:checked')].map(x => x.value);
+    if (!r.length) { tr.nextElementSibling.querySelector('.raisons').style.outline = '2px solid var(--ko)'; return; }
+    decisions[a.code] = {d: 'ko', r: r.join(SEP), v: a.version, t: new Date().toISOString()};
+    sauver();
+    rafraichirCarte(active);
+  }
+});
+
+document.addEventListener('keydown', ev => {
+  if (['SELECT', 'INPUT'].includes(ev.target.tagName) || ev.ctrlKey || ev.altKey || ev.metaKey) return;
+  const c = visibles[active];
+  if (!c) return;
+  if (ev.key === ' ') { ev.preventDefault(); jouerListe(audiosVisibles(c)); }
+  else if (ev.key === 'Enter') {
+    ev.preventDefault();
+    resteBon(active);
+    if (fFinies.checked && finie(c)) { afficher(); }       // la carte disparaît : la suivante prend sa place
+    else { active = Math.min(active + 1, visibles.length - 1); marquerActive(true); }
+    marquerActive(true);
+    const n = visibles[active];
+    if (n && !finie(n)) jouerListe(audiosVisibles(n));
+  }
+  else if (ev.key === 'ArrowDown') { ev.preventDefault(); active = Math.min(active + 1, visibles.length - 1); marquerActive(true); }
+  else if (ev.key === 'ArrowUp') { ev.preventDefault(); active = Math.max(active - 1, 0); marquerActive(true); }
+  else if (/^[1-9]$/.test(ev.key)) { const a = audiosVisibles(c)[+ev.key - 1]; if (a) jouerListe([a]); }
+});
+
+// --- Export : fichier CSV pour valider_audios.py --appliquer
+document.getElementById('exporter').addEventListener('click', () => {
+  const lignes = ['audio_code;file;version;decision;reason;date'];
+  for (const c of D.cartes) for (const a of c.audios) {
+    const x = decision(a);
+    if (x) lignes.push([a.code, a.fichier, a.version, x.d, x.r.replace(/;/g, ','), x.t.slice(0, 10)].join(';'));
+  }
+  const maintenant = new Date(), deux = n => String(n).padStart(2, '0');
+  const nom = `validations_audios_${maintenant.getFullYear()}-${deux(maintenant.getMonth() + 1)}-${deux(maintenant.getDate())}_${deux(maintenant.getHours())}${deux(maintenant.getMinutes())}.csv`;
+  const lien = document.createElement('a');
+  lien.href = URL.createObjectURL(new Blob(['﻿' + lignes.join('\n') + '\n'], {type: 'text/csv;charset=utf-8'}));
+  lien.download = nom;
+  document.body.appendChild(lien); lien.click(); lien.remove();
+  exporte = maintenant.toISOString();
+  try { localStorage.setItem(CLE + '-exporte', exporte); } catch (e) {}
+  compter();
+});
+
+document.title = 'Validation des audios (' + D.genere_le + ')';
+afficher();
+</script>
+</body>
+</html>

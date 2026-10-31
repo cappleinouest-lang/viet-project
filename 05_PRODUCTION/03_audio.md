@@ -2,8 +2,8 @@
 id: PROD-AUDIO
 titre: Génération des audios avec FPT.TTS-pro (FPT AI Marketplace)
 statut: BROUILLON
-version: 0.10
-date: 2026-10-30
+version: 0.12
+date: 2026-10-31
 resume: >
   Explique comment générer, avec FPT.AI, les audios du Module 0 décrits par
   04_DONNEES : ce qui est produit, où va la clé d'accès, les commandes, la
@@ -119,9 +119,21 @@ les fichiers manquants.
 
 ## 5. Validation (R-AUD-01)
 
-Chaque audio est écouté avant de passer à `validated = true`. Outil de
-validation : **à faire** (page d'écoute qui produit la liste des audios
-acceptés).
+Chaque audio est écouté avant de passer à `validated = true` (DEC-0065).
+
+| Étape | Commande ou geste |
+|---|---|
+| 1. Fabriquer la page d'écoute | `python 05_PRODUCTION\tools\valider_audios.py .` |
+| 2. Écouter | ouvrir `06_LIVRABLES\validation\validation_audios.html` ; choisir la leçon ; pour chaque carte : `Espace` (tout écouter), puis `Entrée` (tout le reste est bon) ou « À refaire » + raison |
+| 3. Exporter | bouton « Exporter mes décisions » : fichier `validations_audios_<date>.csv` dans Téléchargements |
+| 4. Appliquer | `python 05_PRODUCTION\tools\valider_audios.py . --appliquer` (dernier export du dossier Téléchargements) |
+| 5. Refaire les refusés | `.venv-asr\Scripts\python.exe 05_PRODUCTION\tools\generer_audio_fpt.py . --executer --refaire --liste 07_QUALITE\audios_a_refaire.csv`, puis retour à l'étape 1 |
+| 6. Lecteur avec les audios validés seulement | `python 05_PRODUCTION\tools\generer_lecteur.py .` (sans `--non-valides`) |
+
+Seuls les audios du plan actuel sont proposés. Une décision ne vaut que
+pour la version écoutée du fichier : un audio refait redevient « à écouter ».
+Les décisions restent dans le navigateur tant qu'elles ne sont pas exportées :
+exporter à la fin de chaque séance.
 
 ## Historique
 
@@ -136,4 +148,6 @@ acceptés).
 | 0.7 | 2026-10-29 | Débit lent propre à chaque voix (F1 0,7 ; F3, H3, H4 0,6). |
 | 0.8 | 2026-10-29 | Mots d'exemple d'E1 ajoutés au plan (DEC-0039) ; décisions des voix : DEC-0040. |
 | 0.9 | 2026-10-30 | F3 Thu Minh écartée (DEC-0048). |
+| 0.11 | 2026-10-30 | Débit lent de F3 : 0,8 (DEC-0059) ; options `--voix` et `--debit` du script. |
+| 0.12 | 2026-10-31 | § 5 : outil de validation par l'écoute (`valider_audios.py`), option `--liste` (DEC-0065). |
 | 0.10 | 2026-10-30 | Voix d'écoute par type de leçon : sons F3 + H4, tons F1 + H3 + H4 provisoirement (DEC-0055). |

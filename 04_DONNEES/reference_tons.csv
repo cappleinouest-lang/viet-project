@@ -1,7 +1,53 @@
-tone_code;written;word_code;meaning_fr
-ngang;ma;W0318;fantôme
-sac;má;W0033;joue ; maman (Sud)
-huyen;mà;;mais
-hoi;mả;;tombe
-nga;mã;;cheval (sino-vietnamien) ; code
-nang;mạ;;plant de riz
+series;label;kind;tone_code;written;word_code;meaning_fr;invented;note
+ma;a;voyelle;ngang;ma;W0318;fantôme;false;
+ma;a;voyelle;sac;má;W0033;"joue ; maman (Sud)";false;
+ma;a;voyelle;huyen;mà;;mais;false;
+ma;a;voyelle;hoi;mả;;tombe;false;
+ma;a;voyelle;nga;mã;;"cheval (sino-vietnamien) ; code";false;
+ma;a;voyelle;nang;mạ;;plant de riz;false;
+bi;i;voyelle;ngang;bi;;bille;false;
+bi;i;voyelle;sac;bí;;courge;false;
+bi;i;voyelle;huyen;bì;;peau, emballage;false;
+bi;i;voyelle;hoi;bỉ;;mépriser (bỉ ổi);false;
+bi;i;voyelle;nga;bĩ;;malchance (bĩ cực);false;
+bi;i;voyelle;nang;bị;W0333;subir;false;
+tu;u;voyelle;ngang;tu;W0338;pratiquer (une religion);false;
+tu;u;voyelle;sac;tú;;talent (tú tài);false;
+tu;u;voyelle;huyen;tù;;prison;false;
+tu;u;voyelle;hoi;tủ;;armoire;false;
+tu;u;voyelle;nga;tũ;;;true;syllabe inventée (pas de mot réel avec ce ton)
+tu;u;voyelle;nang;tụ;;se rassembler;false;
+co;o;voyelle;ngang;co;;se contracter;false;
+co;o;voyelle;sac;có;W0072;avoir;false;
+co;o;voyelle;huyen;cò;;cigogne;false;
+co;o;voyelle;hoi;cỏ;;herbe;false;
+co;o;voyelle;nga;cõ;;;true;syllabe inventée (pas de mot réel avec ce ton)
+co;o;voyelle;nang;cọ;;"pinceau ; frotter";false;
+bơ;ơ;voyelle;ngang;bơ;;"beurre ; avocat";false;
+bơ;ơ;voyelle;sac;bớ;;ohé ! (interjection);false;
+bơ;ơ;voyelle;huyen;bờ;;rive;false;
+bơ;ơ;voyelle;hoi;bở;;friable;false;
+bơ;ơ;voyelle;nga;bỡ;;(bỡ ngỡ : désorienté);false;
+bơ;ơ;voyelle;nang;bợ;;flatter;false;
+hai;ai;diphtongue;ngang;hai;W0025;deux;false;
+hai;ai;diphtongue;sac;hái;;cueillir;false;
+hai;ai;diphtongue;huyen;hài;;comique;false;
+hai;ai;diphtongue;hoi;hải;;mer (sino-vietnamien);false;
+hai;ai;diphtongue;nga;hãi;;peur (sợ hãi);false;
+hai;ai;diphtongue;nang;hại;;nuire;false;
+bao;ao;diphtongue;ngang;bao;;sac;false;
+bao;ao;diphtongue;sac;báo;;journal;false;
+bao;ao;diphtongue;huyen;bào;;rabot;false;
+bao;ao;diphtongue;hoi;bảo;;dire;false;
+bao;ao;diphtongue;nga;bão;;tempête;false;
+bao;ao;diphtongue;nang;bạo;;audacieux;false;
+muôi;uôi;triphtongue;ngang;muôi;;louche;false;
+muôi;uôi;triphtongue;sac;muối;W0145;sel;false;
+muôi;uôi;triphtongue;huyen;muồi;;mûr (chín muồi);false;
+muôi;uôi;triphtongue;hoi;muổi;;;true;syllabe inventée (pas de mot réel avec ce ton)
+muôi;uôi;triphtongue;nga;muỗi;;moustique;false;
+muôi;uôi;triphtongue;nang;muội;;suie;false;
+mat;-t;syllabe fermée;sac;mát;;frais;false;
+mat;-t;syllabe fermée;nang;mạt;;sciure, poussière;false;
+hoc;-c;syllabe fermée;sac;hóc;;coincé (hóc xương);false;
+hoc;-c;syllabe fermée;nang;học;W0117;étudier;false;
