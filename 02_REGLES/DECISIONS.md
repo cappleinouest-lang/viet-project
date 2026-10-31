@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.59
+version: 1.60
 date: 2026-10-31
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1445,8 +1445,11 @@ qui indique « remplace DEC-NNNN ».
   2. Seuls les audios **du plan de génération actuel** sont proposés
      (3 664) ; les 827 audios abandonnés (anciennes voix, essai « hai con… »)
      ne sont pas à écouter.
-  3. Pour chaque audio : « Bon » ou « À refaire » avec une raison (début
-     tronqué, ton faux, son faux, bruit, débit, autre). Raccourcis clavier.
+  3. Pour chaque audio : « Bon » ou « À refaire » avec **une ou plusieurs
+     raisons** à cocher : début du mot tronqué, ton faux ou peu net, son
+     faux, trop numérique, trop lent, trop rapide, espace entre les mots trop
+     faible, bruit ou saturation, autre (liste complétée par Christophe le
+     2026-10-31). Raccourcis clavier.
      Les décisions restent dans le navigateur jusqu'à l'**export** (fichier
      `validations_audios_<date>.csv`, dossier Téléchargements).
   4. `valider_audios.py . --appliquer` reporte l'export : `validated = true`
@@ -1461,6 +1464,33 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : PROD-AUDIO, données (`audios.csv`), lecteur (audios
   validés).
 
+
+### DEC-0066 — Thu Minh écartée des leçons de sons : Ban Mai la remplace
+
+- **Date** : 2026-10-31
+- **Question** : Christophe, à l'écoute : Thu Minh (F3) prononce le **r-**
+  comme au Sud (pas /z/ comme à Hanoï), le **s-** comme au Nord. Que faire ?
+- **Constat** : 83 audios de Thu Minh contiennent un mot en r- (*ra*, *rau*,
+  *rất*, *rồi*), dont la carte d'E1 du son /z/ (L01), qui enseigne
+  justement « d, gi, r = z ». Ce r- n'est pas la prononciation courante de
+  Hanoï retenue par le cours (DEC-0009, DEC-0018).
+- **Options** : A. ne pas valider ces 83 audios ; B. remplacer Thu Minh
+  par Ban Mai dans les leçons de sons ; C. attendre la fin de l'écoute.
+- **Décision** : **B** (choix de Christophe).
+  1. `voix.csv` : F3 `inactive`, `listen_sounds = false` ; F1 Ban Mai
+     `listen_sounds = true`. Leçons de sons : **F1 Ban Mai + H4 Huy Phong**.
+  2. `exemples_e1.csv` : voix de femme F3 → F1 (251 lignes).
+  3. Audios à créer : 788 (« Combien de fois ? » en F1 : suites, phrases,
+     mots espacés ; environ 13 900 caractères). Les mots et syllabes en F1
+     existent déjà (générations précédentes) et passent par la validation.
+  4. Les fichiers de Thu Minh sont gardés (rien n'est effacé) ; ils ne sont
+     plus proposés à la validation.
+- **Conséquence** : une seule voix de femme du Nord chez FPT ; la variété
+  des voix repose sur 1 femme et 1 à 2 hommes. Voix de femme supplémentaire
+  à chercher (autre fournisseur ou enregistrement natif).
+- **Remplace** : DEC-0055 pour la voix de femme des leçons de sons.
+- **Impacte** : données (`voix.csv`, `exemples_e1.csv`, `audios.csv`),
+  PROD-AUDIO, lecteur.
 
 ## Historique
 
@@ -1526,6 +1556,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.57 | 2026-10-30 | Ajout de DEC-0063 (lettres vietnamiennes du son dès E1). |
 | 1.58 | 2026-10-30 | Ajout de DEC-0064 (« Les 6 tons » : autres séries, syllabes fermées). |
 | 1.59 | 2026-10-31 | Ajout de DEC-0065 (validation des audios par l'écoute). |
+| 1.60 | 2026-10-31 | Ajout de DEC-0066 (Thu Minh écartée des leçons de sons, Ban Mai la remplace). |
 
 ## Liens
 

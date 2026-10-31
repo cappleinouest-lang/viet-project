@@ -2,7 +2,7 @@
 id: CTX-IA
 titre: Contexte du projet pour une IA
 statut: VALIDE
-version: 1.13
+version: 1.14
 date: 2026-10-31
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
@@ -48,7 +48,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0065) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0066) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -75,7 +75,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Mots | **100 mots supports** en M0 ; 9 sons rares reportés en A1–A2 (DEC-0031) ; séries minimales de **2 à 4 termes**, paire en E2, série complète en E3 ; contraste de ton ou de son (DEC-0020, 0024 à 0026, 0031) |
 | Outils | **Lecteur d'activités** + page de prononciation (courbe mélodique), développés d'abord en **site statique** ; enveloppe définitive **WordPress ou Firebase** choisie quand le lecteur fonctionne ; **Anki** pour les révisions (DEC-0015, 0016, 0030) ; mode test qui affiche ce qui est joué (DEC-0047) |
 | Données | **CSV** comme source de vérité, contrôle par SQLite temporaire (DEC-0017) |
-| Audio | FPT AI Marketplace, mot envoyé seul, volume égalisé à −20 dBFS (DEC-0040). Écoute des **leçons de sons** : **F3 Thu Minh** et **H4 Huy Phong** ; **leçons de tons** : F1, H3, H4 provisoirement, choix à faire (DEC-0055, mesure dans `07_QUALITE/contraste_tons_voix_2026-10-30.md`). **Modèle d'E4 : F1 Ban Mai**. Débit lent : F1 0,7 ; F3 0,8 (DEC-0059) ; H3, H4 0,6 |
+| Audio | FPT AI Marketplace, mot envoyé seul, volume égalisé à −20 dBFS (DEC-0040). Écoute des **leçons de sons** : **F1 Ban Mai** et **H4 Huy Phong** (F3 Thu Minh écartée : r- du Sud, DEC-0066) ; **leçons de tons** : F1, H3, H4 provisoirement, choix à faire (DEC-0055, mesure dans `07_QUALITE/contraste_tons_voix_2026-10-30.md`). **Modèle d'E4 : F1 Ban Mai**. Débit lent : F1 0,7 ; H3, H4 0,6 |
 
 ## 5. État au 2026-10-30
 
@@ -129,3 +129,4 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | 1.11 | 2026-10-29 | Mots repères et catégories de sons (DEC-0038). |
 | 1.12 | 2026-10-30 | Mise à jour d'ensemble : décisions DEC-0039 à DEC-0048 (E1 découverte, échauffement E2, place du son, leçons de tons, L01, repères des finales, mode test, voix F3 écartée) ; état au 2026-10-30 (audios générés non validés, lecteur 0.13) ; documents PROD-AUDIO et PROD-AF-LECT ajoutés au § 3 ; points ouverts revus ; emplacement unique C:\VIET_PROJECT. |
 | 1.13 | 2026-10-31 | Outil de validation des audios (DEC-0065). |
+| 1.14 | 2026-10-31 | Thu Minh écartée, Ban Mai pour les leçons de sons (DEC-0066). |

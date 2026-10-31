@@ -2,7 +2,7 @@
 id: PROD-AUDIO
 titre: Génération des audios avec FPT.TTS-pro (FPT AI Marketplace)
 statut: BROUILLON
-version: 0.12
+version: 0.13
 date: 2026-10-31
 resume: >
   Explique comment générer, avec FPT.AI, les audios du Module 0 décrits par
@@ -59,7 +59,7 @@ sera ajouté avec le volet production.
 | H3 | `std_leminh` | FPT.AI-VITs | gardée : claire en mot seul (« x » d'environ 140 ms) |
 | H4 | `std_huyphong` | FPT.AI-VITs | gardée |
 | H5 | `std_minhquan` | FPT.AI-VITs | claire, non retenue (choix : 2 femmes et 2 hommes) |
-| F3 | `std_thuminh` | FPT.AI-VITs | gardée le 2026-10-29, écartée (DEC-0048), puis **réintégrée le 2026-10-30 pour l'écoute des leçons de sons** : tons les plus nets à la mesure (DEC-0055) ; code F2 réservé à l'ancienne voix *thuminh* de l'API FPT.AI |
+| F3 | `std_thuminh` | FPT.AI-VITs | gardée le 2026-10-29, écartée (DEC-0048), réintégrée le 2026-10-30 pour l'écoute des leçons de sons (DEC-0055), puis **écartée le 2026-10-31** : r- prononcé comme au Sud (DEC-0066) ; leçons de sons : **F1 Ban Mai + H4 Huy Phong** ; code F2 réservé à l'ancienne voix *thuminh* de l'API FPT.AI |
 
 Le modèle de chaque voix est dans la colonne `provider_model` de `voix.csv`.
 Les mots sont envoyés **seuls**.
@@ -124,7 +124,7 @@ Chaque audio est écouté avant de passer à `validated = true` (DEC-0065).
 | Étape | Commande ou geste |
 |---|---|
 | 1. Fabriquer la page d'écoute | `python 05_PRODUCTION\tools\valider_audios.py .` |
-| 2. Écouter | ouvrir `06_LIVRABLES\validation\validation_audios.html` ; choisir la leçon ; pour chaque carte : `Espace` (tout écouter), puis `Entrée` (tout le reste est bon) ou « À refaire » + raison |
+| 2. Écouter | ouvrir `06_LIVRABLES\validation\validation_audios.html` ; choisir la leçon ; pour chaque carte : `Espace` (tout écouter), puis `Entrée` (tout le reste est bon) ou « À refaire » + une ou plusieurs raisons cochées (début tronqué, ton faux, son faux, trop numérique, trop lent, trop rapide, espace entre les mots trop faible, bruit, autre) |
 | 3. Exporter | bouton « Exporter mes décisions » : fichier `validations_audios_<date>.csv` dans Téléchargements |
 | 4. Appliquer | `python 05_PRODUCTION\tools\valider_audios.py . --appliquer` (dernier export du dossier Téléchargements) |
 | 5. Refaire les refusés | `.venv-asr\Scripts\python.exe 05_PRODUCTION\tools\generer_audio_fpt.py . --executer --refaire --liste 07_QUALITE\audios_a_refaire.csv`, puis retour à l'étape 1 |
@@ -150,4 +150,5 @@ exporter à la fin de chaque séance.
 | 0.9 | 2026-10-30 | F3 Thu Minh écartée (DEC-0048). |
 | 0.11 | 2026-10-30 | Débit lent de F3 : 0,8 (DEC-0059) ; options `--voix` et `--debit` du script. |
 | 0.12 | 2026-10-31 | § 5 : outil de validation par l'écoute (`valider_audios.py`), option `--liste` (DEC-0065). |
+| 0.13 | 2026-10-31 | F3 Thu Minh écartée ; leçons de sons : F1 + H4 (DEC-0066). |
 | 0.10 | 2026-10-30 | Voix d'écoute par type de leçon : sons F3 + H4, tons F1 + H3 + H4 provisoirement (DEC-0055). |
