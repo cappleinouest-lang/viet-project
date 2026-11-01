@@ -300,7 +300,10 @@ def main():
         liste.sort(key=lambda s: (s['groupe'], s['code']))
         # E1 « Découverte » (DEC-0039) : chaque son seul, dans 3 mots au plus, voix de femme puis d'homme.
         decouverte = {}
-        for e in elements_de(liste):
+        # DEC-0072 : sons présentés en E1 AVANT ceux de la première partie (L01 : t puis m),
+        # colonne e1_first de lecons.csv. Un son déjà dans les séries (m) garde une seule fiche.
+        d_abord = (l.get('e1_first') or '').split()
+        for e in d_abord + [x for x in elements_de(liste) if x not in d_abord]:
             mots_e = []
             for x in sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e
                              and (x['word_code'] or x.get('syllable'))), key=lambda x: int(x['rank'])):
@@ -308,7 +311,7 @@ def main():
                     # Syllabe sans sens (DEC-0073) : ni sens ni image, jamais écrite (R-LEX-06) ;
                     # « ecrit » ne sert qu'à la voix de synthèse et à l'audio (référence = l'écriture).
                     invente = x.get('invented') == 'true'
-                    mots_e.append({'ecrit': x['syllable'], 'sens': 'syllabe inventée' if invente else '',
+                    mots_e.append({'ecrit': x['syllable'], 'sens': 'syllabe inventée' if invente else 'syllabe',
                                    'image': '', 'voix': [x['voice_f'], x['voice_h']],
                                    'audio': audio(x['syllable']), 'appui': '', 'invente': invente})
                     continue
@@ -376,6 +379,10 @@ def main():
         # « Combien de fois ? » (DEC-0054) : chaque suite, rattachée à la partie qui contient sa
         # cible ; pour chaque mot, « cible » dit s'il contient le son ou le ton à compter.
         sections = parties(liste, l.get('split_parts') == 'true')
+        # Liste des sons d'E1 de chaque partie (DEC-0072) : les sons « d'abord » en tête de la
+        # première partie. « elements » (séries, « Combien de fois ? », verrous) ne change pas.
+        for k, pa in enumerate(sections):
+            pa['e1'] = (d_abord + [e for e in pa['elements'] if e not in d_abord]) if k == 0 else list(pa['elements'])
         combien = []
         for x in (c for c in comptage if c['lesson_code'] == code):
             e = x['element']
@@ -403,6 +410,7 @@ def main():
             'parties': sections,
             'combien': combien,
             'decouverte': decouverte,
+            'e1_first': d_abord,            # DEC-0072 : sons présentés avant la première partie
             'production': production,
             # Voix d'écoute de la leçon (DEC-0055) : E2, E3, échauffement, « Combien de fois ? ».
             'voix': [v['voice_code'] for v in voix

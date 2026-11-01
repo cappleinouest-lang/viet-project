@@ -37,13 +37,14 @@
  * VOCABULAIRE UTILISÉ DANS LE CODE
  *   leçon (l)    : { code 'M0-L01', numero, titre, seuil (0.85), tons (vrai/faux),
  *                    series [...], parties [...], decouverte {...} }
- *   partie (pa)  : { code 'A' | 'B' | 'U' (unique), titre, series [codes], elements [codes] }
+ *   partie (pa)  : { code 'A' | 'B' | 'U' (unique), titre, series [codes], elements [codes],
+ *                    e1 [codes] : sons d'E1, avec les sons « d'abord » en tête de la 1re partie (DEC-0072) }
  *   série (s)    : { code 'S0001', place 'debut'|'fin'|'voyelle'|'ton', termes [...] }
  *   terme (t)    : un mot ou une syllabe : { ecrit, sens, invente, image, symbole, audio }
  *   symbole      : { texte '/ɛ/', categorie 'identique'|'proche'|'nouveau', place, repere, indication }
  *   debit        : 'slow' (lent) ou 'normal' ; dans l'état d'une étape, c'est la PHASE
  *                  (phase 1 = 'slow' = images + symboles ; phase 2 = 'normal' = symboles seuls)
- *   voix         : code 'F1', 'F3', 'H3', 'H4' (voix actives de voix.csv) ; l.voix = voix d'écoute de la leçon (DEC-0055)
+ *   voix         : code 'F4', 'H6' (voix actives de voix.csv, DEC-0067) ; l.voix = voix d'écoute de la leçon (DEC-0055)
  *   cle          : 'e2' ou 'e3' (quelle étape « Lequel ? »)
  *   pc           : code de la partie ('A', 'B' ou 'U')
  *
@@ -68,7 +69,8 @@
  * DEC-0042 (place du son), DEC-0043 et DEC-0045 (leçons de tons), DEC-0049 et DEC-0050 (E4),
  * DEC-0051 (mode essai : tout ouvert), DEC-0052 et DEC-0053 (page « Les 6 tons », schémas),
  * DEC-0054 (« Combien de fois ? »), DEC-0055 (voix d'écoute par leçon), DEC-0067 (débit lent emprunté),
- * DEC-0069 (signaler un son défectueux), DEC-0070 (E1 : voyelle seule avant les mots).
+ * DEC-0069 (signaler un son défectueux), DEC-0070 (E1 : voyelle seule avant les mots),
+ * DEC-0072 (E1 : sons « d'abord », pa.e1 et l.e1_first), DEC-0073 (E1 : syllabes sans sens).
  * Description complète : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
  */
 // Tout le programme est enfermé dans une fonction qui s'exécute aussitôt :
@@ -259,7 +261,9 @@
   var lectureEnCours = null;
 
   // MODE TEST (DEC-0047) : dans la case du mot qui vient d'être joué, une petite note dit
-  // ce qui a été entendu : fichier, personnage, F (femme) ou H (homme), modèle FPT, débit et
+  // ce qui a été entendu : d'abord le MOT ÉCRIT (pour comparer ce qu'on entend à ce qui est
+  // écrit, y compris en E1 ; mode test seulement, R-ECR-01 reste vrai pour l'apprenant), puis
+  // fichier, personnage, F (femme) ou H (homme), modèle FPT, débit et
   // valeur « speed ». Une ligne par voix (en E1, la femme puis l'homme).
   // Se désactive dans Réglages (« Infos de test sur le son »).
   // En E2, E3 et à l'échauffement, les notes n'apparaissent qu'APRÈS la réponse (sinon le
@@ -279,7 +283,13 @@
     if (!caseMot || !reglages().infoTest) return;
     var f = terme.audio && terme.audio[codeVoix] && terme.audio[codeVoix][debit];
     var bloc = caseMot.querySelector('.info-son');
-    if (!bloc) { bloc = el('span', { class: 'info-son', 'aria-hidden': 'true' }); caseMot.appendChild(bloc); }
+    if (!bloc) {
+      bloc = el('span', { class: 'info-son', 'aria-hidden': 'true' });
+      // Mot écrit, une fois par case (syllabe inventée : marquée « inventée »).
+      bloc.appendChild(el('span', { class: 'info-son-ecrit',
+        text: (terme.appui ? terme.appui + ' ' : '') + terme.ecrit + (terme.invente ? ' (inventée)' : '') }));
+      caseMot.appendChild(bloc);
+    }
     var ligne = bloc.querySelector('[data-voix="' + codeVoix + '"]');
     if (!ligne) { ligne = el('span', { class: 'info-son-voix' }); ligne.dataset.voix = codeVoix; bloc.appendChild(ligne); }
     ligne.innerHTML = '';
@@ -814,7 +824,8 @@
   // de femme puis une voix d'homme ; deux boutons : écoute au débit normal ou au débit lent ;
   // choix de la voix : femme et homme (par défaut), femme seule, homme seul.
   // Aucune opposition entre sons en E1 : les différences commencent en E2.
-  function elementsDe(pa) { return pa.elements || []; }
+  // Sons d'E1 de la partie : pa.e1 (DEC-0072 : t et m d'abord en partie A de L01), sinon pa.elements.
+  function elementsDe(pa) { return pa.e1 || pa.elements || []; }
   function e1Vus(etat, pa) {
     var els = elementsDe(pa);
     return etat.e1.vues.filter(function (x) { return els.indexOf(x) >= 0; }).length;
@@ -846,7 +857,10 @@
         (placeDe(d.symbole) && !l.tons ? ' · ' + placeDe(d.symbole).long : '') }),
       el('h1', { text: 'Écoutez, sans répondre' }),
       el('p', { class: 'petit', text: l.tons ? 'Le même ton dans plusieurs mots, à vitesse normale (le ralenti déforme la mélodie). Choisissez la voix ; touchez un mot pour le réentendre.'
-        : 'Le même son dans plusieurs mots. Choisissez la voix et la vitesse ; touchez un mot pour le réentendre.' })
+        : 'Le même son dans plusieurs mots. Choisissez la voix et la vitesse ; touchez un mot pour le réentendre.' }),
+      // DEC-0072 : consonnes présentées d'abord, pour entendre ensuite les voyelles dans des syllabes simples.
+      (l.e1_first || []).indexOf(d.element) >= 0 && pc === l.parties[0].code
+        ? el('p', { class: 'petit', text: 'Avant les voyelles : une consonne simple, pour les entendre ensuite dans des syllabes comme « to », « me ».' }) : null
     ]));
     // Le son présenté : symbole, catégorie, mot repère, indice d'écoute (DEC-0038)
     var carte = el('div', { class: 'carte-son' }, contenuTerme({ symbole: d.symbole, image: '', sens: '' }, 'decouverte'));
@@ -1784,7 +1798,7 @@
       ligne('reglage-texte', 'Grand texte', 'Agrandit le texte et les symboles.', interrupteur('reglage-texte', 'grandTexte')),
       ligne('reglage-ouvert', 'Mode essai : tout ouvert', 'Toutes les leçons et toutes les étapes accessibles, sans attendre les verrous. Les scores restent calculés. À couper avant d’ouvrir la formation à d’autres apprenants.', interrupteur('reglage-ouvert', 'toutOuvert')),
       ligne('reglage-lettres', 'Lettres vietnamiennes du son', 'En E1 et en phase 1 d’E2–E3 : les lettres qui écrivent le son étudié (toutes, s’il y en a plusieurs), ou l’accent du ton. Jamais le mot entier.', interrupteur('reglage-lettres', 'lettres')),
-      ligne('reglage-info', 'Infos de test sur le son', 'Pendant les essais : dans la case du mot joué, fichier, personnage, femme ou homme, modèle FPT et vitesse (en E2–E3, après la réponse) ; bouton « ⚑ Signaler un son » pour noter un audio défectueux.', interrupteur('reglage-info', 'infoTest'))
+      ligne('reglage-info', 'Infos de test sur le son', 'Pendant les essais : dans la case du mot joué, le mot écrit, le fichier, le personnage, femme ou homme, modèle FPT et vitesse (en E2–E3, après la réponse) ; bouton « ⚑ Signaler un son » pour noter un audio défectueux.', interrupteur('reglage-info', 'infoTest'))
     ]));
   }
 
