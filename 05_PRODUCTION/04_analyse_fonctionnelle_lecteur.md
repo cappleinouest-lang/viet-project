@@ -2,7 +2,7 @@
 id: PROD-AF-LECT
 titre: Analyse fonctionnelle du lecteur d'activités
 statut: BROUILLON
-version: 0.3
+version: 0.4
 date: 2026-11-01
 resume: >
   Décrit ce que le lecteur d'activités doit faire, pour qui et sous quelles
@@ -159,11 +159,11 @@ Flexibilité : **F0** impératif, **F1** peu négociable, **F2** négociable,
 
 | Élément | Comportement |
 |---|---|
-| Unité | Un écran par **son** (ou **ton**) des séries de la partie, dans l'ordre d'apparition. |
+| Unité | Un écran par **son** (ou **ton**) des séries de la partie, dans l'ordre d'apparition ; en tête de la première partie, les sons « d'abord » de la leçon (L01 : **t** puis **m**, avec une ligne « Avant les voyelles : une consonne simple… », DEC-0072). |
 | En-tête | « Son k sur N · consonne en début de mot / en fin de mot / voyelle » (DEC-0042). |
 | Carte du son | Symbole, catégorie (= ≈ ★), marque « début ▸ » ou « ◂ fin » pour une consonne, mot repère, indice d'écoute (DEC-0038, DEC-0046). |
 | Voyelle seule | Pour une **voyelle simple** (a, ă, â, e, ê, i, o, ô, ơ, u, ư) d'une leçon de sons : tuile « 🔈 Le son seul » avant les mots, jouée en premier par « Écouter », réécoutable, **toujours au débit normal** ; absente si son audio n'est pas validé (hors mode d'essai) (DEC-0070). |
-| Mots | 1 à 3 tuiles (image ou 🔊, sens en français) ; **aucun mot écrit** en vietnamien (R-ECR-01) ; lettres du son étudié affichées (DEC-0063). |
+| Mots | 1 à 3 tuiles (image ou 🔊, sens en français ; syllabe sans sens : 🔊 et « syllabe », ou « syllabe inventée », DEC-0073) ; **aucun mot écrit** en vietnamien (R-ECR-01) ; lettres du son étudié affichées (DEC-0063). |
 | Voix | Choix « Femme et homme » (par défaut), « Femme » (F4), « Homme » (H6). |
 | Écoute | « ▶ Écouter » (débit normal) et « 🐢 Écouter lentement » ; toucher un mot le redit avec la voix et la dernière vitesse choisies. Leçons de tons : pas d'écoute lente (DEC-0043). |
 | Fin | « Son suivant » s'active après une écoute complète des mots du son. |
@@ -227,7 +227,10 @@ parties et étapes ouvertes sans verrou, scores calculés normalement) ;
 
 ### 5.9 Mode test (DEC-0047)
 
-Dans la case du mot joué, une note par voix indique : le fichier
+Dans la case du mot joué, la note commence par le **mot écrit** (en gras ;
+« (inventée) » pour une syllabe inventée), pour comparer ce qu'on entend à ce
+qui est écrit, y compris en E1 ; R-ECR-01 reste vrai pour l'apprenant, qui
+coupe le mode test. Puis une note par voix indique : le fichier
 (`W0057-H6-normal.mp3`) ou « synthèse de l'appareil (aucun fichier) », le
 personnage (Quang Anh), F ou H et le code de voix, puis le modèle
 (FPT.TTS-ultra), le débit et sa valeur `speed`. Au débit lent, la note dit
@@ -292,6 +295,7 @@ autres voyelles, diphtongues, syllabes fermées), un schéma par ton d'après
 | **RG-17** | E1, leçons de sons : une voyelle simple est jouée seule avant ses mots, au débit normal, seulement si son audio est validé (ou en mode d'essai). | DEC-0070 |
 | **RG-18** | « Combien de fois ? » compte pour le verrou d'écoute ; en phase 2, une réponse après écoute lente ou espacée n'est pas comptée. | DEC-0054, DEC-0057, DEC-0058 |
 | **RG-19** | Le signalement d'un son ne modifie aucune donnée du lecteur ; il est exporté puis appliqué par `valider_audios.py --appliquer`. Il ne touche pas un audio refait depuis. | DEC-0069 |
+| **RG-20** | E1 : liste des sons de chaque partie = sons « d'abord » (`e1_first`, première partie seulement) + sons des séries ; « Combien de fois ? » et les verrous gardent les seuls sons des séries. Mots d'exemple : niveau 0 (sons déjà vus), 1 (sons de la leçon), 2 (autres) ; moins de 2 mots : syllabes sans sens, réelles d'abord. | DEC-0072, DEC-0073 |
 
 ---
 
@@ -301,10 +305,10 @@ autres voyelles, diphtongues, syllabes fermées), un schéma par ton d'après
 
 | Donnée | Fichier source | Usage dans le lecteur |
 |---|---|---|
-| Leçons, seuil, tons, parties | `lecons.csv` | liste, seuil, règles des tons, découpage A / B |
+| Leçons, seuil, tons, parties | `lecons.csv` (dont `e1_first`) | liste, seuil, règles des tons, découpage A / B, sons « d'abord » d'E1 |
 | Séries et termes | `paires_minimales.csv`, `mots.csv`, `syllabes.csv` | E2, E3, échauffement, écrit |
 | Symboles, place, catégorie, repère | `sons.csv`, `tons.csv`, `reperes_sons.csv` | carte du son, tuiles, consignes |
-| Mots d'exemple d'E1 | `exemples_e1.csv` (voix F4 / H6) | E1 |
+| Mots d'exemple d'E1 | `exemples_e1.csv` (voix F4 / H6 ; syllabes sans sens : colonnes `syllable`, `invented`, choisies dans `syllabes_e1.csv`) | E1 |
 | « Combien de fois ? » | `comptage.csv` | fin d'E3 |
 | Mots supports, courbes du modèle | `mots_lecons.csv`, `courbes_modele.csv` | E4 |
 | Page des tons | `reference_tons.csv`, `tons.csv` | « Les 6 tons » |
@@ -426,3 +430,4 @@ automatiquement).
 | 0.1 | 2026-10-29 | Création, d'après l'état du lecteur et les décisions jusqu'à DEC-0046. |
 | 0.2 | 2026-10-30 | Ajout du mode test (§ 5.9, DEC-0047). |
 | 0.3 | 2026-11-01 | MOD-B04 : voix F4 / H6 et débit lent emprunté (DEC-0067) dans les acteurs, § 5.3 à 5.5, § 5.9 (exemple `W0057-H6-normal.mp3`), RG-11 ; ajouts : voyelle seule (§ 5.3, RG-17, DEC-0070), « Combien de fois ? » (§ 5.5 bis, RG-18), signalement d'un son (§ 5.10, RG-19, DEC-0069), E4 (§ 5.11), « Les 6 tons » (§ 5.12), mode essai (§ 5.8), RG-16 ; périmètre (§ 1, § 9), données (§ 7.1), écarts EC-02, EC-05, EC-06, traçabilité. |
+| 0.4 | 2026-11-01 | MOD-H01 : E1 avec sons « d'abord » (§ 5.3, RG-20, DEC-0072), syllabes sans sens (DEC-0073), mot écrit en mode test (§ 5.9), données (§ 7.1). |

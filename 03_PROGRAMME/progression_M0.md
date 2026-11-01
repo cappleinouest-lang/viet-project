@@ -2,7 +2,7 @@
 id: PROG-M0
 titre: Progression du Module 0
 statut: BROUILLON
-version: 0.12
+version: 0.13
 date: 2026-11-01
 resume: >
   Programme des 14 leçons du Module 0 (sons et tons) : pour chaque leçon, la
@@ -70,7 +70,9 @@ qui relève du programme.
 
 1. **E1** : découverte de chaque son (ou ton) seul, dans 3 mots au plus,
    voix de femme puis voix d'homme (ACT-E1-DECOUV) ; aucune opposition en
-   E1 (DEC-0039).
+   E1 (DEC-0039). Mots choisis de préférence parmi ceux faits de sons déjà
+   vus ; à défaut d'au moins 2 mots, syllabes sans sens, réelles d'abord
+   (DEC-0072, DEC-0073).
 2. **E2 → E3** : les séries de la leçon, **dans l'ordre recommandé de la
    fiche** (§ 3) ; une fois toutes vues, elles sont mêlées.
 3. **E4 → E5** : quand le volet production de la leçon est ouvert (verrou
@@ -130,6 +132,7 @@ affichée, R-LEX-06).
 | But | Installer les sons « faciles » et le ton plat, avec des syllabes simples |
 | Niveau | 4 (mineur) : sons proches ou identiques au français. Écarts réels : **h** (muet en français), **ê / e** et **ô / o** (souvent confondus par les francophones du Sud de la France), **-m / -n** finales (risque de nasaliser la voyelle), implosives **b, đ** (écart faible), ton **ngang** (garder la voix plate) |
 | Parties (DEC-0037) | **A, voyelles** (6 séries), puis **B, consonnes et finales** (8 séries) ; chacune avec E1 → E3 et son verrou. Le son **i** n'est pas un contraste en L01 (DEC-0044) |
+| E1 de la partie A (DEC-0072, DEC-0073) | d'abord **t** puis **m** (une consonne brève, une longue ; écoute seulement), puis les voyelles dans des syllabes **t / m + voyelle au ton ngang** : e *me, te* ; ê *mê, tê* ; o *to, mo* ; ô *tô, mô* ; u *tu, mu* (*te, mo, mô* : syllabes réelles hors corpus, sans sens affiché). m est entendu une seconde fois en partie B (*ba / ma / va*) |
 | Ordre recommandé des séries | 1) voyelles : o/ô (*to/tô*, *ho/hô*), e/ê (*xem/xêm\**), u/ô (*tu/tô*) ; 2) consonnes : b/m/v (*ba/ma/va*), n/l (*nên/lên*), đ/d (*đi/di*, *da/đa*) ; 3) finales -m/-n (*xem/xen*, *nên/nêm*) |
 | Vigilance | **đ** (implosive) face à **d** (= /z/ à Hanoï) ; le ton ngang reste **plat**, sans montée de fin de phrase |
 | Recyclage E5 | aucun (première leçon) ; E5 mêle les trois groupes de séries |
@@ -335,6 +338,7 @@ travail.
 | 0.10 | 2026-10-29 | L01 : i retiré des contrastes, 14 séries (DEC-0044). |
 | 0.11 | 2026-10-30 | Audios : F3 écartée, 3 voix (DEC-0048). |
 | 0.12 | 2026-11-01 | MOD-B05 : voix F4 et H6, débit lent emprunté (DEC-0067) ; volumes d'audios au 2026-11-01 (§ 2.3) ; voix de L14. |
+| 0.13 | 2026-11-01 | MOD-H01 : E1 de la partie A de L01 (t et m d'abord, mots t / m + voyelle, DEC-0072) ; syllabes sans sens (DEC-0073). |
 
 ## Liens
 

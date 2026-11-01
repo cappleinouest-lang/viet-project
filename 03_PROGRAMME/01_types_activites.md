@@ -2,7 +2,7 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.16
+version: 0.17
 date: 2026-11-01
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
@@ -52,8 +52,8 @@ sources:
 
 | Point | Règle |
 |---|---|
-| Entend | chaque son (ou ton) des séries de la leçon, **seul**, dans **3 mots au plus** (`exemples_e1.csv`, règle souple : ton déjà vu) ; chaque mot dit par **une voix de femme puis une voix d'homme**, deux boutons d'écoute : débit **normal** ou débit **lent**, et choix de la voix (femme et homme, femme, homme), au choix de l'élève (DEC-0039) ; pour une **voyelle simple** (leçons de sons), la voyelle **seule** d'abord, au débit normal seulement (DEC-0070) |
-| Voit | image du mot (ou 🔊) et son sens ; **symbole** de l'élément, avec sa **catégorie** (= ≈ ★), son **mot repère** et son **indice d'écoute** (DEC-0038) ; pictogramme du ton, ou `ipa_main` du son, présenté avec son audio (DEC-0029) ; **aucun écrit** (R-ECR-01) |
+| Entend | chaque son (ou ton) des séries de la leçon, **seul**, dans **3 mots au plus** (`exemples_e1.csv` ; ton déjà vu ; de préférence des mots faits de sons déjà vus, puis de sons de la leçon, puis autres sons libres, DEC-0072 ; s'il y a moins de 2 mots, syllabes sans sens, réelles hors corpus d'abord, puis inventées, DEC-0073) ; sons présentés **avant** la première partie quand la leçon en prévoit (`e1_first` : t et m en L01, DEC-0072) ; chaque mot dit par **une voix de femme puis une voix d'homme**, deux boutons d'écoute : débit **normal** ou débit **lent**, et choix de la voix (femme et homme, femme, homme), au choix de l'élève (DEC-0039) ; pour une **voyelle simple** (leçons de sons), la voyelle **seule** d'abord, au débit normal seulement (DEC-0070) |
+| Voit | image du mot (ou 🔊) et son sens (syllabe sans sens : 🔊 et « syllabe », DEC-0073) ; **symbole** de l'élément, avec sa **catégorie** (= ≈ ★), son **mot repère** et son **indice d'écoute** (DEC-0038) ; pictogramme du ton, ou `ipa_main` du son, présenté avec son audio (DEC-0029) ; **aucun écrit** (R-ECR-01) |
 | Répond | rien ; peut **réécouter** autant qu'il veut, puis « suivant » |
 | Fin | les mots de chaque son écoutés au moins une fois en entier |
 | But | s'imprégner d'un modèle **juste** et varié, sans risque de confondre ; aucune opposition entre sons en E1, la première est la paire d'E2 (DEC-0039) |
@@ -196,6 +196,7 @@ calibrés.
 | 0.14 | 2026-10-30 | Écoute lente non comptée (DEC-0057). |
 | 0.15 | 2026-10-30 | Trois écoutes, dont mots espacés (DEC-0058). |
 | 0.16 | 2026-11-01 | MOD-B05 : voix des leçons de tons, F4 au lieu de F1 (DEC-0067) ; voyelle seule en E1 (DEC-0070). |
+| 0.17 | 2026-11-01 | ACT-E1-DECOUV : règle de préférence et consonnes « d'abord » (DEC-0072) ; syllabes sans sens (DEC-0073). |
 
 ## Liens
 
