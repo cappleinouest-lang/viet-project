@@ -158,7 +158,7 @@ gardée, pas supprimée.
 | MOD-B13 | `CONTEXTE_IA.md` v1.17 (DEC-0072, DEC-0073, audios de L01, tarif d'Ultra, points ouverts) ; résumé de ce suivi corrigé (73 décisions, 84 besoins) ; CONTEXTE_IA repassé en BROUILLON, à revalider |
 | MOD-H03 | DEC-0074 : séries S0001, S0004 et S0007 de `paires_minimales.csv` remplacées par des syllabes t/m + voyelle ; aucun audio à produire (déjà générées pour l'E1 avec DEC-0072, DEC-0073) |
 | MOD-H02 | Contrôle systématique des 265 mots d'exemple de L02 à L13 : aucun ton pas encore ouvert à sa leçon. Clos sans modification |
-| MOD-H04 | DEC-0075 : rappel court (1 mot, 1 voix, « déjà vu en L01 ») pour -m et -n en L08/L10, au lieu d'une découverte complète. **Mise en œuvre faite** : colonne `e1_rappel` dans `lecons.csv` (L08 : -m et -n ; L10 : -n), `generer_lecteur.py` (1 mot rang 1, voix F4), `lecteur.js` (écran « Rappel », bouton Écouter seul). Reste : régénérer le lecteur et tester dans le navigateur |
+| MOD-H04 | DEC-0075 : rappel court (1 mot, 1 voix, « déjà vu en L01 ») pour -m et -n en L08/L10, au lieu d'une découverte complète. **Mise en œuvre faite** : colonne `e1_rappel` dans `lecons.csv` (L08 : -m et -n ; L10 : -n), `generer_lecteur.py` (1 mot rang 1, voix F4), `lecteur.js` (écran « Rappel », bouton Écouter seul). Lecteur régénéré et testé par Christophe dans le navigateur : ok. Documents mis à jour : PROD-AF-LECT 0.5 (RG-21), PROD-LECT 0.23, DATA-MODELE 0.23 (`e1_rappel`) |
 
 ---
 
@@ -324,7 +324,7 @@ gardée, pas supprimée.
 | 0.23 | 2026-11-01 | MOD-B13 fait : CONTEXTE_IA v1.17 ; résumé corrigé ; totaux recomptés (84 besoins). |
 | 0.24 | 2026-11-01 | MOD-H03 fait (DEC-0074) : séries S0001, S0004, S0007 de L01 remplacées par t/m + voyelle. |
 | 0.25 | 2026-11-01 | MOD-H02 clos (vérifié, conforme) ; MOD-H04 décidé et fait (DEC-0075, rappel court -m/-n en L08/L10). |
-| 0.26 | 2026-11-01 | MOD-H04 : mise en œuvre dans le lecteur (e1_rappel, generer_lecteur.py, lecteur.js) ; test navigateur à faire. MOD-C16 ajouté (mots tronqués en écoute normale, locuteurs à revoir) ; totaux : 85 besoins. |
+| 0.26 | 2026-11-01 | MOD-H04 : mise en œuvre dans le lecteur (e1_rappel, generer_lecteur.py, lecteur.js) ; test navigateur fait (ok) ; documents PROD-AF-LECT, PROD-LECT, DATA-MODELE mis à jour. MOD-C16 ajouté (mots tronqués en écoute normale, locuteurs à revoir) ; totaux : 85 besoins. |
 
 ## Liens
 

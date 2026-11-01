@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.69
+version: 1.70
 date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1796,6 +1796,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.67 | 2026-11-01 | Ajout de DEC-0073 (E1 : syllabes sans sens quand le corpus ne suffit pas). |
 | 1.68 | 2026-11-01 | Ajout de DEC-0074 (E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle, MOD-H03). |
 | 1.69 | 2026-11-01 | Ajout de DEC-0075 (L08/L10 : rappel court pour -m et -n déjà vus, MOD-H04). |
+| 1.70 | 2026-11-01 | Ajout de DEC-0076 (protocole complet de l'audit des locuteurs, premier passage ~54 audios, MOD-C17). |
 
 ### DEC-0074 — E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle
 
@@ -1854,6 +1855,45 @@ qui indique « remplace DEC-NNNN ».
   `generer_lecteur.py`, `lecons.csv` ou `exemples_e1.csv` (marquer -m en
   L08 et -n en L08/L10 comme « rappel »), PROD-LECT, PROD-AF-LECT,
   PROG-ACT (ACT-E1-DECOUV).
+
+### DEC-0076 — MOD-C17 : protocole de l'audit des locuteurs FPT
+
+- **Date** : 2026-11-01
+- **Question** (MOD-C17) : Christophe demande un audit approfondi des
+  locuteurs déjà utilisés (F1, F3, H3, H4, F4, H6), sur 4 dimensions
+  (voyelles seules, mots courts CV et VC, ralenti, espacement), pour
+  décider quelle voix convient à quel type d'activité avant MOD-C01.
+  Fallait-il tester avec des mots réels du corpus, des syllabes sans
+  sens, ou les deux ? Quelles voix et quelle portée ?
+- **Décision** (choix de Christophe) :
+  - **Matière des items** : syllabes sans sens (isolent le son, modèle
+    DEC-0073) et quelques mots réels du corpus (vérifient la situation
+    normale).
+  - **Voix** : **toutes les voix utilisables** — F1, F3, F4, H1, H2, H3,
+    H4, H5, H6 (9 voix). F2 (aucun `provider_model` dans `voix.csv`) et
+    E1 (voix d'enfant, aucun fournisseur) exclues : impossibles à
+    générer en l'état.
+  - **Portée** : **A2** pour la batterie complète (une fois les corpus
+    A1/A2 créés) ; Module 0 pour le premier passage ci-dessous.
+  - **Premier passage rapide**, avant la batterie complète : ~50 audios
+    pour écarter tôt les voix clairement mauvaises. Items (identiques
+    pour les 9 voix) :
+    - voyelles seules **ê, o, i** ;
+    - syllabe sans sens **te** (CV) ;
+    - syllabe sans sens **em** ou **en** (VC, finale -m/-n) ;
+    - ces 5 items une 2e fois au débit lent ;
+    - 1 phrase de `comptage.csv` en « mots espacés ».
+    Soit 6 items distincts × 9 voix ≈ 54 audios.
+  - Réutiliser `valider_audios.py` (filtre par voix) et les 3 664
+    validations déjà faites pour les anciennes voix.
+- **Raison** : les syllabes sans sens isolent le son étudié sans l'effet
+  de la longueur ou du sens du mot ; quelques mots réels vérifient que
+  le résultat tient aussi en situation normale ; un premier passage léger
+  permet d'éliminer vite certains locuteurs pour certains usages, avant
+  d'investir dans la batterie complète.
+- **Impacte** : nouveau script de génération de la batterie de test,
+  `valider_audios.py` (filtre par voix), `07_QUALITE` (rapport de
+  l'audit).
 
 ## Liens
 
