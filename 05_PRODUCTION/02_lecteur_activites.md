@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.22
+version: 0.23
 date: 2026-11-01
 resume: >
   Décrit la version d'essai du lecteur d'activités (volet écoute E1 → E3 et
@@ -63,7 +63,7 @@ installation n'est nécessaire ; le générateur n'utilise que Python.
 | Règle | Dans le lecteur |
 |---|---|
 | R-PARC-01, R-VOL-01 | E1 → E2 → E3 → écrit ; chaque étape s'ouvre quand la précédente est faite |
-| E1 (PROG-ACT, DEC-0039, DEC-0072, DEC-0073) | un écran par son (ou ton) : symbole, catégorie, repère, indice ; sons « d'abord » en tête de la première partie (L01 : t puis m, avec une ligne d'explication ; liste `e1` de chaque partie, colonne `e1_first` de `lecons.csv`) ; 3 mots au plus (`exemples_e1.csv`), ou des syllabes sans sens (🔊 et « syllabe » ; « syllabe inventée » le cas échéant), chacun dit par une voix de femme puis d'homme ; deux boutons « ▶ Écouter » (débit normal) et « 🐢 Écouter lentement » (débit lent), choix de la voix « Femme et homme » (par défaut), « Femme » ou « Homme » ; toucher un mot le redit avec la voix et la dernière vitesse choisies ; pour une voyelle simple (leçons de sons), tuile « 🔈 Le son seul » jouée avant les mots, au débit normal seulement, si son audio est validé ou en mode d'essai (DEC-0070) ; aucun mot écrit (lettres du son : DEC-0063) ; aucune opposition ; « suivant » après une écoute complète. Progression antérieure : une E2 commencée vaut E1 faite |
+| E1 (PROG-ACT, DEC-0039, DEC-0072, DEC-0073) | un écran par son (ou ton) : symbole, catégorie, repère, indice ; sons « d'abord » en tête de la première partie (L01 : t puis m, avec une ligne d'explication ; liste `e1` de chaque partie, colonne `e1_first` de `lecons.csv`) ; sons déjà vus repris en **rappel court** (colonne `e1_rappel` : L08 -m et -n, L10 -n ; un mot, voix F4, bouton « Écouter » seul, DEC-0075) ; 3 mots au plus (`exemples_e1.csv`), ou des syllabes sans sens (🔊 et « syllabe » ; « syllabe inventée » le cas échéant), chacun dit par une voix de femme puis d'homme ; deux boutons « ▶ Écouter » (débit normal) et « 🐢 Écouter lentement » (débit lent), choix de la voix « Femme et homme » (par défaut), « Femme » ou « Homme » ; toucher un mot le redit avec la voix et la dernière vitesse choisies ; pour une voyelle simple (leçons de sons), tuile « 🔈 Le son seul » jouée avant les mots, au débit normal seulement, si son audio est validé ou en mode d'essai (DEC-0070) ; aucun mot écrit (lettres du son : DEC-0063) ; aucune opposition ; « suivant » après une écoute complète. Progression antérieure : une E2 commencée vaut E1 faite |
 | R-PARC-04, DEC-0033 | E2 : positions 1 et 2 de la série |
 | DEC-0042 | place du son : marque « début ▸ » / « ◂ fin » sur chaque symbole de consonne ; en E1, en-tête « consonne en début / fin de mot » ou « voyelle » ; en E2 et E3, consigne « Écoutez la consonne du début du mot », etc. |
 | DEC-0047 | mode test : dans la case du mot joué, d'abord le **mot écrit** (pour comparer l'écoute à l'écrit ; mode test seulement, R-ECR-01 inchangé pour l'apprenant), puis une ligne par voix : fichier (ou « synthèse de l'appareil »), personnage · F/H · code, modèle · débit · `speed` ; en E2, E3 et à l'échauffement, seulement après la réponse ; réglage « Infos de test sur le son ». Au débit lent, la voix qui fournit le fichier est indiquée (DEC-0067) |
@@ -166,6 +166,7 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.20 | 2026-10-30 | Écran « Combien de fois ? » en fin d'E3 (DEC-0054) : deux phases, verrou comme E2/E3, écrit de la suite révélé après la réponse ; l'écrit d'E3 s'ouvre après sa validation. |
 | 0.21 | 2026-11-01 | MOD-B03 : changements du lecteur des 30 et 31/10 décrits : voix F4 / H6 et débit lent emprunté (DEC-0067), signalement d'un son (DEC-0069), voyelle seule en E1 (DEC-0070), « Combien de fois ? » et page « Les 6 tons » au § 3 ; § 4 et § 5 sans F1, H3, H4 ; résumé ; liens (DOC-32). |
 | 0.22 | 2026-11-01 | MOD-H01 : E1 avec t et m d'abord en L01 (DEC-0072), syllabes sans sens (DEC-0073) ; mode test : mot écrit. |
+| 0.23 | 2026-11-01 | MOD-H04 : E1, rappel court des sons -m et -n en L08 / L10 (DEC-0075). |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.22
+version: 0.23
 date: 2026-11-01
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -95,6 +95,7 @@ erDiagram
 | `is_recycling` | leçon de recyclage (L14) | `true` / `false` | `false` |
 | `split_parts` | leçon présentée en deux parties : voyelles, puis consonnes et finales (DEC-0037) | `true` / `false` | `true` (L01) |
 | `e1_first` | sons présentés en E1 **avant** ceux de la première partie, pour que les mots d'exemple soient faits de sons déjà vus (DEC-0072) ; vide : aucun | `sound_code` séparés par une espace | `PH-CO-t PH-IN-m` (L01) |
+| `e1_rappel` | sons de la leçon déjà découverts plus tôt, repris en E1 sous forme de **rappel court** : 1 mot (rang 1), 1 voix (F4), bouton « Écouter » seul, étiquette « déjà vu en L01 » (DEC-0075) ; vide : aucun | `sound_code` séparés par une espace | `PH-FI-m PH-FI-n` (L08) |
 
 ### 3.4 `ouvertures.csv` — quand chaque son et ton s'ouvre (DEC-0007)
 
@@ -388,6 +389,7 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.20 | 2026-11-01 | MOD-B06 : en-tête mis à jour ; exemples avec F4 / H6 (`audios.csv`, `voix.csv`, `exemples_e1.csv`) ; `item_type` `sequence` et `voyelle` (DEC-0070) ; `provider_model` `FPT.TTS-ultra` ; mots espacés par virgules ; voix de `reference_tons.csv` et de `courbes_modele.csv` (DEC-0067). |
 | 0.21 | 2026-11-01 | `lecons.csv` : colonne `e1_first` (DEC-0072, MOD-H01) ; `exemples_e1.csv` : règle de choix complétée. |
 | 0.22 | 2026-11-01 | `exemples_e1.csv` : colonnes `syllable`, `invented` ; nouveau fichier `syllabes_e1.csv` (DEC-0073). |
+| 0.23 | 2026-11-01 | `lecons.csv` : colonne `e1_rappel` (DEC-0075, MOD-H04). |
 
 ## Liens
 
