@@ -1,7 +1,7 @@
 ---
 id: CTX-IA
 titre: Contexte du projet pour une IA
-statut: BROUILLON
+statut: VALIDE
 version: 1.19
 date: 2026-11-01
 resume: >
@@ -168,3 +168,4 @@ La liste complète, numérotée et classée par priorité, est dans
 | 1.17 | 2026-11-01 | Validé par Christophe : statut VALIDE (validation perdue par une écriture concurrente, reconstituée ici). |
 | 1.18 | 2026-11-01 | MOD-H03 fait (DEC-0074) : séries d'E2 de la partie A de L01 remplacées par t/m + voyelle ; § 3, § 5, § 6 mis à jour (74 décisions). Repassé en BROUILLON (DOC-21). |
 | 1.19 | 2026-11-01 | MOD-H02 clos (tons des mots d'exemple vérifiés conformes) et MOD-H04 décidé (DEC-0075, rappel court -m/-n en L08/L10) ; § 3, § 5, § 6 mis à jour (75 décisions). |
+| 1.19 | 2026-11-01 | Validé par Christophe : statut VALIDE. |
