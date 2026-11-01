@@ -1,8 +1,8 @@
 ---
 id: CTX-IA
 titre: Contexte du projet pour une IA
-statut: VALIDE
-version: 1.16
+statut: BROUILLON
+version: 1.17
 date: 2026-11-01
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
@@ -50,7 +50,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0071) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0073) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -70,7 +70,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Structure | 7 dossiers + `_ARCHIVES` ; Markdown et CSV ; Git (DEC-0001 à 0003) ; audios intermédiaires `_bruts`, `_anciens`, `_essais` **suivis par Git** (DEC-0071) |
 | Module 0 | **14 leçons** (L03 nặng, L07 hỏi, L11 ngã, L14 recyclage) ; durée indicative 4–6 mois (DEC-0004 à 0006, 0019) ; L01 en deux parties dans le lecteur (DEC-0037), 14 séries, i retiré des contrastes, u gardé (DEC-0044, 0046) |
 | Parcours | 5 étapes **E1 Écouter → E2 Distinguer → E3 Opposer → E4 Répéter → E5 Stabiliser** ; volets écoute (E1–E3) / production (E4–E5) ; écoute ≤ 3 leçons d'avance (DEC-0007, 0010) |
-| E1 | **découverte de chaque son seul**, sans opposition : 3 mots au plus par son, voix de femme puis d'homme, boutons « Écouter » / « Écouter lentement », choix de la voix (DEC-0039) ; pour une **voyelle simple**, la voyelle seule avant les mots, au débit normal seulement (DEC-0070) |
+| E1 | **découverte de chaque son seul**, sans opposition : 3 mots au plus par son, voix de femme puis d'homme, boutons « Écouter » / « Écouter lentement », choix de la voix (DEC-0039) ; pour une **voyelle simple**, la voyelle seule avant les mots, au débit normal seulement (DEC-0070) ; en **L01**, consonnes **t et m** découvertes avant les voyelles (début de la partie A), mots d'exemple t/m + voyelle au ton ngang, règle de préférence pour L02 à L13 (DEC-0072) ; **syllabes sans sens** quand le corpus donne moins de 2 exemples (DEC-0073) |
 | E2–E3 | échauffement « Pareil ou différent ? » non noté au début d'E2 (DEC-0041) ; place du son indiquée (début ▸, ◂ fin, voyelle, ton) et consigne « quoi écouter » (DEC-0042) |
 | Leçons de tons | **jamais d'audio lent** (DEC-0043) ; une seule voix à l'échauffement et en phase « avec images », plusieurs voix en phase « symboles seuls » (DEC-0045) ; voix : F4 et H6 (DEC-0067) |
 | Verrous | 85 %, 90 % pour les tons, sur ≥ 2 voix ; chaque série réussie au moins 2 fois au débit normal (DEC-0012, 0032) ; finales : 85 % par leçon, 80 % en sortie (DEC-0036) |
@@ -88,12 +88,12 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 |---|---|
 | Fondations FOND-01 à 04 | **VALIDE** |
 | Règles documentaires, registre des règles, architecture des outils | brouillons |
-| Décisions | **71** (DEC-0001 à DEC-0071) |
-| Données (`04_DONNEES`, 18 fichiers CSV) | reprises ; mots hors corpus à confirmer ; `voix.csv` : F4 et H6 seules actives |
+| Décisions | **73** (DEC-0001 à DEC-0073) |
+| Données (`04_DONNEES`, 18 fichiers CSV) | reprises ; mots hors corpus à confirmer ; `voix.csv` : F4 et H6 seules actives ; 5 mots ajoutés pour l'E1 de L01 (W0340 à W0344, sens à faire relire) |
 | Programme du Module 0 (`progression_M0.md`) | brouillon ; points P1 à P6 décidés (DEC-0031 à 0036) |
-| Audios | `audios.csv` : **5 506 audios**, dont **3 494 validés** (`validated = true`), tous des anciennes voix (F1, F3, H3, H4). **F4 / H6 : générés pour L01 seulement** (227 fichiers, dont 10 voyelles seules), **aucun validé** ; autres leçons à générer après écoute de L01 (environ 1 700 fichiers ; tarif d'Ultra à vérifier). 170 audios marqués « à refaire » (`07_QUALITE/audios_a_refaire.csv`), dont 32 seulement restent utiles |
+| Audios | `audios.csv` : **5 506 audios**, dont **3 494 validés** (`validated = true`), tous des anciennes voix (F1, F3, H3, H4). **F4 / H6 : générés pour L01 seulement** (227 fichiers, dont 10 voyelles seules, puis 42 pour t, m et les nouveaux mots d'exemple, DEC-0072, 0073 ; écoutés : « très bien »), **aucun validé** ; autres leçons à générer (environ 1 700 fichiers, environ 25 000 ₫ en Ultra, MOD-C02). 170 audios marqués « à refaire » (`07_QUALITE/audios_a_refaire.csv`), dont 32 seulement restent utiles |
 | Images | emoji provisoires ; OpenMoji **à choisir** |
-| Lecteur d'activités | **version d'essai 0.21** (numéro de QUAL-AVANCEMENT ; PROD-LECT dit encore 0.20) : volet écoute E1, échauffement, E2, E3, « Combien de fois ? », écrit, pour toutes les leçons sauf L14 ; voyelle seule en E1 (DEC-0070) ; signalement d'un son (DEC-0069) ; réglages, « Mes progrès », mode test, mode essai « tout ouvert » ; page « Les 6 tons ». Volet production : **E4 intégré**, sans verrou (micro, courbes mélodiques du modèle) ; E5, L14, paquets Anki **à développer**. Version autonome en un fichier dans `06_LIVRABLES/lecteur/` |
+| Lecteur d'activités | **version d'essai 0.21** (décrite par PROD-LECT 0.22) : volet écoute E1, échauffement, E2, E3, « Combien de fois ? », écrit, pour toutes les leçons sauf L14 ; voyelle seule en E1 (DEC-0070) ; t et m d'abord en E1 de L01 (DEC-0072) ; mot écrit affiché en mode test ; signalement d'un son (DEC-0069) ; réglages, « Mes progrès », mode test, mode essai « tout ouvert » ; page « Les 6 tons ». Volet production : **E4 intégré**, sans verrou (micro, courbes mélodiques du modèle) ; E5, L14, paquets Anki **à développer**. Version autonome en un fichier dans `06_LIVRABLES/lecteur/` |
 | Git | tout le travail jusqu'au 31/10 enregistré (commit `1d5c57e`, 01/11) ; historique **sauvegardé hors du PC** depuis le 01/11 : dépôt **privé** GitHub `cappleinouest-lang/viet-project` (MOD-A02), à mettre à jour par `git push` après chaque commit |
 | Règles de code (SQL, Python, PowerShell) | hors périmètre pour l'instant |
 
@@ -102,16 +102,17 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 La liste complète, numérotée et classée par priorité, est dans
 `07_QUALITE/suivi_modifications.md` (section 3). Les plus importants :
 
-- **Documents à mettre d'accord avec DEC-0067** (MOD-B02 à MOD-B07) :
-  PROD-AUDIO, PROD-LECT, PROD-AF-LECT, PROG-M0, PROG-ACT, DATA-MODELE et
-  R-AUD-02 parlent encore des voix F1, F3, H3, H4.
-- **E1, mots d'exemple** (MOD-H01, à décider) : étudier d'abord 1 ou 2
-  consonnes initiales pour que les mots d'exemple des voyelles soient de
-  simples syllabes consonne + voyelle. À trancher **avant** de générer les
-  audios Ultra des autres leçons (MOD-C01).
-- **Audios Ultra** : écouter L01 dans le lecteur, vérifier le tarif, puis
-  générer les autres leçons (MOD-C01, MOD-C02) ; ne refaire que les 32
-  audios « à refaire » encore utiles (MOD-C04).
+- **R-AUD-02 et DEC-0067** (MOD-B07, à décider) : une seule femme et un
+  seul homme, et la voix d'homme change entre lent et normal ; vérifier la
+  conformité ou noter l'écart. Les autres documents sont d'accord avec
+  DEC-0067 (MOD-B02 à B06 faits).
+- **Avant de générer les autres leçons** (MOD-C01) : séries d'E2 de la
+  partie A de L01 avec des sons pas encore étudiés (MOD-H03) ; sons -m et
+  -n redécouverts en L08 et L10 (MOD-H04) ; tons des mots d'exemple de L02
+  à L13 (MOD-H02). À trancher d'abord, pour ne pas générer d'audios inutiles.
+- **Audios Ultra** : L01 générée et écoutée ; tarif vérifié (MOD-C02) ;
+  générer les autres leçons (MOD-C01) ; ne refaire que les 32 audios « à
+  refaire » encore utiles (MOD-C04).
 - **Validation des audios** (R-AUD-01) : outil prêt (DEC-0065,
   `tools/valider_audios.py`, mode d'emploi dans `05_PRODUCTION/03_audio.md`
   § 5) ; les audios F4 / H6 sont à écouter et le nombre total à recompter
@@ -137,6 +138,8 @@ La liste complète, numérotée et classée par priorité, est dans
 - Le seul emplacement du projet est **`C:\VIET_PROJECT`** : ne jamais
   utiliser `D:\VIET_PROJECT` (n'existe plus). Le raccourci épinglé dans
   l'Explorateur doit être refait vers `C:\VIET_PROJECT`.
+- **Une seule conversation à la fois** sur `C:\VIET_PROJECT` : deux
+  conversations simultanées ont déjà écrasé des fichiers le 01/11.
 
 ## Historique
 
@@ -160,3 +163,4 @@ La liste complète, numérotée et classée par priorité, est dans
 | 1.15 | 2026-11-01 | MOD-B01 : § 4 voix FPT.TTS-ultra F4 / H6 et débit lent emprunté (DEC-0067, 0068), voyelle seule en E1 (DEC-0070), signalement d'un son (DEC-0069), audios intermédiaires dans Git (DEC-0071) ; § 3 décisions jusqu'à DEC-0071, suivi des modifications, état d'avancement, essai Ultra ; § 5 état au 2026-11-01 (5 506 audios, lecteur 0.21, Git) ; § 6 points ouverts renvoyés au suivi des modifications ; § 2 noter chaque modification dans le suivi. Repassé en BROUILLON (DOC-21). Analyse d'impact (DOC-35) : `sorties` vide, aucun document en aval. |
 | 1.16 | 2026-11-01 | MOD-A02 : sauvegarde sur un dépôt privé GitHub (§ 5), `git push` ajouté au rappel de fin de modification (§ 2), point ouvert retiré (§ 6). |
 | 1.16 | 2026-11-01 | Validé par Christophe (versions 1.15 et 1.16) : statut VALIDE. |
+| 1.17 | 2026-11-01 | MOD-B13 : DEC-0072 et DEC-0073 (§ 3, § 4 E1, § 5) ; audios de L01 et tarif d'Ultra (§ 5) ; version du lecteur (§ 3, § 5) ; points ouverts revus : MOD-B02 à B06 et MOD-H01 faits, MOD-H02 à H04 avant MOD-C01, une seule conversation à la fois (§ 6). Repassé en BROUILLON (DOC-21). |

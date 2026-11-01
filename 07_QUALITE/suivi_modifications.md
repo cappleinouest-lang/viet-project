@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.22
+version: 0.23
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -22,29 +22,29 @@ sources:
 
 ## Résumé
 
-- **Ce qui a été fait** : 70 décisions (DEC-0001 à DEC-0070) et 34 commits Git
+- **Ce qui a été fait** : 73 décisions (DEC-0001 à DEC-0073) et 34 commits Git
   entre le 28 octobre et le 1er novembre 2026. Le travail du 31/10 après
   15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
   (commit `1d5c57e`, MOD-A01).
-- **Ce qui reste à faire** : **83 besoins** relevés (section 3), dont
+- **Ce qui reste à faire** : **84 besoins** relevés (section 3), dont
   **17 de priorité haute** (MOD-A01 à MOD-A04 et MOD-B01 à MOD-B06 faits le 01/11 ; MOD-A05 décidé : DEC-0071).
   L'historique est sauvegardé hors du PC depuis le 01/11 (dépôt privé GitHub,
   MOD-A02). Les documents sont d'accord avec DEC-0067 (MOD-B02 à B06).
-  MOD-H01 est décidé (DEC-0072 : t et m avant les voyelles de L01). Le plus
-  urgent : le mettre en œuvre (mot pour ê, données, lecteur, audios de L01),
+  MOD-H01 est fait (DEC-0072 et DEC-0073 : t et m avant les voyelles de
+  L01, syllabes sans sens). Le plus urgent : trancher MOD-H02 à MOD-H04,
   puis générer les audios Ultra des autres leçons (MOD-C01).
 
 | Thème | Nombre | Haute | Moyenne | Basse |
 |---|---|---|---|---|
 | A. Git et sauvegarde | 5 | 3 | 2 | 0 |
-| B. Cohérence des documents après DEC-0067 | 12 | 7 | 5 | 0 |
+| B. Cohérence des documents après DEC-0067 | 13 | 7 | 6 | 0 |
 | C. Audios et voix | 15 | 4 | 7 | 4 |
 | D. Lecteur d'activités | 24 | 1 | 16 | 7 |
 | E. Contenus et relecture par un locuteur | 10 | 1 | 7 | 2 |
 | F. Règles et fondations | 7 | 0 | 4 | 3 |
 | G. Outils, enveloppe, Anki | 6 | 0 | 1 | 5 |
 | H. Pédagogie et programme | 4 | 1 | 3 | 0 |
-| **Total** | **83** | **17** | **45** | **21** |
+| **Total** | **84** | **17** | **46** | **21** |
 
 ---
 
@@ -154,6 +154,7 @@ gardée, pas supprimée.
 | Incident | Entre 12 h 46 et 12 h 49, une autre conversation travaillant en même temps a réécrit `CONTEXTE_IA.md` (version 1.15 sans MOD-A02) et `suivi_modifications.md` (ancienne 0.8). Réparé : conversation arrêtée, suivi récupéré par `git restore` (0.11), CONTEXTE_IA remis en 1.16 validée. Règle : **une seule conversation à la fois** sur `C:\VIET_PROJECT` |
 | MOD-H01 | Décidé : **DEC-0072** (choix de Christophe) : t et m découverts en E1 avant les voyelles de L01 ; mots d'exemple t/m + voyelle au ton ngang ; règle de préférence pour L02 à L13 ; un mot pour ê à chercher. Mise en œuvre à faire. Nouveau besoin MOD-H03 (séries d'E2 de la partie A) |
 | MOD-H01 | **Fait** : DEC-0073 (syllabes sans sens en E1 : *te*, *mo*, *mô*, *be*) ; 5 mots ajoutés au corpus (W0340 à W0344) ; `choisir_exemples_e1.py` (règle de préférence), `fabriquer_syllabes_e1.py` et `syllabes_e1.csv` ; lecteur (t et m d'abord en partie A de L01, mot écrit en mode test) ; 42 audios de L01 (écoutés : « très bien ») ; 4 documents mis à jour. Reste : valider ces audios (MOD-C03) |
+| MOD-B13 | `CONTEXTE_IA.md` v1.17 (DEC-0072, DEC-0073, audios de L01, tarif d'Ultra, points ouverts) ; résumé de ce suivi corrigé (73 décisions, 84 besoins) ; CONTEXTE_IA repassé en BROUILLON, à revalider |
 
 ---
 
@@ -189,6 +190,7 @@ gardée, pas supprimée.
 | MOD-B10 | Relier ou classer les 2 documents **sans aucun lien** : PROD-COMP-SUPPORT-20261028, PROD-DOSSIER-SUPPORT-20261028 | carte documentaire | `05_PRODUCTION/` | Moyenne | à faire |
 | MOD-B11 | **PROD-ARCH** (v0.4) : rédigé autour de WordPress (extension de progression, Local, hébergeur) alors que DEC-0030 laisse le choix WordPress ou Firebase ; point ouvert 3 « voix de référence » à mettre à jour (DEC-0067) | constat du 2026-11-01 | `05_PRODUCTION/01_architecture_outils.md` | Moyenne | à faire |
 | MOD-B12 | `README.md` de la racine et des dossiers : brouillons v0.1–0.2 du 28/10, à relire | constat du 2026-11-01 | `README.md` | Moyenne | à faire |
+| MOD-B13 | **CONTEXTE_IA** v1.16 en retard sur DEC-0072, DEC-0073, MOD-H01 et MOD-B02 à B06 (§ 3 à § 6) ; résumé de ce suivi (70 décisions, MOD-H01 « à mettre en œuvre ») | relecture du 2026-11-01 | `CONTEXTE_IA.md`, ce document | Moyenne | **fait** (2026-11-01, CONTEXTE_IA v1.17, à revalider par Christophe) |
 
 ### C. Audios et voix
 
@@ -314,6 +316,7 @@ gardée, pas supprimée.
 | 0.20 | 2026-11-01 | Mode test : mot écrit dans les infos du son ; tuile « syllabe » (MOD-H01, étape 4). |
 | 0.21 | 2026-11-01 | Lignes 0.19 et 0.20 rétablies (effacées par l'écriture parallèle de 14 h 30, qui a gardé MOD-D24) ; MOD-H01, étape 5 : 42 audios de L01 ; MOD-C02 : tarifs constatés. |
 | 0.22 | 2026-11-01 | MOD-H01 fait (étape 6 : PROG-M0, PROG-ACT, PROD-LECT, PROD-AF-LECT). |
+| 0.23 | 2026-11-01 | MOD-B13 fait : CONTEXTE_IA v1.17 ; résumé corrigé ; totaux recomptés (84 besoins). |
 
 ## Liens
 
