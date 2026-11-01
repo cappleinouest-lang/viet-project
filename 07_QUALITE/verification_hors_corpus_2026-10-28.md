@@ -2,8 +2,8 @@
 id: QUAL-VERIF-HORS-CORPUS-20261028
 titre: Vérification des termes hors corpus des séries minimales
 statut: BROUILLON
-version: 0.1
-date: 2026-10-28
+version: 0.2
+date: 2026-11-01
 resume: >
   Les 107 termes des séries minimales absents de mots.csv ont été cherchés
   dans trois dictionnaires : 74 sont de vrais mots, 33 restent des syllabes
@@ -13,6 +13,7 @@ sorties: [04_DONNEES/paires_minimales.csv]
 sources:
   - https://github.com/undertheseanlp/dictionary (fusion de 3 listes, licence GPL v3)
   - Hồ Ngọc Đức, liste de mots (hongocduc) ; Từ điển tiếng Việt (tudientv) ; Wiktionnaire vietnamien (wiktionary)
+  - Complément du 2026-11-01 : même dépôt (commit 2c078cf du 2018-12-10, fichier dictionary/words.txt) ; sens : https://en.wiktionary.com/wiki/mê et https://en.wiktionary.com/wiki/tê (consultés le 2026-11-01)
 ---
 
 # Vérification des termes hors corpus des séries minimales
@@ -59,6 +60,24 @@ sonores** (DEC-0027, R-LEX-05) :
 Toutes portent sur un **son** (voyelle ou consonne finale) ; aucune série de
 ton n'est concernée.
 
+## 3 bis. Complément du 2026-11-01 : syllabes t / m + voyelle (DEC-0072)
+
+Même méthode (entrée isolée, en minuscules, dans les trois listes), pour les
+mots d'exemple d'E1 de la partie A de L01 (MOD-H01).
+
+| Syllabe | Dictionnaires | Résultat | Sens (Wiktionnaire anglais, à confirmer) |
+|---|---|---|---|
+| *mê* | 3 sur 3 | **mot réel** | verbe : perdre connaissance, s'endormir ; être passionné, fasciné (« Nó mê phim Hàn ») ; s'égarer. Aucune étiquette régionale |
+| *tê* | 3 sur 3 | **mot réel** | adjectif : **engourdi** (« tê tay », mains engourdies) ; aussi pronom « là-bas » **du Centre** (pas du Nord), nom de la lettre T, « rhinocéros » (vieilli) |
+| *me*, *mu*, *tô*, *to*, *tu*, *ma* | 3 sur 3 | mots réels (confirmé) | — |
+| *te*, *mo*, *mô*, *mi*, *ta* | 3 sur 3 | mots réels | non utilisés pour l'instant (pistes pour MOD-H03) |
+| *ti* | 2 sur 3 | mot réel | — |
+
+- **Fait** : *mê* et *tê* remplissent le critère de DEC-0027.
+- **Limite** : les listes ne donnent ni la fréquence ni l'usage à Hanoï ; le
+  sens vient d'un seul dictionnaire (Wiktionnaire anglais). À faire relire
+  par un locuteur du Nord (MOD-E01). Aucun des deux n'a d'image facile.
+
 ## 4. À faire
 
 - Vérifier le sens et l'usage au Nord des 74 mots réels (dictionnaire ou
@@ -70,3 +89,4 @@ ton n'est concernée.
 | Version | Date | Changement |
 |---|---|---|
 | 0.1 | 2026-10-28 | Création. |
+| 0.2 | 2026-11-01 | § 3 bis : *mê*, *tê* et syllabes t / m + voyelle vérifiées pour DEC-0072 (MOD-H01). |
