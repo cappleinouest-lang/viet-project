@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.12
+version: 0.13
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -26,12 +26,13 @@ sources:
   entre le 28 octobre et le 1er novembre 2026. Le travail du 31/10 après
   15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
   (commit `1d5c57e`, MOD-A01).
-- **Ce qui reste à faire** : **80 besoins** relevés (section 3), dont
+- **Ce qui reste à faire** : **81 besoins** relevés (section 3), dont
   **17 de priorité haute** (MOD-A01 à MOD-A04 et MOD-B01 à MOD-B06 faits le 01/11 ; MOD-A05 décidé : DEC-0071).
   L'historique est sauvegardé hors du PC depuis le 01/11 (dépôt privé GitHub,
   MOD-A02). Les documents sont d'accord avec DEC-0067 (MOD-B02 à B06).
-  Le plus urgent : décider MOD-H01 (consonnes initiales en E1) avant de
-  générer les audios Ultra des autres leçons (MOD-C01).
+  MOD-H01 est décidé (DEC-0072 : t et m avant les voyelles de L01). Le plus
+  urgent : le mettre en œuvre (mot pour ê, données, lecteur, audios de L01),
+  puis générer les audios Ultra des autres leçons (MOD-C01).
 
 | Thème | Nombre | Haute | Moyenne | Basse |
 |---|---|---|---|---|
@@ -42,8 +43,8 @@ sources:
 | E. Contenus et relecture par un locuteur | 10 | 1 | 7 | 2 |
 | F. Règles et fondations | 7 | 0 | 4 | 3 |
 | G. Outils, enveloppe, Anki | 6 | 0 | 1 | 5 |
-| H. Pédagogie et programme | 2 | 1 | 1 | 0 |
-| **Total** | **80** | **17** | **42** | **21** |
+| H. Pédagogie et programme | 3 | 1 | 2 | 0 |
+| **Total** | **81** | **17** | **43** | **21** |
 
 ---
 
@@ -151,6 +152,7 @@ gardée, pas supprimée.
 | MOD-B01 | `CONTEXTE_IA.md` v1.15 : voix F4 / H6 et débit lent emprunté (§ 4), état au 01/11 (§ 5 : 5 506 audios dont 3 494 validés, F4 / H6 pour L01 seulement, lecteur 0.21, Git), points ouverts renvoyés à ce suivi (§ 6), décisions jusqu'à DEC-0071 ; document repassé en BROUILLON (DOC-21), à revalider par Christophe |
 | MOD-B02 à B06 | Documents mis d'accord avec DEC-0067 (voix F4 / H6, débit lent emprunté à F1 / H4) et complétés avec DEC-0069 (signalement) et DEC-0070 (voyelle seule) : PROD-AUDIO 0.18 (titre, § 1 refait avec les 5 506 audios comptés par voix, liens), PROD-LECT 0.21, PROD-AF-LECT 0.3 (« Combien de fois ? », E4, page des tons, RG-16 à RG-19, écart EC-06 : en-tête de `lecteur.js`), PROG-M0 0.12, PROG-ACT 0.16, DATA-MODELE 0.20. Écart relevé : 10 voyelles seules dans `audios.csv` contre 22 prévues (DEC-0070), à vérifier |
 | Incident | Entre 12 h 46 et 12 h 49, une autre conversation travaillant en même temps a réécrit `CONTEXTE_IA.md` (version 1.15 sans MOD-A02) et `suivi_modifications.md` (ancienne 0.8). Réparé : conversation arrêtée, suivi récupéré par `git restore` (0.11), CONTEXTE_IA remis en 1.16 validée. Règle : **une seule conversation à la fois** sur `C:\VIET_PROJECT` |
+| MOD-H01 | Décidé : **DEC-0072** (choix de Christophe) : t et m découverts en E1 avant les voyelles de L01 ; mots d'exemple t/m + voyelle au ton ngang ; règle de préférence pour L02 à L13 ; un mot pour ê à chercher. Mise en œuvre à faire. Nouveau besoin MOD-H03 (séries d'E2 de la partie A) |
 
 ---
 
@@ -277,8 +279,9 @@ gardée, pas supprimée.
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-H01 | **E1 : étudier d'abord 1 ou 2 consonnes initiales**, pour que les mots d'exemple d'une voyelle soient de **simples syllabes consonne + voyelle**, faites seulement de sons déjà vus. Aujourd'hui, les mots d'exemple contiennent des consonnes initiales et finales pas encore étudiées. Constat chiffré (`exemples_e1.csv`, 2026-11-01) : en L01, 10 mots d'exemple de voyelles sur 13 ont une finale (*xem*, *em*, *nên*, *trên*, *lên*, *trong*, *con*, *môn*, *không*, *ông*…) ; *trong*, *không* et *nghe* utilisent tr-, kh-, ngh- et -ng, étudiés seulement en L10. Dans toutes les leçons : 73 mots d'exemple de voyelles, dont 66 avec une consonne initiale et 34 avec une finale. **Contredit l'ordre « voyelles → consonnes → finales » de L01** (DEC-0034, DEC-0037) : une nouvelle décision est nécessaire. À décider : quelles consonnes (de préférence proches du français et déjà dans L01) ; place dans L01 (avant la partie A ou au début de celle-ci) ; règle pour les leçons suivantes (mots d'exemple faits seulement de sons déjà ouverts). À trancher **avant de générer les audios Ultra des autres leçons** (MOD-C01), pour ne pas produire deux fois les mots d'exemple | proposition de Christophe, 2026-11-01 | DEC-0034, DEC-0037, DEC-0039 ; PROG-M0 (ordre de L01) ; FOND-04 ; `exemples_e1.csv`, `choisir_exemples_e1.py`, audios, lecteur | **Haute** | à décider |
-| MOD-H02 | Même question pour les **tons** : plusieurs mots d'exemple de voyelles portent un ton pas encore étudié en L01 (*mẹ*, *bị*, *có*, *là*, *giờ*…, dans L04 à L12). À examiner avec MOD-H01 : faut-il des mots d'exemple au ton ngang seulement, tant que les autres tons ne sont pas ouverts ? | constat du 2026-11-01 (relevé de `exemples_e1.csv`, à confirmer leçon par leçon) | `exemples_e1.csv`, `choisir_exemples_e1.py` | Moyenne | à vérifier |
+| MOD-H01 | **E1 : étudier d'abord 1 ou 2 consonnes initiales**, pour que les mots d'exemple d'une voyelle soient de **simples syllabes consonne + voyelle**, faites seulement de sons déjà vus. Aujourd'hui, les mots d'exemple contiennent des consonnes initiales et finales pas encore étudiées. Constat chiffré (`exemples_e1.csv`, 2026-11-01) : en L01, 10 mots d'exemple de voyelles sur 13 ont une finale (*xem*, *em*, *nên*, *trên*, *lên*, *trong*, *con*, *môn*, *không*, *ông*…) ; *trong*, *không* et *nghe* utilisent tr-, kh-, ngh- et -ng, étudiés seulement en L10. Dans toutes les leçons : 73 mots d'exemple de voyelles, dont 66 avec une consonne initiale et 34 avec une finale. **Contredit l'ordre « voyelles → consonnes → finales » de L01** (DEC-0034, DEC-0037) : une nouvelle décision est nécessaire. À décider : quelles consonnes (de préférence proches du français et déjà dans L01) ; place dans L01 (avant la partie A ou au début de celle-ci) ; règle pour les leçons suivantes (mots d'exemple faits seulement de sons déjà ouverts). À trancher **avant de générer les audios Ultra des autres leçons** (MOD-C01), pour ne pas produire deux fois les mots d'exemple | proposition de Christophe, 2026-11-01 | DEC-0034, DEC-0037, DEC-0039 ; PROG-M0 (ordre de L01) ; FOND-04 ; `exemples_e1.csv`, `choisir_exemples_e1.py`, audios, lecteur | **Haute** | **décidé** (2026-11-01, DEC-0072 : **t et m**, une brève et une longue, au début de la partie A ; mots t/m + voyelle au ton ngang ; règle de préférence pour L02 à L13). **Mise en œuvre à faire** : 1) trouver et vérifier un mot pour ê (pistes *mê*, *tê*, DEC-0027) ; 2) ajouter *me*, *mu*, *tô* et ce mot à `mots.csv` et `syllabes.csv` ; 3) `choisir_exemples_e1.py` (règle de préférence) et `exemples_e1.csv` ; 4) E1 de la partie A dans le lecteur (t, m ; m revu en partie B) ; 5) audios F4 / H6 de L01 ; 6) PROG-M0, PROG-ACT, PROD-LECT, PROD-AF-LECT |
+| MOD-H02 | Même question pour les **tons** : plusieurs mots d'exemple de voyelles portent un ton pas encore étudié en L01 (*mẹ*, *bị*, *có*, *là*, *giờ*…, dans L04 à L12). À examiner avec MOD-H01 : faut-il des mots d'exemple au ton ngang seulement, tant que les autres tons ne sont pas ouverts ? | constat du 2026-11-01 (relevé de `exemples_e1.csv`, à confirmer leçon par leçon) | `exemples_e1.csv`, `choisir_exemples_e1.py` | Moyenne | à vérifier (L01 réglée par DEC-0072 : mots au ton ngang ; reste à vérifier L02 à L13 avec la règle de préférence) |
+| MOD-H03 | **Séries d'E2 de la partie A de L01** : comme les mots d'exemple d'E1 avant DEC-0072, plusieurs séries de voyelles contiennent des finales et des consonnes pas encore étudiées (*xem / xêm*, *nên / nen*, *môn / mon / mun* : x-, n-, -m, -n). Seules *to / tô*, *tu / tô*, *ho / hô* sont des syllabes consonne + voyelle. À examiner : remplacer ces séries par des syllabes t/m + voyelle (*te / tê*, *me / mê*…, à vérifier), ou les garder (le contraste de voyelle reste le seul écart entre les termes). Attention : les audios F4 / H6 de L01 sont déjà générés | DEC-0072, conséquences ; Christophe, 2026-11-01 | `paires_minimales.csv` (S0001, S0004, S0007), DEC-0033, PROG-M0 (L01), audios | Moyenne | à décider |
 
 ---
 
@@ -298,6 +301,7 @@ gardée, pas supprimée.
 | 0.10 | 2026-11-01 | MOD-B01 fait : CONTEXTE_IA v1.15. |
 | 0.11 | 2026-11-01 | MOD-A04 fait (clé retirée du suivi Git, commit `429419e`) ; MOD-A02 fait (dépôt privé GitHub) ; CONTEXTE_IA v1.16. |
 | 0.12 | 2026-11-01 | MOD-B02 à B06 faits ; MOD-B09 en cours ; incident des deux conversations simultanées noté au journal 2.6. |
+| 0.13 | 2026-11-01 | MOD-H01 décidé (DEC-0072), mise en œuvre détaillée ; MOD-H02 précisé ; nouveau besoin MOD-H03 (séries d'E2 de la partie A de L01). |
 
 ## Liens
 

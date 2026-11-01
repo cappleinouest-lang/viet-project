@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.65
+version: 1.66
 date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1626,6 +1626,67 @@ qui indique « remplace DEC-NNNN ».
   Revoir cette décision si le dépôt approche 1 Go.
 - **Impacte** : `.gitignore`, MOD-A02.
 
+### DEC-0072 — E1 de L01 : t et m avant les voyelles, mots d'exemple consonne + voyelle
+
+- **Date** : 2026-11-01
+- **Question** (MOD-H01, proposition de Christophe) : en E1, les mots
+  d'exemple des voyelles de L01 contiennent des sons pas encore étudiés
+  (10 sur 13 ont une finale : *xem*, *nên*, *trong*, *không*… ; tr-, kh-,
+  ngh-, -ng ne viennent qu'en L10). Faut-il faire découvrir d'abord une ou
+  deux consonnes, pour que ces mots soient de simples syllabes
+  consonne + voyelle ?
+- **Constats** (`mots.csv`, `syllabes.csv`, `paires_minimales.csv`,
+  2026-11-01) : la partie A de L01 étudie e, ê, o, ô, u. Au ton ngang
+  (seul ton ouvert en L01), sans finale, le corpus n'a que *xe*, *to*,
+  *tu*, *ho* ; avec les mots réels hors corpus déjà vérifiés (DEC-0027) :
+  *tô*, *hô*, *đô*, *be*, *me*, *mu*, *no*, *xo*. **Aucun mot pour ê.**
+  Une règle stricte (mots faits seulement de sons déjà ouverts) n'est pas
+  tenable dans toutes les leçons : sur 73 mots d'exemple de voyelles,
+  66 ont une consonne initiale et 34 une finale.
+- **Options** : consonnes t + x (meilleure couverture avec le corpus), b + t,
+  t + m, ou ne rien changer à L01. Pour les autres leçons : règle stricte,
+  de préférence, ou souple inchangée (DEC-0039).
+- **Décision** (choix de Christophe) :
+  1. En L01, au **début de la partie A**, E1 présente **t puis m**, pour
+     l'écoute seulement (sans série ni verrou), comme les autres sons d'E1
+     (DEC-0039 : symbole avec « début ▸ », mots, voix de femme et d'homme).
+  2. Les **mots d'exemple des voyelles** e, ê, o, ô, u de L01 sont des
+     syllabes **t ou m + voyelle, au ton ngang, sans finale**. Mots repérés :
+     e *me* ; o *to* ; ô *tô* ; u *tu*, *mu* ; pour **ê**, un mot à trouver
+     (pistes non vérifiées : *mê*, *tê*), contrôlé dans les dictionnaires
+     comme le prévoit DEC-0027 (au moins 2 des 3), puis ajouté au corpus.
+  3. Pour présenter t et m eux-mêmes : de préférence les **mêmes mots**
+     (*to, tu, tô* ; *ma, me, mu*), pour réentendre les mêmes syllabes et
+     limiter les audios.
+  4. **L02 à L13 : règle de préférence.** Les mots d'exemple d'E1 sont
+     choisis d'abord parmi les mots faits de **sons déjà ouverts** ; s'il
+     n'y en a pas assez, la règle souple de DEC-0039 s'applique (ton déjà
+     ouvert, autres sons libres).
+- **Raison** : t est bref (occlusive), m se prolonge : une consonne brève
+  et une longue, toutes deux proches du français ; avec m, l'entrée dans la
+  voyelle s'entend bien. t et m couvrent 4 des 5 voyelles de la partie A ;
+  tous les mots sont au ton ngang, donc aucun ton pas encore vu (MOD-H02,
+  pour L01).
+- **Conséquences** :
+  - m est aussi travaillé en partie B (série *ba / ma / va*) : il sera
+    présenté deux fois en E1 ; écran de la partie B à réutiliser ou à
+    adapter (mise en œuvre).
+  - *me*, *mu*, *tô* et le mot choisi pour ê sont à ajouter à `mots.csv`
+    (sens, `imageable`) ; la plupart n'ont pas d'image facile (🔊 et sens).
+  - Les séries d'E2 de la partie A gardent des finales et d'autres
+    consonnes (*xem / xêm*, *nên / nen*, *môn / mon / mun*) : question
+    notée à part (MOD-H03), non tranchée ici.
+  - À faire **avant** de générer les audios FPT.TTS-ultra des autres
+    leçons (MOD-C01). Audios de L01 à générer : quelques dizaines de
+    fichiers (tarif d'Ultra à vérifier, MOD-C02).
+- **Remplace** : DEC-0039, point 3 (règle souple seule), pour L01 et pour
+  l'ordre de préférence des autres leçons ; précise l'ordre de la partie A
+  de L01 (DEC-0034, DEC-0037 : voyelles, puis consonnes et finales).
+- **Impacte** : `exemples_e1.csv`, `mots.csv`, `syllabes.csv`,
+  `choisir_exemples_e1.py`, `generer_lecteur.py`, `lecteur.js` (E1 de la
+  partie A), audios, PROG-M0 (L01), PROG-ACT (ACT-E1-DECOUV), PROD-LECT,
+  PROD-AF-LECT.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1696,6 +1757,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.63 | 2026-10-31 | Ajout de DEC-0069 (lecteur : signaler un son défectueux). |
 | 1.64 | 2026-10-31 | Ajout de DEC-0070 (E1 : voyelle seule avant les mots). |
 | 1.65 | 2026-11-01 | Ajout de DEC-0071 (audios intermédiaires gardés dans Git, MOD-A05). |
+| 1.66 | 2026-11-01 | Ajout de DEC-0072 (E1 de L01 : t et m avant les voyelles, mots consonne + voyelle ; règle de préférence pour les autres leçons, MOD-H01). |
 
 ## Liens
 
