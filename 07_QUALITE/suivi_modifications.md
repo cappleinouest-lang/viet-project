@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.26
+version: 0.27
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -26,7 +26,7 @@ sources:
   entre le 28 octobre et le 1er novembre 2026. Le travail du 31/10 après
   15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
   (commit `1d5c57e`, MOD-A01).
-- **Ce qui reste à faire** : **85 besoins** relevés (section 3), dont
+- **Ce qui reste à faire** : **86 besoins** relevés (section 3), dont
   **17 de priorité haute** (MOD-A01 à MOD-A04 et MOD-B01 à MOD-B06 faits le 01/11 ; MOD-A05 décidé : DEC-0071).
   L'historique est sauvegardé hors du PC depuis le 01/11 (dépôt privé GitHub,
   MOD-A02). Les documents sont d'accord avec DEC-0067 (MOD-B02 à B06).
@@ -39,13 +39,13 @@ sources:
 |---|---|---|---|---|
 | A. Git et sauvegarde | 5 | 3 | 2 | 0 |
 | B. Cohérence des documents après DEC-0067 | 13 | 7 | 6 | 0 |
-| C. Audios et voix | 16 | 4 | 8 | 4 |
+| C. Audios et voix | 17 | 5 | 8 | 4 |
 | D. Lecteur d'activités | 24 | 1 | 16 | 7 |
 | E. Contenus et relecture par un locuteur | 10 | 1 | 7 | 2 |
 | F. Règles et fondations | 7 | 0 | 4 | 3 |
 | G. Outils, enveloppe, Anki | 6 | 0 | 1 | 5 |
 | H. Pédagogie et programme | 4 | 1 | 3 | 0 |
-| **Total** | **85** | **17** | **47** | **21** |
+| **Total** | **86** | **18** | **47** | **21** |
 
 ---
 
@@ -158,7 +158,7 @@ gardée, pas supprimée.
 | MOD-B13 | `CONTEXTE_IA.md` v1.17 (DEC-0072, DEC-0073, audios de L01, tarif d'Ultra, points ouverts) ; résumé de ce suivi corrigé (73 décisions, 84 besoins) ; CONTEXTE_IA repassé en BROUILLON, à revalider |
 | MOD-H03 | DEC-0074 : séries S0001, S0004 et S0007 de `paires_minimales.csv` remplacées par des syllabes t/m + voyelle ; aucun audio à produire (déjà générées pour l'E1 avec DEC-0072, DEC-0073) |
 | MOD-H02 | Contrôle systématique des 265 mots d'exemple de L02 à L13 : aucun ton pas encore ouvert à sa leçon. Clos sans modification |
-| MOD-H04 | DEC-0075 : rappel court (1 mot, 1 voix, « déjà vu en L01 ») pour -m et -n en L08/L10, au lieu d'une découverte complète. **Mise en œuvre faite** : colonne `e1_rappel` dans `lecons.csv` (L08 : -m et -n ; L10 : -n), `generer_lecteur.py` (1 mot rang 1, voix F4), `lecteur.js` (écran « Rappel », bouton Écouter seul). Lecteur régénéré et testé par Christophe dans le navigateur : ok. Documents mis à jour : PROD-AF-LECT 0.5 (RG-21), PROD-LECT 0.23, DATA-MODELE 0.23 (`e1_rappel`) |
+| MOD-H04 | DEC-0075 : rappel court (1 mot, 1 voix, « déjà vu en L01 ») pour -m et -n en L08/L10, au lieu d'une découverte complète. **Mise en œuvre faite** : colonne `e1_rappel` dans `lecons.csv` (L08 : -m et -n ; L10 : -n), `generer_lecteur.py` (1 mot rang 1, voix F4), `lecteur.js` (écran « Rappel », bouton Écouter seul). Reste : régénérer le lecteur et tester dans le navigateur |
 
 ---
 
@@ -215,7 +215,8 @@ gardée, pas supprimée.
 | MOD-C13 | **Voix d'enfant** : source à trouver | DEC-0023 ; `voix.csv` (E1 `planned`) | `voix.csv` | Basse | à faire |
 | MOD-C14 | Audios lents des mots qui ne servent qu'en leçons de tons : générés mais jamais joués (coût inutile, faible) | PROD-AF-LECT EC-03 | plan de génération | Basse | à faire |
 | MOD-C15 | Réévaluer FPT.TTS-ultra plus tard pour les **phrases et dialogues** (A1–A2) | QUAL-ESSAI-ULTRA, résumé | audios A1 | Basse | plus tard |
-| MOD-C16 | **Mots tronqués en écoute normale** (constat de Christophe, 2026-11-01) : revoir les locuteurs (voix F4 / H6) ; identifier les mots et les voix concernés, puis corriger (autre voix, rognage, régénération). À traiter avant MOD-C01 si possible | Christophe, 2026-11-01 ; lien MOD-C08 (silence de début, rognage Ultra) | `voix.csv`, `audios.csv`, `generer_audio_fpt.py` | Moyenne | à vérifier |
+| MOD-C16 | **Repli « voix système » de mauvaise qualité** : quand une leçon n'a pas encore de MP3 FPT validé, le lecteur lit le texte avec la synthèse vocale de l'appareil (Web Speech API, `vi-VN`, section 3 de `lecteur.js`). Christophe la juge mauvaise (2026-11-01). Les vrais fichiers F4 / H6 **ne sont pas en cause**. Repli provisoire qui disparaît dès que les MP3 existent (MOD-C01) ; à décider : le **désactiver** pendant la production (afficher « audio à venir » au lieu d'une mauvaise voix) | Christophe, 2026-11-01 | `lecteur.js` (section 3, `jouer`, `afficherBandeau`) | Moyenne | à décider |
+| MOD-C17 | **Audit approfondi des locuteurs FPT** déjà utilisés (F1, F3, H3, H4, F4, H6) : noter chaque voix sur 4 dimensions — lettres/voyelles seules, mots courts CV et VC (consonnes de début et de fin), ralenti, espacement des mots — sur une batterie de test commune, en réutilisant `valider_audios.py` et les validations existantes (3 664 écoutes, anciennes voix seulement ; F4 / H6 Ultra à écouter car seulement L01 produit). Sortie : tableau voix × type d'activité → valable / à éviter. Tranche aussi MOD-B07 (R-AUD-02). À faire avant MOD-C01 | Christophe, 2026-11-01 | `voix.csv`, `07_QUALITE/validations`, `valider_audios.py`, batterie de test à écrire | **Haute** | à concevoir |
 
 ### D. Lecteur d'activités
 
@@ -324,7 +325,8 @@ gardée, pas supprimée.
 | 0.23 | 2026-11-01 | MOD-B13 fait : CONTEXTE_IA v1.17 ; résumé corrigé ; totaux recomptés (84 besoins). |
 | 0.24 | 2026-11-01 | MOD-H03 fait (DEC-0074) : séries S0001, S0004, S0007 de L01 remplacées par t/m + voyelle. |
 | 0.25 | 2026-11-01 | MOD-H02 clos (vérifié, conforme) ; MOD-H04 décidé et fait (DEC-0075, rappel court -m/-n en L08/L10). |
-| 0.26 | 2026-11-01 | MOD-H04 : mise en œuvre dans le lecteur (e1_rappel, generer_lecteur.py, lecteur.js) ; test navigateur fait (ok) ; documents PROD-AF-LECT, PROD-LECT, DATA-MODELE mis à jour. MOD-C16 ajouté (mots tronqués en écoute normale, locuteurs à revoir) ; totaux : 85 besoins. |
+| 0.26 | 2026-11-01 | MOD-H04 : mise en œuvre dans le lecteur (e1_rappel, generer_lecteur.py, lecteur.js) ; test navigateur à faire. MOD-C16 ajouté ; totaux : 85 besoins. |
+| 0.27 | 2026-11-01 | MOD-C16 corrigé (le défaut est la synthèse système, pas les voix F4 / H6) ; MOD-C17 ajouté (audit approfondi des locuteurs) ; totaux : 86 besoins. |
 
 ## Liens
 
