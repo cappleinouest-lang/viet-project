@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.9
+version: 0.10
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -27,7 +27,7 @@ sources:
   15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
   (commit `1d5c57e`, MOD-A01).
 - **Ce qui reste à faire** : **80 besoins** relevés (section 3), dont
-  **17 de priorité haute** (MOD-A01 et MOD-A03 faits le 01/11 ; MOD-A05 décidé : DEC-0071). Le plus
+  **17 de priorité haute** (MOD-A01, MOD-A03 et MOD-B01 faits le 01/11 ; MOD-A05 décidé : DEC-0071). Le plus
   urgent : la sauvegarde hors du PC (MOD-A02), puis mettre les documents d'accord avec DEC-0067 (plusieurs documents décrivent
   encore les anciennes voix F1, F3, H3, H4).
 
@@ -144,6 +144,7 @@ gardée, pas supprimée.
 | MOD-A01 | Fait à 12 h 09, commit `1d5c57e` (`git add -A`) : les 23 fichiers de documents, données, lecteur et scripts de la section 2.5 (dont `suivi_modifications.md` v0.7), et 1 015 audios nouveaux, modifiés ou supprimés. Vérification demandée : `git status` vide après le commit |
 | MOD-A03 | Vérifié : 6 784 MP3 suivis par Git (88 Mo), dont 2 296 dans des dossiers que le `.gitignore` devrait exclure ; dépôt compatible avec GitHub. Suite : MOD-A05 |
 | MOD-A05 | Décidé (DEC-0071, option B) : `_bruts`, `_anciens` et `_essais` restent suivis par Git ; leurs lignes sont retirées du `.gitignore` |
+| MOD-B01 | `CONTEXTE_IA.md` v1.15 : voix F4 / H6 et débit lent emprunté (§ 4), état au 01/11 (§ 5 : 5 506 audios dont 3 494 validés, F4 / H6 pour L01 seulement, lecteur 0.21, Git), points ouverts renvoyés à ce suivi (§ 6), décisions jusqu'à DEC-0071 ; document repassé en BROUILLON (DOC-21), à revalider par Christophe |
 
 ---
 
@@ -167,7 +168,7 @@ gardée, pas supprimée.
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-B01 | **CONTEXTE_IA** v1.15 : § 4 « Audio » (dit encore F1 + H4 pour les sons, F1/H3/H4 pour les tons, modèle F1), § 5 état (daté du 30/10, lecteur 0.13 au lieu de 0.21, 4 491 audios), § 6 points ouverts, nombre de décisions (DEC-0070) | constat du 2026-11-01 | CTX-IA | **Haute** | à faire |
+| MOD-B01 | **CONTEXTE_IA** v1.15 : § 4 « Audio » (dit encore F1 + H4 pour les sons, F1/H3/H4 pour les tons, modèle F1), § 5 état (daté du 30/10, lecteur 0.13 au lieu de 0.21, 4 491 audios), § 6 points ouverts, nombre de décisions (DEC-0070) | constat du 2026-11-01 | CTX-IA | **Haute** | **fait** (2026-11-01, CTX-IA v1.15 ; à revalider) |
 | MOD-B02 | **PROD-AUDIO** : titre « FPT.TTS-pro » périmé ; § 1 tableau des voix et totaux du 29/10 ; historique (ligne 0.10 mal placée) ; champs `entrees` et `sorties` vides (DOC-30) | constat du 2026-11-01 | `05_PRODUCTION/03_audio.md` | **Haute** | à faire |
 | MOD-B03 | **PROD-LECT** : § 4 « voix F1, H3, H4 simulées » ; § 5 « modèle F1 » ; version 0.20 du 30/10 sans DEC-0065 à DEC-0070 | constat du 2026-11-01 | `05_PRODUCTION/02_lecteur_activites.md` | **Haute** | à faire |
 | MOD-B04 | **PROD-AF-LECT** (analyse fonctionnelle, état du 29/10) : voix F1 dans les règles RG-11, § 6 ; exemples `W0057-H3`, Le Minh ; ajouter signalement (DEC-0069), voyelle seule (DEC-0070), « Combien de fois ? », E4, page des tons | constat du 2026-11-01 | `05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md` | **Haute** | à faire |
@@ -288,6 +289,7 @@ gardée, pas supprimée.
 | 0.7 | 2026-11-01 | MOD-A03 fait : les MP3 sont suivis par Git (résultat chiffré) ; nouveau besoin MOD-A05 (audios intermédiaires suivis malgré le `.gitignore`) ; journal 2.6. |
 | 0.8 | 2026-11-01 | MOD-A01 fait (commit `1d5c57e`) : journal 2.4 à 2.6, section 2.5 vérifiée avec `git status`. |
 | 0.9 | 2026-11-01 | MOD-A05 fait : audios intermédiaires gardés dans Git (DEC-0071), `.gitignore` corrigé. |
+| 0.10 | 2026-11-01 | MOD-B01 fait : CONTEXTE_IA v1.15. |
 
 ## Liens
 
