@@ -1,7 +1,7 @@
 ---
 id: CTX-IA
 titre: Contexte du projet pour une IA
-statut: BROUILLON
+statut: VALIDE
 version: 1.15
 date: 2026-11-01
 resume: >
@@ -158,3 +158,4 @@ La liste complète, numérotée et classée par priorité, est dans
 | 1.13 | 2026-10-31 | Outil de validation des audios (DEC-0065). |
 | 1.14 | 2026-10-31 | Thu Minh écartée, Ban Mai pour les leçons de sons (DEC-0066). |
 | 1.15 | 2026-11-01 | MOD-B01 : § 4 voix FPT.TTS-ultra F4 / H6 et débit lent emprunté (DEC-0067, 0068), voyelle seule en E1 (DEC-0070), signalement d'un son (DEC-0069), audios intermédiaires dans Git (DEC-0071) ; § 3 décisions jusqu'à DEC-0071, suivi des modifications, état d'avancement, essai Ultra ; § 5 état au 2026-11-01 (5 506 audios, lecteur 0.21, Git) ; § 6 points ouverts renvoyés au suivi des modifications ; § 2 noter chaque modification dans le suivi. Repassé en BROUILLON (DOC-21). Analyse d'impact (DOC-35) : `sorties` vide, aucun document en aval. |
+| 1.15 | 2026-11-01 | Validé par Christophe (statut VALIDE). |
