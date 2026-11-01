@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.66
+version: 1.67
 date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1687,6 +1687,41 @@ qui indique « remplace DEC-NNNN ».
   partie A), audios, PROG-M0 (L01), PROG-ACT (ACT-E1-DECOUV), PROD-LECT,
   PROD-AF-LECT.
 
+### DEC-0073 — E1 : syllabes sans sens quand le corpus ne suffit pas
+
+- **Date** : 2026-11-01
+- **Question** (MOD-H01, suite de DEC-0072) : avec la règle de DEC-0072,
+  plusieurs sons de L01 n'ont qu'un mot d'exemple (e *me*, o *to*,
+  ô *tô*, b *ba*). Christophe : en E1, comme en E2 et E3, les mots
+  peuvent être des syllabes inventées.
+- **Constat** : *te*, *mo*, *mô* sont de vrais mots (3 dictionnaires sur 3,
+  QUAL-VERIF-HORS-CORPUS § 3 bis), absents du corpus. DEC-0039 ne prévoyait
+  en E1 que des mots du corpus, avec image ou sens.
+- **Décision** (accord de Christophe) :
+  1. En E1, quand les mots du corpus donnent **moins de 2 exemples** pour un
+     son ou un ton, on complète jusqu'à 2 avec des **syllabes sans sens**,
+     dans cet ordre : d'abord une **syllabe réelle hors corpus** (au moins
+     2 dictionnaires sur 3, DEC-0027), puis seulement en dernier recours une
+     **syllabe inventée**.
+  2. Ces syllabes suivent les mêmes règles que les mots : faites seulement
+     de **sons déjà vus** (niveau 0 de DEC-0072), ton déjà ouvert ; pour une
+     voyelle, jamais la voyelle seule (déjà jouée, DEC-0070).
+  3. Affichage : **🔊 sans sens ni image** ; une syllabe inventée porte la
+     mention « syllabe inventée ». Jamais écrites (R-ECR-01, R-LEX-06).
+  4. Candidates : `04_DONNEES/syllabes_e1.csv` (3 581 syllabes simples
+     décomposées, 1 572 réelles, 2 009 inventées), fabriqué par
+     `tools/fabriquer_syllabes_e1.py`.
+- **Résultat** (2026-11-01) : 4 syllabes ajoutées, toutes réelles :
+  L01 e *te*, o *mo*, ô *mô*, b *be*.
+- **Raison** : faire entendre au moins deux syllabes justes par son, en
+  restant le plus possible dans le vietnamien réel.
+- **Remplace** : DEC-0039, point 3, pour la seule origine des mots d'E1
+  (« mots du corpus »).
+- **Impacte** : `exemples_e1.csv` (colonnes `syllable`, `invented`),
+  `syllabes_e1.csv`, `choisir_exemples_e1.py`, `generer_lecteur.py`,
+  `generer_audio_fpt.py`, DATA-MODELE, QUAL-VERIF-HORS-CORPUS, PROG-ACT
+  (ACT-E1-DECOUV), PROD-AF-LECT.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1758,6 +1793,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.64 | 2026-10-31 | Ajout de DEC-0070 (E1 : voyelle seule avant les mots). |
 | 1.65 | 2026-11-01 | Ajout de DEC-0071 (audios intermédiaires gardés dans Git, MOD-A05). |
 | 1.66 | 2026-11-01 | Ajout de DEC-0072 (E1 de L01 : t et m avant les voyelles, mots consonne + voyelle ; règle de préférence pour les autres leçons, MOD-H01). |
+| 1.67 | 2026-11-01 | Ajout de DEC-0073 (E1 : syllabes sans sens quand le corpus ne suffit pas). |
 
 ## Liens
 

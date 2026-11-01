@@ -26,7 +26,7 @@ ENTRÉES (04_DONNEES, sauf mention)
     paires_minimales.csv  séries minimales : termes, position, élément contrasté
     mots.csv, sons.csv, tons.csv, reperes_sons.csv
                           sens des mots, symboles, place, repères (DEC-0038, DEC-0042)
-    exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039)
+    exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039) ; syllabes sans sens (DEC-0073)
     voix.csv              voix actives ; voix d'écoute par type de leçon (listen_sounds / listen_tones, DEC-0055) ;
                           slow_from : voix qui fournit le débit lent (DEC-0067 : F4 <- F1, H6 <- H4)
     mots_lecons.csv       mots supports de chaque leçon : les mots d'E4 (DEC-0050)
@@ -302,8 +302,16 @@ def main():
         decouverte = {}
         for e in elements_de(liste):
             mots_e = []
-            for x in sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e and x['word_code']),
-                            key=lambda x: int(x['rank'])):
+            for x in sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e
+                             and (x['word_code'] or x.get('syllable'))), key=lambda x: int(x['rank'])):
+                if not x['word_code']:
+                    # Syllabe sans sens (DEC-0073) : ni sens ni image, jamais écrite (R-LEX-06) ;
+                    # « ecrit » ne sert qu'à la voix de synthèse et à l'audio (référence = l'écriture).
+                    invente = x.get('invented') == 'true'
+                    mots_e.append({'ecrit': x['syllable'], 'sens': 'syllabe inventée' if invente else '',
+                                   'image': '', 'voix': [x['voice_f'], x['voice_h']],
+                                   'audio': audio(x['syllable']), 'appui': '', 'invente': invente})
+                    continue
                 m = mots[x['word_code']]
                 # Classificateur (DEC-0062) : « con mèo » si la règle l'autorise et que l'audio existe.
                 a = rc.appui(ctx_clf, x['word_code'], code, e)

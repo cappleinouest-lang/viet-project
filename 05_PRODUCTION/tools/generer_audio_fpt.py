@@ -190,12 +190,19 @@ def plan(donnees, lecon=None):
         for v in voix_ecoute(p['lesson_code']):
             ajouter('V-' + e, sons[e]['grapheme'], 'voyelle', v['voice_code'], 'normal')
     for x in lire(os.path.join(donnees, 'exemples_e1.csv')):      # DEC-0039
-        if (lecon and x['lesson_code'] != lecon) or not x['word_code']:
+        if lecon and x['lesson_code'] != lecon:
+            continue
+        if x['word_code']:
+            ref, ecrit, type_item = x['word_code'], mots[x['word_code']]['written'], 'word'
+        elif x.get('syllable'):                                     # DEC-0073 : syllabe sans sens
+            ref, ecrit = x['syllable'], x['syllable']
+            type_item = 'invented' if x.get('invented') == 'true' else 'syllable'
+        else:
             continue
         for code_voix in (x['voice_f'], x['voice_h']):
             if code_voix in actives:
                 for d in VITESSE_FPT:
-                    ajouter(x['word_code'], mots[x['word_code']]['written'], 'word', code_voix, d)
+                    ajouter(ref, ecrit, type_item, code_voix, d)
     if not lecon:                                                  # DEC-0052 : série des 6 tons
         for x in lire(os.path.join(donnees, 'reference_tons.csv')):
             ref = x['word_code'] or x['written']

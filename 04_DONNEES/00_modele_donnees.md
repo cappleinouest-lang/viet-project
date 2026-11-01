@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.20
+version: 0.22
 date: 2026-11-01
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -94,6 +94,7 @@ erDiagram
 | `is_tone_lesson` | leçon de tons | `true` / `false` | `false` |
 | `is_recycling` | leçon de recyclage (L14) | `true` / `false` | `false` |
 | `split_parts` | leçon présentée en deux parties : voyelles, puis consonnes et finales (DEC-0037) | `true` / `false` | `true` (L01) |
+| `e1_first` | sons présentés en E1 **avant** ceux de la première partie, pour que les mots d'exemple soient faits de sons déjà vus (DEC-0072) ; vide : aucun | `sound_code` séparés par une espace | `PH-CO-t PH-IN-m` (L01) |
 
 ### 3.4 `ouvertures.csv` — quand chaque son et ton s'ouvre (DEC-0007)
 
@@ -215,16 +216,20 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 ### 3.11 bis `exemples_e1.csv` — mots d'exemple de l'étape E1 (DEC-0039)
 
 Produit par `05_PRODUCTION/tools/choisir_exemples_e1.py` ; peut être corrigé
-à la main (relancer l'outil réécrit le fichier : `--verifier` compare sans écrire).
+à la main (relancer l'outil réécrit le fichier : `--verifier` compare sans écrire
+et affiche les mots qui changent). Règle de choix : DEC-0039, complétée par
+DEC-0072 (sons de `e1_first`, règle de préférence par niveaux).
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
 | `lesson_code` | leçon | `lesson_code` | `M0-L01` |
-| `element` | son ou ton découvert | `sound_code` ou `tone_code` | `PH-VS-e` |
+| `element` | son ou ton découvert (y compris les sons de `e1_first` de `lecons.csv`) | `sound_code` ou `tone_code` | `PH-VS-e` |
 | `rank` | ordre de passage | 1 à 3 | `1` |
-| `word_code` | mot d'une syllabe contenant l'élément | `word_code` | `W0057` |
+| `word_code` | mot d'une syllabe contenant l'élément ; vide pour une syllabe sans sens | `word_code` | `W0057` |
 | `voice_f` / `voice_h` | voix de femme, puis voix d'homme | `voice_code` actifs | `F4` / `H6` |
 | `note` | écriture du mot (lecture humaine du fichier) | | `xem` |
+| `syllable` | syllabe sans sens, quand le corpus ne suffit pas (DEC-0073) : écriture, prise dans `syllabes_e1.csv` ; sert de référence d'audio ; jamais affichée | | `te` |
+| `invented` | pour une syllabe sans sens : inventée (`true`) ou réelle hors corpus (`false`) | `true` / `false` / vide | `false` |
 
 ### 3.12 `images.csv` — images des mots (DEC-0024)
 
@@ -313,6 +318,22 @@ Produit par `05_PRODUCTION/tools/choisir_appuis.py`. Colonnes : `series_code`,
 `classificateurs.csv`), `note` (termes de la série). Les audios correspondants
 ont pour référence `K-<série>-<position>`.
 
+### 3.18 `syllabes_e1.csv` — syllabes simples candidates pour E1 (DEC-0073)
+
+Fichier **produit** par `05_PRODUCTION/tools/fabriquer_syllabes_e1.py` (à ne
+pas saisir à la main) : toutes les syllabes consonne simple + voyelle simple
+(+ finale -m, -n, -p, -t) aux 6 tons, sauf celles de `mots.csv`.
+`choisir_exemples_e1.py` y prend une syllabe quand le corpus donne moins de
+2 exemples. 3 581 lignes (2026-11-01).
+
+| Colonne | Contenu | Valeurs permises | Exemple |
+|---|---|---|---|
+| `written` | syllabe écrite | | `te` |
+| `initial`, `nucleus`, `final` | décomposition, comme `syllabes.csv` | `sound_code` ou vide | `PH-CO-t` / `PH-VS-e` / vide |
+| `tone` | ton | `tone_code` | `ngang` |
+| `invented` | absente d'au moins 2 des 3 dictionnaires (DEC-0027) | `true` / `false` | `false` |
+| `dictionaries` | dictionnaires où elle figure | `hongocduc`, `tudientv`, `wiktionary` | `hongocduc tudientv wiktionary` |
+
 ## 4. Ce qui n'est pas un fichier source
 
 **Transcription phonétique des mots** : non utilisée (DEC-0021). Seule la
@@ -359,6 +380,14 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.12 | 2026-10-29 | `lecons.csv` : colonne `split_parts` (DEC-0037) ; L14 corrigé dans l'exemple de `is_recycling`. |
 | 0.13 | 2026-10-29 | Nouveau fichier `reperes_sons.csv` (DEC-0038). |
 | 0.14 | 2026-10-29 | `voix.csv` : colonne `provider_model`, statut `inactive`, fournisseur `fpt-mkp`. |
+| 0.15 | 2026-10-29 | `voix.csv` : colonne `provider_speed_slow` (débit lent propre à chaque voix). |
+| 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
+| 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |
+| 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055) ; `mots.csv` : colonne `classifier`, fichier `appuis_series.csv` (DEC-0060). |
+| 0.19 | 2026-10-31 | `voix.csv` : colonne `slow_from` (débit lent emprunté à une autre voix, DEC-0067). En-tête du document laissé par erreur en v0.19 du 30/10. |
+| 0.20 | 2026-11-01 | MOD-B06 : en-tête mis à jour ; exemples avec F4 / H6 (`audios.csv`, `voix.csv`, `exemples_e1.csv`) ; `item_type` `sequence` et `voyelle` (DEC-0070) ; `provider_model` `FPT.TTS-ultra` ; mots espacés par virgules ; voix de `reference_tons.csv` et de `courbes_modele.csv` (DEC-0067). |
+| 0.21 | 2026-11-01 | `lecons.csv` : colonne `e1_first` (DEC-0072, MOD-H01) ; `exemples_e1.csv` : règle de choix complétée. |
+| 0.22 | 2026-11-01 | `exemples_e1.csv` : colonnes `syllable`, `invented` ; nouveau fichier `syllabes_e1.csv` (DEC-0073). |
 
 ## Liens
 
@@ -368,9 +397,3 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
   [Spécificités du vietnamien](../01_FONDATIONS/02_specificites_vietnamien.md)
 - **Sorties** : fichiers CSV de ce dossier ·
   [Architecture des outils](../05_PRODUCTION/01_architecture_outils.md)
-| 0.15 | 2026-10-29 | `voix.csv` : colonne `provider_speed_slow` (débit lent propre à chaque voix). |
-| 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
-| 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |
-| 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055) ; `mots.csv` : colonne `classifier`, fichier `appuis_series.csv` (DEC-0060). |
-| 0.19 | 2026-10-31 | `voix.csv` : colonne `slow_from` (débit lent emprunté à une autre voix, DEC-0067). En-tête du document laissé par erreur en v0.19 du 30/10. |
-| 0.20 | 2026-11-01 | MOD-B06 : en-tête mis à jour ; exemples avec F4 / H6 (`audios.csv`, `voix.csv`, `exemples_e1.csv`) ; `item_type` `sequence` et `voyelle` (DEC-0070) ; `provider_model` `FPT.TTS-ultra` ; mots espacés par virgules ; voix de `reference_tons.csv` et de `courbes_modele.csv` (DEC-0067). |

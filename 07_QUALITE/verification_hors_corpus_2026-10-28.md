@@ -2,7 +2,7 @@
 id: QUAL-VERIF-HORS-CORPUS-20261028
 titre: Vérification des termes hors corpus des séries minimales
 statut: BROUILLON
-version: 0.2
+version: 0.3
 date: 2026-11-01
 resume: >
   Les 107 termes des séries minimales absents de mots.csv ont été cherchés
@@ -78,6 +78,17 @@ mots d'exemple d'E1 de la partie A de L01 (MOD-H01).
   sens vient d'un seul dictionnaire (Wiktionnaire anglais). À faire relire
   par un locuteur du Nord (MOD-E01). Aucun des deux n'a d'image facile.
 
+## 3 ter. Liste des syllabes simples pour E1 (DEC-0073, 2026-11-01)
+
+- **Fait** : `05_PRODUCTION/tools/fabriquer_syllabes_e1.py` applique la même
+  méthode (entrée isolée, en minuscules, au moins 2 dictionnaires sur 3) à
+  toutes les syllabes simples (16 débuts × 11 voyelles × 5 finales × tons
+  permis, hors `mots.csv`) : **3 581 syllabes, 1 572 réelles, 2 009
+  inventées**, dans `04_DONNEES/syllabes_e1.csv`.
+- **Contrôle** : les résultats du § 2 se retrouvent (*mon*, *xêm* absents ;
+  *nen* dans un seul dictionnaire ; *hô*, *mu*, *be* réels).
+- **Limite** : même limite qu'au § 1 (existence, pas sens ni usage au Nord).
+
 ## 4. À faire
 
 - Vérifier le sens et l'usage au Nord des 74 mots réels (dictionnaire ou
@@ -90,3 +101,4 @@ mots d'exemple d'E1 de la partie A de L01 (MOD-H01).
 |---|---|---|
 | 0.1 | 2026-10-28 | Création. |
 | 0.2 | 2026-11-01 | § 3 bis : *mê*, *tê* et syllabes t / m + voyelle vérifiées pour DEC-0072 (MOD-H01). |
+| 0.3 | 2026-11-01 | § 3 ter : liste des syllabes simples pour E1 (DEC-0073). |
