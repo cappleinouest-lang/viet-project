@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.60
+version: 1.64
 date: 2026-10-31
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1492,6 +1492,116 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : données (`voix.csv`, `exemples_e1.csv`, `audios.csv`),
   PROD-AUDIO, lecteur.
 
+### DEC-0067 — Voix FPT.TTS-ultra : Ban Mai et Quang Anh ; débit lent emprunté ; mots espacés par virgules
+
+- **Date** : 2026-10-31
+- **Question** : quelles voix du Nord garder, après l'essai de FPT.TTS-ultra
+  (07_QUALITE/essai_tts_ultra_2026-10-31.md) ?
+- **Constats** : à l'écoute de Christophe, Ban Mai (Ultra) attaque le début
+  des mots avec plus de précision qu'en FPT.TTS-pro ; Quang Anh (Ultra) a
+  l'accent du Nord ; Minh Quang, Xuan Toan, Phuong An et Kim Ngan (Ultra)
+  ne l'ont pas ; Viet Khoa (Ultra) parle trop vite. **FPT.TTS-ultra ignore
+  le paramètre de vitesse** : pas de débit lent. À la mesure, les tons
+  d'Ultra sont moins contrastés (Ban Mai 2,34 ; Quang Anh 2,22, contre
+  environ 4 pour F1 et H4). Pour les phrases, l'espacement par
+  ponctuation sonne haché ; les virgules espacent mieux que les points de
+  suspension et que les points (essai_espacement.py).
+- **Options** pour le débit lent : 1. ralentir les fichiers Ultra après
+  coup ; 2. voix Ultra au débit normal, anciennes voix pour le lent ;
+  3. pas d'audio lent.
+- **Décision** : **2** (choix de Christophe).
+  1. Deux voix seulement, une femme et un homme : **F4 Ban Mai** et
+     **H6 Quang Anh**, en FPT.TTS-ultra, pour toutes les écoutes (leçons de
+     sons et de tons), E1, la page « Les 6 tons » et la voix modèle d'E4.
+  2. **Débit lent emprunté** : nouvelle colonne `slow_from` de `voix.csv`.
+     F4 prend les fichiers lents de **F1 Ban Mai** (FPT.TTS-pro, 0,7),
+     H6 ceux de **H4 Huy Phong** (FPT.AI-VITs, 0,6). Pour la voix d'homme,
+     le personnage change donc entre lent et normal.
+  3. F1, H3 et H4 deviennent `inactive` (F1 et H4 restent la source du
+     débit lent ; H3 Le Minh est retiré).
+  4. `exemples_e1.csv` : voix F1 → F4, H4 et H3 → H6.
+  5. **Mots espacés** des phrases : **virgules** entre les mots à la place
+     des points de suspension (« Tôi, ăn, nem. »).
+  6. Fichiers FPT.TTS-ultra : silence de début et de fin raccourci
+     (`decoupe_audio.py`, plus de 200 ms mesurés avant le mot).
+  7. Phrases lentes à 0,75 : jugées bonnes à l'écoute, **non appliquées
+     pour l'instant** (coût), à revoir plus tard.
+- **Mise en œuvre** : d'abord une seule leçon (`--lecon M0-L01`), écoutée
+  dans le lecteur, avant le reste (environ 1 700 fichiers, 19 000
+  caractères ; tarif d'Ultra à vérifier sur la marketplace).
+- **Remplace** : DEC-0066 et DEC-0055 pour le choix des voix ; DEC-0058
+  pour l'écriture des mots espacés (virgules au lieu de points de
+  suspension).
+- **Impacte** : données (`voix.csv`, `exemples_e1.csv`, `audios.csv`,
+  `courbes_modele.csv`), PROD-AUDIO, lecteur (`generer_lecteur.py`,
+  `lecteur.js`), `generer_audio_fpt.py`, `decoupe_audio.py`,
+  `courbes_modele.py`.
+
+### DEC-0068 — Fichiers FPT.TTS-ultra : début gardé brut, silence final complété
+
+- **Date** : 2026-10-31
+- **Question** : faut-il raccourcir le silence de début des fichiers Ultra
+  (plus de 200 ms, contre environ 90 ms pour F1 et 40 ms pour H4), comme
+  prévu par DEC-0067 (point 6) ?
+- **Décision** : **non, pour l'instant** (choix de Christophe) : le
+  début est gardé tel que FPT le livre. **La fin est traitée** (demande de
+  Christophe : silence final trop court, environ 0,19 s) : le silence après
+  le mot est complété jusqu'à 0,35 s, comme pour les autres audios, sans
+  rien couper ni fondre. Le volume est égalisé.
+  Le raccourcissement reste disponible (`ROGNER_ULTRA` dans
+  `generer_audio_fpt.py`) s'il gêne à l'usage (temps de réaction,
+  écart entre débit lent et normal).
+- **Remplace** : DEC-0067, point 6.
+- **Impacte** : `generer_audio_fpt.py`, PROD-AUDIO.
+
+### DEC-0069 — Lecteur : signaler un son défectueux pendant les exercices
+
+- **Date** : 2026-10-31
+- **Question** : comment noter, en faisant les exercices, un audio qui ne
+  convient pas, pour qu'il soit traité ensuite ?
+- **Décision** (demande de Christophe) : en mode test (réglage « Infos de
+  test sur le son »), un bouton **« ⚑ Signaler un son »** reste en bas de
+  l'écran dans tous les exercices. Il ouvre un panneau : les 8 derniers
+  sons joués (à réécouter), une **case à cocher par défaut possible**
+  (début tronqué, fin coupée, son parasite après le mot, ton faux ou peu net, son faux, accent non
+  conforme à Hanoï, mot différent, trop numérique, trop lent, trop rapide,
+  espace entre les mots trop faible ou trop long, silence trop long avant
+  le mot, volume, bruit ou coupure, voix différente de celle annoncée,
+  lent et normal trop différents, autre) et une remarque.
+- **Traitement** : les signalements restent sur l'appareil jusqu'à
+  l'export (fichier `validations_audios_lecteur_<date>.csv`, au format de
+  la page de validation, décision « à refaire »), puis
+  `valider_audios.py --appliquer` les inscrit dans
+  `07_QUALITE/audios_a_refaire.csv`, et `generer_audio_fpt.py --refaire
+  --liste` les régénère (DEC-0065). Un signalement ne touche pas un audio
+  refait depuis (version = date du fichier).
+- **Limite** : en E2–E3, le panneau montre le mot et le nom du fichier :
+  l'ouvrir après avoir répondu.
+- **Impacte** : `lecteur.js`, `lecteur.css`, `generer_lecteur.py`
+  (`versions` dans `donnees.js`), PROD-AUDIO.
+
+### DEC-0070 — E1 : la voyelle seule avant les mots (voyelles simples)
+
+- **Date** : 2026-10-31
+- **Constat** : essai `essai_voyelles.py` (page de test) : Ban Mai et
+  Quang Anh (FPT.TTS-ultra) disent parfaitement une voyelle seule, y
+  compris ă et â (écoute de Christophe).
+- **Décision** (choix de Christophe) : en E1, pour une **voyelle simple**
+  (a, ă, â, e, ê, i, o, ô, ơ, u, ư : sons PH-VS-… et PH-VO-…), le lecteur
+  fait entendre **la voyelle seule avant les mots** (tuile « 🔈 Le son
+  seul », jouée en premier par « Écouter », réécoutable), avec la voix
+  choisie (femme, homme ou les deux).
+  1. **Toujours au débit normal** : FPT.TTS-ultra n'a pas de débit lent ;
+     avec « Écouter lentement », seuls les mots sont ralentis.
+  2. **Diphtongues et triphtongues exclues** pour l'instant : à essayer
+     seules d'abord (certaines ne forment jamais une syllabe seules).
+  3. Audios : `audio/V-<code du son>-<voix>-normal.mp3` (22 fichiers :
+     11 voyelles × F4, H6), validés comme les autres (R-AUD-01). Sans
+     fichier validé, la tuile n'apparaît pas (la voix de synthèse de
+     l'appareil épellerait la lettre).
+- **Impacte** : `generer_audio_fpt.py`, `generer_lecteur.py`,
+  `valider_audios.py`, `lecteur.js`, `lecteur.css`, PROD-AUDIO.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1557,6 +1667,10 @@ qui indique « remplace DEC-NNNN ».
 | 1.58 | 2026-10-30 | Ajout de DEC-0064 (« Les 6 tons » : autres séries, syllabes fermées). |
 | 1.59 | 2026-10-31 | Ajout de DEC-0065 (validation des audios par l'écoute). |
 | 1.60 | 2026-10-31 | Ajout de DEC-0066 (Thu Minh écartée des leçons de sons, Ban Mai la remplace). |
+| 1.61 | 2026-10-31 | Ajout de DEC-0067 (voix FPT.TTS-ultra Ban Mai et Quang Anh, débit lent emprunté, mots espacés par virgules). |
+| 1.62 | 2026-10-31 | Ajout de DEC-0068 (fichiers Ultra : début gardé brut, silence final complété). |
+| 1.63 | 2026-10-31 | Ajout de DEC-0069 (lecteur : signaler un son défectueux). |
+| 1.64 | 2026-10-31 | Ajout de DEC-0070 (E1 : voyelle seule avant les mots). |
 
 ## Liens
 

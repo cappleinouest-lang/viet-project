@@ -8,6 +8,8 @@ Ce qui est généré (d'après 04_DONNEES, source unique) :
   - volet production : chaque mot support, avec la voix modèle (F1), lent et normal ;
   - étape E1 « Découverte » (DEC-0039) : chaque mot d'exemple de exemples_e1.csv, avec sa voix
     de femme et sa voix d'homme, lent et normal ;
+  - étape E1, voyelles simples (DEC-0070) : la voyelle SEULE (a, ă, â, e, ê, i, o, ô, ơ, u, ư),
+    avec les voix d'écoute de la leçon, au débit normal seulement. Fichier : audio/V-<code du son>-<voix>-normal.mp3 ;
   - page « Les 6 tons » (DEC-0052) : la série de reference_tons.csv (ma, má, mà, mả, mã, mạ),
     avec les voix VOIX_REFERENCE_TONS, lent et normal ;
   - exercice « Combien de fois ? » (DEC-0054) : chaque suite ou phrase de comptage.csv, dite
@@ -22,8 +24,13 @@ Où vont les fichiers : 04_DONNEES/audio/<référence>-<voix>-<débit>.mp3
 Chaque fichier créé est ajouté à 04_DONNEES/audios.csv avec validated = false :
 il devra être écouté et validé (R-AUD-01) avant d'être utilisé par le lecteur.
 
-Modèle FPT par voix : colonne provider_model de voix.csv (FPT.TTS-pro pour Ban Mai,
-FPT.AI-VITs pour les voix d'homme, choix du 2026-10-29 après écoute).
+Modèle FPT par voix : colonne provider_model de voix.csv. Depuis DEC-0067 (2026-10-31) : F4 Ban Mai
+et H6 Quang Anh en FPT.TTS-ultra au débit normal ; FPT.TTS-ultra ignore la vitesse, donc le débit
+LENT de ces voix est pris chez la voix indiquée dans la colonne slow_from (F1 Ban Mai FPT.TTS-pro,
+H4 Huy Phong FPT.AI-VITs) : fichiers <référence>-F1-slow.mp3 et <référence>-H4-slow.mp3.
+Fichiers FPT.TTS-ultra (DEC-0068) : début gardé tel que FPT le livre ; silence après le mot complété
+jusqu'à 0,35 s, sans rien couper (decoupe_audio.completer_fin). Raccourcir aussi le début
+(decoupe_audio.rogner_silences) reste possible avec ROGNER_ULTRA = True.
 
 Chaque fichier est égalisé en volume (niveau de parole -20 dBFS, crête <= -1 dBFS, decoupe_audio.py) ;
 le fichier reçu de FPT est gardé dans 04_DONNEES/audio/_bruts/. À lancer avec le Python de .venv-asr,
@@ -79,11 +86,12 @@ MODELE = 'FPT.TTS-pro'
 FOURNISSEUR = 'fpt-mkp'                       # valeur de la colonne provider de voix.csv
 VITESSE_FPT = {'slow': 0.8, 'normal': 1.0}    # valeurs par défaut ; « lent » propre à chaque voix : colonne provider_speed_slow de voix.csv
 VITESSE_PAR_VOIX = {}                         # rempli par plan()
-VOIX_MODELE = 'F1'                            # voix unique du volet production (R-AUD-03)
-VOIX_REFERENCE_TONS = ['F1', 'H3']            # page « Les 6 tons » : une voix de femme, une d'homme (DEC-0052)
+VOIX_MODELE = 'F4'                            # voix unique du volet production (R-AUD-03, DEC-0067)
+VOIX_REFERENCE_TONS = ['F4', 'H6']            # page « Les 6 tons » : une voix de femme, une d'homme (DEC-0052, DEC-0067)
 DELAI_ENTRE_APPELS = 1.5                      # secondes, pour ne pas surcharger le service
 ATTENTES_SI_LIMITE = [10, 30]                 # secondes d'attente successives si le service répond 429
 DOUBLER = False                               # --doubler : envoyer « mot, mot. » et garder la 2e occurrence
+ROGNER_ULTRA = False                          # DEC-0068 : fichiers Ultra gardés bruts (silences non raccourcis)
 MODELE_PAR_VOIX = {}                          # rempli par plan() d'après la colonne provider_model de voix.csv
 ATTENTE_MAX_FICHIER = 30                      # secondes d'attente si le service renvoie un lien au lieu du fichier
 
@@ -129,12 +137,20 @@ def lire(chemin):
         return list(csv.DictReader(f, delimiter=';'))
 
 
+def voyelle_simple(code):
+    """Voyelle simple (DEC-0070) : sons PH-VS-… et PH-VO-… de sons.csv (a, i, u, e, o, ô, ơ, ư, ê, â, ă).
+    Diphtongues et triphtongues exclues tant qu'elles n'ont pas été essayées seules."""
+    return code.startswith('PH-VS-') or code.startswith('PH-VO-')
+
+
 def plan(donnees, lecon=None):
     paires = lire(os.path.join(donnees, 'paires_minimales.csv'))
     mots = {m['word_code']: m for m in lire(os.path.join(donnees, 'mots.csv'))}
     supports = lire(os.path.join(donnees, 'mots_lecons.csv'))
-    voix = [v for v in lire(os.path.join(donnees, 'voix.csv'))
-            if v['status'] == 'active' and v['provider'] == FOURNISSEUR]
+    toutes = {v['voice_code']: v for v in lire(os.path.join(donnees, 'voix.csv'))}
+    voix = [v for v in toutes.values() if v['status'] == 'active' and v['provider'] == FOURNISSEUR]
+    # Débit lent emprunté (DEC-0067) : voix -> voix qui fournit son débit lent (colonne slow_from).
+    lent_de = {v['voice_code']: v['slow_from'] for v in voix if v.get('slow_from')}
     items = {}   # (référence, voix, débit) -> description
     # Voix d'écoute selon le type de leçon (DEC-0055) : colonnes listen_sounds / listen_tones de voix.csv.
     lecons_tons = {l['lesson_code'] for l in lire(os.path.join(donnees, 'lecons.csv')) if l['is_tone_lesson'] == 'true'}
@@ -143,6 +159,8 @@ def plan(donnees, lecon=None):
         return [v for v in voix if v.get(col, 'true') == 'true']
 
     def ajouter(ref, ecrit, type_item, code_voix, debit):
+        if debit == 'slow':
+            code_voix = lent_de.get(code_voix, code_voix)    # DEC-0067 : fichier lent de F1 / H4
         cle = (ref, code_voix, debit)
         if cle not in items:
             items[cle] = {'ref': ref, 'ecrit': ecrit, 'type': type_item, 'voix': code_voix, 'debit': debit}
@@ -161,6 +179,16 @@ def plan(donnees, lecon=None):
         for d in VITESSE_FPT:
             ajouter(s['word_code'], mots[s['word_code']]['written'], 'word', VOIX_MODELE, d)
     actives = {v['voice_code'] for v in voix}
+    # E1, voyelles simples (DEC-0070) : la voyelle seule, débit normal, voix d'écoute de la leçon.
+    sons = {s['sound_code']: s for s in lire(os.path.join(donnees, 'sons.csv'))}
+    vues = set()
+    for p in paires:
+        e = p['element']
+        if (lecon and p['lesson_code'] != lecon) or e not in sons or not voyelle_simple(e) or (p['lesson_code'], e) in vues:
+            continue
+        vues.add((p['lesson_code'], e))
+        for v in voix_ecoute(p['lesson_code']):
+            ajouter('V-' + e, sons[e]['grapheme'], 'voyelle', v['voice_code'], 'normal')
     for x in lire(os.path.join(donnees, 'exemples_e1.csv')):      # DEC-0039
         if (lecon and x['lesson_code'] != lecon) or not x['word_code']:
             continue
@@ -205,26 +233,28 @@ def plan(donnees, lecon=None):
         if a:
             for d in VITESSE_FPT:
                 ajouter(a[1], a[0], 'sequence', VOIX_MODELE, d)
-    voix_fpt = {v['voice_code']: v['provider_voice'] for v in voix}
-    MODELE_PAR_VOIX.update({v['voice_code']: (v.get('provider_model') or MODELE) for v in voix})
+    utiles = voix + [toutes[c] for c in sorted(set(lent_de.values())) if c in toutes]   # + voix du débit lent
+    voix_fpt = {v['voice_code']: v['provider_voice'] for v in utiles}
+    MODELE_PAR_VOIX.update({v['voice_code']: (v.get('provider_model') or MODELE) for v in utiles})
     VITESSE_PAR_VOIX.update({v['voice_code']: dict(VITESSE_FPT, spaced=1.0, **({'slow': float(v['provider_speed_slow'])}
-                             if v.get('provider_speed_slow') else {})) for v in voix})
+                             if v.get('provider_speed_slow') else {})) for v in utiles})
     return list(items.values()), voix_fpt
 
 
 def phrase_espacee(x, mots):
-    """« Tôi thích cà phê. » -> « Tôi… thích… cà phê. » : points de suspension entre les MOTS
-    (un mot de deux syllabes reste d'un seul tenant), majuscule et ponctuation finale gardées."""
+    """« Tôi thích cà phê. » -> « Tôi, thích, cà phê. » : virgules entre les MOTS (DEC-0067, à la place
+    des points de suspension de DEC-0058 : plus d'espace, moins haché à l'écoute ; un mot de deux syllabes
+    reste d'un seul tenant), majuscule et ponctuation finale gardées."""
     ecrits = [mots[w]['written'] if w in mots else w for w in x['word_codes'].split()]
     if not ecrits:
         return x['written']
     ecrits[0] = ecrits[0][:1].upper() + ecrits[0][1:]
     fin = x['written'].rstrip()[-1:] if x['written'].rstrip()[-1:] in '.?!' else '.'
-    return '… '.join(ecrits) + fin
+    return ', '.join(ecrits) + fin
 
 
 def nom_fichier(item):
-    base = item['ref'] if item['type'] in ('word', 'sequence') else 'S-' + telex(item['ecrit'])
+    base = item['ref'] if item['type'] in ('word', 'sequence', 'voyelle') else 'S-' + telex(item['ecrit'])
     return 'audio/' + base + '-' + item['voix'] + '-' + item['debit'] + '.mp3'
 
 
@@ -283,8 +313,10 @@ def chercher_lien(reponse):
 
 def synthetiser(texte, cle, voix_fpt, vitesse, modele=None):
     """Renvoie le contenu mp3, ou lève une erreur."""
-    corps = json.dumps({'model': modele or MODELE, 'input': texte, 'voice': voix_fpt,
-                        'speed': vitesse, 'response_format': 'mp3'}, ensure_ascii=False).encode('utf-8')
+    champs = {'model': modele or MODELE, 'input': texte, 'voice': voix_fpt, 'speed': vitesse, 'response_format': 'mp3'}
+    if 'ultra' in (modele or MODELE).lower():
+        champs['text'] = texte      # nom du champ dans l'exemple de la fiche FPT.TTS-ultra (essai du 2026-10-31)
+    corps = json.dumps(champs, ensure_ascii=False).encode('utf-8')
     req = urllib.request.Request(API_URL, data=corps, method='POST',
                                  headers={'Authorization': 'Bearer ' + cle,
                                           'Content-Type': 'application/json'})
@@ -356,7 +388,8 @@ def produire(texte, cle, voix_fpt, vitesse, destination, modele=None):
     with open(brut, 'wb') as f:
         f.write(contenu)
     temporaire = destination + '.tmp.mp3'
-    decoupe_audio.traiter_fichier(brut, temporaire, DOUBLER)
+    decoupe_audio.traiter_fichier(brut, temporaire, DOUBLER, rogner=ROGNER_ULTRA and 'ultra' in (modele or MODELE).lower(),
+                                 fin='ultra' in (modele or MODELE).lower())
     os.replace(temporaire, destination)
 
 

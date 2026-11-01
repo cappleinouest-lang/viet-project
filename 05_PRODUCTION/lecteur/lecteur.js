@@ -29,6 +29,7 @@
  *   11. Écran : l'écrit (fin d'E3)
  *   11 bis. Écran : E4 Répéter (volet production)
  *   11 ter. Écran : Les 6 tons (référence, schéma de chaque ton)
+ *    3 bis. Signaler un son défectueux (essais)
  *   12. Écran : réglages
  *   13. Écran : mes progrès
  *   14. Démarrage
@@ -66,7 +67,8 @@
  * DEC-0037 (leçon en deux parties), DEC-0039 (E1 un son à la fois), DEC-0041 (échauffement),
  * DEC-0042 (place du son), DEC-0043 et DEC-0045 (leçons de tons), DEC-0049 et DEC-0050 (E4),
  * DEC-0051 (mode essai : tout ouvert), DEC-0052 et DEC-0053 (page « Les 6 tons », schémas),
- * DEC-0054 (« Combien de fois ? »), DEC-0055 (voix d'écoute par leçon).
+ * DEC-0054 (« Combien de fois ? »), DEC-0055 (voix d'écoute par leçon), DEC-0067 (débit lent emprunté),
+ * DEC-0069 (signaler un son défectueux), DEC-0070 (E1 : voyelle seule avant les mots).
  * Description complète : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
  */
 // Tout le programme est enfermé dans une fonction qui s'exécute aussitôt :
@@ -269,7 +271,9 @@
     var nomDebit = { slow: 'lent', normal: 'normal', spaced: 'mots espacés' }[debit] || debit;
     var vitesse = nomDebit + (v.vitesse_fpt && v.vitesse_fpt[debit] != null ? ' · speed ' + String(v.vitesse_fpt[debit]).replace('.', ',') : '');
     if (!fichier) return ['synthèse de l’appareil (aucun fichier)', qui, nomDebit];
-    return [fichier.split('/').pop(), qui, (v.modele ? v.modele + ' · ' : '') + vitesse];
+    // Débit lent emprunté à une autre voix (DEC-0067 : F4 <- F1, H6 <- H4) : on dit laquelle.
+    var modele = (debit === 'slow' && v.lent && v.lent.code !== codeVoix) ? v.lent.modele + ' (lent de ' + v.lent.code + ')' : v.modele;
+    return [fichier.split('/').pop(), qui, (modele ? modele + ' · ' : '') + vitesse];
   }
   function noterInfoSon(caseMot, terme, codeVoix, debit) {
     if (!caseMot || !reglages().infoTest) return;
@@ -291,6 +295,7 @@
       var f = terme.audio[codeVoix] && terme.audio[codeVoix][debit];
       noterInfoSon(caseMot, terme, codeVoix, debit);   // mode test (DEC-0047)
       if (f) {
+        memoriserSon(terme, codeVoix, debit, f);        // pour « ⚑ Signaler un son » (DEC-0069)
         if (lectureEnCours) lectureEnCours.pause();
         var a = new Audio(f);
         lectureEnCours = a;
@@ -319,6 +324,152 @@
     if (lectureEnCours) lectureEnCours.pause();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }
+  /* ---------- 3 bis. Signaler un son défectueux (essais, DEC-0069) ----------
+     Pendant les essais (réglage « Infos de test sur le son »), un bouton « ⚑ Signaler un son »
+     reste en bas de l'écran, dans tous les exercices. Il ouvre un panneau : les derniers sons
+     joués (à réécouter), une case à cocher pour chaque défaut possible et une remarque.
+     Les signalements restent sur cet appareil jusqu'à l'export : fichier
+     validations_audios_lecteur_<date>.csv (Téléchargements), lu par
+       python 05_PRODUCTION\tools\valider_audios.py . --appliquer
+     comme un refus « à refaire » : l'audio passe dans 07_QUALITE/audios_a_refaire.csv avec les
+     défauts cochés, puis se régénère avec generer_audio_fpt.py --refaire --liste (DEC-0065).
+     Version du fichier : D.versions (date du fichier lors de la génération du lecteur) ; un audio
+     refait depuis n'est pas touché par un ancien signalement. */
+  var CLE_SIGNAL = 'viet-lecteur-signalements-v1';
+  var DEFAUTS = [
+    'début du mot tronqué', 'fin du mot coupée', 'son parasite après le mot', 'ton faux ou peu net', 'son faux (voyelle, consonne)',
+    'accent non conforme à Hanoï', 'mot différent de celui attendu', 'trop numérique, métallique',
+    'trop lent', 'trop rapide', 'espace entre les mots trop faible', 'espace entre les mots trop long',
+    'silence trop long avant le mot', 'volume trop fort ou trop faible', 'bruit, saturation, coupure',
+    'voix différente de celle annoncée', 'lent et normal trop différents', 'autre (voir remarque)'
+  ];
+  var derniersSons = [];          // 8 derniers fichiers joués, le plus récent d'abord
+  var signalMemoire = [];         // copie en mémoire si le navigateur refuse le stockage
+  function lireSignalements() {
+    try { var t = window.localStorage.getItem(CLE_SIGNAL); if (t) return JSON.parse(t); } catch (e) { /* stockage indisponible */ }
+    return signalMemoire;
+  }
+  function ecrireSignalements(liste) {
+    signalMemoire = liste;
+    try { window.localStorage.setItem(CLE_SIGNAL, JSON.stringify(liste)); } catch (e) { /* idem */ }
+    majBoutonSignal();
+  }
+  function nomVoix(code) { var v = D.voix.filter(function (x) { return x.code === code; })[0]; return v ? v.nom : code; }
+  var NOMS_DEBITS = { slow: 'lent', normal: 'normal', spaced: 'mots espacés' };
+  function memoriserSon(terme, codeVoix, debit, fichier) {
+    derniersSons = derniersSons.filter(function (x) { return x.fichier !== fichier; });
+    derniersSons.unshift({ fichier: fichier, ecrit: (terme.appui ? terme.appui + ' ' : '') + (terme.ecrit || ''),
+      voix: codeVoix, debit: debit, ecran: titreBarre.textContent, t: Date.now() });
+    derniersSons = derniersSons.slice(0, 8);
+  }
+  var btnSignal = el('button', { class: 'btn-signal', type: 'button', text: '⚑ Signaler un son', onclick: function () { ouvrirSignal(); } });
+  document.body.appendChild(btnSignal);
+  function majBoutonSignal() {
+    var n = lireSignalements().filter(function (x) { return !x.exporte; }).length;
+    btnSignal.hidden = !reglages().infoTest;
+    btnSignal.textContent = '⚑ Signaler un son' + (n ? ' (' + n + ' à exporter)' : '');
+  }
+  function fermerSignal() { var f = document.querySelector('.signal-fond'); if (f) f.remove(); }
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') fermerSignal(); });
+
+  function ouvrirSignal(choixInitial) {
+    fermerSignal();
+    var choisi = choixInitial || (derniersSons[0] && derniersSons[0].fichier) || null;
+    var panneau = el('div', { class: 'signal-panneau', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Signaler un son' });
+    var fond = el('div', { class: 'signal-fond', onclick: function (ev) { if (ev.target === fond) fermerSignal(); } }, [panneau]);
+    document.body.appendChild(fond);
+    function dessiner() {
+      panneau.innerHTML = '';
+      panneau.appendChild(el('h2', { text: '⚑ Signaler un son' }));
+      panneau.appendChild(el('p', { class: 'petit', text: 'Choisissez le son, cochez un ou plusieurs défauts, puis « Enregistrer ». En E2–E3, ouvrez ce panneau après avoir répondu : le nom du fichier donne la réponse.' }));
+      // 1. Le son concerné : les derniers sons joués.
+      var liste = el('div', { class: 'signal-sons' });
+      if (!derniersSons.length) liste.appendChild(el('p', { class: 'petit', text: 'Aucun son enregistré n’a encore été joué depuis l’ouverture du lecteur (la voix de synthèse de l’appareil ne se signale pas).' }));
+      derniersSons.forEach(function (x, i) {
+        var radio = el('input', { type: 'radio', name: 'signal-son', id: 'signal-son-' + i });
+        radio.checked = x.fichier === choisi;
+        radio.addEventListener('change', function () { choisi = x.fichier; dessiner(); });
+        var deja = lireSignalements().some(function (s) { return s.file === x.fichier && !s.exporte; });
+        liste.appendChild(el('div', { class: 'signal-son' + (x.fichier === choisi ? ' choisi' : '') }, [
+          radio,
+          el('label', { for: 'signal-son-' + i }, [
+            el('b', { text: x.ecrit || '?' }), ' · ' + nomVoix(x.voix) + ' · ' + (NOMS_DEBITS[x.debit] || x.debit) + (deja ? ' · déjà signalé' : ''),
+            el('span', { class: 'petit signal-fichier', text: x.fichier.split('/').pop() + ' · ' + x.ecran })]),
+          el('button', { class: 'bouton second', type: 'button', text: '▶', title: 'Réécouter', onclick: function () {
+            if (lectureEnCours) lectureEnCours.pause();
+            lectureEnCours = new Audio(x.fichier); lectureEnCours.play().catch(function () {});
+          } })
+        ]));
+      });
+      panneau.appendChild(liste);
+      // 2. Les défauts : cases à cocher ; on reprend un signalement non exporté du même fichier.
+      var ancien = lireSignalements().filter(function (s) { return s.file === choisi && !s.exporte; })[0] || { raisons: [], remarque: '' };
+      var cases = el('fieldset', { class: 'signal-defauts' }, [el('legend', { text: 'Défauts constatés' })]);
+      DEFAUTS.forEach(function (d, i) {
+        var c = el('input', { type: 'checkbox', id: 'signal-def-' + i, value: d });
+        c.checked = ancien.raisons.indexOf(d) >= 0;
+        cases.appendChild(el('label', { for: 'signal-def-' + i, class: 'signal-defaut' }, [c, ' ' + d]));
+      });
+      panneau.appendChild(cases);
+      var remarque = el('textarea', { class: 'signal-remarque', rows: '2', placeholder: 'Remarque (facultatif) : ce que vous entendez, le mot attendu…' });
+      remarque.value = ancien.remarque || '';
+      panneau.appendChild(remarque);
+      var message = el('p', { class: 'petit signal-message', 'aria-live': 'polite' });
+      panneau.appendChild(el('div', { class: 'actions' }, [
+        el('button', { class: 'bouton', type: 'button', text: 'Enregistrer', disabled: !choisi, onclick: function () {
+          var raisons = [].slice.call(cases.querySelectorAll('input:checked')).map(function (c) { return c.value; });
+          if (!raisons.length && !remarque.value.trim()) { message.textContent = 'Cochez au moins un défaut (ou écrivez une remarque).'; return; }
+          var x = derniersSons.filter(function (s) { return s.fichier === choisi; })[0];
+          var liste2 = lireSignalements().filter(function (s) { return !(s.file === choisi && !s.exporte); });
+          liste2.push({ file: choisi, version: (D.versions || {})[choisi] || '', raisons: raisons, remarque: remarque.value.trim(),
+            ecrit: x ? x.ecrit : '', voix: x ? x.voix : '', debit: x ? x.debit : '', ecran: x ? x.ecran : '', t: new Date().toISOString(), exporte: false });
+          ecrireSignalements(liste2);
+          dessiner();
+          panneau.querySelector('.signal-message').textContent = 'Enregistré. Pensez à exporter à la fin de la séance.';
+        } }),
+        el('button', { class: 'bouton second', type: 'button', text: 'Fermer', onclick: fermerSignal })
+      ]));
+      panneau.appendChild(message);
+      // 3. Les signalements gardés sur l'appareil, export et nettoyage.
+      var tous = lireSignalements(), aExporter = tous.filter(function (s) { return !s.exporte; });
+      var bloc = el('div', { class: 'signal-liste' }, [el('h3', { text: aExporter.length + ' signalement(s) à exporter' + (tous.length > aExporter.length ? ' · ' + (tous.length - aExporter.length) + ' déjà exporté(s)' : '') })]);
+      aExporter.forEach(function (s) {
+        bloc.appendChild(el('div', { class: 'signal-ligne petit' }, [
+          el('span', { text: (s.ecrit || s.file.split('/').pop()) + ' · ' + nomVoix(s.voix) + ' · ' + (NOMS_DEBITS[s.debit] || s.debit) + ' : ' + s.raisons.concat(s.remarque ? [s.remarque] : []).join(', ') }),
+          el('button', { class: 'bouton discret', type: 'button', text: 'retirer', onclick: function () {
+            ecrireSignalements(lireSignalements().filter(function (y) { return y !== s && !(y.file === s.file && y.t === s.t); })); dessiner();
+          } })
+        ]));
+      });
+      var vider = el('button', { class: 'bouton discret', type: 'button', text: 'Effacer les signalements déjà exportés', disabled: tous.length === aExporter.length });
+      vider.addEventListener('click', function () {
+        if (vider.dataset.confirme) { ecrireSignalements(aExporter); dessiner(); return; }
+        vider.dataset.confirme = '1'; vider.textContent = 'Confirmer : effacer ' + (tous.length - aExporter.length) + ' signalement(s) exporté(s)';
+      });
+      bloc.appendChild(el('div', { class: 'actions' }, [
+        el('button', { class: 'bouton second', type: 'button', text: 'Exporter les signalements', disabled: !aExporter.length, onclick: function () { exporterSignalements(); dessiner(); } }),
+        vider]));
+      panneau.appendChild(bloc);
+    }
+    dessiner();
+  }
+  // Fichier CSV au format de la page de validation (valider_audios.py --appliquer) : décision « ko ».
+  function exporterSignalements() {
+    var tous = lireSignalements(), lignes = ['audio_code;file;version;decision;reason;date'];
+    tous.forEach(function (s) {
+      if (s.exporte) return;
+      var base = s.file.split('/').pop().replace(/\.mp3$/, '');
+      var raison = s.raisons.concat(s.remarque ? ['remarque : ' + s.remarque] : []).join(' + ').replace(/[;\r\n]+/g, ',');
+      lignes.push(['A-' + base, s.file, s.version, 'ko', raison, s.t.slice(0, 10)].join(';'));
+      s.exporte = true;
+    });
+    var m = new Date(), d = function (n) { return String(n).padStart(2, '0'); };
+    var nom = 'validations_audios_lecteur_' + m.getFullYear() + '-' + d(m.getMonth() + 1) + '-' + d(m.getDate()) + '_' + d(m.getHours()) + d(m.getMinutes()) + '.csv';
+    var lien = el('a', { href: URL.createObjectURL(new Blob(['﻿' + lignes.join('\n') + '\n'], { type: 'text/csv;charset=utf-8' })), download: nom });
+    document.body.appendChild(lien); lien.click(); lien.remove();
+    ecrireSignalements(tous);
+  }
+
   // pause(700) : attendre 700 millisecondes dans un enchaînement de sons.
   function pause(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
   // Une voix au hasard, différente de « sauf » (pour ne pas répéter la même voix).
@@ -403,7 +554,11 @@
   // Leçons de tons (DEC-0045) : on compare des mélodies, donc d'abord avec UNE voix (la voix modèle) ;
   // plusieurs voix ensuite seulement, en phase « symboles seuls », pour rendre l'exercice plus difficile.
   function voixUnique(l, debit) { return l.tons && debit === 'slow'; }
-  function voixModele() { return D.voix.some(function (v) { return v.code === 'F1'; }) ? 'F1' : D.voix[0].code; }   // R-AUD-03
+  // R-AUD-03 ; voix modèle donnée par generer_lecteur.py (F4 depuis DEC-0067), sinon F1, sinon la première.
+  function voixModele() {
+    var m = D.voix_modele || 'F1';
+    return D.voix.some(function (v) { return v.code === m; }) ? m : D.voix[0].code;
+  }
   function nomPhase(l, debit) {
     if (l.tons) return debit === 'slow' ? 'avec images' : 'symboles seuls';
     return debit === 'slow' ? 'débit lent' : 'débit normal';
@@ -677,7 +832,8 @@
     var pa = partieDe(l, pc);
     var els = elementsDe(pa);
     var etat = etatPartie(code, pc);
-    // d = le son présenté : { element, symbole, mots: [{ ecrit, sens, image, voix: [femme, homme], audio }] }
+    // d = le son présenté : { element, symbole, mots: [{ ecrit, sens, image, voix: [femme, homme], audio }],
+    //     seul : la voyelle seule (DEC-0070, voyelles simples), jouée avant les mots, au débit normal }
     var d = l.decouverte[els[index]];
     // lent : vitesse choisie en dernier (bouton « Écouter lentement ») ; choixVoix : femme, homme ou les deux.
     var lent = false;
@@ -713,6 +869,19 @@
       b.dataset.v = x[0];
       return b;
     });
+    // Voyelle seule (DEC-0070) : toujours au débit normal (FPT.TTS-ultra n'a pas de débit lent),
+    // avec la voix choisie (ou femme puis homme). Bouton pour la réentendre.
+    function direSeul() {
+      var s = d.seul, v = s.voix;
+      btnSeul.classList.add('joue');
+      var fin = function () { btnSeul.classList.remove('joue'); };
+      var p = choixVoix === 'f' ? jouer(s, v[0], 'normal', btnSeul)
+        : choixVoix === 'h' ? jouer(s, v[v.length - 1], 'normal', btnSeul)
+        : jouer(s, v[0], 'normal', btnSeul).then(function () { return v.length > 1 ? pause(450).then(function () { return jouer(s, v[1], 'normal', btnSeul); }) : null; });
+      return p.then(fin);
+    }
+    var btnSeul = d.seul ? el('button', { class: 'tuile tuile-seul', type: 'button', 'aria-label': 'le son seul',
+      onclick: function () { direSeul(); } }, [el('span', { class: 'image', text: '🔈', 'aria-hidden': 'true' }), el('span', { class: 'sens', text: 'Le son seul' })]) : null;
     // Tuiles des mots : image (ou 🔊) et sens ; aucun écrit vietnamien en E1 (R-ECR-01).
     var grille = el('div', { class: classeTuiles(d.mots.length) });
     var tuiles = d.mots.map(function (m, i) {
@@ -736,6 +905,7 @@
       ecoute.disabled = true; ecouteLente.disabled = true;
       ecoute.classList.toggle('choisi', !lent); ecouteLente.classList.toggle('choisi', lent);
       var seq = Promise.resolve();
+      if (d.seul) seq = seq.then(direSeul).then(function () { return pause(900); });   // DEC-0070 : la voyelle seule d'abord
       d.mots.forEach(function (m, i) {
         seq = seq.then(function () { surligner(i); return dire(m, tuiles[i]); }).then(function () { return pause(700); });
       });
@@ -751,6 +921,7 @@
     // Leçon de tons : pas d'écoute lente (DEC-0043)
     // Leçon de tons : un seul bouton (pas d'écoute lente, DEC-0043).
     app.appendChild(l.tons ? el('div', { class: 'actions centre' }, [ecoute]) : el('div', { class: 'deux-ecoutes' }, [ecoute, ecouteLente]));
+    if (btnSeul) app.appendChild(el('div', { class: 'seul-ligne' }, [btnSeul]));
     app.appendChild(grille);
     var lg = legende([{ termes: [{ symbole: d.symbole }] }]); if (lg) app.appendChild(lg);
     app.appendChild(el('div', { class: 'actions' }, [suivant]));
@@ -1402,7 +1573,7 @@
 
   /* ---------- 11 ter. Écran : « Les 6 tons » (référence, DEC-0052, DEC-0053) ----------
      La même syllabe (ma, má, mà, mả, mã, mạ : reference_tons.csv) dite avec les 6 tons, par une
-     voix de femme (F1) ou d'homme (H3), au débit normal ou lent.
+     voix de femme ou d'homme (D.voix_reference_tons : F4 et H6 depuis DEC-0067), au débit normal ou lent.
      Chaque ton est montré par un SCHÉMA simple (DEC-0053), pas par une courbe mesurée :
      hauteur sur l'échelle de 1 (grave) à 5 (aigu) de Chao (colonne chao de tons.csv), coup de
      glotte marqué ˀ (ngã, au milieu) ou ʔ (nặng, à la fin), nặng plus court.
@@ -1481,8 +1652,8 @@
     serieTons = serie || serieTons || series[0];
     if (series.indexOf(serieTons) < 0) serieTons = series[0];
     var R = toutes.filter(function (t) { return t.serie === serieTons; });
-    var voixDispo = ['F1', 'H3'].filter(function (v) { return R.some(function (t) { return t.audio && t.audio[v]; }); });
-    var codeVoix = voixDispo[0] || 'F1', debit = 'normal', choisi = -1;
+    var voixDispo = (D.voix_reference_tons || ['F1', 'H3']).filter(function (v) { return R.some(function (t) { return t.audio && t.audio[v]; }); });
+    var codeVoix = voixDispo[0] || voixModele(), debit = 'normal', choisi = -1;
     vider();
     btnRetour.hidden = false;
     btnRetour.onclick = function () { arreterSon(); retour(); };
@@ -1518,7 +1689,8 @@
       });
       return el('div', { class: 'choix-voix-groupe', role: 'group' }, boutons);
     }
-    var noms = { F1: '👩 Ban Mai', H3: '👨 Le Minh' };
+    var noms = {};
+    D.voix.forEach(function (v) { noms[v.code] = (v.genre === 'male' ? '👨 ' : '👩 ') + (v.nom || v.code); });
     if (voixDispo.length > 1) app.appendChild(groupe(voixDispo.map(function (v) { return [v, noms[v] || v]; }), codeVoix, function (v) { codeVoix = v; }));
     app.appendChild(groupe([['normal', '▶ Débit normal'], ['slow', '🐢 Débit lent']], debit, function (d) { debit = d; }));
 
@@ -1595,7 +1767,7 @@
     function interrupteur(id, cle) {
       var c = el('input', { type: 'checkbox', id: id, class: 'interrupteur' });
       c.checked = !!R[cle];
-      c.addEventListener('change', function () { R[cle] = c.checked; sauver(); appliquerReglages(); });
+      c.addEventListener('change', function () { R[cle] = c.checked; sauver(); appliquerReglages(); majBoutonSignal(); });
       return c;
     }
     var vit = el('select', { id: 'reglage-vitesse' }, [
@@ -1612,7 +1784,7 @@
       ligne('reglage-texte', 'Grand texte', 'Agrandit le texte et les symboles.', interrupteur('reglage-texte', 'grandTexte')),
       ligne('reglage-ouvert', 'Mode essai : tout ouvert', 'Toutes les leçons et toutes les étapes accessibles, sans attendre les verrous. Les scores restent calculés. À couper avant d’ouvrir la formation à d’autres apprenants.', interrupteur('reglage-ouvert', 'toutOuvert')),
       ligne('reglage-lettres', 'Lettres vietnamiennes du son', 'En E1 et en phase 1 d’E2–E3 : les lettres qui écrivent le son étudié (toutes, s’il y en a plusieurs), ou l’accent du ton. Jamais le mot entier.', interrupteur('reglage-lettres', 'lettres')),
-      ligne('reglage-info', 'Infos de test sur le son', 'Pendant les essais : dans la case du mot joué, fichier, personnage, femme ou homme, modèle FPT et vitesse (en E2–E3, après la réponse).', interrupteur('reglage-info', 'infoTest'))
+      ligne('reglage-info', 'Infos de test sur le son', 'Pendant les essais : dans la case du mot joué, fichier, personnage, femme ou homme, modèle FPT et vitesse (en E2–E3, après la réponse) ; bouton « ⚑ Signaler un son » pour noter un audio défectueux.', interrupteur('reglage-info', 'infoTest'))
     ]));
   }
 
@@ -1725,5 +1897,6 @@
      LecteurOutils : quelques fonctions rendues visibles pour les essais automatiques.
      ecranAccueil() : premier écran affiché. */
   window.LecteurOutils = { Stockage: Stockage, mesure: mesure, verifierPassages: verifierPassages };
+  majBoutonSignal();
   ecranAccueil();
 })();

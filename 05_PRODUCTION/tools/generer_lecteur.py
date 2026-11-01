@@ -27,9 +27,10 @@ ENTRÉES (04_DONNEES, sauf mention)
     mots.csv, sons.csv, tons.csv, reperes_sons.csv
                           sens des mots, symboles, place, repères (DEC-0038, DEC-0042)
     exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039)
-    voix.csv              voix actives ; voix d'écoute par type de leçon (listen_sounds / listen_tones, DEC-0055)
+    voix.csv              voix actives ; voix d'écoute par type de leçon (listen_sounds / listen_tones, DEC-0055) ;
+                          slow_from : voix qui fournit le débit lent (DEC-0067 : F4 <- F1, H6 <- H4)
     mots_lecons.csv       mots supports de chaque leçon : les mots d'E4 (DEC-0050)
-    courbes_modele.csv    courbes mélodiques du modèle F1, calculées par courbes_modele.py (DEC-0050)
+    courbes_modele.csv    courbes mélodiques du modèle (F4, lent F1), calculées par courbes_modele.py (DEC-0050)
     reference_tons.csv    série ma, má, mà, mả, mã, mạ de la page « Les 6 tons » (DEC-0052)
     comptage.csv          suites de l'exercice « Combien de fois ? » (DEC-0054) ; syllabes.csv pour repérer les cibles
     audios.csv            fichiers audio déclarés et leur validation
@@ -91,12 +92,16 @@ VOIX_PROVISOIRES = {
     'H1': {'hauteur': 0.7, 'vitesse': 1.0},
     'H3': {'hauteur': 0.7, 'vitesse': 1.0},
     'H4': {'hauteur': 0.85, 'vitesse': 0.95},
+    'F4': {'hauteur': 1.15, 'vitesse': 1.0},
+    'H6': {'hauteur': 0.8, 'vitesse': 1.0},
 }
 # Vitesse de la voix de synthèse pour chaque débit (n'agit pas sur les fichiers audio).
 # Les clés 'slow' et 'normal' sont aussi celles de audios.csv (colonne speed).
 DEBITS = {'slow': 0.55, 'normal': 0.9, 'spaced': 0.9}   # spaced : mots espacés (DEC-0058)
-# Voix modèle des étapes de production E4–E5 (R-AUD-03) : Ban Mai.
-VOIX_MODELE = 'F1'
+# Voix modèle des étapes de production E4–E5 (R-AUD-03) : Ban Mai (F4, FPT.TTS-ultra, DEC-0067).
+VOIX_MODELE = 'F4'
+# Page « Les 6 tons » (DEC-0052) : une voix de femme, une voix d'homme (DEC-0067).
+VOIX_REFERENCE_TONS = ['F4', 'H6']
 
 # Ordre d'affichage des séries d'une leçon selon la place de l'élément contrasté :
 # 0 voyelles (et tons), 1 consonnes de début, 2 finales. Sert aussi au découpage en parties
@@ -160,7 +165,8 @@ def main():
     sons = {s['sound_code']: s for s in lire('sons.csv')}
     tons = {t['tone_code']: t for t in lire('tons.csv')}
     paires = lire('paires_minimales.csv')
-    voix = [v for v in lire('voix.csv') if v['status'] == 'active']
+    toutes_voix = {v['voice_code']: v for v in lire('voix.csv')}
+    voix = [v for v in toutes_voix.values() if v['status'] == 'active']
     audios = lire('audios.csv')
     # images.csv est lu mais pas encore utilisé (fichier vide) : les images viennent
     # provisoirement de images_provisoires.csv (emoji).
@@ -172,6 +178,7 @@ def main():
     comptage = lire('comptage.csv')                                 # DEC-0054
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import regle_classificateurs as rc                              # DEC-0062 : même règle que l'audio
+    from generer_audio_fpt import voyelle_simple                    # DEC-0070 : même règle que l'audio
     ctx_clf = rc.charger(DONNEES)
     syllabe = {}
     for s_ in lire('syllabes.csv'):
@@ -231,12 +238,14 @@ def main():
 
     # --- 4.4 audio(référence) : fichiers disponibles pour un terme, rangés par voix puis débit :
     #   { 'F1': { 'slow': 'audio/W0057-F1-slow.mp3', 'normal': ... }, 'H3': {...} }
-    # Seules les voix actives de voix.csv sont prises.
+    # Seules les voix actives de voix.csv sont prises. Débit lent emprunté (DEC-0067) : pour une voix
+    # dont la colonne slow_from est remplie (F4 <- F1, H6 <- H4), le fichier lent est celui de cette voix.
     def audio(ref):
         res = {}
         for v in voix:
             for d in DEBITS:
-                f = fichiers_audio.get((ref, v['voice_code'], d))
+                source = (v.get('slow_from') or v['voice_code']) if d == 'slow' else v['voice_code']
+                f = fichiers_audio.get((ref, source, d))
                 if f:
                     res.setdefault(v['voice_code'], {})[d] = f
         return res
@@ -307,7 +316,16 @@ def main():
                     'audio': aud_clf or audio(m['word_code']),
                     'appui': a[0].split(' ')[0] if aud_clf else '',
                 })
-            decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e}
+            # Voyelle simple (DEC-0070) : la voyelle seule, jouée avant les mots (débit normal seulement).
+            # Seulement si le fichier existe : la voix de synthèse de l'appareil épellerait la lettre.
+            seul = None
+            if e in sons and voyelle_simple(e) and l['is_tone_lesson'] != 'true':
+                aud_seul = {v: fd for v, fd in audio('V-' + e).items() if fd.get('normal')}
+                if aud_seul:
+                    voix_seul = (mots_e[0]['voix'] if mots_e else [v['voice_code'] for v in voix][:2])
+                    seul = {'ecrit': sons[e]['grapheme'], 'audio': aud_seul,
+                            'voix': [x for x in voix_seul if x in aud_seul] or list(aud_seul)}
+            decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e, 'seul': seul}
         # E4 « Écoute et répète » (DEC-0049, DEC-0050) : les mots supports de la leçon, dans
         # l'ordre de mots_lecons.csv, avec la voix modèle seule (R-AUD-03), ses deux débits et
         # la courbe mélodique de chaque fichier. Cibles = sons (ou tons) des séries dont le mot
@@ -403,6 +421,9 @@ def main():
         })
 
     # --- 4.7 Le contenu complet de donnees.js.
+    def lent(v):     # voix qui fournit le débit lent de v (elle-même, ou slow_from, DEC-0067)
+        return toutes_voix.get(v.get('slow_from') or '', v)
+
     donnees = {
         'genere_le': datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),
         'parametres': PARAMETRES,
@@ -411,9 +432,18 @@ def main():
         'voix': [{'code': v['voice_code'], 'genre': v['gender'], **VOIX_PROVISOIRES.get(v['voice_code'], {}),
                   'nom': nom_personnage(v), 'voix_fpt': v.get('provider_voice', ''),
                   'modele': v.get('provider_model', ''),
-                  'vitesse_fpt': {'slow': float(v.get('provider_speed_slow') or 0.8), 'normal': 1.0, 'spaced': 1.0}}
+                  'vitesse_fpt': {'slow': float(lent(v).get('provider_speed_slow') or 0.8), 'normal': 1.0, 'spaced': 1.0},
+                  # Mode test (DEC-0047) : d'où vient le débit lent (DEC-0067).
+                  'lent': {'code': lent(v)['voice_code'], 'voix_fpt': lent(v).get('provider_voice', ''),
+                           'modele': lent(v).get('provider_model', '')}}
                  for v in voix],
+        'voix_modele': VOIX_MODELE,
+        'voix_reference_tons': [c for c in VOIX_REFERENCE_TONS if any(v['voice_code'] == c for v in voix)],
         'debits': DEBITS,
+        # « ⚑ Signaler un son » (DEC-0069) : version de chaque fichier = sa date (même calcul que
+        # valider_audios.py), pour qu'un signalement ne touche pas un audio refait depuis.
+        'versions': {f: str(int(os.path.getmtime(os.path.join(DONNEES, f))))
+                     for f in set(fichiers_audio.values()) if os.path.exists(os.path.join(DONNEES, f))},
         'lecons': sortie_lecons,
         'reference_tons': reference_tons,
     }

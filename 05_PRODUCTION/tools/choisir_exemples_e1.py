@@ -50,7 +50,7 @@ def choisir(donnees):
         col = 'listen_tones' if tons else 'listen_sounds'
         f = [v['voice_code'] for v in voix if v.get(col) == 'true' and v['gender'] == 'female']
         h = [v['voice_code'] for v in voix if v.get(col) == 'true' and v['gender'] == 'male']
-        return f or ['F1'], h or ['H3']
+        return f or ['F4'], h or ['H6']
 
     def frequence(w):
         r = mots[w].get('frequency_rank') or ''

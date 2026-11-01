@@ -15,7 +15,9 @@ paramètres). Décisions : DEC-0049, DEC-0050.
 
 Nécessite numpy et soundfile (présents dans .venv-asr). Usage (depuis C:\\VIET_PROJECT) :
     .venv-asr\\Scripts\\python.exe 05_PRODUCTION\\tools\\courbes_modele.py .
-    .venv-asr\\Scripts\\python.exe 05_PRODUCTION\\tools\\courbes_modele.py . --voix F1 --tout
+    .venv-asr\\Scripts\\python.exe 05_PRODUCTION\\tools\\courbes_modele.py . --voix F4,F1 --tout
+Voix par défaut (DEC-0067) : la voix modèle de generer_audio_fpt.py (F4) et la voix qui fournit son
+débit lent (colonne slow_from de voix.csv : F1).
 Par défaut seuls les audios dont la courbe manque ou dont le fichier a changé sont calculés.
 
 Colonnes de courbes_modele.csv :
@@ -198,10 +200,19 @@ def lire(chemin):
 
 
 def main():
-    racine = next((a for a in sys.argv[1:] if not a.startswith('--') and a not in ('F1', 'F3', 'H3', 'H4')), '.')
-    voix = sys.argv[sys.argv.index('--voix') + 1] if '--voix' in sys.argv else 'F1'
+    args = sys.argv[1:]
+    choix = args[args.index('--voix') + 1] if '--voix' in args and args.index('--voix') + 1 < len(args) else None
+    racine = next((a for a in args if not a.startswith('--') and a != choix), '.')
     tout = '--tout' in sys.argv
     donnees = os.path.join(racine, '04_DONNEES')
+    if choix:
+        voix = set(choix.split(','))
+    else:                    # voix modèle + voix de son débit lent (DEC-0067)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from generer_audio_fpt import VOIX_MODELE
+        lignes_voix = {v['voice_code']: v for v in lire(os.path.join(donnees, 'voix.csv'))}
+        voix = {VOIX_MODELE} | ({lignes_voix[VOIX_MODELE]['slow_from']}
+                               if lignes_voix.get(VOIX_MODELE, {}).get('slow_from') else set())
     try:
         import numpy  # noqa: F401
         import soundfile  # noqa: F401
@@ -212,7 +223,7 @@ def main():
     anciennes = {l['audio_code']: l for l in lire(sortie)}
     # Voix modèle, plus toutes les voix pour la série de la page « Les 6 tons » (DEC-0052).
     refs_tons = {x['word_code'] or x['written'] for x in lire(os.path.join(donnees, 'reference_tons.csv'))}
-    audios = [a for a in lire(os.path.join(donnees, 'audios.csv')) if a['voice'] == voix or a['item_ref'] in refs_tons]
+    audios = [a for a in lire(os.path.join(donnees, 'audios.csv')) if a['voice'] in voix or a['item_ref'] in refs_tons]
     lignes, calcules, absents = [], 0, 0
     for i, a in enumerate(audios):
         chemin = os.path.join(donnees, a['file'].replace('/', os.sep))
@@ -238,7 +249,7 @@ def main():
         w = csv.DictWriter(f, fieldnames=COLONNES, delimiter=';', lineterminator='\n')
         w.writeheader()
         w.writerows(lignes)
-    print(f'Voix {voix} et série des tons : {len(lignes)} courbes ({calcules} calculées, {len(lignes) - calcules} reprises), '
+    print(f'Voix {", ".join(sorted(voix))} et série des tons : {len(lignes)} courbes ({calcules} calculées, {len(lignes) - calcules} reprises), '
           f'{absents} fichier(s) audio absent(s).')
     print('Écrit :', sortie)
 

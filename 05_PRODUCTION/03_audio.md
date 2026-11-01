@@ -2,7 +2,7 @@
 id: PROD-AUDIO
 titre: Génération des audios avec FPT.TTS-pro (FPT AI Marketplace)
 statut: BROUILLON
-version: 0.13
+version: 0.17
 date: 2026-10-31
 resume: >
   Explique comment générer, avec FPT.AI, les audios du Module 0 décrits par
@@ -49,7 +49,37 @@ sera ajouté avec le volet production.
 > (401) ou de solde (402), ou après 5 erreurs sans succès, et reprend là où
 > il s'est arrêté.
 
-## 1 bis. Choix des voix et des modèles (écoute du 2026-10-29)
+## 1 bis. Voix actuelles (DEC-0067, 2026-10-31)
+
+| Code | Voix | Débit normal et mots espacés | Débit lent (colonne `slow_from`) |
+|---|---|---|---|
+| F4 | Ban Mai (femme, voix modèle) | `std_banmai`, **FPT.TTS-ultra** | fichiers de **F1** (`std_banmai`, FPT.TTS-pro, 0,7) |
+| H6 | Quang Anh (homme) | `std_quanganh`, **FPT.TTS-ultra** | fichiers de **H4** (`std_huyphong`, FPT.AI-VITs, 0,6) |
+
+- FPT.TTS-ultra **ignore la vitesse** : le script ne lui demande jamais de
+  débit lent ; le plan prévoit à la place `<référence>-F1-slow.mp3` ou
+  `<référence>-H4-slow.mp3` (générés avec F1 ou H4 s'ils manquent), et le
+  lecteur les joue pour F4 ou H6.
+- Le texte est envoyé dans les champs `input` et `text` (exemple de la
+  fiche FPT.TTS-ultra).
+- Silence de début des fichiers Ultra (plus de 200 ms) : **gardé tel que
+  FPT le livre** (DEC-0068). Le raccourcir reste possible
+  (`ROGNER_ULTRA = True` dans `generer_audio_fpt.py`).
+- Silence de fin des fichiers Ultra (environ 0,19 s) : **complété jusqu'à
+  0,35 s**, sans rien couper ni fondre (DEC-0068).
+- Mots espacés (phrases de « Combien de fois ? ») : **virgules** entre les
+  mots (« Tôi, ăn, nem. »), à la place des points de suspension.
+- Courbes d'E4 : `courbes_modele.py` prend par défaut F4 et F1.
+- E1, voyelles simples (DEC-0070) : la voyelle **seule** (a, ă, â, e, ê, i,
+  o, ô, ơ, u, ư), F4 et H6, débit normal seulement :
+  `audio/V-<code du son>-<voix>-normal.mp3` (22 fichiers). Essai :
+  `essai_voyelles.py`.
+- Tarif de FPT.TTS-ultra : **à vérifier** sur la page du modèle avant une
+  génération complète (environ 19 000 caractères).
+- Essais : 07_QUALITE/essai_tts_ultra_2026-10-31.md (scripts
+  `essai_ultra.py`, `essai_espacement.py`).
+
+## 1 ter. Choix des voix et des modèles (écoute du 2026-10-29, historique)
 
 | Code | Voix | Modèle | Décision |
 |---|---|---|---|
@@ -73,7 +103,7 @@ gardé dans `04_DONNEES/audio/_bruts/`). Elle nécessite `numpy` et
 `.venv-asr\Scripts\python.exe`. Les essais sont dans
 `04_DONNEES/audio/_essais/` (script `essai_variantes_fpt.py`).
 
-## 1 ter. Égalisation du volume
+## 1 quater. Égalisation du volume
 
 Les voix n'ont pas le même niveau (mesure du 2026-10-29 : Huy Phong environ
 5 dB plus faible que les autres). Chaque fichier est donc ramené à un
@@ -130,6 +160,12 @@ Chaque audio est écouté avant de passer à `validated = true` (DEC-0065).
 | 5. Refaire les refusés | `.venv-asr\Scripts\python.exe 05_PRODUCTION\tools\generer_audio_fpt.py . --executer --refaire --liste 07_QUALITE\audios_a_refaire.csv`, puis retour à l'étape 1 |
 | 6. Lecteur avec les audios validés seulement | `python 05_PRODUCTION\tools\generer_lecteur.py .` (sans `--non-valides`) |
 
+**Pendant les exercices** (DEC-0069) : en mode test, le bouton
+« ⚑ Signaler un son » du lecteur permet de cocher les défauts du son
+entendu ; « Exporter les signalements » enregistre un fichier
+`validations_audios_lecteur_<date>.csv` dans Téléchargements, que l'étape 4
+(`--appliquer`) traite comme un export de la page de validation.
+
 Seuls les audios du plan actuel sont proposés. Une décision ne vaut que
 pour la version écoutée du fichier : un audio refait redevient « à écouter ».
 Les décisions restent dans le navigateur tant qu'elles ne sont pas exportées :
@@ -152,3 +188,7 @@ exporter à la fin de chaque séance.
 | 0.12 | 2026-10-31 | § 5 : outil de validation par l'écoute (`valider_audios.py`), option `--liste` (DEC-0065). |
 | 0.13 | 2026-10-31 | F3 Thu Minh écartée ; leçons de sons : F1 + H4 (DEC-0066). |
 | 0.10 | 2026-10-30 | Voix d'écoute par type de leçon : sons F3 + H4, tons F1 + H3 + H4 provisoirement (DEC-0055). |
+| 0.14 | 2026-10-31 | § 1 bis : F4 Ban Mai et H6 Quang Anh en FPT.TTS-ultra, débit lent emprunté à F1 et H4, silences raccourcis, mots espacés par virgules (DEC-0067). |
+| 0.15 | 2026-10-31 | Fichiers Ultra : début gardé brut, silence final complété à 0,35 s (DEC-0068). |
+| 0.16 | 2026-10-31 | § 5 : signaler un son défectueux depuis le lecteur (DEC-0069). |
+| 0.17 | 2026-10-31 | Voyelle seule en E1 (DEC-0070). |

@@ -90,11 +90,47 @@ def normaliser(x, sr):
     return x * 10 ** (gain / 20)
 
 
-def traiter_fichier(source, destination, doubler=False):
-    """Lit le mp3 reçu de FPT ; garde le 2e mot si doubler ; égalise le volume ; écrit le mp3."""
+def rogner_silences(x, sr):
+    """Silence de début et de fin ramené à SILENCE_DEBUT / SILENCE_FIN (DEC-0067 : FPT.TTS-ultra laisse
+    plus de 200 ms de silence avant le mot). On garde MARGE_AVANT / MARGE_APRES autour de la parole."""
+    duree = len(x) / sr
+    sil = silences(x, sr)
+    debut_parole = sil[0][1] if sil and sil[0][0] <= 0.02 else 0.0
+    fin_parole = sil[-1][0] if sil and sil[-1][1] >= duree - 0.02 else duree
+    if fin_parole - debut_parole < 0.05:
+        return x                                   # rien de net à garder : fichier laissé tel quel
+    debut = max(0.0, debut_parole - MARGE_AVANT)
+    fin = min(duree, fin_parole + MARGE_APRES)
+    mot = x[int(debut * sr):int(fin * sr)].copy()
+    a, b = int(FONDU_DEBUT * sr), int(FONDU_FIN * sr)
+    if debut > 0:
+        mot[:a] *= np.linspace(0, 1, a)
+    if fin < duree:
+        mot[-b:] *= np.linspace(1, 0, b)
+    return np.concatenate([np.zeros(int(SILENCE_DEBUT * sr)), mot, np.zeros(int(SILENCE_FIN * sr))])
+
+
+def completer_fin(x, sr):
+    """Silence après le mot porté à SILENCE_FIN au moins, SANS rien couper ni fondre (DEC-0068) :
+    on mesure le silence final déjà présent et on ajoute seulement ce qui manque."""
+    duree = len(x) / sr
+    sil = silences(x, sr)
+    deja = (sil[-1][1] - sil[-1][0]) if sil and sil[-1][1] >= duree - 0.02 else 0.0
+    manque = max(0.0, SILENCE_FIN - deja)
+    return np.concatenate([x, np.zeros(int(manque * sr))])
+
+
+def traiter_fichier(source, destination, doubler=False, rogner=False, fin=False):
+    """Lit le mp3 reçu de FPT ; garde le 2e mot si doubler ; sinon, si rogner, raccourcit les silences
+    de début et de fin ; sinon, si fin, complète le silence final (sans rien couper) ; égalise le
+    volume ; écrit le mp3."""
     import soundfile as sf
     x, sr = sf.read(source, dtype='float64', always_2d=True)
     y = x.mean(axis=1)
     if doubler:
         y = garder_dernier_mot(y, sr)
+    elif rogner:
+        y = rogner_silences(y, sr)
+    elif fin:
+        y = completer_fin(y, sr)
     sf.write(destination, normaliser(y, sr), sr, format='MP3', subtype='MPEG_LAYER_III')

@@ -123,6 +123,8 @@ def fabriquer_page():
         if t == 'word':
             m = mots.get(ref, {})
             return m.get('written', i['ecrit']), m.get('meaning_fr', '').split(' / ')[0], 'mot'
+        if t == 'voyelle':                       # DEC-0070 : voyelle seule d'E1
+            return i['ecrit'], '', 'voyelle seule (E1)'
         if t == 'invented':
             return i['ecrit'], '', 'syllabe inventée'
         if t == 'syllable':

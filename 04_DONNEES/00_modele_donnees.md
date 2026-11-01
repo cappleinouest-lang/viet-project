@@ -2,7 +2,7 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.18
+version: 0.19
 date: 2026-10-30
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
@@ -209,6 +209,7 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 | `status` | état | `active`, `planned`, `inactive` (écartée, gardée pour l'historique) | `active` |
 | `listen_sounds` | voix d'écoute des leçons de sons (DEC-0055) | `true` / `false` | `true` |
 | `listen_tones` | voix d'écoute des leçons de tons (DEC-0055) | `true` / `false` | `false` |
+| `slow_from` | voix qui fournit le débit lent de cette voix (DEC-0067 : FPT.TTS-ultra ignore la vitesse) ; vide : la voix elle-même | `voice_code` | `F1` |
 | `note` | remarque | | |
 
 ### 3.11 bis `exemples_e1.csv` — mots d'exemple de l'étape E1 (DEC-0039)
@@ -370,3 +371,4 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
 | 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |
 | 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055) ; `mots.csv` : colonne `classifier`, fichier `appuis_series.csv` (DEC-0060). |
+| 0.19 | 2026-10-31 | `voix.csv` : colonne `slow_from` (débit lent emprunté à une autre voix, DEC-0067). |
