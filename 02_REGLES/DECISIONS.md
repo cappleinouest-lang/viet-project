@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.67
+version: 1.68
 date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1794,6 +1794,39 @@ qui indique « remplace DEC-NNNN ».
 | 1.65 | 2026-11-01 | Ajout de DEC-0071 (audios intermédiaires gardés dans Git, MOD-A05). |
 | 1.66 | 2026-11-01 | Ajout de DEC-0072 (E1 de L01 : t et m avant les voyelles, mots consonne + voyelle ; règle de préférence pour les autres leçons, MOD-H01). |
 | 1.67 | 2026-11-01 | Ajout de DEC-0073 (E1 : syllabes sans sens quand le corpus ne suffit pas). |
+| 1.68 | 2026-11-01 | Ajout de DEC-0074 (E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle, MOD-H03). |
+
+### DEC-0074 — E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle
+
+- **Date** : 2026-11-01
+- **Question** (MOD-H03, conséquence de DEC-0072) : les séries d'E2 de la
+  partie A de L01 (S0001 *xem / xêm*, S0004 *nên / nen*, S0007
+  *môn / mon / mun*) contiennent des sons pas encore étudiés (x-, n-, -m,
+  -n), alors que DEC-0072 a retiré ces sons des mots d'exemple d'E1. Fallait-il
+  les remplacer par des syllabes t/m + voyelle, ou les garder (le contraste
+  de voyelle restant le seul écart entre les termes) ?
+- **Constat** (`paires_minimales.csv`, `mots.csv`, `audios.csv`,
+  2026-11-01) : les syllabes de remplacement ont déjà leurs audios F4 / H6
+  (générées pour l'E1 avec DEC-0072, DEC-0073) : aucun audio à produire.
+  *me* (W0340) et *mê* (W0343) sont des mots du corpus ; *te* est un vrai
+  mot hors corpus (DEC-0073) et *tê* (W0344) est dans le corpus ; *mu*
+  (W0341) est un mot du corpus, *mô* et *mo* sont de vrais mots hors
+  corpus (DEC-0073). S0012 *ho / hô* n'est pas concernée : elle reprend le
+  contraste *to / tô* avec une autre consonne et n'a pas été signalée dans
+  MOD-H03.
+- **Décision** (choix de Christophe) : remplacer S0001, S0004 et S0007 :
+  - S0001 : *xem / xêm* → **me / mê**.
+  - S0004 : *nên / nen* → **tê / te**.
+  - S0007 : *môn / mon / mun* → **mô / mo / mu**.
+
+  S0012 (*ho / hô*) et les autres séries de la partie A ne changent pas.
+  *xem*, *nên* et *môn* restent utilisés dans les séries des finales de la
+  partie B.
+- **Raison** : des séries d'E2 faites uniquement de sons déjà vus, avec
+  plus de vrais mots et moins de syllabes inventées ; cohérence avec
+  DEC-0072 (mots d'exemple d'E1 déjà limités à t/m + voyelle).
+- **Impacte** : `paires_minimales.csv` (S0001, S0004, S0007) ; aucun audio
+  nouveau ; PROG-M0 (L01), PROD-AF-LECT (à vérifier : exemples cités).
 
 ## Liens
 

@@ -1,19 +1,19 @@
 series_code;lesson_code;contrast_type;position;written;word_code;invented;element;validated;note
-S0001;M0-L01;sound;1;xem;W0057;false;PH-VS-e;false;
-S0001;M0-L01;sound;2;xêm;;true;PH-VO-ee;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
+S0001;M0-L01;sound;1;me;W0340;false;PH-VS-e;false;
+S0001;M0-L01;sound;2;mê;W0343;false;PH-VO-ee;false;
 S0002;M0-L01;sound;1;xem;W0057;false;PH-FI-m;false;
 S0002;M0-L01;sound;2;xen;;false;PH-FI-n;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0003;M0-L01;sound;1;nên;W0152;false;PH-IN-n;false;
 S0003;M0-L01;sound;2;lên;W0032;false;PH-IN-l;false;
-S0004;M0-L01;sound;1;nên;W0152;false;PH-VO-ee;false;
-S0004;M0-L01;sound;2;nen;;true;PH-VS-e;false;hors corpus, attesté dans 1 seul dictionnaire (hongocduc) : traité comme syllabe inventée (DEC-0027), à confirmer
+S0004;M0-L01;sound;1;tê;W0344;false;PH-VO-ee;false;
+S0004;M0-L01;sound;2;te;;false;PH-VS-e;false;hors corpus, vrai mot (3 dictionnaires sur 3, DEC-0074)
 S0005;M0-L01;sound;1;nên;W0152;false;PH-FI-n;false;
 S0005;M0-L01;sound;2;nêm;;false;PH-FI-m;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0006;M0-L01;sound;1;to;W0050;false;PH-VS-o;false;
 S0006;M0-L01;sound;2;tô;;false;PH-VS-oo;false;mot réel attesté dans une liste de fréquence (hors corpus)
-S0007;M0-L01;sound;1;môn;W0323;false;PH-VS-oo;false;
-S0007;M0-L01;sound;2;mon;;true;PH-VS-o;false;absent des 3 dictionnaires : syllabe inventée (DEC-0013, DEC-0027)
-S0007;M0-L01;sound;3;mun;;false;PH-VS-u;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
+S0007;M0-L01;sound;1;mô;;false;PH-VS-oo;false;hors corpus, vrai mot (3 dictionnaires sur 3, DEC-0074)
+S0007;M0-L01;sound;2;mo;;false;PH-VS-o;false;hors corpus, vrai mot (3 dictionnaires sur 3, DEC-0074)
+S0007;M0-L01;sound;3;mu;W0341;false;PH-VS-u;false;
 S0008;M0-L01;sound;1;môn;W0323;false;PH-FI-n;false;
 S0008;M0-L01;sound;2;môm;;false;PH-FI-m;false;hors corpus, attesté dans 3 dictionnaires (hongocduc, tudientv, wiktionary) : mot réel (DEC-0027), sens et usage au Nord à confirmer
 S0009;M0-L01;sound;1;đi;W0062;false;PH-IN-dd;false;
