@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.7
+version: 0.8
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -22,13 +22,13 @@ sources:
 
 ## Résumé
 
-- **Ce qui a été fait** : 70 décisions (DEC-0001 à DEC-0070) et 33 commits Git
-  entre le 28 et le 31 octobre 2026. **Tout ce qui a été fait après le
-  31/10 à 15 h 15 n'est pas encore enregistré dans Git** (DEC-0067 à
-  DEC-0070, voix FPT.TTS-ultra, signalement des sons, voyelle seule en E1).
+- **Ce qui a été fait** : 70 décisions (DEC-0001 à DEC-0070) et 34 commits Git
+  entre le 28 octobre et le 1er novembre 2026. Le travail du 31/10 après
+  15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
+  (commit `1d5c57e`, MOD-A01).
 - **Ce qui reste à faire** : **80 besoins** relevés (section 3), dont
-  **17 de priorité haute**. Le plus urgent : enregistrer dans Git, puis
-  mettre les documents d'accord avec DEC-0067 (plusieurs documents décrivent
+  **17 de priorité haute** (MOD-A01 et MOD-A03 faits le 01/11). Le plus
+  urgent : la sauvegarde hors du PC (MOD-A02), puis mettre les documents d'accord avec DEC-0067 (plusieurs documents décrivent
   encore les anciennes voix F1, F3, H3, H4).
 
 | Thème | Nombre | Haute | Moyenne | Basse |
@@ -115,15 +115,15 @@ gardée, pas supprimée.
 | 22 h 21 | `627c075` | Trois écoutes des phrases (0058) ; débit lent de Thu Minh 0,8 (0059) ; classificateurs en E1 et E4 (0060 à 0062) |
 | 22 h 31 | `8966ee6` | Lettres vietnamiennes du son dès E1 (0063) ; « Les 6 tons » : 10 séries (0064) |
 
-### 2.4 Vendredi 31 octobre 2026 (2 commits + travail non enregistré)
+### 2.4 Vendredi 31 octobre 2026 (2 commits + travail enregistré le 01/11)
 
 | Heure | Commit | Modification |
 |---|---|---|
 | 13 h 40 | `0fab1ab` | État d'avancement au 31/10 (QUAL-AVANCEMENT-20261031) |
 | 15 h 15 | `5002119` | Thu Minh écartée, Ban Mai pour les leçons de sons (DEC-0066) ; probablement aussi l'outil de validation des audios (DEC-0065, non cité dans le message) ; CONTEXTE_IA 1.14 |
-| 15 h 17 – 23 h 36 | **aucun** | **Non enregistré dans Git** : voir 2.5 |
+| 15 h 17 – 23 h 36 | — | Travail enregistré le 01/11 dans `1d5c57e` : voir 2.5 et 2.6 |
 
-### 2.5 Modifications non enregistrées dans Git (au 2026-11-01)
+### 2.5 Modifications du 31/10 après 15 h 15 (enregistrées le 2026-11-01, commit `1d5c57e`)
 
 | Fichier | Modification |
 |---|---|
@@ -133,14 +133,15 @@ gardée, pas supprimée.
 | `04_DONNEES/00_modele_donnees.md` | colonne `slow_from` (en-tête non mis à jour : voir MOD-B06) |
 | `05_PRODUCTION/03_audio.md` (v0.14 à 0.17) | § 1 bis voix actuelles ; signalement ; voyelle seule |
 | `05_PRODUCTION/lecteur/lecteur.js`, `lecteur.css` | signalement d'un son (DEC-0069), voyelle seule (DEC-0070) |
-| `05_PRODUCTION/tools/` | `generer_audio_fpt.py`, `generer_lecteur.py`, `valider_audios.py`, `courbes_modele.py`, `decoupe_audio.py`, `choisir_exemples_e1.py` modifiés ; `essai_ultra.py`, `essai_espacement.py`, `essai_voyelles.py`, `validation_audios.html` nouveaux (à confirmer avec `git status`) |
+| `05_PRODUCTION/tools/` | `generer_audio_fpt.py`, `generer_lecteur.py`, `valider_audios.py`, `courbes_modele.py`, `decoupe_audio.py`, `choisir_exemples_e1.py`, `validation_audios.html` modifiés ; `essai_ultra.py`, `essai_espacement.py`, `essai_voyelles.py` nouveaux (vérifié avec `git status` le 01/11) |
 | `07_QUALITE/` | `essai_tts_ultra_2026-10-31.md` (v1.0 à 1.5), `audios_a_refaire.csv` (170 lignes), `validations/validations_audios_2026-10-31_1527.csv` |
-| `04_DONNEES/audio/` | au moins 592 fichiers créés après 15 h 15 : F1 (« Combien de fois ? », DEC-0066) pour L01, L04, L05, L06, L08, L09 ; **F4 et H6 pour L01** (essai de DEC-0067). Liste partielle : le relevé s'arrête à 2 000 fichiers |
+| `04_DONNEES/audio/` | 1 015 fichiers nouveaux, modifiés ou supprimés (`git status`, 01/11), dont : F1 (« Combien de fois ? », DEC-0066) pour L01, L04, L05, L06, L08, L09 ; **F4 et H6 pour L01** (essai de DEC-0067). Le premier relevé, partiel, en comptait au moins 592 |
 
 ### 2.6 Dimanche 1er novembre 2026
 
 | Besoin | Résultat |
 |---|---|
+| MOD-A01 | Fait à 12 h 09, commit `1d5c57e` (`git add -A`) : les 23 fichiers de documents, données, lecteur et scripts de la section 2.5 (dont `suivi_modifications.md` v0.7), et 1 015 audios nouveaux, modifiés ou supprimés. Vérification demandée : `git status` vide après le commit |
 | MOD-A03 | Vérifié : 6 784 MP3 suivis par Git (88 Mo), dont 2 296 dans des dossiers que le `.gitignore` devrait exclure ; dépôt compatible avec GitHub. Suite : MOD-A05 |
 
 ---
@@ -151,11 +152,11 @@ gardée, pas supprimée.
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-A01 | **Enregistrer dans Git** tout le travail du 31/10 après 15 h 15 (section 2.5) | constat du 2026-11-01 | tout le projet | **Haute** | à faire |
+| MOD-A01 | **Enregistrer dans Git** tout le travail du 31/10 après 15 h 15 (section 2.5) | constat du 2026-11-01 | tout le projet | **Haute** | **fait** (2026-11-01, commit `1d5c57e`) |
 | MOD-A02 | **Sauvegarde hors du PC** : dépôt privé GitHub (l'historique n'existe que sur le PC) | QUAL-AVANCEMENT § 7 n° 2 ; risque « perte totale » | Git | **Haute** | à faire |
 | MOD-A03 | Vérifier si les **milliers de MP3** de `04_DONNEES/audio/` sont suivis par Git (le `.gitignore` n'exclut que `_bruts`, `_essais`, `_anciens`) : poids du dépôt, limite de GitHub. **Résultat (lecture de `.git/index`, 2026-11-01)** : hypothèse **confirmée**. Sur 6 860 fichiers suivis, **6 784 sont des MP3** (88 Mo sur 89 Mo) : 4 486 à la racine de `audio/` (46,6 Mo), **mais aussi 2 232 dans `_bruts` (40,5 Mo), 45 dans `_essais` et 19 dans `_anciens`** : ces fichiers ont été ajoutés à Git avant la règle du `.gitignore`, qui ne retire jamais un fichier déjà suivi (voir MOD-A05). Le dossier `audio/Nouveau dossier` (2 MP3) est encore suivi mais n'existe plus sur le disque : sa suppression sera enregistrée avec MOD-A01. Dépôt compressé (`.git/objects/pack`) : 88 Mo. Plus gros fichier suivi : `audios.csv`, 0,4 Mo. **Compatible avec GitHub** (limite stricte de 100 Mo par fichier ; dépôt conseillé sous 1 Go, à revérifier dans la documentation de GitHub). Point de vigilance : chaque génération d'audios ajoute son poids à l'historique, même si les fichiers sont ensuite supprimés. Non compté : les MP3 créés après le dernier commit (MOD-A01) | constat du 2026-11-01 | `.gitignore`, MOD-A02, MOD-A05 | **Haute** | **fait** (2026-11-01) |
 | MOD-A04 | Fichier vide `cle api FPT.txt` à la racine : la clé doit rester **hors** du projet (DOC-04). Il est ignoré par Git, mais à déplacer ou laisser vide | constat du 2026-11-01 | DOC-04 | Moyenne | à vérifier |
-| MOD-A05 | **Retirer de Git les audios intermédiaires** déjà suivis malgré le `.gitignore` (`_bruts`, `_essais`, `_anciens` : 2 296 MP3, 41 Mo), avec `git rm -r --cached` (retire les fichiers de Git **sans les effacer du disque**). Ils restent dans l'historique déjà enregistré : le dépôt ne maigrit pas, mais les prochains commits ne les suivent plus. À décider : retirer (cohérent avec la règle DOC-19) ou garder suivis (et alors corriger le `.gitignore`). À faire **avant** MOD-A01 et MOD-A02 | MOD-A03, 2026-11-01 | `.gitignore`, DOC-19, MOD-A01, MOD-A02 | Moyenne | à décider |
+| MOD-A05 | **Retirer de Git les audios intermédiaires** déjà suivis malgré le `.gitignore` (`_bruts`, `_essais`, `_anciens` : 2 296 MP3, 41 Mo), avec `git rm -r --cached` (retire les fichiers de Git **sans les effacer du disque**). Ils restent dans l'historique déjà enregistré : le dépôt ne maigrit pas, mais les prochains commits ne les suivent plus. À décider : retirer (cohérent avec la règle DOC-19) ou garder suivis (et alors corriger le `.gitignore`). À faire **avant** MOD-A02 (MOD-A01 a été fait avant, le 01/11 : les audios intermédiaires déjà suivis et modifiés y sont donc enregistrés) | MOD-A03, 2026-11-01 | `.gitignore`, DOC-19, MOD-A01, MOD-A02 | Moyenne | à décider |
 
 ### B. Cohérence des documents après DEC-0067
 
@@ -284,6 +285,7 @@ gardée, pas supprimée.
 | 0.5 | 2026-11-01 | MOD-D17 : choix de Christophe, bilan d'écoute de fin de leçon et récapitulatif. |
 | 0.6 | 2026-11-01 | MOD-D18 à MOD-D23 : améliorations de l'interface du lecteur (guidage, bouton flottant, textes, accueil, écrit, détails), après relecture des écrans. |
 | 0.7 | 2026-11-01 | MOD-A03 fait : les MP3 sont suivis par Git (résultat chiffré) ; nouveau besoin MOD-A05 (audios intermédiaires suivis malgré le `.gitignore`) ; journal 2.6. |
+| 0.8 | 2026-11-01 | MOD-A01 fait (commit `1d5c57e`) : journal 2.4 à 2.6, section 2.5 vérifiée avec `git status`. |
 
 ## Liens
 
