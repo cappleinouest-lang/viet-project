@@ -2,16 +2,18 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.20
-date: 2026-10-30
+version: 0.21
+date: 2026-11-01
 resume: >
-  Décrit la première version du lecteur d'activités (volet écoute E1 → E3,
-  toutes les leçons du Module 0) : fichiers, génération, règles appliquées,
-  ce qui est provisoire, comment l'essayer et ce qui reste à faire.
-entrees: [PROD-AF-LECT]
-sorties: []
+  Décrit la version d'essai du lecteur d'activités (volet écoute E1 → E3 et
+  « Combien de fois ? », E4 du volet production, page « Les 6 tons ») :
+  fichiers, génération, règles appliquées, ce qui est provisoire, comment
+  l'essayer et ce qui reste à faire.
+entrees: [PROD-AF-LECT, PROD-AUDIO]
+sorties: [QUAL-AVANCEMENT-20261031]
 sources:
-  - 02_REGLES/DECISIONS.md (DEC-0026 à DEC-0030, DEC-0032, DEC-0033)
+  - 02_REGLES/DECISIONS.md (DEC-0026 à DEC-0030, DEC-0032, DEC-0033, DEC-0037 à DEC-0070)
+  - 05_PRODUCTION/tools/generer_lecteur.py et lecteur/lecteur.js (relus le 2026-11-01)
   - 03_PROGRAMME/01_types_activites.md (PROG-ACT)
   - 03_PROGRAMME/progression_M0.md (PROG-M0)
   - 05_PRODUCTION/01_architecture_outils.md (PROD-ARCH)
@@ -23,10 +25,16 @@ sources:
 
 Le lecteur est un **site statique** (DEC-0030) : une page, une feuille de
 style, un programme JavaScript et un fichier de données **généré** depuis
-`04_DONNEES`. Cette version 0.1 couvre le **volet écoute** (E1, E2, E3 et
-la révélation de l'écrit) pour les 13 leçons qui ont des séries. Le son
-vient, en attendant les enregistrements validés, de la **voix de synthèse**
-de l'appareil.
+`04_DONNEES`. La version 0.1 couvrait le **volet écoute** (E1, E2, E3 et
+la révélation de l'écrit) pour les 13 leçons qui ont des séries ; s'y sont
+ajoutés l'échauffement, « Combien de fois ? », E4 (volet production), la
+page « Les 6 tons » et les audios FPT. Les audios sont joués quand ils sont
+**validés** (ou tous en mode d'essai, `--non-valides`) ; sinon, la **voix de
+synthèse** de l'appareil.
+
+Depuis DEC-0067, deux voix : **F4 Ban Mai** (femme, voix modèle) et
+**H6 Quang Anh** (homme), en FPT.TTS-ultra ; au débit lent, le lecteur joue
+les fichiers de F1 et H4 (colonne `slow_from` de `voix.csv`).
 
 ## 1. Fichiers
 
@@ -55,11 +63,13 @@ installation n'est nécessaire ; le générateur n'utilise que Python.
 | Règle | Dans le lecteur |
 |---|---|
 | R-PARC-01, R-VOL-01 | E1 → E2 → E3 → écrit ; chaque étape s'ouvre quand la précédente est faite |
-| E1 (PROG-ACT, DEC-0039) | un écran par son (ou ton) : symbole, catégorie, repère, indice ; 3 mots au plus (`exemples_e1.csv`), chacun dit par une voix de femme puis d'homme ; deux boutons « ▶ Écouter » (débit normal) et « 🐢 Écouter lentement » (débit lent), choix de la voix « Femme et homme » (par défaut), « Femme » ou « Homme » ; toucher un mot le redit avec la voix et la dernière vitesse choisies ; aucun écrit ; aucune opposition ; « suivant » après une écoute complète. Progression antérieure : une E2 commencée vaut E1 faite |
+| E1 (PROG-ACT, DEC-0039) | un écran par son (ou ton) : symbole, catégorie, repère, indice ; 3 mots au plus (`exemples_e1.csv`), chacun dit par une voix de femme puis d'homme ; deux boutons « ▶ Écouter » (débit normal) et « 🐢 Écouter lentement » (débit lent), choix de la voix « Femme et homme » (par défaut), « Femme » ou « Homme » ; toucher un mot le redit avec la voix et la dernière vitesse choisies ; pour une voyelle simple (leçons de sons), tuile « 🔈 Le son seul » jouée avant les mots, au débit normal seulement, si son audio est validé ou en mode d'essai (DEC-0070) ; aucun mot écrit (lettres du son : DEC-0063) ; aucune opposition ; « suivant » après une écoute complète. Progression antérieure : une E2 commencée vaut E1 faite |
 | R-PARC-04, DEC-0033 | E2 : positions 1 et 2 de la série |
 | DEC-0042 | place du son : marque « début ▸ » / « ◂ fin » sur chaque symbole de consonne ; en E1, en-tête « consonne en début / fin de mot » ou « voyelle » ; en E2 et E3, consigne « Écoutez la consonne du début du mot », etc. |
-| DEC-0047 | mode test : dans la case du mot joué, une ligne par voix : fichier (ou « synthèse de l'appareil »), personnage · F/H · code, modèle · débit · `speed` ; en E2, E3 et à l'échauffement, seulement après la réponse ; réglage « Infos de test sur le son » |
-| DEC-0045 | leçons de tons : échauffement avec la même voix (F1) pour les deux mots ; E2–E3 phase « avec images » avec F1 seule, phase « symboles seuls » avec les voix actives (3 depuis DEC-0048) |
+| DEC-0047 | mode test : dans la case du mot joué, une ligne par voix : fichier (ou « synthèse de l'appareil »), personnage · F/H · code, modèle · débit · `speed` ; en E2, E3 et à l'échauffement, seulement après la réponse ; réglage « Infos de test sur le son ». Au débit lent, la voix qui fournit le fichier est indiquée (DEC-0067) |
+| DEC-0069 | en mode test, bouton « ⚑ Signaler un son » dans tous les exercices : 8 derniers sons joués, défauts à cocher, remarque ; export `validations_audios_lecteur_<date>.csv` (traitement : PROD-AUDIO § 5) |
+| DEC-0067 | voix d'écoute de toutes les leçons (sons et tons) : F4 et H6 (colonnes `listen_sounds` et `listen_tones` de `voix.csv`) ; débit lent pris à la voix `slow_from` (F4 ← F1, H6 ← H4) |
+| DEC-0045 | leçons de tons : échauffement avec la même voix, la voix modèle (F4 depuis DEC-0067), pour les deux mots ; E2–E3 phase « avec images » avec la voix modèle seule, phase « symboles seuls » avec les voix d'écoute de la leçon (F4 et H6) |
 | DEC-0043 | leçons de tons : audio toujours au débit normal (E1 sans « Écouter lentement », échauffement, E2, E3) ; phases d'E2–E3 nommées « avec images » puis « symboles seuls » |
 | DEC-0041 | E2 commence par 10 paires « Pareil ou différent ? » non notées (deux voix différentes par paire, termes montrés après la réponse) ; bouton « Pareil ou différent ? » sur l'étape E2 pour le refaire ; une E2 déjà commencée le saute |
 | R-PARC-05 | E3 : série complète (2 à 4 choix) |
@@ -69,6 +79,8 @@ installation n'est nécessaire ; le générateur n'utilise que Python.
 | PROG-ACT § 4 | tirage au hasard ; pas plus de 3 fois de suite la bonne réponse à la même place ; voix alternées ; pas de chronomètre |
 | R-VOL-02 | la leçon suivante s'ouvre quand l'écoute de la précédente est validée |
 | DEC-0038 | symbole de son avec sa catégorie (= ≈ ★, couleur et marque), son mot repère (🇫🇷 mot écrit, 🇻🇳 image seule) et son indice d'écoute en E1 ; catégorie et repère en petit au débit lent ; symbole seul au débit normal. Données : `04_DONNEES/reperes_sons.csv` |
+| DEC-0054, DEC-0056 à DEC-0058 | « Combien de fois ? » en fin d'E3 : suites ou phrases, deux phases, trois écoutes des phrases (normale, lente, mots espacés par virgules depuis DEC-0067), écrit révélé après la réponse, verrou comme E2–E3 |
+| DEC-0052, DEC-0053, DEC-0064 | page « Les 6 tons » : 10 séries, schéma de chaque ton, voix F4 ou H6 (`voix_reference_tons`), débit normal ou lent |
 | DEC-0037 | leçon marquée `split_parts` (L01) : partie A voyelles, puis partie B consonnes et finales, chacune avec E1 → E3, son verrou et l'écrit ; l'écoute de la leçon est validée après la dernière partie |
 
 **Essai automatique du 2026-10-28** (navigateur sans son, voix simulée,
@@ -95,7 +107,7 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 
 | Élément | Provisoire | Définitif |
 |---|---|---|
-| Son | voix de synthèse de l'appareil pour les mots sans fichier ; les voix F1, H3, H4 sont simulées par la hauteur. Essai avec les audios FPT non encore validés : `generer_lecteur.py . --non-valides` | audios FPT.AI validés (DEC-0023), lus automatiquement dès qu'ils figurent dans `audios.csv` avec `validated = true` |
+| Son | voix de synthèse de l'appareil pour les mots sans fichier ; les voix F4 et H6 y sont simulées par la hauteur. Essai avec les audios FPT non encore validés : `generer_lecteur.py . --non-valides`. Au 2026-11-01, les audios F4 / H6 n'existent que pour L01 (PROD-AUDIO § 1) : les autres leçons jouent la voix de synthèse | audios FPT validés (DEC-0023, DEC-0067), lus automatiquement dès qu'ils figurent dans `audios.csv` avec `validated = true` |
 | Images | emoji | images OpenMoji dans `images.csv` (DEC-0024) |
 | Progression | dans le navigateur de l'appareil | WordPress ou Firebase (DEC-0030) : seul l'objet `Stockage` de `lecteur.js` change |
 
@@ -111,12 +123,12 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
    `prononciation.js` : micro, courbe mélodique par l'algorithme YIN, demi-tons
    autour de la hauteur médiane, temps ramené de 0 à 1). Limite connue : chaque
    courbe est rapportée à SA propre médiane, elle montre la forme du ton, pas
-   son registre (haut / bas). Étape 2 (DEC-0050) : courbes du modèle F1
-   calculées à l'avance par `tools/courbes_modele.py` (même calcul que
+   son registre (haut / bas). Étape 2 (DEC-0050) : courbes du modèle (F4
+   depuis DEC-0067, lent F1) calculées à l'avance par `tools/courbes_modele.py` (même calcul que
    `prononciation.js`) dans `04_DONNEES/courbes_modele.csv`. Étape 3 : **E4 intégré
    au lecteur** (version 0.15) : mots supports de la leçon (`mots_lecons.csv`),
-   ouverts quand l'écoute de la leçon est validée ; passage 1 avec le modèle F1
-   lent, passage 2 avec le modèle normal ; pour chaque mot : écrit, image, son ou
+   ouverts quand l'écoute de la leçon est validée ; passage 1 avec le modèle lent
+   (fichiers de F1), passage 2 avec le modèle normal (F4) ; pour chaque mot : écrit, image, son ou
    ton visé avec son chemin de prononciation, modèle, enregistrement, « Moi »,
    « Moi puis le modèle », courbes, note « proche » / « à reprendre » (3 essais
    au plus, paramètre `essais_max_e4`). E4 est marquée « parcourue », sans verrou
@@ -152,3 +164,10 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.18 | 2026-10-30 | « Les 6 tons » : schéma de chaque ton à la place des courbes mesurées (DEC-0053). |
 | 0.19 | 2026-10-30 | Voix d'écoute propres à chaque leçon (`l.voix`, DEC-0055). |
 | 0.20 | 2026-10-30 | Écran « Combien de fois ? » en fin d'E3 (DEC-0054) : deux phases, verrou comme E2/E3, écrit de la suite révélé après la réponse ; l'écrit d'E3 s'ouvre après sa validation. |
+| 0.21 | 2026-11-01 | MOD-B03 : changements du lecteur des 30 et 31/10 décrits : voix F4 / H6 et débit lent emprunté (DEC-0067), signalement d'un son (DEC-0069), voyelle seule en E1 (DEC-0070), « Combien de fois ? » et page « Les 6 tons » au § 3 ; § 4 et § 5 sans F1, H3, H4 ; résumé ; liens (DOC-32). |
+
+## Liens
+
+- **Entrées** : [PROD-AF-LECT](04_analyse_fonctionnelle_lecteur.md),
+  [PROD-AUDIO](03_audio.md)
+- **Sorties** : [QUAL-AVANCEMENT-20261031](../07_QUALITE/etat_avancement_2026-10-31.md)

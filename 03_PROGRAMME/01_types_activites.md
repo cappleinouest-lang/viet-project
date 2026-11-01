@@ -2,8 +2,8 @@
 id: PROG-ACT
 titre: Types d'activités des étapes E1 à E5
 statut: BROUILLON
-version: 0.15
-date: 2026-10-30
+version: 0.16
+date: 2026-11-01
 resume: >
   Catalogue des types d'activités, communs à toutes les leçons du Module 0 :
   pour chaque étape E1 à E5, ce que l'élève entend et voit, comment il
@@ -44,14 +44,15 @@ sources:
 
 > **Leçons de tons (DEC-0043, DEC-0045)** : jamais d'audio lent (E1,
 > échauffement, E2, E3) ; en E2–E3, la première phase garde les images et
-> **une seule voix** (F1, aussi dans l'échauffement), la seconde passe aux
+> **une seule voix**, la voix modèle (F4 depuis DEC-0067, aussi dans
+> l'échauffement), la seconde passe aux
 > symboles seuls et à **plusieurs voix** ; toutes deux au débit normal.
 
 ### ACT-E1-DECOUV — Découverte
 
 | Point | Règle |
 |---|---|
-| Entend | chaque son (ou ton) des séries de la leçon, **seul**, dans **3 mots au plus** (`exemples_e1.csv`, règle souple : ton déjà vu) ; chaque mot dit par **une voix de femme puis une voix d'homme**, deux boutons d'écoute : débit **normal** ou débit **lent**, et choix de la voix (femme et homme, femme, homme), au choix de l'élève (DEC-0039) |
+| Entend | chaque son (ou ton) des séries de la leçon, **seul**, dans **3 mots au plus** (`exemples_e1.csv`, règle souple : ton déjà vu) ; chaque mot dit par **une voix de femme puis une voix d'homme**, deux boutons d'écoute : débit **normal** ou débit **lent**, et choix de la voix (femme et homme, femme, homme), au choix de l'élève (DEC-0039) ; pour une **voyelle simple** (leçons de sons), la voyelle **seule** d'abord, au débit normal seulement (DEC-0070) |
 | Voit | image du mot (ou 🔊) et son sens ; **symbole** de l'élément, avec sa **catégorie** (= ≈ ★), son **mot repère** et son **indice d'écoute** (DEC-0038) ; pictogramme du ton, ou `ipa_main` du son, présenté avec son audio (DEC-0029) ; **aucun écrit** (R-ECR-01) |
 | Répond | rien ; peut **réécouter** autant qu'il veut, puis « suivant » |
 | Fin | les mots de chaque son écoutés au moins une fois en entier |
@@ -194,6 +195,7 @@ calibrés.
 | 0.13 | 2026-10-30 | Phrases plutôt que suites, règle souple (DEC-0056). |
 | 0.14 | 2026-10-30 | Écoute lente non comptée (DEC-0057). |
 | 0.15 | 2026-10-30 | Trois écoutes, dont mots espacés (DEC-0058). |
+| 0.16 | 2026-11-01 | MOD-B05 : voix des leçons de tons, F4 au lieu de F1 (DEC-0067) ; voyelle seule en E1 (DEC-0070). |
 
 ## Liens
 

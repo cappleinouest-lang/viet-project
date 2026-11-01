@@ -2,8 +2,8 @@
 id: DATA-MODELE
 titre: Modèle des données
 statut: BROUILLON
-version: 0.19
-date: 2026-10-30
+version: 0.20
+date: 2026-11-01
 resume: >
   Liste les fichiers CSV de 04_DONNEES, leurs colonnes, les valeurs permises
   et les liens entre fichiers. Sert de référence au générateur et au script
@@ -11,7 +11,7 @@ resume: >
 entrees: [REG-REGLES, REG-DEC, FOND-02]
 sorties: [04_DONNEES/*.csv, 05_PRODUCTION (générateur, contrôle), 07_QUALITE, QUAL-PROP-MOTS-M0, QUAL-REPRISE-MOTS-20261028, QUAL-VERIF-HORS-CORPUS-20261028, PROG-ACT]
 sources:
-  - 02_REGLES/DECISIONS.md (DEC-0007, DEC-0013, DEC-0017)
+  - 02_REGLES/DECISIONS.md (DEC-0007, DEC-0013, DEC-0017, DEC-0067, DEC-0070)
   - _ARCHIVES/Projet de Formation_Vietnamien_A0_to_A2/PROD/00_GLOBAL/*.csv
   - _ARCHIVES/Projet sous Anki/03_DATA_CSV/
 ---
@@ -161,13 +161,13 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
-| `audio_code` | code | | `A-W0042-F1-slow` |
-| `item_type` | ce qui est prononcé | `word`, `syllable`, `invented` | `word` |
+| `audio_code` | code | | `A-W0042-F4-normal` |
+| `item_type` | ce qui est prononcé | `word`, `syllable`, `invented`, `sequence` (suite ou phrase de `comptage.csv`), `voyelle` (voyelle seule d'E1, DEC-0070) | `word` |
 | `item_ref` | référence | `word_code`, ou écriture pour une syllabe | `W0042` |
-| `voice` | voix | `voice_code` de `voix.csv` | `F1` |
-| `speed` | débit | `slow`, `normal`, `fast`, `spaced` (mots espacés par des points de suspension, DEC-0058) | `slow` |
+| `voice` | voix | `voice_code` de `voix.csv` ; un débit lent emprunté reste inscrit sous la voix qui le fournit (`F1`, `H4`, DEC-0067) | `F4` |
+| `speed` | débit | `slow`, `normal`, `fast`, `spaced` (mots espacés : points de suspension, DEC-0058, puis virgules depuis DEC-0067) | `normal` |
 | `source` | origine | `fpt-mkp`, `fpt`, `native`, `recorded` | `fpt-mkp` |
-| `file` | chemin relatif, dans `04_DONNEES/audio/` (DEC-0023) | | `audio/W0042-F1-slow.mp3` |
+| `file` | chemin relatif, dans `04_DONNEES/audio/` (DEC-0023) | | `audio/W0042-F4-normal.mp3` |
 | `validated` | écouté et validé (R-AUD-01) | `true` / `false` | `false` |
 
 ### 3.9 `classificateurs.csv` (pour A1)
@@ -198,17 +198,17 @@ seul élément (son ou ton). Une ligne = un terme de la série.
 
 | Colonne | Contenu | Valeurs permises | Exemple |
 |---|---|---|---|
-| `voice_code` | code | `F1`, `F2`, `H1`, `E1`… (un code n'est jamais réutilisé pour une autre voix) | `H3` |
+| `voice_code` | code | `F1`, `F2`, `H1`, `E1`… (un code n'est jamais réutilisé pour une autre voix ; une même voix dans un autre modèle prend un nouveau code : `F1` → `F4`) | `H6` |
 | `gender` | genre | `female`, `male`, vide | `male` |
 | `age` | âge | `adult`, `child` | `adult` |
 | `region` | accent | `north` (DEC-0009) | `north` |
 | `provider` | origine | `fpt-mkp` (FPT AI Marketplace), `fpt` (ancienne API FPT.AI), `native` (enregistrement), autre | `fpt-mkp` |
-| `provider_voice` | identifiant chez le fournisseur | | `std_leminh` |
-| `provider_model` | modèle de synthèse chez le fournisseur | `FPT.TTS-pro`, `FPT.AI-VITs`, vide | `FPT.AI-VITs` |
-| `provider_speed_slow` | valeur `speed` du débit lent pour cette voix (vide : 0,8) | nombre | `0.6` |
+| `provider_voice` | identifiant chez le fournisseur | | `std_quanganh` |
+| `provider_model` | modèle de synthèse chez le fournisseur | `FPT.TTS-ultra`, `FPT.TTS-pro`, `FPT.AI-VITs`, vide | `FPT.TTS-ultra` |
+| `provider_speed_slow` | valeur `speed` du débit lent pour cette voix (vide : 0,8 ; sans objet en FPT.TTS-ultra, qui ignore la vitesse) | nombre | `0.6` |
 | `status` | état | `active`, `planned`, `inactive` (écartée, gardée pour l'historique) | `active` |
-| `listen_sounds` | voix d'écoute des leçons de sons (DEC-0055) | `true` / `false` | `true` |
-| `listen_tones` | voix d'écoute des leçons de tons (DEC-0055) | `true` / `false` | `false` |
+| `listen_sounds` | voix d'écoute des leçons de sons (DEC-0055 ; F4 et H6 depuis DEC-0067) | `true` / `false` | `true` |
+| `listen_tones` | voix d'écoute des leçons de tons (DEC-0055 ; F4 et H6 depuis DEC-0067) | `true` / `false` | `true` |
 | `slow_from` | voix qui fournit le débit lent de cette voix (DEC-0067 : FPT.TTS-ultra ignore la vitesse) ; vide : la voix elle-même | `voice_code` | `F1` |
 | `note` | remarque | | |
 
@@ -223,7 +223,7 @@ Produit par `05_PRODUCTION/tools/choisir_exemples_e1.py` ; peut être corrigé
 | `element` | son ou ton découvert | `sound_code` ou `tone_code` | `PH-VS-e` |
 | `rank` | ordre de passage | 1 à 3 | `1` |
 | `word_code` | mot d'une syllabe contenant l'élément | `word_code` | `W0057` |
-| `voice_f` / `voice_h` | voix de femme, puis voix d'homme | `voice_code` actifs | `F1` / `H3` |
+| `voice_f` / `voice_h` | voix de femme, puis voix d'homme | `voice_code` actifs | `F4` / `H6` |
 | `note` | écriture du mot (lecture humaine du fichier) | | `xem` |
 
 ### 3.12 `images.csv` — images des mots (DEC-0024)
@@ -264,7 +264,7 @@ consonne **finale** peut avoir sa propre ligne, symbole précédé de `-`
 ### 3.14 `reference_tons.csv` — série de la page « Les 6 tons » (DEC-0052)
 
 Une même syllabe dite avec les 6 tons, pour comparer les tons sur une même
-échelle. Audios : voix F1 et H3, lent et normal (`generer_audio_fpt.py`) ;
+échelle. Audios : voix F4 et H6 (DEC-0067 ; F1 et H3 auparavant), normal, et lent emprunté à F1 et H4 (`generer_audio_fpt.py`) ;
 courbes : `courbes_modele.py`.
 
 | Colonne | Contenu | Valeurs permises | Exemple |
@@ -282,8 +282,9 @@ courbes : `courbes_modele.py`.
 ### 3.15 `courbes_modele.csv` — courbes mélodiques calculées (DEC-0050)
 
 Fichier **produit** par `05_PRODUCTION/tools/courbes_modele.py`, à ne pas
-saisir à la main : une ligne par audio de la voix modèle F1 et de la série
-des tons. Colonnes : `audio_code`, `file`, `size` (taille du fichier, pour
+saisir à la main : une ligne par audio de la voix modèle (F4 depuis
+DEC-0067, et F1 qui fournit son débit lent) et de la série des tons. Les
+lignes calculées pour d'anciennes voix (F3, H3, H4) restent dans le fichier. Colonnes : `audio_code`, `file`, `size` (taille du fichier, pour
 repérer un audio regénéré), `median_hz`, `voiced_s`, `points` (demi-tons
 autour de la médiane, toutes les 10 ms ; `_` = pas de voix mesurable).
 
@@ -371,4 +372,5 @@ audios. Elles sont donc toujours cohérentes avec les données et regénérables
 | 0.16 | 2026-10-29 | Ajout de `exemples_e1.csv` (DEC-0039). |
 | 0.17 | 2026-10-29 | `reperes_sons.csv` : lignes propres aux finales (`-m`, `-n`) (DEC-0046). |
 | 0.18 | 2026-10-30 | Nouveaux fichiers `reference_tons.csv` (DEC-0052) et `courbes_modele.csv` (DEC-0050) ; `comptage.csv` (DEC-0054) ; `voix.csv` : colonnes `listen_sounds`, `listen_tones` (DEC-0055) ; `mots.csv` : colonne `classifier`, fichier `appuis_series.csv` (DEC-0060). |
-| 0.19 | 2026-10-31 | `voix.csv` : colonne `slow_from` (débit lent emprunté à une autre voix, DEC-0067). |
+| 0.19 | 2026-10-31 | `voix.csv` : colonne `slow_from` (débit lent emprunté à une autre voix, DEC-0067). En-tête du document laissé par erreur en v0.19 du 30/10. |
+| 0.20 | 2026-11-01 | MOD-B06 : en-tête mis à jour ; exemples avec F4 / H6 (`audios.csv`, `voix.csv`, `exemples_e1.csv`) ; `item_type` `sequence` et `voyelle` (DEC-0070) ; `provider_model` `FPT.TTS-ultra` ; mots espacés par virgules ; voix de `reference_tons.csv` et de `courbes_modele.csv` (DEC-0067). |

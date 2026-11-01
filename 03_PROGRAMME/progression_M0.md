@@ -2,8 +2,8 @@
 id: PROG-M0
 titre: Progression du Module 0
 statut: BROUILLON
-version: 0.11
-date: 2026-10-30
+version: 0.12
+date: 2026-11-01
 resume: >
   Programme des 14 leçons du Module 0 (sons et tons) : pour chaque leçon, la
   famille de nouveautés, les contrastes travaillés, le volume de contenus, les
@@ -89,8 +89,8 @@ Chaque temps reste un choix entre deux possibilités (R-PARC-04).
 
 | Volet | Contenu | Volume du Module 0 |
 |---|---|---|
-| Écoute (E1–E3) | voir `05_PRODUCTION/03_audio.md` : 3 voix actives (F1, H3, H4 ; F3 écartée, DEC-0048) × 2 débits, plus les mots d'exemple d'E1 (DEC-0039) | **2 238 audios** (2026-10-29) |
-| Production (E4–E5) | 100 mots supports × 1 voix modèle × 2 débits (+ débit rapide en E5) | **200 à 300 audios** |
+| Écoute (E1–E3) | voir `05_PRODUCTION/03_audio.md` : **2 voix** F4 Ban Mai et H6 Quang Anh (FPT.TTS-ultra, DEC-0067) au débit normal, débit lent emprunté à F1 et H4 ; plus les mots d'exemple d'E1 (DEC-0039), la voyelle seule (DEC-0070) et « Combien de fois ? » | F4 / H6 : **227 audios** pour L01 (2026-11-01) ; environ **1 700** à générer pour les autres leçons |
+| Production (E4–E5) | 100 mots supports × 1 voix modèle (F4 ; lent : fichiers de F1) × 2 débits (+ débit rapide en E5) | **200 à 300 audios** |
 | Images | mots supports `imageable` (79 sur 100, estimation à corriger) | 79 images |
 
 > **Hypothèse** : le débit rapide (R-AUD-04) ne sert qu'en E5, donc
@@ -274,7 +274,7 @@ affichée, R-LEX-06).
 | Nouveauté | aucune (R-REV-03) |
 | Contenu | les **97 séries** de L01 à L13, mêlées ; E5 sur les **100 mots** |
 | Pondération | **Proposition** : la moitié des items sur les **tons** (L02, L03, L07, L11) ; puis, à parts égales, voyelles centrales et brèves (L06, L09), finales (L08, L10), autres |
-| Voix | les 3 voix ; débit normal |
+| Voix | les 2 voix d'écoute (F4, H6, DEC-0067) ; débit normal |
 | Verrou = sortie du Module 0 | toutes les leçons validées dans les deux volets ; tons ≥ 90 % ; ư, ơ, â intelligibles ; -p, -t, -c, -ch non relâchées ; rythme syllabique (R-VOL-09) |
 
 Objectifs chiffrés de FOND-01 § 6.1 à mesurer en L14 : tons ≥ 90 % ;
@@ -334,6 +334,7 @@ travail.
 | 0.9 | 2026-10-29 | E1 sans écoute contrastée (DEC-0039) ; audios : 4 voix (DEC-0040). |
 | 0.10 | 2026-10-29 | L01 : i retiré des contrastes, 14 séries (DEC-0044). |
 | 0.11 | 2026-10-30 | Audios : F3 écartée, 3 voix (DEC-0048). |
+| 0.12 | 2026-11-01 | MOD-B05 : voix F4 et H6, débit lent emprunté (DEC-0067) ; volumes d'audios au 2026-11-01 (§ 2.3) ; voix de L14. |
 
 ## Liens
 

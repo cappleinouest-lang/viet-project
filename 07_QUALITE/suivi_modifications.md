@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.11
+version: 0.12
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -27,10 +27,11 @@ sources:
   15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
   (commit `1d5c57e`, MOD-A01).
 - **Ce qui reste à faire** : **80 besoins** relevés (section 3), dont
-  **17 de priorité haute** (MOD-A01, MOD-A02, MOD-A03 et MOD-B01 faits le 01/11 ; MOD-A05 décidé : DEC-0071).
+  **17 de priorité haute** (MOD-A01 à MOD-A04 et MOD-B01 à MOD-B06 faits le 01/11 ; MOD-A05 décidé : DEC-0071).
   L'historique est sauvegardé hors du PC depuis le 01/11 (dépôt privé GitHub,
-  MOD-A02). Le plus urgent : mettre les documents d'accord avec DEC-0067 (plusieurs documents décrivent
-  encore les anciennes voix F1, F3, H3, H4).
+  MOD-A02). Les documents sont d'accord avec DEC-0067 (MOD-B02 à B06).
+  Le plus urgent : décider MOD-H01 (consonnes initiales en E1) avant de
+  générer les audios Ultra des autres leçons (MOD-C01).
 
 | Thème | Nombre | Haute | Moyenne | Basse |
 |---|---|---|---|---|
@@ -148,6 +149,8 @@ gardée, pas supprimée.
 | MOD-A04 | Fait (commit `429419e`) : `cle api FPT.txt` retiré du suivi de Git, toujours vide dans l'historique (aucune clé envoyée sur GitHub) |
 | MOD-A02 | Fait vers 12 h 40 : dépôt privé GitHub `cappleinouest-lang/viet-project` créé vide, relié (`git remote add origin`), historique envoyé (`git push -u origin main`, 14 079 objets, 233 Mo) |
 | MOD-B01 | `CONTEXTE_IA.md` v1.15 : voix F4 / H6 et débit lent emprunté (§ 4), état au 01/11 (§ 5 : 5 506 audios dont 3 494 validés, F4 / H6 pour L01 seulement, lecteur 0.21, Git), points ouverts renvoyés à ce suivi (§ 6), décisions jusqu'à DEC-0071 ; document repassé en BROUILLON (DOC-21), à revalider par Christophe |
+| MOD-B02 à B06 | Documents mis d'accord avec DEC-0067 (voix F4 / H6, débit lent emprunté à F1 / H4) et complétés avec DEC-0069 (signalement) et DEC-0070 (voyelle seule) : PROD-AUDIO 0.18 (titre, § 1 refait avec les 5 506 audios comptés par voix, liens), PROD-LECT 0.21, PROD-AF-LECT 0.3 (« Combien de fois ? », E4, page des tons, RG-16 à RG-19, écart EC-06 : en-tête de `lecteur.js`), PROG-M0 0.12, PROG-ACT 0.16, DATA-MODELE 0.20. Écart relevé : 10 voyelles seules dans `audios.csv` contre 22 prévues (DEC-0070), à vérifier |
+| Incident | Entre 12 h 46 et 12 h 49, une autre conversation travaillant en même temps a réécrit `CONTEXTE_IA.md` (version 1.15 sans MOD-A02) et `suivi_modifications.md` (ancienne 0.8). Réparé : conversation arrêtée, suivi récupéré par `git restore` (0.11), CONTEXTE_IA remis en 1.16 validée. Règle : **une seule conversation à la fois** sur `C:\VIET_PROJECT` |
 
 ---
 
@@ -172,14 +175,14 @@ gardée, pas supprimée.
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
 | MOD-B01 | **CONTEXTE_IA** v1.15 : § 4 « Audio » (dit encore F1 + H4 pour les sons, F1/H3/H4 pour les tons, modèle F1), § 5 état (daté du 30/10, lecteur 0.13 au lieu de 0.21, 4 491 audios), § 6 points ouverts, nombre de décisions (DEC-0070) | constat du 2026-11-01 | CTX-IA | **Haute** | **fait** (2026-11-01, CTX-IA v1.15 ; à revalider) |
-| MOD-B02 | **PROD-AUDIO** : titre « FPT.TTS-pro » périmé ; § 1 tableau des voix et totaux du 29/10 ; historique (ligne 0.10 mal placée) ; champs `entrees` et `sorties` vides (DOC-30) | constat du 2026-11-01 | `05_PRODUCTION/03_audio.md` | **Haute** | à faire |
-| MOD-B03 | **PROD-LECT** : § 4 « voix F1, H3, H4 simulées » ; § 5 « modèle F1 » ; version 0.20 du 30/10 sans DEC-0065 à DEC-0070 | constat du 2026-11-01 | `05_PRODUCTION/02_lecteur_activites.md` | **Haute** | à faire |
-| MOD-B04 | **PROD-AF-LECT** (analyse fonctionnelle, état du 29/10) : voix F1 dans les règles RG-11, § 6 ; exemples `W0057-H3`, Le Minh ; ajouter signalement (DEC-0069), voyelle seule (DEC-0070), « Combien de fois ? », E4, page des tons | constat du 2026-11-01 | `05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md` | **Haute** | à faire |
-| MOD-B05 | **PROG-M0** § 3 : « 3 voix actives (F1, H3, H4) », « 2 238 audios » ; **PROG-ACT** ligne 47 : « une seule voix (F1) » | constat du 2026-11-01 | `03_PROGRAMME/` | **Haute** | à faire |
-| MOD-B06 | **DATA-MODELE** : en-tête (v0.19, date du 30/10) non mis à jour alors que `slow_from` a été ajouté ; exemples F1 / H3 dans `voice_f` / `voice_h` | constat du 2026-11-01 | `04_DONNEES/00_modele_donnees.md` | **Haute** | à faire |
+| MOD-B02 | **PROD-AUDIO** : titre « FPT.TTS-pro » périmé ; § 1 tableau des voix et totaux du 29/10 ; historique (ligne 0.10 mal placée) ; champs `entrees` et `sorties` vides (DOC-30) | constat du 2026-11-01 | `05_PRODUCTION/03_audio.md` | **Haute** | **fait** (2026-11-01, PROD-AUDIO v0.18) |
+| MOD-B03 | **PROD-LECT** : § 4 « voix F1, H3, H4 simulées » ; § 5 « modèle F1 » ; version 0.20 du 30/10 sans DEC-0065 à DEC-0070 | constat du 2026-11-01 | `05_PRODUCTION/02_lecteur_activites.md` | **Haute** | **fait** (2026-11-01, PROD-LECT v0.21) |
+| MOD-B04 | **PROD-AF-LECT** (analyse fonctionnelle, état du 29/10) : voix F1 dans les règles RG-11, § 6 ; exemples `W0057-H3`, Le Minh ; ajouter signalement (DEC-0069), voyelle seule (DEC-0070), « Combien de fois ? », E4, page des tons | constat du 2026-11-01 | `05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md` | **Haute** | **fait** (2026-11-01, PROD-AF-LECT v0.3) |
+| MOD-B05 | **PROG-M0** § 3 : « 3 voix actives (F1, H3, H4) », « 2 238 audios » ; **PROG-ACT** ligne 47 : « une seule voix (F1) » | constat du 2026-11-01 | `03_PROGRAMME/` | **Haute** | **fait** (2026-11-01, PROG-M0 v0.12, PROG-ACT v0.16) |
+| MOD-B06 | **DATA-MODELE** : en-tête (v0.19, date du 30/10) non mis à jour alors que `slow_from` a été ajouté ; exemples F1 / H3 dans `voice_f` / `voice_h` | constat du 2026-11-01 | `04_DONNEES/00_modele_donnees.md` | **Haute** | **fait** (2026-11-01, DATA-MODELE v0.20) |
 | MOD-B07 | **REG-REGLES** R-AUD-02 (« au moins 2 voix », variété) : depuis DEC-0067, une seule femme et un seul homme, et le personnage d'homme change entre lent (Huy Phong) et normal (Quang Anh). Vérifier la conformité, ou noter l'écart | DEC-0066, DEC-0067 | `02_REGLES/REGISTRE_REGLES.md` | **Haute** | à décider |
 | MOD-B08 | **Regénérer** `CARTE_DOCUMENTAIRE.md` (datée du 29/10) avec `build_doc_map.py` | QUAL-AVANCEMENT § 7 n° 15 | carte | Moyenne | à faire |
-| MOD-B09 | Rendre les **liens réciproques** (DOC-32) : CTX-IA, PROD-AUDIO, PROD-LECT, REG-DEC et QUAL-CONTRASTE-TONS ne citent pas en `sorties` les rapports QUAL-AVANCEMENT, QUAL-CONTRASTE-TONS, QUAL-ESSAI-ULTRA ; et ce document (QUAL-SUIVI-MODIF) | essai de `build_doc_map.py` du 2026-11-01 | en-têtes | Moyenne | à faire |
+| MOD-B09 | Rendre les **liens réciproques** (DOC-32) : CTX-IA, PROD-AUDIO, PROD-LECT, REG-DEC et QUAL-CONTRASTE-TONS ne citent pas en `sorties` les rapports QUAL-AVANCEMENT, QUAL-CONTRASTE-TONS, QUAL-ESSAI-ULTRA ; et ce document (QUAL-SUIVI-MODIF) | essai de `build_doc_map.py` du 2026-11-01 | en-têtes | Moyenne | en cours (PROD-AUDIO et PROD-LECT faits le 2026-11-01 avec MOD-B02, B03) |
 | MOD-B10 | Relier ou classer les 2 documents **sans aucun lien** : PROD-COMP-SUPPORT-20261028, PROD-DOSSIER-SUPPORT-20261028 | carte documentaire | `05_PRODUCTION/` | Moyenne | à faire |
 | MOD-B11 | **PROD-ARCH** (v0.4) : rédigé autour de WordPress (extension de progression, Local, hébergeur) alors que DEC-0030 laisse le choix WordPress ou Firebase ; point ouvert 3 « voix de référence » à mettre à jour (DEC-0067) | constat du 2026-11-01 | `05_PRODUCTION/01_architecture_outils.md` | Moyenne | à faire |
 | MOD-B12 | `README.md` de la racine et des dossiers : brouillons v0.1–0.2 du 28/10, à relire | constat du 2026-11-01 | `README.md` | Moyenne | à faire |
@@ -294,6 +297,7 @@ gardée, pas supprimée.
 | 0.9 | 2026-11-01 | MOD-A05 fait : audios intermédiaires gardés dans Git (DEC-0071), `.gitignore` corrigé. |
 | 0.10 | 2026-11-01 | MOD-B01 fait : CONTEXTE_IA v1.15. |
 | 0.11 | 2026-11-01 | MOD-A04 fait (clé retirée du suivi Git, commit `429419e`) ; MOD-A02 fait (dépôt privé GitHub) ; CONTEXTE_IA v1.16. |
+| 0.12 | 2026-11-01 | MOD-B02 à B06 faits ; MOD-B09 en cours ; incident des deux conversations simultanées noté au journal 2.6. |
 
 ## Liens
 

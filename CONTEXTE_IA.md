@@ -2,7 +2,7 @@
 id: CTX-IA
 titre: Contexte du projet pour une IA
 statut: VALIDE
-version: 1.15
+version: 1.16
 date: 2026-11-01
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
@@ -37,7 +37,8 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
   `inactive` ou reste en place, ignoré.
 - Après chaque modification validée : la noter dans
   `07_QUALITE/suivi_modifications.md` (numéro `MOD-…`), puis rappeler
-  `git add .` et `git commit -m "MOD-… : …"` dans `C:\VIET_PROJECT`.
+  `git add .`, `git commit -m "MOD-… : …"` puis `git push` (sauvegarde
+  sur GitHub, MOD-A02) dans `C:\VIET_PROJECT`.
 
 ## 3. Où trouver quoi
 
@@ -93,7 +94,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Audios | `audios.csv` : **5 506 audios**, dont **3 494 validés** (`validated = true`), tous des anciennes voix (F1, F3, H3, H4). **F4 / H6 : générés pour L01 seulement** (227 fichiers, dont 10 voyelles seules), **aucun validé** ; autres leçons à générer après écoute de L01 (environ 1 700 fichiers ; tarif d'Ultra à vérifier). 170 audios marqués « à refaire » (`07_QUALITE/audios_a_refaire.csv`), dont 32 seulement restent utiles |
 | Images | emoji provisoires ; OpenMoji **à choisir** |
 | Lecteur d'activités | **version d'essai 0.21** (numéro de QUAL-AVANCEMENT ; PROD-LECT dit encore 0.20) : volet écoute E1, échauffement, E2, E3, « Combien de fois ? », écrit, pour toutes les leçons sauf L14 ; voyelle seule en E1 (DEC-0070) ; signalement d'un son (DEC-0069) ; réglages, « Mes progrès », mode test, mode essai « tout ouvert » ; page « Les 6 tons ». Volet production : **E4 intégré**, sans verrou (micro, courbes mélodiques du modèle) ; E5, L14, paquets Anki **à développer**. Version autonome en un fichier dans `06_LIVRABLES/lecteur/` |
-| Git | tout le travail jusqu'au 31/10 enregistré (commit `1d5c57e`, 01/11) ; historique **seulement sur le PC** : dépôt privé GitHub prévu (MOD-A02) |
+| Git | tout le travail jusqu'au 31/10 enregistré (commit `1d5c57e`, 01/11) ; historique **sauvegardé hors du PC** depuis le 01/11 : dépôt **privé** GitHub `cappleinouest-lang/viet-project` (MOD-A02), à mettre à jour par `git push` après chaque commit |
 | Règles de code (SQL, Python, PowerShell) | hors périmètre pour l'instant |
 
 ## 6. Points ouverts
@@ -101,7 +102,6 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 La liste complète, numérotée et classée par priorité, est dans
 `07_QUALITE/suivi_modifications.md` (section 3). Les plus importants :
 
-- **Sauvegarde hors du PC** (MOD-A02) : dépôt privé GitHub.
 - **Documents à mettre d'accord avec DEC-0067** (MOD-B02 à MOD-B07) :
   PROD-AUDIO, PROD-LECT, PROD-AF-LECT, PROG-M0, PROG-ACT, DATA-MODELE et
   R-AUD-02 parlent encore des voix F1, F3, H3, H4.
@@ -158,4 +158,5 @@ La liste complète, numérotée et classée par priorité, est dans
 | 1.13 | 2026-10-31 | Outil de validation des audios (DEC-0065). |
 | 1.14 | 2026-10-31 | Thu Minh écartée, Ban Mai pour les leçons de sons (DEC-0066). |
 | 1.15 | 2026-11-01 | MOD-B01 : § 4 voix FPT.TTS-ultra F4 / H6 et débit lent emprunté (DEC-0067, 0068), voyelle seule en E1 (DEC-0070), signalement d'un son (DEC-0069), audios intermédiaires dans Git (DEC-0071) ; § 3 décisions jusqu'à DEC-0071, suivi des modifications, état d'avancement, essai Ultra ; § 5 état au 2026-11-01 (5 506 audios, lecteur 0.21, Git) ; § 6 points ouverts renvoyés au suivi des modifications ; § 2 noter chaque modification dans le suivi. Repassé en BROUILLON (DOC-21). Analyse d'impact (DOC-35) : `sorties` vide, aucun document en aval. |
-| 1.15 | 2026-11-01 | Validé par Christophe (statut VALIDE). |
+| 1.16 | 2026-11-01 | MOD-A02 : sauvegarde sur un dépôt privé GitHub (§ 5), `git push` ajouté au rappel de fin de modification (§ 2), point ouvert retiré (§ 6). |
+| 1.16 | 2026-11-01 | Validé par Christophe (versions 1.15 et 1.16) : statut VALIDE. |
