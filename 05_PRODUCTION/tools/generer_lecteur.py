@@ -22,7 +22,8 @@ USAGE (depuis C:\\VIET_PROJECT)
     Résultat : ouvrir 06_LIVRABLES\\lecteur\\index.html.
 
 ENTRÉES (04_DONNEES, sauf mention)
-    lecons.csv            leçons : numéro, titre, seuil, tons ?, deux parties ?
+    lecons.csv            leçons : numéro, titre, seuil, tons ?, deux parties ? ;
+                          e1_first : sons d'abord (DEC-0072) ; e1_rappel : sons en rappel court (DEC-0075)
     paires_minimales.csv  séries minimales : termes, position, élément contrasté
     mots.csv, sons.csv, tons.csv, reperes_sons.csv
                           sens des mots, symboles, place, repères (DEC-0038, DEC-0042)
@@ -303,16 +304,24 @@ def main():
         # DEC-0072 : sons présentés en E1 AVANT ceux de la première partie (L01 : t puis m),
         # colonne e1_first de lecons.csv. Un son déjà dans les séries (m) garde une seule fiche.
         d_abord = (l.get('e1_first') or '').split()
+        # DEC-0075 : sons déjà vus en L01, présentés en « rappel court » dans cette leçon
+        # (1 mot, 1 voix de femme, pas d'écoute lente) : colonne e1_rappel de lecons.csv.
+        rappel = set((l.get('e1_rappel') or '').split())
         for e in d_abord + [x for x in elements_de(liste) if x not in d_abord]:
             mots_e = []
-            for x in sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e
-                             and (x['word_code'] or x.get('syllable'))), key=lambda x: int(x['rank'])):
+            exemples_e = sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e
+                                 and (x['word_code'] or x.get('syllable'))), key=lambda x: int(x['rank']))
+            # DEC-0075 : rappel court : un seul mot (le rang 1), une seule voix (la femme).
+            if e in rappel:
+                exemples_e = exemples_e[:1]
+            for x in exemples_e:
+                voix_mot = [x['voice_f']] if e in rappel else [x['voice_f'], x['voice_h']]
                 if not x['word_code']:
                     # Syllabe sans sens (DEC-0073) : ni sens ni image, jamais écrite (R-LEX-06) ;
                     # « ecrit » ne sert qu'à la voix de synthèse et à l'audio (référence = l'écriture).
                     invente = x.get('invented') == 'true'
                     mots_e.append({'ecrit': x['syllable'], 'sens': 'syllabe inventée' if invente else 'syllabe',
-                                   'image': '', 'voix': [x['voice_f'], x['voice_h']],
+                                   'image': '', 'voix': voix_mot,
                                    'audio': audio(x['syllable']), 'appui': '', 'invente': invente})
                     continue
                 m = mots[x['word_code']]
@@ -323,7 +332,7 @@ def main():
                     'ecrit': m['written'],          # pour la voix de synthèse seulement : jamais affiché en E1 (R-ECR-01)
                     'sens': m['meaning_fr'].split(' / ')[0],
                     'image': images_prov.get(m['word_code'], '') if m['imageable'] == 'true' else '',
-                    'voix': [x['voice_f'], x['voice_h']],
+                    'voix': voix_mot,
                     'audio': aud_clf or audio(m['word_code']),
                     'appui': a[0].split(' ')[0] if aud_clf else '',
                 })
@@ -336,7 +345,8 @@ def main():
                     voix_seul = (mots_e[0]['voix'] if mots_e else [v['voice_code'] for v in voix][:2])
                     seul = {'ecrit': sons[e]['grapheme'], 'audio': aud_seul,
                             'voix': [x for x in voix_seul if x in aud_seul] or list(aud_seul)}
-            decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e, 'seul': seul}
+            decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e, 'seul': seul,
+                             'rappel': e in rappel}  # DEC-0075
         # E4 « Écoute et répète » (DEC-0049, DEC-0050) : les mots supports de la leçon, dans
         # l'ordre de mots_lecons.csv, avec la voix modèle seule (R-AUD-03), ses deux débits et
         # la courbe mélodique de chaque fichier. Cibles = sons (ou tons) des séries dont le mot

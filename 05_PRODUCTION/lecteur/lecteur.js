@@ -70,7 +70,8 @@
  * DEC-0051 (mode essai : tout ouvert), DEC-0052 et DEC-0053 (page « Les 6 tons », schémas),
  * DEC-0054 (« Combien de fois ? »), DEC-0055 (voix d'écoute par leçon), DEC-0067 (débit lent emprunté),
  * DEC-0069 (signaler un son défectueux), DEC-0070 (E1 : voyelle seule avant les mots),
- * DEC-0072 (E1 : sons « d'abord », pa.e1 et l.e1_first), DEC-0073 (E1 : syllabes sans sens).
+ * DEC-0072 (E1 : sons « d'abord », pa.e1 et l.e1_first), DEC-0073 (E1 : syllabes sans sens),
+ * DEC-0075 (E1 : rappel court en L08/L10 pour -m et -n, d.rappel).
  * Description complète : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
  */
 // Tout le programme est enfermé dans une fonction qui s'exécute aussitôt :
@@ -848,18 +849,22 @@
     var d = l.decouverte[els[index]];
     // lent : vitesse choisie en dernier (bouton « Écouter lentement ») ; choixVoix : femme, homme ou les deux.
     var lent = false;
-    var choixVoix = 'fh';   // 'fh' : femme puis homme ; 'f' : femme ; 'h' : homme
+    // DEC-0075 : rappel court (-m et -n en L08/L10) : une seule voix (celle fournie dans d.mots[].voix),
+    // pas de choix de voix, pas d'écoute lente.
+    var choixVoix = d.rappel ? 'f' : 'fh';   // 'fh' : femme puis homme ; 'f' : femme ; 'h' : homme
     vider();
     btnRetour.onclick = function () { ecranLecon(code); };
     titreBarre.textContent = titreEcran(l, pa, 'E1 Découvrir');
     app.appendChild(el('div', { class: 'consigne' }, [
       el('span', { class: 'etiquette', text: (l.tons ? 'Ton ' : 'Son ') + (index + 1) + ' sur ' + els.length +
-        (placeDe(d.symbole) && !l.tons ? ' · ' + placeDe(d.symbole).long : '') }),
-      el('h1', { text: 'Écoutez, sans répondre' }),
-      el('p', { class: 'petit', text: l.tons ? 'Le même ton dans plusieurs mots, à vitesse normale (le ralenti déforme la mélodie). Choisissez la voix ; touchez un mot pour le réentendre.'
+        (placeDe(d.symbole) && !l.tons ? ' · ' + placeDe(d.symbole).long : '') +
+        (d.rappel ? ' · déjà vu en L01' : '') }),   // DEC-0075
+      el('h1', { text: d.rappel ? 'Rappel : écoutez ce son une fois' : 'Écoutez, sans répondre' }),
+      el('p', { class: 'petit', text: d.rappel ? 'Vous avez déjà étudié ce son en L01. Un seul mot, pour s’en souvenir avant de passer aux sons nouveaux de la leçon.'
+        : l.tons ? 'Le même ton dans plusieurs mots, à vitesse normale (le ralenti déforme la mélodie). Choisissez la voix ; touchez un mot pour le réentendre.'
         : 'Le même son dans plusieurs mots. Choisissez la voix et la vitesse ; touchez un mot pour le réentendre.' }),
       // DEC-0072 : consonnes présentées d'abord, pour entendre ensuite les voyelles dans des syllabes simples.
-      (l.e1_first || []).indexOf(d.element) >= 0 && pc === l.parties[0].code
+      !d.rappel && (l.e1_first || []).indexOf(d.element) >= 0 && pc === l.parties[0].code
         ? el('p', { class: 'petit', text: 'Avant les voyelles : une consonne simple, pour les entendre ensuite dans des syllabes comme « to », « me ».' }) : null
     ]));
     // Le son présenté : symbole, catégorie, mot repère, indice d'écoute (DEC-0038)
@@ -931,10 +936,10 @@
     }
     var ecoute = el('button', { class: 'ecoute choisi', type: 'button', text: '▶ Écouter', onclick: function () { ecouterTout(false); } });
     var ecouteLente = el('button', { class: 'ecoute', type: 'button', text: '🐢 Écouter lentement', onclick: function () { ecouterTout(true); } });
-    app.appendChild(el('div', { class: 'choix-voix-groupe', role: 'group', 'aria-label': 'Voix' }, boutonsVoix));
-    // Leçon de tons : pas d'écoute lente (DEC-0043)
-    // Leçon de tons : un seul bouton (pas d'écoute lente, DEC-0043).
-    app.appendChild(l.tons ? el('div', { class: 'actions centre' }, [ecoute]) : el('div', { class: 'deux-ecoutes' }, [ecoute, ecouteLente]));
+    // DEC-0075 : rappel court : pas de choix de voix (une seule voix).
+    if (!d.rappel) app.appendChild(el('div', { class: 'choix-voix-groupe', role: 'group', 'aria-label': 'Voix' }, boutonsVoix));
+    // Leçon de tons : un seul bouton (pas d'écoute lente, DEC-0043) ; de même pour un rappel court (DEC-0075).
+    app.appendChild(l.tons || d.rappel ? el('div', { class: 'actions centre' }, [ecoute]) : el('div', { class: 'deux-ecoutes' }, [ecoute, ecouteLente]));
     if (btnSeul) app.appendChild(el('div', { class: 'seul-ligne' }, [btnSeul]));
     app.appendChild(grille);
     var lg = legende([{ termes: [{ symbole: d.symbole }] }]); if (lg) app.appendChild(lg);
