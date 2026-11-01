@@ -2,8 +2,8 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.64
-date: 2026-10-31
+version: 1.65
+date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
   décision et sa raison. Une décision ne se modifie pas : on en prend une
@@ -1602,6 +1602,30 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : `generer_audio_fpt.py`, `generer_lecteur.py`,
   `valider_audios.py`, `lecteur.js`, `lecteur.css`, PROD-AUDIO.
 
+### DEC-0071 — Audios intermédiaires (`_bruts`, `_anciens`, `_essais`) gardés dans Git
+
+- **Date** : 2026-11-01
+- **Constat** (MOD-A03, MOD-A05) : 2 296 MP3 de `04_DONNEES/audio/_bruts`
+  (2 232), `_essais` (45) et `_anciens` (19), 41 Mo, sont suivis par Git
+  alors que le `.gitignore` les exclut (ajoutés avant la règle ; Git ne
+  retire jamais un fichier déjà suivi). Les nouveaux fichiers de ces
+  dossiers, eux, n'étaient pas enregistrés. `_bruts` n'est pas un doublon :
+  c'est le fichier reçu de FPT, avant égalisation du volume, dont
+  `decoupe_audio.py` tire le MP3 final ; le perdre oblige à repayer FPT pour
+  tout retraitement (par exemple MOD-C08). `_anciens` garde les versions
+  remplacées par `--refaire`. DOC-19 n'exclut pas ces dossiers.
+- **Options** : A. les retirer de Git (`git rm -r --cached`, fichiers gardés
+  sur le disque, nouveaux bruts non sauvegardés) / B. les garder dans Git et
+  corriger le `.gitignore` / B bis. comme B, mais `_essais` retiré.
+- **Décision** (choix de Christophe) : **B**. Les trois dossiers sont suivis
+  par Git ; leurs trois lignes sont retirées du `.gitignore`.
+- **Raison** : les bruts sont payés et coûteux à remplacer ; leur poids est
+  faible (dépôt de 88 Mo, compatible avec GitHub) ; la sauvegarde hors du PC
+  (MOD-A02) les protégera.
+- **Conséquence** : le dépôt grossit d'environ un brut par audio généré.
+  Revoir cette décision si le dépôt approche 1 Go.
+- **Impacte** : `.gitignore`, MOD-A02.
+
 ## Historique
 
 | Version | Date | Changement |
@@ -1671,6 +1695,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.62 | 2026-10-31 | Ajout de DEC-0068 (fichiers Ultra : début gardé brut, silence final complété). |
 | 1.63 | 2026-10-31 | Ajout de DEC-0069 (lecteur : signaler un son défectueux). |
 | 1.64 | 2026-10-31 | Ajout de DEC-0070 (E1 : voyelle seule avant les mots). |
+| 1.65 | 2026-11-01 | Ajout de DEC-0071 (audios intermédiaires gardés dans Git, MOD-A05). |
 
 ## Liens
 

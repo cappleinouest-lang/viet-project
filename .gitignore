@@ -13,10 +13,8 @@ _ARCHIVES/
 cle*api*.txt
 *cle*FPT*.txt
 
-# Audios intermediaires : bruts recus de FPT (doublons), essais de voix, anciennes versions
-04_DONNEES/audio/_bruts/
-04_DONNEES/audio/_essais/
-04_DONNEES/audio/_anciens/
+# Audios intermediaires (_bruts, _essais, _anciens) : volontairement SUIVIS par Git
+# (DEC-0071, 2026-11-01) : les bruts recus de FPT sont payes et couteux a remplacer.
 
 # Journaux techniques (DOC-05)
 07_QUALITE/journaux/

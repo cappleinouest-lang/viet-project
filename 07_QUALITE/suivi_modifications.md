@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.8
+version: 0.9
 date: 2026-11-01
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -27,7 +27,7 @@ sources:
   15 h 15 (DEC-0067 à DEC-0070) est enregistré dans Git depuis le 01/11
   (commit `1d5c57e`, MOD-A01).
 - **Ce qui reste à faire** : **80 besoins** relevés (section 3), dont
-  **17 de priorité haute** (MOD-A01 et MOD-A03 faits le 01/11). Le plus
+  **17 de priorité haute** (MOD-A01 et MOD-A03 faits le 01/11 ; MOD-A05 décidé : DEC-0071). Le plus
   urgent : la sauvegarde hors du PC (MOD-A02), puis mettre les documents d'accord avec DEC-0067 (plusieurs documents décrivent
   encore les anciennes voix F1, F3, H3, H4).
 
@@ -143,6 +143,7 @@ gardée, pas supprimée.
 |---|---|
 | MOD-A01 | Fait à 12 h 09, commit `1d5c57e` (`git add -A`) : les 23 fichiers de documents, données, lecteur et scripts de la section 2.5 (dont `suivi_modifications.md` v0.7), et 1 015 audios nouveaux, modifiés ou supprimés. Vérification demandée : `git status` vide après le commit |
 | MOD-A03 | Vérifié : 6 784 MP3 suivis par Git (88 Mo), dont 2 296 dans des dossiers que le `.gitignore` devrait exclure ; dépôt compatible avec GitHub. Suite : MOD-A05 |
+| MOD-A05 | Décidé (DEC-0071, option B) : `_bruts`, `_anciens` et `_essais` restent suivis par Git ; leurs lignes sont retirées du `.gitignore` |
 
 ---
 
@@ -154,9 +155,9 @@ gardée, pas supprimée.
 |---|---|---|---|---|---|
 | MOD-A01 | **Enregistrer dans Git** tout le travail du 31/10 après 15 h 15 (section 2.5) | constat du 2026-11-01 | tout le projet | **Haute** | **fait** (2026-11-01, commit `1d5c57e`) |
 | MOD-A02 | **Sauvegarde hors du PC** : dépôt privé GitHub (l'historique n'existe que sur le PC) | QUAL-AVANCEMENT § 7 n° 2 ; risque « perte totale » | Git | **Haute** | à faire |
-| MOD-A03 | Vérifier si les **milliers de MP3** de `04_DONNEES/audio/` sont suivis par Git (le `.gitignore` n'exclut que `_bruts`, `_essais`, `_anciens`) : poids du dépôt, limite de GitHub. **Résultat (lecture de `.git/index`, 2026-11-01)** : hypothèse **confirmée**. Sur 6 860 fichiers suivis, **6 784 sont des MP3** (88 Mo sur 89 Mo) : 4 486 à la racine de `audio/` (46,6 Mo), **mais aussi 2 232 dans `_bruts` (40,5 Mo), 45 dans `_essais` et 19 dans `_anciens`** : ces fichiers ont été ajoutés à Git avant la règle du `.gitignore`, qui ne retire jamais un fichier déjà suivi (voir MOD-A05). Le dossier `audio/Nouveau dossier` (2 MP3) est encore suivi mais n'existe plus sur le disque : sa suppression sera enregistrée avec MOD-A01. Dépôt compressé (`.git/objects/pack`) : 88 Mo. Plus gros fichier suivi : `audios.csv`, 0,4 Mo. **Compatible avec GitHub** (limite stricte de 100 Mo par fichier ; dépôt conseillé sous 1 Go, à revérifier dans la documentation de GitHub). Point de vigilance : chaque génération d'audios ajoute son poids à l'historique, même si les fichiers sont ensuite supprimés. Non compté : les MP3 créés après le dernier commit (MOD-A01) | constat du 2026-11-01 | `.gitignore`, MOD-A02, MOD-A05 | **Haute** | **fait** (2026-11-01) |
+| MOD-A03 | Vérifier si les **milliers de MP3** de `04_DONNEES/audio/` sont suivis par Git (le `.gitignore` n'exclut que `_bruts`, `_essais`, `_anciens`) : poids du dépôt, limite de GitHub. **Résultat (lecture de `.git/index`, 2026-11-01 ; recoupé par Christophe avec `git ls-files 04_DONNEES/audio/_bruts` : 2 232)** : hypothèse **confirmée**. Sur 6 860 fichiers suivis, **6 784 sont des MP3** (88 Mo sur 89 Mo) : 4 486 à la racine de `audio/` (46,6 Mo), **mais aussi 2 232 dans `_bruts` (40,5 Mo), 45 dans `_essais` et 19 dans `_anciens`** : ces fichiers ont été ajoutés à Git avant la règle du `.gitignore`, qui ne retire jamais un fichier déjà suivi (voir MOD-A05). Le dossier `audio/Nouveau dossier` (2 MP3) est encore suivi mais n'existe plus sur le disque : sa suppression sera enregistrée avec MOD-A01. Dépôt compressé (`.git/objects/pack`) : 88 Mo. Plus gros fichier suivi : `audios.csv`, 0,4 Mo. **Compatible avec GitHub** (limite stricte de 100 Mo par fichier ; dépôt conseillé sous 1 Go, à revérifier dans la documentation de GitHub). Point de vigilance : chaque génération d'audios ajoute son poids à l'historique, même si les fichiers sont ensuite supprimés. Non compté : les MP3 créés après le dernier commit (MOD-A01) | constat du 2026-11-01 | `.gitignore`, MOD-A02, MOD-A05 | **Haute** | **fait** (2026-11-01) |
 | MOD-A04 | Fichier vide `cle api FPT.txt` à la racine : la clé doit rester **hors** du projet (DOC-04). Il est ignoré par Git, mais à déplacer ou laisser vide | constat du 2026-11-01 | DOC-04 | Moyenne | à vérifier |
-| MOD-A05 | **Retirer de Git les audios intermédiaires** déjà suivis malgré le `.gitignore` (`_bruts`, `_essais`, `_anciens` : 2 296 MP3, 41 Mo), avec `git rm -r --cached` (retire les fichiers de Git **sans les effacer du disque**). Ils restent dans l'historique déjà enregistré : le dépôt ne maigrit pas, mais les prochains commits ne les suivent plus. À décider : retirer (cohérent avec la règle DOC-19) ou garder suivis (et alors corriger le `.gitignore`). À faire **avant** MOD-A02 (MOD-A01 a été fait avant, le 01/11 : les audios intermédiaires déjà suivis et modifiés y sont donc enregistrés) | MOD-A03, 2026-11-01 | `.gitignore`, DOC-19, MOD-A01, MOD-A02 | Moyenne | à décider |
+| MOD-A05 | **Retirer de Git les audios intermédiaires** déjà suivis malgré le `.gitignore` (`_bruts`, `_essais`, `_anciens` : 2 296 MP3, 41 Mo), avec `git rm -r --cached` (retire les fichiers de Git **sans les effacer du disque**). Ils restent dans l'historique déjà enregistré : le dépôt ne maigrit pas, mais les prochains commits ne les suivent plus. À décider : retirer (cohérent avec la règle DOC-19) ou garder suivis (et alors corriger le `.gitignore`). À faire **avant** MOD-A02 (MOD-A01 a été fait avant, le 01/11 : les audios intermédiaires déjà suivis et modifiés y sont donc enregistrés) | MOD-A03, 2026-11-01 | `.gitignore`, DOC-19, MOD-A01, MOD-A02 | Moyenne | **fait** (2026-11-01) : option B, **garder** dans Git et corriger le `.gitignore` (DEC-0071) ; le texte « cohérent avec DOC-19 » était inexact, DOC-19 n'exclut pas ces dossiers |
 
 ### B. Cohérence des documents après DEC-0067
 
@@ -286,6 +287,7 @@ gardée, pas supprimée.
 | 0.6 | 2026-11-01 | MOD-D18 à MOD-D23 : améliorations de l'interface du lecteur (guidage, bouton flottant, textes, accueil, écrit, détails), après relecture des écrans. |
 | 0.7 | 2026-11-01 | MOD-A03 fait : les MP3 sont suivis par Git (résultat chiffré) ; nouveau besoin MOD-A05 (audios intermédiaires suivis malgré le `.gitignore`) ; journal 2.6. |
 | 0.8 | 2026-11-01 | MOD-A01 fait (commit `1d5c57e`) : journal 2.4 à 2.6, section 2.5 vérifiée avec `git status`. |
+| 0.9 | 2026-11-01 | MOD-A05 fait : audios intermédiaires gardés dans Git (DEC-0071), `.gitignore` corrigé. |
 
 ## Liens
 
