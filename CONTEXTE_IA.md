@@ -2,7 +2,7 @@
 id: CTX-IA
 titre: Contexte du projet pour une IA
 statut: BROUILLON
-version: 1.18
+version: 1.19
 date: 2026-11-01
 resume: >
   Seul document à donner à une IA en début de session (DOC-28) : le projet
@@ -50,7 +50,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 | Difficultés des francophones | `01_FONDATIONS/03_difficultes_francophones.md` |
 | Parcours E1 → E5, volets, verrous, écrit, images, audio | `01_FONDATIONS/04_principes_pedagogiques.md` |
 | Règles vérifiables (R-…) | `02_REGLES/REGISTRE_REGLES.md` |
-| Toutes les décisions (DEC-0001 à DEC-0074) | `02_REGLES/DECISIONS.md` |
+| Toutes les décisions (DEC-0001 à DEC-0075) | `02_REGLES/DECISIONS.md` |
 | Types d'activités par étape | `03_PROGRAMME/01_types_activites.md` |
 | Les 14 leçons du Module 0 | `03_PROGRAMME/progression_M0.md` |
 | Fichiers de données et leurs colonnes | `04_DONNEES/00_modele_donnees.md` |
@@ -88,7 +88,7 @@ Rythme : 20 à 30 min par jour ; progression pilotée par des **verrous**.
 |---|---|
 | Fondations FOND-01 à 04 | **VALIDE** |
 | Règles documentaires, registre des règles, architecture des outils | brouillons |
-| Décisions | **74** (DEC-0001 à DEC-0074) |
+| Décisions | **75** (DEC-0001 à DEC-0075) |
 | Données (`04_DONNEES`, 18 fichiers CSV) | reprises ; mots hors corpus à confirmer ; `voix.csv` : F4 et H6 seules actives ; 5 mots ajoutés pour l'E1 de L01 (W0340 à W0344, sens à faire relire) |
 | Programme du Module 0 (`progression_M0.md`) | brouillon ; points P1 à P6 décidés (DEC-0031 à 0036) |
 | Audios | `audios.csv` : **5 506 audios**, dont **3 494 validés** (`validated = true`), tous des anciennes voix (F1, F3, H3, H4). **F4 / H6 : générés pour L01 seulement** (227 fichiers, dont 10 voyelles seules, puis 42 pour t, m et les nouveaux mots d'exemple, DEC-0072, 0073 ; écoutés : « très bien »), **aucun validé** ; autres leçons à générer (environ 1 700 fichiers, environ 25 000 ₫ en Ultra, MOD-C02). 170 audios marqués « à refaire » (`07_QUALITE/audios_a_refaire.csv`), dont 32 seulement restent utiles |
@@ -106,10 +106,11 @@ La liste complète, numérotée et classée par priorité, est dans
   seul homme, et la voix d'homme change entre lent et normal ; vérifier la
   conformité ou noter l'écart. Les autres documents sont d'accord avec
   DEC-0067 (MOD-B02 à B06 faits).
-- **Avant de générer les autres leçons** (MOD-C01) : sons -m et
-  -n redécouverts en L08 et L10 (MOD-H04) ; tons des mots d'exemple de L02
-  à L13 (MOD-H02). À trancher d'abord, pour ne pas générer d'audios inutiles.
-  Séries d'E2 de la partie A de L01 réglées (DEC-0074, MOD-H03).
+- **MOD-H01 à MOD-H04 réglées** (DEC-0072 à DEC-0075) : t et m avant les
+  voyelles de L01, syllabes sans sens, séries d'E2 de la partie A, tons des
+  mots d'exemple vérifiés conformes (L02 à L13), rappel court pour -m/-n en
+  L08/L10 (mise en œuvre dans le lecteur à faire). Plus rien à trancher
+  avant de générer les audios des autres leçons.
 - **Audios Ultra** : L01 générée et écoutée ; tarif vérifié (MOD-C02) ;
   générer les autres leçons (MOD-C01) ; ne refaire que les 32 audios « à
   refaire » encore utiles (MOD-C04).
@@ -163,6 +164,7 @@ La liste complète, numérotée et classée par priorité, est dans
 | 1.15 | 2026-11-01 | MOD-B01 : § 4 voix FPT.TTS-ultra F4 / H6 et débit lent emprunté (DEC-0067, 0068), voyelle seule en E1 (DEC-0070), signalement d'un son (DEC-0069), audios intermédiaires dans Git (DEC-0071) ; § 3 décisions jusqu'à DEC-0071, suivi des modifications, état d'avancement, essai Ultra ; § 5 état au 2026-11-01 (5 506 audios, lecteur 0.21, Git) ; § 6 points ouverts renvoyés au suivi des modifications ; § 2 noter chaque modification dans le suivi. Repassé en BROUILLON (DOC-21). Analyse d'impact (DOC-35) : `sorties` vide, aucun document en aval. |
 | 1.16 | 2026-11-01 | MOD-A02 : sauvegarde sur un dépôt privé GitHub (§ 5), `git push` ajouté au rappel de fin de modification (§ 2), point ouvert retiré (§ 6). |
 | 1.16 | 2026-11-01 | Validé par Christophe (versions 1.15 et 1.16) : statut VALIDE. |
-| 1.17 | 2026-11-01 | Validé par Christophe : statut VALIDE (validation perdue par une écriture concurrente, reconstituée ici). |
-| 1.18 | 2026-11-01 | MOD-H03 fait (DEC-0074) : séries d'E2 de la partie A de L01 remplacées par t/m + voyelle ; § 3, § 5, § 6 mis à jour (74 décisions). Repassé en BROUILLON (DOC-21).
 | 1.17 | 2026-11-01 | MOD-B13 : DEC-0072 et DEC-0073 (§ 3, § 4 E1, § 5) ; audios de L01 et tarif d'Ultra (§ 5) ; version du lecteur (§ 3, § 5) ; points ouverts revus : MOD-B02 à B06 et MOD-H01 faits, MOD-H02 à H04 avant MOD-C01, une seule conversation à la fois (§ 6). Repassé en BROUILLON (DOC-21). |
+| 1.17 | 2026-11-01 | Validé par Christophe : statut VALIDE (validation perdue par une écriture concurrente, reconstituée ici). |
+| 1.18 | 2026-11-01 | MOD-H03 fait (DEC-0074) : séries d'E2 de la partie A de L01 remplacées par t/m + voyelle ; § 3, § 5, § 6 mis à jour (74 décisions). Repassé en BROUILLON (DOC-21). |
+| 1.19 | 2026-11-01 | MOD-H02 clos (tons des mots d'exemple vérifiés conformes) et MOD-H04 décidé (DEC-0075, rappel court -m/-n en L08/L10) ; § 3, § 5, § 6 mis à jour (75 décisions). |

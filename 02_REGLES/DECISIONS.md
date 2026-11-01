@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.68
+version: 1.69
 date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1795,6 +1795,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.66 | 2026-11-01 | Ajout de DEC-0072 (E1 de L01 : t et m avant les voyelles, mots consonne + voyelle ; règle de préférence pour les autres leçons, MOD-H01). |
 | 1.67 | 2026-11-01 | Ajout de DEC-0073 (E1 : syllabes sans sens quand le corpus ne suffit pas). |
 | 1.68 | 2026-11-01 | Ajout de DEC-0074 (E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle, MOD-H03). |
+| 1.69 | 2026-11-01 | Ajout de DEC-0075 (L08/L10 : rappel court pour -m et -n déjà vus, MOD-H04). |
 
 ### DEC-0074 — E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle
 
@@ -1827,6 +1828,32 @@ qui indique « remplace DEC-NNNN ».
   DEC-0072 (mots d'exemple d'E1 déjà limités à t/m + voyelle).
 - **Impacte** : `paires_minimales.csv` (S0001, S0004, S0007) ; aucun audio
   nouveau ; PROG-M0 (L01), PROD-AF-LECT (à vérifier : exemples cités).
+
+### DEC-0075 — L08 et L10 : rappel court pour les sons -m et -n déjà vus
+
+- **Date** : 2026-11-01
+- **Question** (MOD-H04) : en E1, L08 et L10 font redécouvrir -m et -n
+  (déjà étudiés en L01) avec un écran de découverte complet (3 mots, 2
+  voix), alors qu'ils ne servent dans ces leçons que de point d'appui face
+  à un son nouveau (séries S0061, S0063, S0065 en L08 ; S0074, S0076,
+  S0077 en L10). Fallait-il garder la découverte complète, la retirer, ou
+  la remplacer par un rappel plus court ?
+- **Décision** (choix de Christophe) : un **rappel court**, plus léger que
+  la découverte normale (DEC-0039) :
+  - **1 seul mot** (déjà présent dans la leçon), pas 3.
+  - **1 seule voix**, pas les deux.
+  - Étiquette **« déjà vu en L01 »** à côté du symbole.
+  - Bouton **« Écouter » seulement**, pas de « Écouter lentement ».
+
+  Les séries (S0061, S0063, S0065, S0074, S0076, S0077) et les suites
+  « Combien de fois ? » sur -m / -n en L08 et L10 ne changent pas : elles
+  restent utiles (son nouveau opposé à un son connu).
+- **Raison** : éviter de refaire une découverte complète d'un son déjà
+  maîtrisé, tout en gardant une trace visible qu'il est repris.
+- **Impacte** : `lecteur.js` (écran E1, distinction découverte / rappel),
+  `generer_lecteur.py`, `lecons.csv` ou `exemples_e1.csv` (marquer -m en
+  L08 et -n en L08/L10 comme « rappel »), PROD-LECT, PROD-AF-LECT,
+  PROG-ACT (ACT-E1-DECOUV).
 
 ## Liens
 
