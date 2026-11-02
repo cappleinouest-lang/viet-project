@@ -27,9 +27,10 @@ ENTRÉES (04_DONNEES, sauf mention)
     paires_minimales.csv  séries minimales : termes, position, élément contrasté
     mots.csv, sons.csv, tons.csv, reperes_sons.csv
                           sens des mots, symboles, place, repères (DEC-0038, DEC-0042)
-    exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039) ; syllabes sans sens (DEC-0073)
-    voix.csv              voix actives ; voix d'écoute par type de leçon (listen_sounds / listen_tones, DEC-0055) ;
-                          slow_from : voix qui fournit le débit lent (DEC-0067 : F4 <- F1, H6 <- H4)
+    exemples_e1.csv       mots d'exemple de l'étape E1 (DEC-0039) ; syllabes sans sens (DEC-0073) ;
+                          colonnes voice_f / voice_h ignorées depuis DEC-0077 (voix d'E1 : VOIX_PAR_USAGE)
+    voix.csv              voix actives ; voix d'écoute E2/E3 par type de leçon (listen_sounds / listen_tones, DEC-0055) ;
+                          slow_from : voix qui fournit le débit lent (DEC-0067 : F4 <- F1)
     mots_lecons.csv       mots supports de chaque leçon : les mots d'E4 (DEC-0050)
     courbes_modele.csv    courbes mélodiques du modèle (F4, lent F1), calculées par courbes_modele.py (DEC-0050)
     reference_tons.csv    série ma, má, mà, mả, mã, mạ de la page « Les 6 tons » (DEC-0052)
@@ -39,6 +40,7 @@ ENTRÉES (04_DONNEES, sauf mention)
 
 MODIFICATIONS COURANTES : OÙ REGARDER
     seuils de verrou, 20 réponses, 2 voix…  → PARAMETRES (ci-dessous)
+    voix selon l'activité (DEC-0077)         → VOIX_PAR_USAGE
     hauteur des voix de synthèse provisoires → VOIX_PROVISOIRES
     ordre des séries (voyelles d'abord…)     → ORDRE_POSITIONS
     noms des parties A / B                   → parties()
@@ -99,10 +101,20 @@ VOIX_PROVISOIRES = {
 # Vitesse de la voix de synthèse pour chaque débit (n'agit pas sur les fichiers audio).
 # Les clés 'slow' et 'normal' sont aussi celles de audios.csv (colonne speed).
 DEBITS = {'slow': 0.55, 'normal': 0.9, 'spaced': 0.9}   # spaced : mots espacés (DEC-0058)
-# Voix modèle des étapes de production E4–E5 (R-AUD-03) : Ban Mai (F4, FPT.TTS-ultra, DEC-0067).
+# Voix selon l'activité (DEC-0077, stratégie multi-voix par usage) : [femme, homme].
+# E2 / E3 et échauffement ne sont pas ici : colonnes listen_sounds / listen_tones de voix.csv
+# (leçons de sons : F4 + H4 ; leçons de tons : F1 + H3).
+VOIX_PAR_USAGE = {
+    'e1_voyelle': ['F1', 'H4'],   # E1, voyelle seule (DEC-0070)
+    'e1_syllabe': ['F1', 'H4'],   # E1, syllabes sans sens (DEC-0073)
+    'e1_mots':    ['F4', 'H4'],   # E1, mots d'exemple des leçons de sons (DEC-0039)
+    'tons':       ['F1', 'H3'],   # leçons de tons (E1) et page « Les 6 tons » (DEC-0052)
+    'combien':    ['F1', 'H3'],   # « Combien de fois ? » (DEC-0054) et phrases espacées (DEC-0058)
+}
+# Voix modèle des étapes de production E4–E5 (R-AUD-03) : Ban Mai F4 seule (DEC-0067, DEC-0077).
 VOIX_MODELE = 'F4'
-# Page « Les 6 tons » (DEC-0052) : une voix de femme, une voix d'homme (DEC-0067).
-VOIX_REFERENCE_TONS = ['F4', 'H6']
+# Page « Les 6 tons » (DEC-0052) : F1 + H3 (DEC-0077).
+VOIX_REFERENCE_TONS = VOIX_PAR_USAGE['tons']
 
 # Ordre d'affichage des séries d'une leçon selon la place de l'élément contrasté :
 # 0 voyelles (et tons), 1 consonnes de début, 2 finales. Sert aussi au découpage en parties
@@ -168,6 +180,12 @@ def main():
     paires = lire('paires_minimales.csv')
     toutes_voix = {v['voice_code']: v for v in lire('voix.csv')}
     voix = [v for v in toutes_voix.values() if v['status'] == 'active']
+    # DEC-0077 : avertir si une voix prévue pour un usage n'est pas active dans voix.csv (elle serait ignorée).
+    actives = {v['voice_code'] for v in voix}
+    for usage, liste_v in list(VOIX_PAR_USAGE.items()) + [('modele', [VOIX_MODELE])]:
+        for c in liste_v:
+            if c not in actives:
+                print(f"ATTENTION : voix {c} prévue pour « {usage} » (DEC-0077) mais inactive dans voix.csv")
     audios = lire('audios.csv')
     # images.csv est lu mais pas encore utilisé (fichier vide) : les images viennent
     # provisoirement de images_provisoires.csv (emoji).
@@ -307,6 +325,7 @@ def main():
         # DEC-0075 : sons déjà vus en L01, présentés en « rappel court » dans cette leçon
         # (1 mot, 1 voix de femme, pas d'écoute lente) : colonne e1_rappel de lecons.csv.
         rappel = set((l.get('e1_rappel') or '').split())
+        lecon_tons = l['is_tone_lesson'] == 'true'
         for e in d_abord + [x for x in elements_de(liste) if x not in d_abord]:
             mots_e = []
             exemples_e = sorted((x for x in exemples if x['lesson_code'] == code and x['element'] == e
@@ -315,7 +334,9 @@ def main():
             if e in rappel:
                 exemples_e = exemples_e[:1]
             for x in exemples_e:
-                voix_mot = [x['voice_f']] if e in rappel else [x['voice_f'], x['voice_h']]
+                # Voix d'E1 (DEC-0077) : leçon de tons F1 + H3 ; syllabe sans sens F1 + H4 ; mot F4 + H4.
+                usage = 'tons' if lecon_tons else ('e1_mots' if x['word_code'] else 'e1_syllabe')
+                voix_mot = VOIX_PAR_USAGE[usage][:1] if e in rappel else list(VOIX_PAR_USAGE[usage])
                 if not x['word_code']:
                     # Syllabe sans sens (DEC-0073) : ni sens ni image, jamais écrite (R-LEX-06) ;
                     # « ecrit » ne sert qu'à la voix de synthèse et à l'audio (référence = l'écriture).
@@ -339,10 +360,10 @@ def main():
             # Voyelle simple (DEC-0070) : la voyelle seule, jouée avant les mots (débit normal seulement).
             # Seulement si le fichier existe : la voix de synthèse de l'appareil épellerait la lettre.
             seul = None
-            if e in sons and voyelle_simple(e) and l['is_tone_lesson'] != 'true':
+            if e in sons and voyelle_simple(e) and not lecon_tons:
                 aud_seul = {v: fd for v, fd in audio('V-' + e).items() if fd.get('normal')}
                 if aud_seul:
-                    voix_seul = (mots_e[0]['voix'] if mots_e else [v['voice_code'] for v in voix][:2])
+                    voix_seul = VOIX_PAR_USAGE['e1_voyelle']   # DEC-0077 : F1 + H4
                     seul = {'ecrit': sons[e]['grapheme'], 'audio': aud_seul,
                             'voix': [x for x in voix_seul if x in aud_seul] or list(aud_seul)}
             decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e, 'seul': seul,
@@ -425,6 +446,8 @@ def main():
             # Voix d'écoute de la leçon (DEC-0055) : E2, E3, échauffement, « Combien de fois ? ».
             'voix': [v['voice_code'] for v in voix
                      if v.get('listen_tones' if l['is_tone_lesson'] == 'true' else 'listen_sounds', 'true') == 'true'],
+            # Voix de « Combien de fois ? » et des phrases espacées (DEC-0077) : F1 + H3, voix actives seulement.
+            'voix_combien': [c for c in VOIX_PAR_USAGE['combien'] if c in actives],
         })
 
     # --- 4.6 bis Page « Les 6 tons » (DEC-0052) : pour chaque ton, la syllabe de la série, son
@@ -516,8 +539,9 @@ def main():
     print(f"« Combien de fois ? » : {nb_c} suites, dont {nb_c_audio} avec audio")
     nb_e4 = sum(len(l['production']) for l in sortie_lecons)
     nb_courbes = sum(len(p['courbes']) for l in sortie_lecons for p in l['production'])
-    nb_ref = sum(1 for x in reference_tons if x['courbes'].get(VOIX_MODELE, {}).get('normal'))
-    print(f"Page « Les 6 tons » : {nb_ref} / {len(reference_tons)} tons avec audio et courbe (voix modèle)")
+    for v_ref in VOIX_REFERENCE_TONS:   # DEC-0077 : F1 et H3
+        nb_ref = sum(1 for x in reference_tons if x['courbes'].get(v_ref, {}).get('normal'))
+        print(f"Page « Les 6 tons » : {nb_ref} / {len(reference_tons)} tons avec audio et courbe ({v_ref})")
     print(f"E4 : {nb_e4} mots supports, {nb_courbes} courbes du modèle"
           f"{'' if courbes else ' (courbes_modele.csv absent : lancer courbes_modele.py)'}")
 

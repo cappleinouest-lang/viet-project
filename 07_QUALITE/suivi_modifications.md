@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.29
+version: 0.30
 date: 2026-11-02
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -165,6 +165,7 @@ gardée, pas supprimée.
 | Besoin | Résultat |
 |---|---|
 | MOD-C01 | Plan de génération de L02 à L13 refait selon DEC-0077 (choix de Christophe : leçons de tons L02, L03, L07, L11 entièrement en F1 + H3, sans débit lent ; lent de F4 = F1, lent natif de H4 0,6, de F1 0,7, de H3 0,6 ; audios existants réutilisés). Résultat : 985 fichiers à créer, 13 016 caractères, environ 6 200 ₫ (dont « Combien de fois ? » en H3 : 644 fichiers, 11 730 caractères, environ 4 900 ₫). Existence vérifiée dans `audios.csv` seulement. `voix.csv` : `listen_sounds` vrai pour F4 et H4 seulement, `listen_tones` vrai pour F1 et H3 seulement. `generer_audio_fpt.py` : table `VOIX_USAGE` / `VOIX_TONS`, pas de débit lent en leçon de tons (DEC-0043) pour toutes les écoutes, `VOIX_REFERENCE_TONS = ['F1', 'H3']`, colonnes `voice_f` / `voice_h` d'`exemples_e1.csv` plus lues. Plan du script modifié vérifié (mêmes totaux), aucun audio généré |
+| MOD-D01 | Lecteur adapté à DEC-0077. `generer_lecteur.py` : tableau `VOIX_PAR_USAGE` (E1 voyelle seule et syllabes sans sens F1 + H4, mots d'exemple F4 + H4, leçons de tons et page « Les 6 tons » F1 + H3, « Combien de fois ? » F1 + H3), modèle d'E4 F4 ; colonnes `voice_f` / `voice_h` d'`exemples_e1.csv` plus lues ; nouvelles données par leçon `voix_combien` et `voix_unique` (F1 en leçon de tons, à la place de la voix modèle F4 : DEC-0045) ; avertissement si une voix prévue est inactive. `lecteur.js` : « Combien de fois ? » sur `l.voix_combien`, phases à une voix des leçons de tons sur `l.voix_unique`. Test sur une copie (Chromium, `--non-valides`, audios absents remplacés par un fichier factice) : page des tons F1 / H3 (52/52 audios et courbes), E1 de L01 voyelle e (seule F1 + H4, mots F4 + H4, syllabe F1 + H4), E4 F4 (lent F1), « Combien de fois ? » F1 / H3, L02 échauffement et E2 en F1 seule ; aucune erreur JavaScript. PROD-LECT 0.24 |
 
 ---
 
@@ -228,7 +229,7 @@ gardée, pas supprimée.
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-D01 | Regénérer le lecteur avec F4 / H6 et vérifier la page des tons, E1 (voyelle seule) et E4 (courbes F4) | DEC-0067, DEC-0070 | `generer_lecteur.py`, `courbes_modele.py` | **Haute** | **impacté par DEC-0077** : à revoir avec la répartition F1/F4/H3/H4 par usage (H6 écartée) avant de regénérer |
+| MOD-D01 | Regénérer le lecteur avec F4 / H6 et vérifier la page des tons, E1 (voyelle seule) et E4 (courbes F4) | DEC-0067, DEC-0070 | `generer_lecteur.py`, `courbes_modele.py` | **Haute** | **fait** (2026-11-02, DEC-0077) : répartition F1/F4/H3/H4 par usage codée et testée sur une copie ; regénération du lecteur sur le PC à lancer |
 | MOD-D02 | **E5 Stabiliser** : enchaînements, lecture avant écoute, classificateurs, débit rapide | QUAL-AVANCEMENT n° 5 ; R-AUD-04 | lecteur | Moyenne | à faire |
 | MOD-D03 | **Verrou de production** (R-VOL-08) : méthode de mesure ; proposition provisoire « proche » sur 80 % des items d'E5 ; seuils de la courbe à calibrer sur voix natives (paires 2 à 5 à enregistrer) | REG-REGLES ; PROG-ACT § 6 ; FOND-04 § 4 ; PROD-ARCH point 1 | lecteur, règles | Moyenne | à décider |
 | MOD-D04 | **L14** : leçon de recyclage, à partir de toutes les séries | PROG-M0 ; PROD-LECT § 5 | lecteur, données | Moyenne | à faire |
@@ -335,6 +336,7 @@ gardée, pas supprimée.
 | 0.27 | 2026-11-01 | MOD-C16 corrigé (le défaut est la synthèse système, pas les voix F4 / H6) ; MOD-C17 ajouté (audit approfondi des locuteurs) ; totaux : 86 besoins. |
 | 0.28 | 2026-11-02 | DEC-0077 (stratégie A, multi-voix par usage) : MOD-C17 fait, MOD-C05 fait, MOD-C06 plus pertinent ; MOD-C01 et MOD-D01 impactés (plan à revoir). |
 | 0.29 | 2026-11-02 | MOD-C01 : plan DEC-0077 refait pour L02 à L13 (985 fichiers, 13 016 caractères, environ 6 200 ₫) ; `voix.csv` et `generer_audio_fpt.py` mis à jour ; section 2.7 ajoutée. |
+| 0.30 | 2026-11-02 | MOD-D01 fait : lecteur adapté à DEC-0077 (`generer_lecteur.py`, `lecteur.js`), testé sur une copie ; journal 2.7. |
 
 ## Liens
 

@@ -44,7 +44,8 @@
  *   symbole      : { texte '/ɛ/', categorie 'identique'|'proche'|'nouveau', place, repere, indication }
  *   debit        : 'slow' (lent) ou 'normal' ; dans l'état d'une étape, c'est la PHASE
  *                  (phase 1 = 'slow' = images + symboles ; phase 2 = 'normal' = symboles seuls)
- *   voix         : code 'F4', 'H6' (voix actives de voix.csv, DEC-0067) ; l.voix = voix d'écoute de la leçon (DEC-0055)
+ *   voix         : code 'F1', 'F4', 'H3', 'H4' (voix actives de voix.csv, DEC-0077) ; l.voix = voix d'écoute E2/E3 de la leçon (DEC-0055) ;
+ *                  l.voix_combien = voix de « Combien de fois ? » (F1 + H3, DEC-0077)
  *   cle          : 'e2' ou 'e3' (quelle étape « Lequel ? »)
  *   pc           : code de la partie ('A', 'B' ou 'U')
  *
@@ -1210,7 +1211,9 @@
     function nouvelItem() {
       var x = choisir();
       dernierItem = x;
-      var voix = voixUnique(l, e.debit) ? voixModele() : voixAuHasard(l, derniereVoix);
+      // DEC-0077 : voix propres à « Combien de fois ? » (l.voix_combien), sinon voix d'écoute de la leçon.
+      var lv = { voix: (l.voix_combien && l.voix_combien.length) ? l.voix_combien : l.voix };
+      var voix = voixUnique(l, e.debit) ? voixModele() : voixAuHasard(lv, derniereVoix);
       derniereVoix = voix;
       afficher(x, voix);
     }
@@ -1592,7 +1595,7 @@
 
   /* ---------- 11 ter. Écran : « Les 6 tons » (référence, DEC-0052, DEC-0053) ----------
      La même syllabe (ma, má, mà, mả, mã, mạ : reference_tons.csv) dite avec les 6 tons, par une
-     voix de femme ou d'homme (D.voix_reference_tons : F4 et H6 depuis DEC-0067), au débit normal ou lent.
+     voix de femme ou d'homme (D.voix_reference_tons : F1 et H3 depuis DEC-0077), au débit normal ou lent.
      Chaque ton est montré par un SCHÉMA simple (DEC-0053), pas par une courbe mesurée :
      hauteur sur l'échelle de 1 (grave) à 5 (aigu) de Chao (colonne chao de tons.csv), coup de
      glotte marqué ˀ (ngã, au milieu) ou ʔ (nặng, à la fin), nặng plus court.
