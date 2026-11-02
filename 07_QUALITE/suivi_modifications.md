@@ -2,8 +2,8 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.27
-date: 2026-11-01
+version: 0.28
+date: 2026-11-02
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
   projet depuis la refonte du 2026-10-28, jour par jour, avec les commits Git
@@ -200,12 +200,12 @@ gardée, pas supprimée.
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-C01 | **Écouter L01 en F4 / H6 dans le lecteur**, puis générer les autres leçons (environ 1 700 fichiers, 19 000 caractères) | DEC-0067 « Mise en œuvre » | audios | **Haute** | en cours (L01 générée) |
+| MOD-C01 | **Écouter L01 en F4 / H6 dans le lecteur**, puis générer les autres leçons (environ 1 700 fichiers, 19 000 caractères) | DEC-0067 « Mise en œuvre » | audios | **Haute** | **impacté par DEC-0077** : plan à revoir (répartition F1/F4/H3/H4 par usage, H6 écartée) avant de lancer la génération complète |
 | MOD-C02 | **Vérifier le tarif de FPT.TTS-ultra** avant la génération complète | PROD-AUDIO § 1 bis | coût | **Haute** | **fait** (2026-11-01) : le tarif n'est pas affiché sur la marketplace ; déduit de l'historique des transactions (1 jeton = 1 caractère envoyé, vérifié le 01/11 : 19 caractères → 19 jetons par voix). FPT.TTS-pro et FPT.AI-VITs : environ **0,42 ₫** par caractère (8 ₫ pour 19) ; **FPT.TTS-ultra : environ 1,3 ₫** (13 ₫ pour 10, 4 ₫ pour 3, le 31/10), soit environ 3 fois plus. Débits arrondis au đồng. Estimation pour les autres leçons : de l'ordre de 25 000 ₫ en Ultra. Solde le 01/11 avant génération : 988 058 ₫ |
 | MOD-C03 | **Valider les audios** à l'écoute (R-AUD-01) ; sans cela le lecteur reste en mode d'essai. Le nombre à écouter (3 664 au plan du 31/10) change avec DEC-0067 : à recompter | QUAL-AVANCEMENT § 7 n° 1 ; DEC-0065 | `audios.csv` | **Haute** | à faire |
 | MOD-C04 | **Trier `audios_a_refaire.csv`** : sur 170 refus, **138** concernent des voix devenues inactives au débit concerné (F3 : 95 ; F1 normal : 22 ; H4 normal : 13 ; H3 : 8). Seuls **32 restent utiles** : les lents de H4 (25) et de F1 (7), empruntés par H6 et F4. Ne pas tout regénérer (coût inutile) | calcul du 2026-11-01 sur le fichier | `07_QUALITE/audios_a_refaire.csv`, `generer_audio_fpt.py --liste` | **Haute** | à faire |
-| MOD-C05 | **Contraste des tons plus faible en Ultra** (2,3 contre environ 4 pour F1 et H4) alors que F4 et H6 servent aussi aux leçons de tons : réévaluer le choix des voix des leçons de tons (le « locuteur le plus adapté » reste à choisir) | QUAL-ESSAI-ULTRA ; DEC-0067 | voix des tons | Moyenne | à décider |
-| MOD-C06 | **Voix d'homme différente** entre lent (Huy Phong) et normal (Quang Anh) : vérifier que cela ne gêne pas | DEC-0067 point 2 | `voix.csv` | Moyenne | à vérifier |
+| MOD-C05 | **Contraste des tons plus faible en Ultra** (2,3 contre environ 4 pour F1 et H4) alors que F4 et H6 servent aussi aux leçons de tons : réévaluer le choix des voix des leçons de tons (le « locuteur le plus adapté » reste à choisir) | QUAL-ESSAI-ULTRA ; DEC-0067 | voix des tons | Moyenne | **fait** (DEC-0077) : tons confiés à F1 + H3 (meilleur contraste à l'audit), plus à F4/H6 |
+| MOD-C06 | **Voix d'homme différente** entre lent (Huy Phong) et normal (Quang Anh) : vérifier que cela ne gêne pas | DEC-0067 point 2 | `voix.csv` | Moyenne | **plus pertinent** (DEC-0077) : H6 écartée, Huy Phong (H4) sert au même débit normal pour ses usages |
 | MOD-C07 | **Phrases lentes** à 0,75 : jugées bonnes, non appliquées (coût) ; à revoir | DEC-0067 point 7 | `comptage.csv`, audios | Moyenne | à décider |
 | MOD-C08 | Silence de début des fichiers Ultra (plus de 200 ms) gardé brut : le raccourcir (`ROGNER_ULTRA = True`) s'il gêne à l'usage | DEC-0068 | `generer_audio_fpt.py` | Moyenne | à vérifier |
 | MOD-C09 | **Deuxième voix de femme du Nord** (autre fournisseur ou enregistrement natif) | DEC-0066 « Conséquence » ; CTX-IA § 6 | `voix.csv` | Moyenne | à faire |
@@ -216,13 +216,13 @@ gardée, pas supprimée.
 | MOD-C14 | Audios lents des mots qui ne servent qu'en leçons de tons : générés mais jamais joués (coût inutile, faible) | PROD-AF-LECT EC-03 | plan de génération | Basse | à faire |
 | MOD-C15 | Réévaluer FPT.TTS-ultra plus tard pour les **phrases et dialogues** (A1–A2) | QUAL-ESSAI-ULTRA, résumé | audios A1 | Basse | plus tard |
 | MOD-C16 | **Repli « voix système » de mauvaise qualité** : quand une leçon n'a pas encore de MP3 FPT validé, le lecteur lit le texte avec la synthèse vocale de l'appareil (Web Speech API, `vi-VN`, section 3 de `lecteur.js`). Christophe la juge mauvaise (2026-11-01). Les vrais fichiers F4 / H6 **ne sont pas en cause**. Repli provisoire qui disparaît dès que les MP3 existent (MOD-C01) ; à décider : le **désactiver** pendant la production (afficher « audio à venir » au lieu d'une mauvaise voix) | Christophe, 2026-11-01 | `lecteur.js` (section 3, `jouer`, `afficherBandeau`) | Moyenne | à décider |
-| MOD-C17 | **Audit approfondi des locuteurs FPT** déjà utilisés (F1, F3, H3, H4, F4, H6) : noter chaque voix sur 4 dimensions — lettres/voyelles seules, mots courts CV et VC (consonnes de début et de fin), ralenti, espacement des mots — sur une batterie de test commune, en réutilisant `valider_audios.py` et les validations existantes (3 664 écoutes, anciennes voix seulement ; F4 / H6 Ultra à écouter car seulement L01 produit). Sortie : tableau voix × type d'activité → valable / à éviter. Tranche aussi MOD-B07 (R-AUD-02). À faire avant MOD-C01 | Christophe, 2026-11-01 | `voix.csv`, `07_QUALITE/validations`, `valider_audios.py`, batterie de test à écrire | **Haute** | à concevoir |
+| MOD-C17 | **Audit approfondi des locuteurs FPT** déjà utilisés (F1, F3, H3, H4, F4, H6) : noter chaque voix sur 4 dimensions — lettres/voyelles seules, mots courts CV et VC (consonnes de début et de fin), ralenti, espacement des mots — sur une batterie de test commune, en réutilisant `valider_audios.py` et les validations existantes (3 664 écoutes, anciennes voix seulement ; F4 / H6 Ultra à écouter car seulement L01 produit). Sortie : tableau voix × type d'activité → valable / à éviter. Tranche aussi MOD-B07 (R-AUD-02). À faire avant MOD-C01 | Christophe, 2026-11-01 | `voix.csv`, `07_QUALITE/validations`, `valider_audios.py`, batterie de test à écrire | **Haute** | **fait** (2026-11-02, DEC-0077) : 322 audios (4 passages), stratégie A retenue — F1/F4/H3/H4 répartis par usage, F3/H1/H2/H5/H6 écartées |
 
 ### D. Lecteur d'activités
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-D01 | Regénérer le lecteur avec F4 / H6 et vérifier la page des tons, E1 (voyelle seule) et E4 (courbes F4) | DEC-0067, DEC-0070 | `generer_lecteur.py`, `courbes_modele.py` | **Haute** | à vérifier |
+| MOD-D01 | Regénérer le lecteur avec F4 / H6 et vérifier la page des tons, E1 (voyelle seule) et E4 (courbes F4) | DEC-0067, DEC-0070 | `generer_lecteur.py`, `courbes_modele.py` | **Haute** | **impacté par DEC-0077** : à revoir avec la répartition F1/F4/H3/H4 par usage (H6 écartée) avant de regénérer |
 | MOD-D02 | **E5 Stabiliser** : enchaînements, lecture avant écoute, classificateurs, débit rapide | QUAL-AVANCEMENT n° 5 ; R-AUD-04 | lecteur | Moyenne | à faire |
 | MOD-D03 | **Verrou de production** (R-VOL-08) : méthode de mesure ; proposition provisoire « proche » sur 80 % des items d'E5 ; seuils de la courbe à calibrer sur voix natives (paires 2 à 5 à enregistrer) | REG-REGLES ; PROG-ACT § 6 ; FOND-04 § 4 ; PROD-ARCH point 1 | lecteur, règles | Moyenne | à décider |
 | MOD-D04 | **L14** : leçon de recyclage, à partir de toutes les séries | PROG-M0 ; PROD-LECT § 5 | lecteur, données | Moyenne | à faire |
@@ -327,6 +327,7 @@ gardée, pas supprimée.
 | 0.25 | 2026-11-01 | MOD-H02 clos (vérifié, conforme) ; MOD-H04 décidé et fait (DEC-0075, rappel court -m/-n en L08/L10). |
 | 0.26 | 2026-11-01 | MOD-H04 : mise en œuvre dans le lecteur (e1_rappel, generer_lecteur.py, lecteur.js) ; test navigateur à faire. MOD-C16 ajouté ; totaux : 85 besoins. |
 | 0.27 | 2026-11-01 | MOD-C16 corrigé (le défaut est la synthèse système, pas les voix F4 / H6) ; MOD-C17 ajouté (audit approfondi des locuteurs) ; totaux : 86 besoins. |
+| 0.28 | 2026-11-02 | DEC-0077 (stratégie A, multi-voix par usage) : MOD-C17 fait, MOD-C05 fait, MOD-C06 plus pertinent ; MOD-C01 et MOD-D01 impactés (plan à revoir). |
 
 ## Liens
 

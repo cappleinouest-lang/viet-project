@@ -2,7 +2,7 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.70
+version: 1.71
 date: 2026-11-01
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
@@ -1797,6 +1797,7 @@ qui indique « remplace DEC-NNNN ».
 | 1.68 | 2026-11-01 | Ajout de DEC-0074 (E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle, MOD-H03). |
 | 1.69 | 2026-11-01 | Ajout de DEC-0075 (L08/L10 : rappel court pour -m et -n déjà vus, MOD-H04). |
 | 1.70 | 2026-11-01 | Ajout de DEC-0076 (protocole complet de l'audit des locuteurs, premier passage ~54 audios, MOD-C17). |
+| 1.71 | 2026-11-02 | Ajout de DEC-0077 (stratégie A, multi-voix par usage : F1, F4, H3, H4 selon le type d'activité, MOD-C17 fait). |
 
 ### DEC-0074 — E1 de L01 : séries d'E2 de la partie A remplacées par t/m + voyelle
 
@@ -1894,6 +1895,40 @@ qui indique « remplace DEC-NNNN ».
 - **Impacte** : nouveau script de génération de la batterie de test,
   `valider_audios.py` (filtre par voix), `07_QUALITE` (rapport de
   l'audit).
+
+### DEC-0077 — MOD-C17 : stratégie multi-voix par usage (résultat de l'audit)
+
+- **Date** : 2026-11-02
+- **Question** (MOD-C17) : l'audit complet (passages 1 à 4, 322 audios :
+  voyelles seules, syllabes CV/VC, débit lent, mots espacés, mots réels
+  avec r- et finales, phrases avec prosodie, tons séparés) a montré
+  qu'aucune voix n'est bonne partout. Quelle stratégie adopter ?
+- **Décision** (choix de Christophe, stratégie A — multi-voix par usage) :
+  retenir **F1, F4, H3, H4** et répartir par type d'activité :
+  - **E1 voyelles seules** (DEC-0070) : **F1 + H4**.
+  - **E1 syllabes sans sens** (DEC-0073) : **F1 + H4**.
+  - **E1 mots d'exemple** (DEC-0039) : **F4 + H4**.
+  - **E2 / E3** (paires, écoute de mots) : **F4 + H4**.
+  - **E4 modèle de production** (R-AUD-03) : **F4** (modèle unique).
+  - **« Combien de fois ? »** (DEC-0054) : **F1 + H3**.
+  - **Phrases espacées** (DEC-0058) : **F1 + H3**.
+  - **Leçons de tons et page « Les 6 tons »** : **F1 + H3**.
+  - F3, H1, H2, H5, H6 écartées de tout usage (défauts dominants à
+    l'audit : H3 mauvais sauf tons où il reste le meilleur homme ; H6
+    mauvais en débit normal ; H1/H2/H5 mauvais sur plusieurs dimensions ;
+    F3 déjà écartée, DEC-0066).
+- **Raison** : l'écoute de Christophe (passages 1 à 4, CSV
+  `audit_locuteurs_fusion_2026-11-02.csv`, case vide = correct) ne
+  dégage pas un seul « meilleur locuteur » toutes activités confondues ;
+  chaque voix a un point fort net (F1 : voyelles/syllabes et tons ; F4 :
+  mots réels et modèle de production ; H3 : tons ; H4 : voyelles/syllabes
+  et mots réels). Répartir par usage exploite ces points forts sans
+  dépendre d'une voix unique à défauts.
+- **Impacte** : `voix.csv` (F1, F4, H3, H4 actives ; F3, H1, H2, H5, H6
+  inactives), `generer_lecteur.py`, `generer_audio_fpt.py` (répartition
+  des voix par type d'activité à coder), MOD-C01 et MOD-D01 (plan de
+  génération à revoir avec cette répartition), MOD-C05 et MOD-C06
+  (tranchés par ce résultat).
 
 ## Liens
 

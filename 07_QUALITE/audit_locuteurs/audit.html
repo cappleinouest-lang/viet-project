@@ -1,0 +1,3857 @@
+<!doctype html>
+<html lang="fr" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<title>Audit des locuteurs FPT — MOD-C17</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, sans-serif; margin: 1rem; }
+  h1 { font-size: 1.3rem; margin: 0 0 0.3rem 0; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
+  .barre { position: sticky; top: 0; background: Canvas; padding: 0.6rem 0; z-index: 10; border-bottom: 1px solid #ccc; display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+  button { font: inherit; padding: 0.3rem 0.8rem; cursor: pointer; }
+  .compteur { font-weight: bold; font-size: 0.95rem; }
+  .legende { font-size: 0.8rem; color: #666; }
+  table { border-collapse: collapse; width: 100%; margin-top: 0.5rem; }
+  th, td { border: 1px solid #ccc; padding: 0.3rem; text-align: center; vertical-align: top; font-size: 0.85rem; }
+  thead th { background: #f0f0f0; position: sticky; top: 50px; z-index: 5; }
+  tbody th { background: #f8f8f8; font-weight: bold; min-width: 2.2rem; }
+  .groupe-normal { background: #fafff5; }
+  .groupe-slow { background: #f5faff; }
+  .groupe-spaced { background: #fffaf0; }
+  td.celule { min-width: 100px; }
+  audio { width: 100%; height: 28px; }
+  .via { font-size: 0.72rem; color: #888; display: block; margin-top: 2px; }
+  .verdict { display: inline-flex; gap: 2px; margin-top: 2px; }
+  .verdict input[type=radio] { display: none; }
+  .verdict label { padding: 1px 5px; border: 1px solid #bbb; border-radius: 3px; cursor: pointer; font-size: 0.8rem; }
+  .verdict input[type=radio]:checked + label.ok { background: #4caf50; color: white; border-color: #4caf50; }
+  .verdict input[type=radio]:checked + label.ko { background: #e74c3c; color: white; border-color: #e74c3c; }
+  .verdict input[type=radio]:checked + label.doute { background: #f39c12; color: white; border-color: #f39c12; }
+  .defauts { font-size: 0.72rem; margin-top: 2px; display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; }
+  .defauts label { cursor: pointer; padding: 1px 3px; border: 1px solid #ccc; border-radius: 2px; }
+  .defauts input[type=checkbox] { display: none; }
+  .defauts input[type=checkbox]:checked + span { background: #333; color: white; padding: 1px 3px; border-radius: 2px; }
+  .note { width: 100%; margin-top: 2px; font-size: 0.75rem; border: 1px solid #ddd; padding: 1px 2px; }
+  .texte { font-weight: bold; color: #333; font-size: 1rem; }
+  .notice { background: #fff8dc; border: 1px solid #e0c060; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<h1>Audit des locuteurs FPT — MOD-C17 (DEC-0076)</h1>
+<div class="meta">348 cellules · passages 1 à 3 : sons, mots, phrases · passage 4 : tons<code>audio/</code></div>
+
+<div class="notice">
+  <strong>Mode d'emploi.</strong> Écoute chaque audio avec ▶. Pose un verdict (<strong>OK</strong>, <strong>KO</strong>, <strong>?</strong>) et coche les défauts observés
+  (<strong>T</strong> = tronqué, <strong>S</strong> = son faux, <strong>N</strong> = trop numérique, <strong>B</strong> = bruit, <strong>A</strong> = autre).
+  Les saisies sont sauvegardées <strong>automatiquement</strong> dans le navigateur. Clique sur « Exporter CSV » quand c'est fini.
+  Note sur F4 et H6 en « slow » : fichier mutualisé avec F1 et H4 (DEC-0067) : le petit <em>via XX</em> l'indique.
+</div>
+
+<div class="barre">
+  <button onclick="exporter()">⬇ Exporter CSV</button>
+  <button onclick="vider()">🗑 Effacer tout</button>
+  <span class="compteur" id="compteur"></span>
+  <span class="legende">Les verdicts restent dans ce navigateur jusqu'à l'export ou l'effacement.</span>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Voix</th>
+      <th colspan="5" class="groupe-normal">Normal</th>
+      <th colspan="5" class="groupe-slow">Slow</th>
+      <th class="groupe-spaced">Espacé</th>
+    </tr>
+    <tr>
+      <th class="groupe-normal"><span class="texte">ê</span></th>
+      <th class="groupe-normal"><span class="texte">o</span></th>
+      <th class="groupe-normal"><span class="texte">i</span></th>
+      <th class="groupe-normal"><span class="texte">te</span></th>
+      <th class="groupe-normal"><span class="texte">em</span></th>
+      <th class="groupe-slow"><span class="texte">ê</span></th>
+      <th class="groupe-slow"><span class="texte">o</span></th>
+      <th class="groupe-slow"><span class="texte">i</span></th>
+      <th class="groupe-slow"><span class="texte">te</span></th>
+      <th class="groupe-slow"><span class="texte">em</span></th>
+      <th class="groupe-spaced"><span class="texte">Tôi, ăn, nem.</span></th>
+    </tr>
+  </thead>
+  <tbody id="corps"></tbody>
+</table>
+
+<h2 style="font-size:1.1rem;margin-top:1.5rem">Passage 2 — mots réels du corpus (débit normal)</h2>
+<table>
+  <thead><tr><th>Voix</th>
+    <th class="groupe-normal"><span class="texte">ra</span></th>
+    <th class="groupe-normal"><span class="texte">rau</span></th>
+    <th class="groupe-normal"><span class="texte">rồi</span></th>
+    <th class="groupe-normal"><span class="texte">mẹ</span></th>
+    <th class="groupe-normal"><span class="texte">lên</span></th>
+    <th class="groupe-normal"><span class="texte">không</span></th>
+  </tr></thead>
+  <tbody id="corps2"></tbody>
+</table>
+
+<h2 style="font-size:1.1rem;margin-top:1.5rem">Passage 3 — phrases avec prosodie (? !) · débit normal</h2>
+<table>
+  <thead><tr><th>Voix</th><th class="groupe-normal"><span class="texte">Bạn khỏe không?</span></th><th class="groupe-normal"><span class="texte">Bạn tên là gì?</span></th><th class="groupe-normal"><span class="texte">Mấy giờ rồi?</span></th><th class="groupe-normal"><span class="texte">Nhà vệ sinh ở đâu?</span></th><th class="groupe-normal"><span class="texte">Nhanh lên!</span></th><th class="groupe-normal"><span class="texte">Ngon quá!</span></th><th class="groupe-normal"><span class="texte">Tôi không hiểu.</span></th><th class="groupe-normal"><span class="texte">Tôi đang học tiếng Việt.</span></th></tr></thead>
+  <tbody id="corps3"></tbody>
+</table>
+
+<h2 style="font-size:1.1rem;margin-top:1.5rem">Passage 3 — phrases avec prosodie (? !) · débit lent (F4 = fichier de F1, H6 = fichier de H4)</h2>
+<table>
+  <thead><tr><th>Voix</th><th class="groupe-slow"><span class="texte">Bạn khỏe không?</span></th><th class="groupe-slow"><span class="texte">Bạn tên là gì?</span></th><th class="groupe-slow"><span class="texte">Mấy giờ rồi?</span></th><th class="groupe-slow"><span class="texte">Nhà vệ sinh ở đâu?</span></th><th class="groupe-slow"><span class="texte">Nhanh lên!</span></th><th class="groupe-slow"><span class="texte">Ngon quá!</span></th><th class="groupe-slow"><span class="texte">Tôi không hiểu.</span></th><th class="groupe-slow"><span class="texte">Tôi đang học tiếng Việt.</span></th></tr></thead>
+  <tbody id="corps4"></tbody>
+</table>
+
+<h2 style="font-size:1.1rem;margin-top:1.5rem">Passage 4A — voyelle seule « a » avec les 6 tons · débit normal</h2>
+<table>
+  <thead><tr><th>Voix</th><th class="groupe-normal"><span class="texte">a</span></th><th class="groupe-normal"><span class="texte">á</span></th><th class="groupe-normal"><span class="texte">à</span></th><th class="groupe-normal"><span class="texte">ả</span></th><th class="groupe-normal"><span class="texte">ã</span></th><th class="groupe-normal"><span class="texte">ạ</span></th></tr></thead>
+  <tbody id="corps5"></tbody>
+</table>
+
+<h2 style="font-size:1.1rem;margin-top:1.5rem">Passage 4B — voyelle dans un mot : série « ma » · débit normal</h2>
+<table>
+  <thead><tr><th>Voix</th><th class="groupe-normal"><span class="texte">ma</span></th><th class="groupe-normal"><span class="texte">má</span></th><th class="groupe-normal"><span class="texte">mà</span></th><th class="groupe-normal"><span class="texte">mả</span></th><th class="groupe-normal"><span class="texte">mã</span></th><th class="groupe-normal"><span class="texte">mạ</span></th></tr></thead>
+  <tbody id="corps6"></tbody>
+</table>
+
+<h2 style="font-size:1.1rem;margin-top:1.5rem">Passage 4B — voyelle dans un mot : série « bi » · débit normal</h2>
+<table>
+  <thead><tr><th>Voix</th><th class="groupe-normal"><span class="texte">bi</span></th><th class="groupe-normal"><span class="texte">bí</span></th><th class="groupe-normal"><span class="texte">bì</span></th><th class="groupe-normal"><span class="texte">bỉ</span></th><th class="groupe-normal"><span class="texte">bĩ</span></th><th class="groupe-normal"><span class="texte">bị</span></th></tr></thead>
+  <tbody id="corps7"></tbody>
+</table>
+
+<script>
+const DONNEES = [
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-F1-normal.mp3",
+    "audio_code": "A-AUD-V-ee-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-F1-normal.mp3",
+    "audio_code": "A-AUD-V-o-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-F1-normal.mp3",
+    "audio_code": "A-AUD-V-i-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-F1-normal.mp3",
+    "audio_code": "A-AUD-S-te-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-F1-normal.mp3",
+    "audio_code": "A-AUD-S-em-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-F1-slow.mp3",
+    "audio_code": "A-AUD-V-ee-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-F1-slow.mp3",
+    "audio_code": "A-AUD-V-ee-F1-slow"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-F1-slow.mp3",
+    "audio_code": "A-AUD-V-o-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-F1-slow.mp3",
+    "audio_code": "A-AUD-V-o-F1-slow"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-F1-slow.mp3",
+    "audio_code": "A-AUD-V-i-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-F1-slow.mp3",
+    "audio_code": "A-AUD-V-i-F1-slow"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-F1-slow.mp3",
+    "audio_code": "A-AUD-S-te-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-F1-slow.mp3",
+    "audio_code": "A-AUD-S-te-F1-slow"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-F1-slow.mp3",
+    "audio_code": "A-AUD-S-em-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-F1-slow.mp3",
+    "audio_code": "A-AUD-S-em-F1-slow"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-F1-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-F1-spaced"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-F3-normal.mp3",
+    "audio_code": "A-AUD-V-ee-F3-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-F3-normal.mp3",
+    "audio_code": "A-AUD-V-o-F3-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-F3-normal.mp3",
+    "audio_code": "A-AUD-V-i-F3-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-F3-normal.mp3",
+    "audio_code": "A-AUD-S-te-F3-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-F3-normal.mp3",
+    "audio_code": "A-AUD-S-em-F3-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-F3-slow.mp3",
+    "audio_code": "A-AUD-V-ee-F3-slow"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-F3-slow.mp3",
+    "audio_code": "A-AUD-V-o-F3-slow"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-F3-slow.mp3",
+    "audio_code": "A-AUD-V-i-F3-slow"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-F3-slow.mp3",
+    "audio_code": "A-AUD-S-te-F3-slow"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-F3-slow.mp3",
+    "audio_code": "A-AUD-S-em-F3-slow"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-F3-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-F3-spaced"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-F4-normal.mp3",
+    "audio_code": "A-AUD-V-ee-F4-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-F4-normal.mp3",
+    "audio_code": "A-AUD-V-o-F4-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-F4-normal.mp3",
+    "audio_code": "A-AUD-V-i-F4-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-F4-normal.mp3",
+    "audio_code": "A-AUD-S-te-F4-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-F4-normal.mp3",
+    "audio_code": "A-AUD-S-em-F4-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-F4-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-F4-spaced"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H1-normal.mp3",
+    "audio_code": "A-AUD-V-ee-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-H1-normal.mp3",
+    "audio_code": "A-AUD-V-o-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-H1-normal.mp3",
+    "audio_code": "A-AUD-V-i-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-H1-normal.mp3",
+    "audio_code": "A-AUD-S-te-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-H1-normal.mp3",
+    "audio_code": "A-AUD-S-em-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H1-slow.mp3",
+    "audio_code": "A-AUD-V-ee-H1-slow"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-H1-slow.mp3",
+    "audio_code": "A-AUD-V-o-H1-slow"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-H1-slow.mp3",
+    "audio_code": "A-AUD-V-i-H1-slow"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-H1-slow.mp3",
+    "audio_code": "A-AUD-S-te-H1-slow"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-H1-slow.mp3",
+    "audio_code": "A-AUD-S-em-H1-slow"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-H1-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-H1-spaced"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H2-normal.mp3",
+    "audio_code": "A-AUD-V-ee-H2-normal"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-H2-normal.mp3",
+    "audio_code": "A-AUD-V-o-H2-normal"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-H2-normal.mp3",
+    "audio_code": "A-AUD-V-i-H2-normal"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-H2-normal.mp3",
+    "audio_code": "A-AUD-S-te-H2-normal"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-H2-normal.mp3",
+    "audio_code": "A-AUD-S-em-H2-normal"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H2-slow.mp3",
+    "audio_code": "A-AUD-V-ee-H2-slow"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-H2-slow.mp3",
+    "audio_code": "A-AUD-V-o-H2-slow"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-H2-slow.mp3",
+    "audio_code": "A-AUD-V-i-H2-slow"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-H2-slow.mp3",
+    "audio_code": "A-AUD-S-te-H2-slow"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-H2-slow.mp3",
+    "audio_code": "A-AUD-S-em-H2-slow"
+  },
+  {
+    "voice": "H2",
+    "voice_actual": "H2",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-H2-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-H2-spaced"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H3-normal.mp3",
+    "audio_code": "A-AUD-V-ee-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-H3-normal.mp3",
+    "audio_code": "A-AUD-V-o-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-H3-normal.mp3",
+    "audio_code": "A-AUD-V-i-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-H3-normal.mp3",
+    "audio_code": "A-AUD-S-te-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-H3-normal.mp3",
+    "audio_code": "A-AUD-S-em-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H3-slow.mp3",
+    "audio_code": "A-AUD-V-ee-H3-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-H3-slow.mp3",
+    "audio_code": "A-AUD-V-o-H3-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-H3-slow.mp3",
+    "audio_code": "A-AUD-V-i-H3-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-H3-slow.mp3",
+    "audio_code": "A-AUD-S-te-H3-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-H3-slow.mp3",
+    "audio_code": "A-AUD-S-em-H3-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-H3-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-H3-spaced"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H4-normal.mp3",
+    "audio_code": "A-AUD-V-ee-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-H4-normal.mp3",
+    "audio_code": "A-AUD-V-o-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-H4-normal.mp3",
+    "audio_code": "A-AUD-V-i-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-H4-normal.mp3",
+    "audio_code": "A-AUD-S-te-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-H4-normal.mp3",
+    "audio_code": "A-AUD-S-em-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H4-slow.mp3",
+    "audio_code": "A-AUD-V-ee-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H4-slow.mp3",
+    "audio_code": "A-AUD-V-ee-H4-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-H4-slow.mp3",
+    "audio_code": "A-AUD-V-o-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-H4-slow.mp3",
+    "audio_code": "A-AUD-V-o-H4-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-H4-slow.mp3",
+    "audio_code": "A-AUD-V-i-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-H4-slow.mp3",
+    "audio_code": "A-AUD-V-i-H4-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-H4-slow.mp3",
+    "audio_code": "A-AUD-S-te-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-H4-slow.mp3",
+    "audio_code": "A-AUD-S-te-H4-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-H4-slow.mp3",
+    "audio_code": "A-AUD-S-em-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-H4-slow.mp3",
+    "audio_code": "A-AUD-S-em-H4-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-H4-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-H4-spaced"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H5-normal.mp3",
+    "audio_code": "A-AUD-V-ee-H5-normal"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-H5-normal.mp3",
+    "audio_code": "A-AUD-V-o-H5-normal"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-H5-normal.mp3",
+    "audio_code": "A-AUD-V-i-H5-normal"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-H5-normal.mp3",
+    "audio_code": "A-AUD-S-te-H5-normal"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-H5-normal.mp3",
+    "audio_code": "A-AUD-S-em-H5-normal"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H5-slow.mp3",
+    "audio_code": "A-AUD-V-ee-H5-slow"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "o",
+    "file": "audio/AUD-V-o-H5-slow.mp3",
+    "audio_code": "A-AUD-V-o-H5-slow"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "slow",
+    "text": "i",
+    "file": "audio/AUD-V-i-H5-slow.mp3",
+    "audio_code": "A-AUD-V-i-H5-slow"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "slow",
+    "text": "te",
+    "file": "audio/AUD-S-te-H5-slow.mp3",
+    "audio_code": "A-AUD-S-te-H5-slow"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "slow",
+    "text": "em",
+    "file": "audio/AUD-S-em-H5-slow.mp3",
+    "audio_code": "A-AUD-S-em-H5-slow"
+  },
+  {
+    "voice": "H5",
+    "voice_actual": "H5",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-H5-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-H5-spaced"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-V-ee",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "ê",
+    "file": "audio/AUD-V-ee-H6-normal.mp3",
+    "audio_code": "A-AUD-V-ee-H6-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-V-o",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "o",
+    "file": "audio/AUD-V-o-H6-normal.mp3",
+    "audio_code": "A-AUD-V-o-H6-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-V-i",
+    "nature": "voyelle",
+    "debit": "normal",
+    "text": "i",
+    "file": "audio/AUD-V-i-H6-normal.mp3",
+    "audio_code": "A-AUD-V-i-H6-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-S-te",
+    "nature": "syllabe-CV",
+    "debit": "normal",
+    "text": "te",
+    "file": "audio/AUD-S-te-H6-normal.mp3",
+    "audio_code": "A-AUD-S-te-H6-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-S-em",
+    "nature": "syllabe-VC-m",
+    "debit": "normal",
+    "text": "em",
+    "file": "audio/AUD-S-em-H6-normal.mp3",
+    "audio_code": "A-AUD-S-em-H6-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-P-toi-an-nem",
+    "nature": "phrase-espacement",
+    "debit": "spaced",
+    "text": "Tôi, ăn, nem.",
+    "file": "audio/AUD-P-toi-an-nem-H6-spaced.mp3",
+    "audio_code": "A-AUD-P-toi-an-nem-H6-spaced"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-W-ra",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "ra",
+    "file": "audio/AUD-W-ra-F1-normal.mp3",
+    "audio_code": "A-AUD-W-ra-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-W-ra",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "ra",
+    "file": "audio/AUD-W-ra-F3-normal.mp3",
+    "audio_code": "A-AUD-W-ra-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-W-ra",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "ra",
+    "file": "audio/AUD-W-ra-F4-normal.mp3",
+    "audio_code": "A-AUD-W-ra-F4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-W-ra",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "ra",
+    "file": "audio/AUD-W-ra-H4-normal.mp3",
+    "audio_code": "A-AUD-W-ra-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-W-ra",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "ra",
+    "file": "audio/AUD-W-ra-H6-normal.mp3",
+    "audio_code": "A-AUD-W-ra-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-W-rau",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rau",
+    "file": "audio/AUD-W-rau-F1-normal.mp3",
+    "audio_code": "A-AUD-W-rau-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-W-rau",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rau",
+    "file": "audio/AUD-W-rau-F3-normal.mp3",
+    "audio_code": "A-AUD-W-rau-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-W-rau",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rau",
+    "file": "audio/AUD-W-rau-F4-normal.mp3",
+    "audio_code": "A-AUD-W-rau-F4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-W-rau",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rau",
+    "file": "audio/AUD-W-rau-H4-normal.mp3",
+    "audio_code": "A-AUD-W-rau-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-W-rau",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rau",
+    "file": "audio/AUD-W-rau-H6-normal.mp3",
+    "audio_code": "A-AUD-W-rau-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-W-roi",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rồi",
+    "file": "audio/AUD-W-roi-F1-normal.mp3",
+    "audio_code": "A-AUD-W-roi-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-W-roi",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rồi",
+    "file": "audio/AUD-W-roi-F3-normal.mp3",
+    "audio_code": "A-AUD-W-roi-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-W-roi",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rồi",
+    "file": "audio/AUD-W-roi-F4-normal.mp3",
+    "audio_code": "A-AUD-W-roi-F4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-W-roi",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rồi",
+    "file": "audio/AUD-W-roi-H4-normal.mp3",
+    "audio_code": "A-AUD-W-roi-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-W-roi",
+    "nature": "mot-r",
+    "debit": "normal",
+    "text": "rồi",
+    "file": "audio/AUD-W-roi-H6-normal.mp3",
+    "audio_code": "A-AUD-W-roi-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-W-me",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mẹ",
+    "file": "audio/AUD-W-me-F1-normal.mp3",
+    "audio_code": "A-AUD-W-me-F1-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-W-me",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mẹ",
+    "file": "audio/AUD-W-me-F4-normal.mp3",
+    "audio_code": "A-AUD-W-me-F4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-W-me",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mẹ",
+    "file": "audio/AUD-W-me-H4-normal.mp3",
+    "audio_code": "A-AUD-W-me-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-W-me",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mẹ",
+    "file": "audio/AUD-W-me-H6-normal.mp3",
+    "audio_code": "A-AUD-W-me-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-W-len",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "lên",
+    "file": "audio/AUD-W-len-F1-normal.mp3",
+    "audio_code": "A-AUD-W-len-F1-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-W-len",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "lên",
+    "file": "audio/AUD-W-len-F4-normal.mp3",
+    "audio_code": "A-AUD-W-len-F4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-W-len",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "lên",
+    "file": "audio/AUD-W-len-H4-normal.mp3",
+    "audio_code": "A-AUD-W-len-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-W-len",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "lên",
+    "file": "audio/AUD-W-len-H6-normal.mp3",
+    "audio_code": "A-AUD-W-len-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-W-khong",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "không",
+    "file": "audio/AUD-W-khong-F1-normal.mp3",
+    "audio_code": "A-AUD-W-khong-F1-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-W-khong",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "không",
+    "file": "audio/AUD-W-khong-F4-normal.mp3",
+    "audio_code": "A-AUD-W-khong-F4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-W-khong",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "không",
+    "file": "audio/AUD-W-khong-H4-normal.mp3",
+    "audio_code": "A-AUD-W-khong-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-W-khong",
+    "nature": "mot-final",
+    "debit": "normal",
+    "text": "không",
+    "file": "audio/AUD-W-khong-H6-normal.mp3",
+    "audio_code": "A-AUD-W-khong-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-F1-normal.mp3",
+    "audio_code": "A-AUD-F-khoe-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-F1-slow.mp3",
+    "audio_code": "A-AUD-F-khoe-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-F1-slow.mp3",
+    "audio_code": "A-AUD-F-khoe-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-F4-normal.mp3",
+    "audio_code": "A-AUD-F-khoe-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H1-normal.mp3",
+    "audio_code": "A-AUD-F-khoe-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H1-slow.mp3",
+    "audio_code": "A-AUD-F-khoe-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H3-normal.mp3",
+    "audio_code": "A-AUD-F-khoe-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H3-slow.mp3",
+    "audio_code": "A-AUD-F-khoe-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H4-normal.mp3",
+    "audio_code": "A-AUD-F-khoe-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H4-slow.mp3",
+    "audio_code": "A-AUD-F-khoe-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H4-slow.mp3",
+    "audio_code": "A-AUD-F-khoe-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-khoe",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn khỏe không?",
+    "file": "audio/AUD-F-khoe-H6-normal.mp3",
+    "audio_code": "A-AUD-F-khoe-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-F1-normal.mp3",
+    "audio_code": "A-AUD-F-ten-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-F1-slow.mp3",
+    "audio_code": "A-AUD-F-ten-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-F1-slow.mp3",
+    "audio_code": "A-AUD-F-ten-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-F4-normal.mp3",
+    "audio_code": "A-AUD-F-ten-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H1-normal.mp3",
+    "audio_code": "A-AUD-F-ten-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H1-slow.mp3",
+    "audio_code": "A-AUD-F-ten-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H3-normal.mp3",
+    "audio_code": "A-AUD-F-ten-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H3-slow.mp3",
+    "audio_code": "A-AUD-F-ten-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H4-normal.mp3",
+    "audio_code": "A-AUD-F-ten-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H4-slow.mp3",
+    "audio_code": "A-AUD-F-ten-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H4-slow.mp3",
+    "audio_code": "A-AUD-F-ten-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-ten",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Bạn tên là gì?",
+    "file": "audio/AUD-F-ten-H6-normal.mp3",
+    "audio_code": "A-AUD-F-ten-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-F1-normal.mp3",
+    "audio_code": "A-AUD-F-gio-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-F1-slow.mp3",
+    "audio_code": "A-AUD-F-gio-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-F1-slow.mp3",
+    "audio_code": "A-AUD-F-gio-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-F4-normal.mp3",
+    "audio_code": "A-AUD-F-gio-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H1-normal.mp3",
+    "audio_code": "A-AUD-F-gio-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H1-slow.mp3",
+    "audio_code": "A-AUD-F-gio-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H3-normal.mp3",
+    "audio_code": "A-AUD-F-gio-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H3-slow.mp3",
+    "audio_code": "A-AUD-F-gio-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H4-normal.mp3",
+    "audio_code": "A-AUD-F-gio-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H4-slow.mp3",
+    "audio_code": "A-AUD-F-gio-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H4-slow.mp3",
+    "audio_code": "A-AUD-F-gio-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-gio",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Mấy giờ rồi?",
+    "file": "audio/AUD-F-gio-H6-normal.mp3",
+    "audio_code": "A-AUD-F-gio-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-F1-normal.mp3",
+    "audio_code": "A-AUD-F-vs-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-F1-slow.mp3",
+    "audio_code": "A-AUD-F-vs-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-F1-slow.mp3",
+    "audio_code": "A-AUD-F-vs-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-F4-normal.mp3",
+    "audio_code": "A-AUD-F-vs-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H1-normal.mp3",
+    "audio_code": "A-AUD-F-vs-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H1-slow.mp3",
+    "audio_code": "A-AUD-F-vs-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H3-normal.mp3",
+    "audio_code": "A-AUD-F-vs-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H3-slow.mp3",
+    "audio_code": "A-AUD-F-vs-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H4-normal.mp3",
+    "audio_code": "A-AUD-F-vs-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H4-slow.mp3",
+    "audio_code": "A-AUD-F-vs-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "slow",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H4-slow.mp3",
+    "audio_code": "A-AUD-F-vs-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-vs",
+    "nature": "phrase-question",
+    "debit": "normal",
+    "text": "Nhà vệ sinh ở đâu?",
+    "file": "audio/AUD-F-vs-H6-normal.mp3",
+    "audio_code": "A-AUD-F-vs-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-F1-normal.mp3",
+    "audio_code": "A-AUD-F-nhanh-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-F1-slow.mp3",
+    "audio_code": "A-AUD-F-nhanh-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-F1-slow.mp3",
+    "audio_code": "A-AUD-F-nhanh-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-F4-normal.mp3",
+    "audio_code": "A-AUD-F-nhanh-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H1-normal.mp3",
+    "audio_code": "A-AUD-F-nhanh-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H1-slow.mp3",
+    "audio_code": "A-AUD-F-nhanh-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H3-normal.mp3",
+    "audio_code": "A-AUD-F-nhanh-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H3-slow.mp3",
+    "audio_code": "A-AUD-F-nhanh-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H4-normal.mp3",
+    "audio_code": "A-AUD-F-nhanh-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H4-slow.mp3",
+    "audio_code": "A-AUD-F-nhanh-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H4-slow.mp3",
+    "audio_code": "A-AUD-F-nhanh-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-nhanh",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Nhanh lên!",
+    "file": "audio/AUD-F-nhanh-H6-normal.mp3",
+    "audio_code": "A-AUD-F-nhanh-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-F1-normal.mp3",
+    "audio_code": "A-AUD-F-ngon-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-F1-slow.mp3",
+    "audio_code": "A-AUD-F-ngon-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-F1-slow.mp3",
+    "audio_code": "A-AUD-F-ngon-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-F4-normal.mp3",
+    "audio_code": "A-AUD-F-ngon-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H1-normal.mp3",
+    "audio_code": "A-AUD-F-ngon-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H1-slow.mp3",
+    "audio_code": "A-AUD-F-ngon-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H3-normal.mp3",
+    "audio_code": "A-AUD-F-ngon-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H3-slow.mp3",
+    "audio_code": "A-AUD-F-ngon-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H4-normal.mp3",
+    "audio_code": "A-AUD-F-ngon-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H4-slow.mp3",
+    "audio_code": "A-AUD-F-ngon-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "slow",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H4-slow.mp3",
+    "audio_code": "A-AUD-F-ngon-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-ngon",
+    "nature": "phrase-exclamation",
+    "debit": "normal",
+    "text": "Ngon quá!",
+    "file": "audio/AUD-F-ngon-H6-normal.mp3",
+    "audio_code": "A-AUD-F-ngon-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-F1-normal.mp3",
+    "audio_code": "A-AUD-F-hieu-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-F1-slow.mp3",
+    "audio_code": "A-AUD-F-hieu-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-F1-slow.mp3",
+    "audio_code": "A-AUD-F-hieu-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-F4-normal.mp3",
+    "audio_code": "A-AUD-F-hieu-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H1-normal.mp3",
+    "audio_code": "A-AUD-F-hieu-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H1-slow.mp3",
+    "audio_code": "A-AUD-F-hieu-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H3-normal.mp3",
+    "audio_code": "A-AUD-F-hieu-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H3-slow.mp3",
+    "audio_code": "A-AUD-F-hieu-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H4-normal.mp3",
+    "audio_code": "A-AUD-F-hieu-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H4-slow.mp3",
+    "audio_code": "A-AUD-F-hieu-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H4-slow.mp3",
+    "audio_code": "A-AUD-F-hieu-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-hieu",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi không hiểu.",
+    "file": "audio/AUD-F-hieu-H6-normal.mp3",
+    "audio_code": "A-AUD-F-hieu-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-F1-normal.mp3",
+    "audio_code": "A-AUD-F-hoc-F1-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-F1-slow.mp3",
+    "audio_code": "A-AUD-F-hoc-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F1",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-F1-slow.mp3",
+    "audio_code": "A-AUD-F-hoc-F1-slow"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-F4-normal.mp3",
+    "audio_code": "A-AUD-F-hoc-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H1-normal.mp3",
+    "audio_code": "A-AUD-F-hoc-H1-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H1-slow.mp3",
+    "audio_code": "A-AUD-F-hoc-H1-slow"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H3-normal.mp3",
+    "audio_code": "A-AUD-F-hoc-H3-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H3-slow.mp3",
+    "audio_code": "A-AUD-F-hoc-H3-slow"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H4-normal.mp3",
+    "audio_code": "A-AUD-F-hoc-H4-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H4-slow.mp3",
+    "audio_code": "A-AUD-F-hoc-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H4",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "slow",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H4-slow.mp3",
+    "audio_code": "A-AUD-F-hoc-H4-slow"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-F-hoc",
+    "nature": "phrase-affirmation",
+    "debit": "normal",
+    "text": "Tôi đang học tiếng Việt.",
+    "file": "audio/AUD-F-hoc-H6-normal.mp3",
+    "audio_code": "A-AUD-F-hoc-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-F1-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-F3-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-F4-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-H1-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-H3-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-H4-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-a-ngang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "a",
+    "file": "audio/AUD-T-a-ngang-H6-normal.mp3",
+    "audio_code": "A-AUD-T-a-ngang-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-F1-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-F3-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-F4-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-H1-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-H3-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-H4-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-a-sac",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "á",
+    "file": "audio/AUD-T-a-sac-H6-normal.mp3",
+    "audio_code": "A-AUD-T-a-sac-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-F1-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-F3-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-F4-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-H1-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-H3-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-H4-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-a-huyen",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "à",
+    "file": "audio/AUD-T-a-huyen-H6-normal.mp3",
+    "audio_code": "A-AUD-T-a-huyen-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-F1-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-F3-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-F4-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-H1-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-H3-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-H4-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-a-hoi",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ả",
+    "file": "audio/AUD-T-a-hoi-H6-normal.mp3",
+    "audio_code": "A-AUD-T-a-hoi-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-F1-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-F3-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-F4-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-H1-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-H3-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-H4-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-a-nga",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ã",
+    "file": "audio/AUD-T-a-nga-H6-normal.mp3",
+    "audio_code": "A-AUD-T-a-nga-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-F1-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-F3-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-F4-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-H1-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-H3-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-H4-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-a-nang",
+    "nature": "voyelle-ton",
+    "debit": "normal",
+    "text": "ạ",
+    "file": "audio/AUD-T-a-nang-H6-normal.mp3",
+    "audio_code": "A-AUD-T-a-nang-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-F1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-F3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-F4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-H1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-H3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-H4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-ma-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "ma",
+    "file": "audio/AUD-T-ma-ngang-H6-normal.mp3",
+    "audio_code": "A-AUD-T-ma-ngang-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-F1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-F3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-F4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-H1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-H3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-H4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-ma-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "má",
+    "file": "audio/AUD-T-ma-sac-H6-normal.mp3",
+    "audio_code": "A-AUD-T-ma-sac-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-F1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-F3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-F4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-H1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-H3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-H4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-ma-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mà",
+    "file": "audio/AUD-T-ma-huyen-H6-normal.mp3",
+    "audio_code": "A-AUD-T-ma-huyen-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-F1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-F3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-F4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-H1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-H3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-H4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-ma-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mả",
+    "file": "audio/AUD-T-ma-hoi-H6-normal.mp3",
+    "audio_code": "A-AUD-T-ma-hoi-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-F1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-F3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-F4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-H1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-H3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-H4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-ma-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mã",
+    "file": "audio/AUD-T-ma-nga-H6-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nga-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-F1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-F3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-F4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-H1-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-H3-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-H4-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-ma-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "mạ",
+    "file": "audio/AUD-T-ma-nang-H6-normal.mp3",
+    "audio_code": "A-AUD-T-ma-nang-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-F1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-F3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-F4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-H1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-H3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-H4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-bi-ngang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bi",
+    "file": "audio/AUD-T-bi-ngang-H6-normal.mp3",
+    "audio_code": "A-AUD-T-bi-ngang-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-F1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-F3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-F4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-H1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-H3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-H4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-bi-sac",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bí",
+    "file": "audio/AUD-T-bi-sac-H6-normal.mp3",
+    "audio_code": "A-AUD-T-bi-sac-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-F1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-F3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-F4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-H1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-H3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-H4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-bi-huyen",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bì",
+    "file": "audio/AUD-T-bi-huyen-H6-normal.mp3",
+    "audio_code": "A-AUD-T-bi-huyen-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-F1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-F3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-F4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-H1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-H3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-H4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-bi-hoi",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bỉ",
+    "file": "audio/AUD-T-bi-hoi-H6-normal.mp3",
+    "audio_code": "A-AUD-T-bi-hoi-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-F1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-F3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-F4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-H1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-H3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-H4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-bi-nga",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bĩ",
+    "file": "audio/AUD-T-bi-nga-H6-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nga-H6-normal"
+  },
+  {
+    "voice": "F1",
+    "voice_actual": "F1",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-F1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-F1-normal"
+  },
+  {
+    "voice": "F3",
+    "voice_actual": "F3",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-F3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-F3-normal"
+  },
+  {
+    "voice": "F4",
+    "voice_actual": "F4",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-F4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-F4-normal"
+  },
+  {
+    "voice": "H1",
+    "voice_actual": "H1",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-H1-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-H1-normal"
+  },
+  {
+    "voice": "H3",
+    "voice_actual": "H3",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-H3-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-H3-normal"
+  },
+  {
+    "voice": "H4",
+    "voice_actual": "H4",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-H4-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-H4-normal"
+  },
+  {
+    "voice": "H6",
+    "voice_actual": "H6",
+    "ref": "AUD-T-bi-nang",
+    "nature": "mot-ton",
+    "debit": "normal",
+    "text": "bị",
+    "file": "audio/AUD-T-bi-nang-H6-normal.mp3",
+    "audio_code": "A-AUD-T-bi-nang-H6-normal"
+  }
+];
+const VOIX = ['F1','F3','F4','H1','H2','H3','H4','H5','H6'];
+const COLONNES = [
+  {debit:'normal', ref:'AUD-V-ee', classe:'groupe-normal'},
+  {debit:'normal', ref:'AUD-V-o',  classe:'groupe-normal'},
+  {debit:'normal', ref:'AUD-V-i',  classe:'groupe-normal'},
+  {debit:'normal', ref:'AUD-S-te', classe:'groupe-normal'},
+  {debit:'normal', ref:'AUD-S-em', classe:'groupe-normal'},
+  {debit:'slow',   ref:'AUD-V-ee', classe:'groupe-slow'},
+  {debit:'slow',   ref:'AUD-V-o',  classe:'groupe-slow'},
+  {debit:'slow',   ref:'AUD-V-i',  classe:'groupe-slow'},
+  {debit:'slow',   ref:'AUD-S-te', classe:'groupe-slow'},
+  {debit:'slow',   ref:'AUD-S-em', classe:'groupe-slow'},
+  {debit:'spaced', ref:'AUD-P-toi-an-nem', classe:'groupe-spaced'},
+];
+const DEFAUTS = [
+  {code:'T', nom:'tronqué (début ou fin)'},
+  {code:'S', nom:'son faux (prononciation)'},
+  {code:'N', nom:'trop numérique (artefact)'},
+  {code:'B', nom:'bruit de fond'},
+  {code:'A', nom:'autre (voir note)'},
+];
+const CLE = 'audit-mod-c17-';
+
+// Clé unique par cellule : la voix voulue + l'audio_code.
+// (Nécessaire car deux cellules peuvent partager le même audio en slow
+// — F4 utilise le fichier de F1, H6 celui de H4.)
+function cleCellule(cell) {
+  return CLE + cell.voice + '-' + cell.audio_code;
+}
+
+// Migration douce des anciennes données (sans la voix voulue dans la clé) :
+// recopie la valeur sous la nouvelle clé la première fois.
+function migrer() {
+  DONNEES.forEach(cell => {
+    const neuve = cleCellule(cell);
+    const ancienne = CLE + cell.audio_code;
+    if (localStorage.getItem(neuve) === null) {
+      const val = localStorage.getItem(ancienne);
+      if (val !== null) {
+        try { localStorage.setItem(neuve, val); } catch(e) {}
+      }
+    }
+  });
+}
+
+function trouver(voice, ref, debit) {
+  return DONNEES.find(d => d.voice===voice && d.ref===ref && d.debit===debit);
+}
+
+function construireTable(idCorps, listeVoix, colonnes) {
+  const corps = document.getElementById(idCorps);
+  listeVoix.forEach(v => {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.textContent = v;
+    tr.appendChild(th);
+    colonnes.forEach(col => {
+      const td = document.createElement('td');
+      td.className = 'celule ' + col.classe;
+      const cell = trouver(v, col.ref, col.debit);
+      if (!cell) {
+        td.textContent = '—';
+      } else {
+        const cle = cleCellule(cell);
+        const mot = document.createElement('div');
+        mot.className = 'texte';
+        mot.textContent = cell.text;
+        td.appendChild(mot);
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.preload = 'none';
+        audio.src = cell.file;
+        td.appendChild(audio);
+        if (cell.voice !== cell.voice_actual) {
+          const via = document.createElement('span');
+          via.className = 'via';
+          via.textContent = 'via ' + cell.voice_actual;
+          td.appendChild(via);
+        }
+        // verdict
+        const verdict = document.createElement('div');
+        verdict.className = 'verdict';
+        ['ok','ko','doute'].forEach((val, idx) => {
+          const id = cle + '-' + val;
+          const inp = document.createElement('input');
+          inp.type = 'radio';
+          inp.name = cle + '-v';
+          inp.id = id;
+          inp.value = val;
+          inp.addEventListener('change', () => sauver(cell, 'verdict', val));
+          const lab = document.createElement('label');
+          lab.htmlFor = id;
+          lab.className = val;
+          lab.textContent = val==='ok' ? '✓' : (val==='ko' ? '✗' : '?');
+          lab.title = val==='ok' ? 'bon' : (val==='ko' ? 'mauvais' : 'incertain');
+          verdict.appendChild(inp);
+          verdict.appendChild(lab);
+        });
+        td.appendChild(verdict);
+        // défauts
+        const def = document.createElement('div');
+        def.className = 'defauts';
+        DEFAUTS.forEach(d => {
+          const id = cle + '-d-' + d.code;
+          const inp = document.createElement('input');
+          inp.type = 'checkbox';
+          inp.id = id;
+          inp.value = d.code;
+          inp.addEventListener('change', () => sauverDefauts(cell));
+          const lab = document.createElement('label');
+          lab.htmlFor = id;
+          lab.title = d.nom;
+          const sp = document.createElement('span');
+          sp.textContent = d.code;
+          lab.appendChild(sp);
+          def.appendChild(inp);
+          def.appendChild(lab);
+        });
+        td.appendChild(def);
+        // note
+        const note = document.createElement('input');
+        note.type = 'text';
+        note.className = 'note';
+        note.placeholder = 'note…';
+        note.id = cle + '-note';
+        note.addEventListener('input', () => sauver(cell, 'note', note.value));
+        td.appendChild(note);
+      }
+      tr.appendChild(td);
+    });
+    corps.appendChild(tr);
+  });
+}
+
+const VOIX2 = ['F1','F3','F4','H4','H6'];
+const VOIX3 = ['F1','F4','H1','H3','H4','H6'];
+const VOIX4 = ['F1','F3','F4','H1','H3','H4','H6'];
+const REFS3 = ["AUD-F-khoe", "AUD-F-ten", "AUD-F-gio", "AUD-F-vs", "AUD-F-nhanh", "AUD-F-ngon", "AUD-F-hieu", "AUD-F-hoc"];
+const COLONNES2 = ['AUD-W-ra','AUD-W-rau','AUD-W-roi','AUD-W-me','AUD-W-len','AUD-W-khong']
+  .map(ref => ({debit:'normal', ref:ref, classe:'groupe-normal'}));
+
+function construire() {
+  construireTable('corps', VOIX, COLONNES);
+  construireTable('corps2', VOIX2, COLONNES2);
+  construireTable('corps3', VOIX3, REFS3.map(ref => ({debit:'normal', ref:ref, classe:'groupe-normal'})));
+  construireTable('corps4', VOIX3, REFS3.map(ref => ({debit:'slow', ref:ref, classe:'groupe-slow'})));
+  const TONS = ['ngang','sac','huyen','hoi','nga','nang'];
+  ['a','ma','bi'].forEach((nom, i) => {
+    construireTable('corps' + (5 + i), VOIX4, TONS.map(t => ({debit:'normal', ref:'AUD-T-' + nom + '-' + t, classe:'groupe-normal'})));
+  });
+  restaurer();
+  compter();
+}
+
+function sauver(cell, champ, val) {
+  const cle = cleCellule(cell);
+  let obj = {};
+  try { obj = JSON.parse(localStorage.getItem(cle) || '{}'); } catch(e) {}
+  obj[champ] = val;
+  try { localStorage.setItem(cle, JSON.stringify(obj)); } catch(e) {}
+  compter();
+}
+
+function sauverDefauts(cell) {
+  const cle = cleCellule(cell);
+  const coches = DEFAUTS.map(d => {
+    const inp = document.getElementById(cle + '-d-' + d.code);
+    return inp && inp.checked ? d.code : null;
+  }).filter(x => x);
+  sauver(cell, 'defauts', coches.join(','));
+}
+
+function restaurer() {
+  DONNEES.forEach(cell => {
+    const cle = cleCellule(cell);
+    let obj = {};
+    try { obj = JSON.parse(localStorage.getItem(cle) || '{}'); } catch(e) {}
+    if (obj.verdict) {
+      const inp = document.getElementById(cle + '-' + obj.verdict);
+      if (inp) inp.checked = true;
+    }
+    if (obj.defauts) {
+      obj.defauts.split(',').forEach(code => {
+        const inp = document.getElementById(cle + '-d-' + code);
+        if (inp) inp.checked = true;
+      });
+    }
+    if (obj.note) {
+      const inp = document.getElementById(cle + '-note');
+      if (inp) inp.value = obj.note;
+    }
+  });
+}
+
+function compter() {
+  let juges = 0;
+  DONNEES.forEach(cell => {
+    const cle = cleCellule(cell);
+    let obj = {};
+    try { obj = JSON.parse(localStorage.getItem(cle) || '{}'); } catch(e) {}
+    if (obj.verdict) juges++;
+  });
+  document.getElementById('compteur').textContent =
+    juges + ' / ' + DONNEES.length + ' audios jugés';
+}
+
+function exporter() {
+  const lignes = [['audio_code','voice_requested','voice_actual','item_ref','nature','debit','text','file','verdict','defauts','note']];
+  DONNEES.forEach(cell => {
+    const cle = cleCellule(cell);
+    let obj = {};
+    try { obj = JSON.parse(localStorage.getItem(cle) || '{}'); } catch(e) {}
+    lignes.push([
+      cell.audio_code, cell.voice, cell.voice_actual, cell.ref, cell.nature, cell.debit,
+      cell.text, cell.file, obj.verdict||'', obj.defauts||'', (obj.note||'').replace(/;/g,',')
+    ]);
+  });
+  const csv = lignes.map(l => l.map(c => {
+    const s = String(c);
+    return s.includes(';')||s.includes('"')||s.includes('\n') ? '"'+s.replace(/"/g,'""')+'"' : s;
+  }).join(';')).join('\n');
+  const bom = '﻿';
+  const blob = new Blob([bom + csv], {type: 'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const now = new Date();
+  const ts = now.toISOString().replace(/[-:T]/g,'').slice(0,13);
+  a.href = url;
+  a.download = 'audit_locuteurs_' + ts + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+}
+
+function vider() {
+  if (!confirm('Effacer TOUS les verdicts et notes de ce navigateur ?')) return;
+  DONNEES.forEach(cell => {
+    try { localStorage.removeItem(cleCellule(cell)); } catch(e) {}
+    try { localStorage.removeItem(CLE + cell.audio_code); } catch(e) {}
+  });
+  location.reload();
+}
+
+migrer();
+construire();
+</script>
+</body>
+</html>

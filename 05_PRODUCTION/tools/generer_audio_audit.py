@@ -57,6 +57,54 @@ PHRASE = {
     'texte_espace': 'Tôi, ăn, nem.',    # mots espacés par virgules (DEC-0067)
     'source': 'P-L01-01 (comptage.csv)',
 }
+# Passage 2 (2026-11-01) : mots réels du corpus, débit normal, voix restantes.
+# (ref, texte, nature, voix testées)
+ITEMS_PASSAGE2 = [
+    ('AUD-W-ra',    'ra',    'mot-r',     ['F1', 'F3', 'F4', 'H4', 'H6']),
+    ('AUD-W-rau',   'rau',   'mot-r',     ['F1', 'F3', 'F4', 'H4', 'H6']),
+    ('AUD-W-roi',   'rồi',   'mot-r',     ['F1', 'F3', 'F4', 'H4', 'H6']),
+    ('AUD-W-me',    'mẹ',    'mot-ton',   ['F1', 'F4', 'H4', 'H6']),
+    ('AUD-W-len',   'lên',   'mot-final', ['F1', 'F4', 'H4', 'H6']),
+    ('AUD-W-khong', 'không', 'mot-final', ['F1', 'F4', 'H4', 'H6']),
+]
+# Passage 3 (2026-11-01) : phrases avec prosodie (? !), normal et lent.
+# Textes tirés de sources web (trykaiwa.com, flexiclasses.com), pas du corpus ; « Ngon quá! » à faire relire (MOD-E01).
+ITEMS_PASSAGE3 = [
+    ('AUD-F-khoe',  'Bạn khỏe không?',        'phrase-question'),
+    ('AUD-F-ten',   'Bạn tên là gì?',         'phrase-question'),
+    ('AUD-F-gio',   'Mấy giờ rồi?',           'phrase-question'),
+    ('AUD-F-vs',    'Nhà vệ sinh ở đâu?',     'phrase-question'),
+    ('AUD-F-nhanh', 'Nhanh lên!',             'phrase-exclamation'),
+    ('AUD-F-ngon',  'Ngon quá!',              'phrase-exclamation'),
+    ('AUD-F-hieu',  'Tôi không hiểu.',        'phrase-affirmation'),
+    ('AUD-F-hoc',   'Tôi đang học tiếng Việt.', 'phrase-affirmation'),
+]
+VOIX_PASSAGE3 = ['F1', 'F4', 'H1', 'H3', 'H4', 'H6']
+
+# Passage 4 (2026-11-01) : tons, débit normal seulement (DEC-0043 : pas d'audio lent pour les tons).
+# A = voyelle a seule avec les 6 tons ; B = séries ma et bi de reference_tons.csv (DEC-0064).
+ITEMS_PASSAGE4 = [
+    ('AUD-T-a-ngang', 'a', 'voyelle-ton'),
+    ('AUD-T-a-sac', 'á', 'voyelle-ton'),
+    ('AUD-T-a-huyen', 'à', 'voyelle-ton'),
+    ('AUD-T-a-hoi', 'ả', 'voyelle-ton'),
+    ('AUD-T-a-nga', 'ã', 'voyelle-ton'),
+    ('AUD-T-a-nang', 'ạ', 'voyelle-ton'),
+    ('AUD-T-ma-ngang', 'ma', 'mot-ton'),
+    ('AUD-T-ma-sac', 'má', 'mot-ton'),
+    ('AUD-T-ma-huyen', 'mà', 'mot-ton'),
+    ('AUD-T-ma-hoi', 'mả', 'mot-ton'),
+    ('AUD-T-ma-nga', 'mã', 'mot-ton'),
+    ('AUD-T-ma-nang', 'mạ', 'mot-ton'),
+    ('AUD-T-bi-ngang', 'bi', 'mot-ton'),
+    ('AUD-T-bi-sac', 'bí', 'mot-ton'),
+    ('AUD-T-bi-huyen', 'bì', 'mot-ton'),
+    ('AUD-T-bi-hoi', 'bỉ', 'mot-ton'),
+    ('AUD-T-bi-nga', 'bĩ', 'mot-ton'),
+    ('AUD-T-bi-nang', 'bị', 'mot-ton'),
+]
+VOIX_PASSAGE4 = ['F1', 'F3', 'F4', 'H1', 'H3', 'H4', 'H6']
+
 VOIX_AUDIT = ['F1', 'F3', 'F4', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6']
 DEBITS_SIMPLES = ['normal', 'slow']
 DEBIT_PHRASE = 'spaced'
@@ -134,6 +182,59 @@ def plan_audit(donnees):
                 'vitesse_fpt': VITESSE_NORMALE,
             })
 
+    # Passage 2 : mots réels, débit normal
+    for ref, texte, nature, voix_liste in ITEMS_PASSAGE2:
+        for v in voix_liste:
+            info = toutes.get(v)
+            if not info or not info.get('provider_model'):
+                continue
+            items.append({
+                'ref': ref, 'texte': texte, 'nature': nature,
+                'voix_voulue': v, 'voix_reelle': v,
+                'debit': 'normal',
+                'provider_voice': info['provider_voice'],
+                'provider_model': info['provider_model'],
+                'vitesse_fpt': VITESSE_NORMALE,
+            })
+
+    # Passage 3 : phrases avec prosodie, normal puis lent (lent de F4 -> F1, de H6 -> H4, DEC-0067)
+    for ref, texte, nature in ITEMS_PASSAGE3:
+        for v in VOIX_PASSAGE3:
+            info = toutes.get(v)
+            if not info or not info.get('provider_model'):
+                continue
+            items.append({
+                'ref': ref, 'texte': texte, 'nature': nature,
+                'voix_voulue': v, 'voix_reelle': v, 'debit': 'normal',
+                'provider_voice': info['provider_voice'],
+                'provider_model': info['provider_model'],
+                'vitesse_fpt': VITESSE_NORMALE,
+            })
+            voix_slow = info['slow_from'] if info.get('slow_from') else v
+            info_slow = toutes.get(voix_slow)
+            if info_slow and info_slow.get('provider_model'):
+                items.append({
+                    'ref': ref, 'texte': texte, 'nature': nature,
+                    'voix_voulue': v, 'voix_reelle': voix_slow, 'debit': 'slow',
+                    'provider_voice': info_slow['provider_voice'],
+                    'provider_model': info_slow['provider_model'],
+                    'vitesse_fpt': vitesse_pour(info_slow, 'slow'),
+                })
+
+    # Passage 4 : tons, débit normal
+    for ref, texte, nature in ITEMS_PASSAGE4:
+        for v in VOIX_PASSAGE4:
+            info = toutes.get(v)
+            if not info or not info.get('provider_model'):
+                continue
+            items.append({
+                'ref': ref, 'texte': texte, 'nature': nature,
+                'voix_voulue': v, 'voix_reelle': v, 'debit': 'normal',
+                'provider_voice': info['provider_voice'],
+                'provider_model': info['provider_model'],
+                'vitesse_fpt': VITESSE_NORMALE,
+            })
+
     # Déduplication : si deux (voix_voulue) différentes retombent sur la même
     # (ref, voix_reelle, debit), on ne garde qu'une occurrence et on note les voix voulues couvertes.
     uniques = {}
@@ -163,6 +264,7 @@ def main():
     a.add_argument('--executer', action='store_true',
                    help='appeler FPT (sinon : plan seulement)')
     a.add_argument('--voix', help='filtrer sur certaines voix voulues, par ex. F4,H6')
+    a.add_argument('--passage', choices=['1', '2', '3', '4'], help='1 = voyelles/syllabes/phrase ; 2 = mots réels (r-, mẹ, lên, không) ; 3 = phrases avec prosodie (? !) ; 4 = tons')
     a.add_argument('--item', help='filtrer sur certaines refs, par ex. AUD-V-ee,AUD-S-te')
     a.add_argument('--debit', help='filtrer sur certains débits : normal, slow, spaced')
     args = a.parse_args()
@@ -177,6 +279,13 @@ def main():
     if args.voix:
         voulues = set(args.voix.split(','))
         items = [i for i in items if any(vv in voulues for vv in i['voix_voulues'])]
+    if args.passage:
+        refs2 = {r for r, _, _, _ in ITEMS_PASSAGE2}
+        refs3 = {r for r, _, _ in ITEMS_PASSAGE3}
+        refs4 = {r for r, _, _ in ITEMS_PASSAGE4}
+        def passage_de(ref):
+            return '2' if ref in refs2 else ('3' if ref in refs3 else ('4' if ref in refs4 else '1'))
+        items = [i for i in items if passage_de(i['ref']) == args.passage]
     if args.item:
         refs = set(args.item.split(','))
         items = [i for i in items if i['ref'] in refs]
