@@ -72,7 +72,8 @@
  * DEC-0054 (« Combien de fois ? »), DEC-0055 (voix d'écoute par leçon), DEC-0067 (débit lent emprunté),
  * DEC-0069 (signaler un son défectueux), DEC-0070 (E1 : voyelle seule avant les mots),
  * DEC-0072 (E1 : sons « d'abord », pa.e1 et l.e1_first), DEC-0073 (E1 : syllabes sans sens),
- * DEC-0075 (E1 : rappel court en L08/L10 pour -m et -n, d.rappel).
+ * DEC-0075 (E1 : rappel court en L08/L10 pour -m et -n, d.rappel),
+ * MOD-D25 (E1 : écoute automatique, séquence d'un fichier par voix, d.sequence).
  * Description complète : 05_PRODUCTION/04_analyse_fonctionnelle_lecteur.md (PROD-AF-LECT).
  */
 // Tout le programme est enfermé dans une fonction qui s'exécute aussitôt :
@@ -261,6 +262,7 @@
   // quand le son est fini. On enchaîne avec .then(...) : jouer(a).then(function () { return jouer(b); }).
   // Sécurité : la promesse se termine de toute façon après 5 à 6 s (son bloqué).
   var lectureEnCours = null;
+  var jetonSon = 0, minuteursSeq = [];   // MOD-D25 : séquences d'E1 (arrêt et surlignage)
 
   // MODE TEST (DEC-0047) : dans la case du mot qui vient d'être joué, une petite note dit
   // ce qui a été entendu : d'abord le MOT ÉCRIT (pour comparer ce qu'on entend à ce qui est
@@ -331,8 +333,29 @@
       setTimeout(fin, 5000);
     });
   }
+  // MOD-D25 : jouerPartie(partie, surQuand) joue UN fichier de séquence d'E1 (morceaux collés,
+  // sans silence ajouté) ; surQuand(i) est appelé au début de chaque morceau (i = rang de la
+  // tuile, -1 = voyelle seule). Sécurité : la promesse se termine après durée + 3 s.
+  function jouerPartie(p, surQuand) {
+    return new Promise(function (resolve) {
+      var fini = false;
+      function fin() { if (!fini) { fini = true; resolve(); } }
+      if (lectureEnCours) lectureEnCours.pause();
+      var a = new Audio(p.fichier);
+      lectureEnCours = a;
+      a.onended = fin; a.onerror = fin;
+      a.onplaying = function () {
+        a.onplaying = null;
+        p.morceaux.forEach(function (m) { minuteursSeq.push(setTimeout(function () { surQuand(m.i, p.voix); }, m.debut)); });
+      };
+      a.play().catch(fin);
+      minuteursSeq.push(setTimeout(fin, (p.duree || 5000) + 3000));
+    });
+  }
   // Coupe le son en cours (appelé à chaque changement d'écran).
   function arreterSon() {
+    jetonSon++;                                   // MOD-D25 : une séquence d'E1 en cours s'arrête
+    minuteursSeq.forEach(clearTimeout); minuteursSeq = [];
     if (lectureEnCours) lectureEnCours.pause();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   }
@@ -925,6 +948,35 @@
       ecoute.disabled = true; ecouteLente.disabled = true;
       ecoute.classList.toggle('choisi', !lent); ecouteLente.classList.toggle('choisi', lent);
       var seq = Promise.resolve();
+      // MOD-D25 : au débit normal, séquence d'écoute (un fichier par voix) si elle existe pour
+      // la ou les voix choisies : femme (F1 puis F4), puis homme ; sinon fichier par fichier.
+      var cotes = choixVoix === 'f' ? ['F'] : choixVoix === 'h' ? ['H'] : ['F', 'H'];
+      if (!lent && d.sequence && cotes.every(function (c) { return d.sequence[c]; })) {
+        var jeton = jetonSon;
+        var surQuand = function (i, voix) {
+          if (jeton !== jetonSon) return;
+          if (btnSeul) btnSeul.classList.toggle('joue', i < 0);
+          surligner(i);
+          var t = i < 0 ? d.seul : d.mots[i], caseT = i < 0 ? btnSeul : tuiles[i];
+          noterInfoSon(caseT, t, voix, 'normal');                 // mode test (DEC-0047)
+          var f = t.audio[voix] && t.audio[voix].normal;
+          if (f) memoriserSon(t, voix, 'normal', f);               // « ⚑ Signaler » vise le fichier d'origine (DEC-0069)
+        };
+        cotes.forEach(function (c, k) {
+          if (k) seq = seq.then(function () { return jeton === jetonSon ? pause(700) : null; });
+          d.sequence[c].forEach(function (p) {
+            seq = seq.then(function () { return jeton === jetonSon ? jouerPartie(p, surQuand) : null; });
+          });
+        });
+        seq.then(function () {
+          if (jeton !== jetonSon) return;
+          if (btnSeul) btnSeul.classList.remove('joue');
+          surligner(-1); ecoute.disabled = false; ecouteLente.disabled = false;
+          if (etat.e1.vues.indexOf(d.element) < 0) { etat.e1.vues.push(d.element); sauver(); }
+          suivant.disabled = false;
+        });
+        return;
+      }
       if (d.seul) seq = seq.then(direSeul).then(function () { return pause(900); });   // DEC-0070 : la voyelle seule d'abord
       d.mots.forEach(function (m, i) {
         seq = seq.then(function () { surligner(i); return dire(m, tuiles[i]); }).then(function () { return pause(700); });
@@ -946,6 +998,9 @@
     var lg = legende([{ termes: [{ symbole: d.symbole }] }]); if (lg) app.appendChild(lg);
     app.appendChild(el('div', { class: 'actions' }, [suivant]));
     if (!d.mots.length) { suivant.disabled = false; ecoute.disabled = true; ecouteLente.disabled = true; }
+    // MOD-D25 : écoute lancée automatiquement à l'ouverture de l'écran (débit normal, voix choisies) ;
+    // « ▶ Écouter » sert à réécouter.
+    else ecouterTout(false);
   }
 
   /* ---------- 9. Écran : échauffement « Pareil ou différent ? » (DEC-0041) ---------- */

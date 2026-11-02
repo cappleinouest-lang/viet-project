@@ -31,6 +31,8 @@ ENTRÉES (04_DONNEES, sauf mention)
                           colonnes voice_f / voice_h ignorées depuis DEC-0077 (voix d'E1 : VOIX_PAR_USAGE)
     voix.csv              voix actives ; voix d'écoute E2/E3 par type de leçon (listen_sounds / listen_tones, DEC-0055) ;
                           slow_from : voix qui fournit le débit lent (DEC-0067 : F4 <- F1)
+    audio/e1_sequences/sequences_e1.csv
+                          séquences d'écoute de l'E1 (MOD-D25), fabriquées par concatener_e1.py
     mots_lecons.csv       mots supports de chaque leçon : les mots d'E4 (DEC-0050)
     courbes_modele.csv    courbes mélodiques du modèle (F4, lent F1), calculées par courbes_modele.py (DEC-0050)
     reference_tons.csv    série ma, má, mà, mả, mã, mạ de la page « Les 6 tons » (DEC-0052)
@@ -198,6 +200,9 @@ def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import regle_classificateurs as rc                              # DEC-0062 : même règle que l'audio
     from generer_audio_fpt import voyelle_simple                    # DEC-0070 : même règle que l'audio
+    import concatener_e1 as seq_e1                                  # MOD-D25 : séquences d'écoute de l'E1
+    index_seq = seq_e1.lire_index(DONNEES)
+    fichiers_seq = set()
     ctx_clf = rc.charger(DONNEES)
     syllabe = {}
     for s_ in lire('syllabes.csv'):
@@ -343,7 +348,8 @@ def main():
                     invente = x.get('invented') == 'true'
                     mots_e.append({'ecrit': x['syllable'], 'sens': 'syllabe inventée' if invente else 'syllabe',
                                    'image': '', 'voix': voix_mot,
-                                   'audio': audio(x['syllable']), 'appui': '', 'invente': invente})
+                                   'audio': audio(x['syllable']), 'appui': '', 'invente': invente,
+                                   'syllabe': True})   # MOD-D25 : syllabes avant les mots
                     continue
                 m = mots[x['word_code']]
                 # Classificateur (DEC-0062) : « con mèo » si la règle l'autorise et que l'audio existe.
@@ -366,8 +372,15 @@ def main():
                     voix_seul = VOIX_PAR_USAGE['e1_voyelle']   # DEC-0077 : F1 + H4
                     seul = {'ecrit': sons[e]['grapheme'], 'audio': aud_seul,
                             'voix': [x for x in voix_seul if x in aud_seul] or list(aud_seul)}
+            # MOD-D25 : ordre d'écoute voyelle seule -> syllabes sans sens -> mots (tuiles dans le même ordre).
+            mots_e.sort(key=lambda m: not m.get('syllabe'))
             decouverte[e] = {'element': e, 'symbole': symbole(e), 'mots': mots_e, 'seul': seul,
                              'rappel': e in rappel}  # DEC-0075
+            # MOD-D25 : séquence d'écoute (un MP3 par voix), si concatener_e1.py l'a fabriquée à jour.
+            sq = seq_e1.sequence_lecteur(DONNEES, code, e, decouverte[e], index_seq)
+            if sq:
+                decouverte[e]['sequence'] = sq
+                fichiers_seq.update(p['fichier'] for c in sq.values() for p in c)
         # E4 « Écoute et répète » (DEC-0049, DEC-0050) : les mots supports de la leçon, dans
         # l'ordre de mots_lecons.csv, avec la voix modèle seule (R-AUD-03), ses deux débits et
         # la courbe mélodique de chaque fichier. Cibles = sons (ou tons) des séries dont le mot
@@ -504,8 +517,8 @@ def main():
         f.write(js)
     for nom in ['index.html', 'lecteur.css', 'prononciation.js', 'lecteur.js']:
         shutil.copyfile(os.path.join(LECTEUR, nom), os.path.join(SORTIE, nom))
-    # Audios validés copiés à côté du lecteur
-    for f in set(fichiers_audio.values()):
+    # Audios validés copiés à côté du lecteur (et séquences d'E1, MOD-D25)
+    for f in set(fichiers_audio.values()) | fichiers_seq:
         src = os.path.join(DONNEES, f)
         dst = os.path.join(SORTIE, f)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
@@ -534,6 +547,9 @@ def main():
     nb_series = sum(len(l['series']) for l in sortie_lecons)
     print(f"{len(sortie_lecons)} leçons, {nb_series} séries, {len(fichiers_audio)} audios "
           f"{'(validés ou non : ESSAI)' if NON_VALIDES else 'validés'} -> {SORTIE}")
+    nb_seq = sum(1 for l in sortie_lecons for d in l['decouverte'].values() if d.get('sequence'))
+    nb_e1 = sum(len(l['decouverte']) for l in sortie_lecons)
+    print(f"E1 : {nb_seq} / {nb_e1} sons avec séquence d'écoute ({len(fichiers_seq)} fichiers, MOD-D25)")
     nb_c = sum(len(l['combien']) for l in sortie_lecons)
     nb_c_audio = sum(1 for l in sortie_lecons for x in l['combien'] if x['audio'])
     print(f"« Combien de fois ? » : {nb_c} suites, dont {nb_c_audio} avec audio")

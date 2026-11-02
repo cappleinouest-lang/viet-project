@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.24
+version: 0.25
 date: 2026-11-02
 resume: >
   Décrit la version d'essai du lecteur d'activités (volet écoute E1 → E3 et
@@ -67,6 +67,23 @@ python 05_PRODUCTION\tools\generer_lecteur.py .
 
 Puis ouvrir `06_LIVRABLES\lecteur\index.html` (double-clic). Aucune
 installation n'est nécessaire ; le générateur n'utilise que Python.
+
+**Séquences d'écoute de l'E1** (MOD-D25) : à l'ouverture d'un écran d'E1,
+le lecteur joue automatiquement, au débit normal, les audios du son à la
+suite (voyelle seule → syllabes sans sens → mots), d'abord la femme puis
+l'homme ; « ▶ Écouter » sert à réécouter. Chaque voix est un fichier collé à
+l'avance, sans silence ajouté, jamais deux voix dans un même fichier (femme :
+F1 pour la voyelle et les syllabes, puis F4 pour les mots ; homme : H4, H3 en
+leçon de tons). Pour les fabriquer, après la première génération :
+
+```
+.venv-asr\Scripts\python.exe 05_PRODUCTION\tools\concatener_e1.py . --lecon M0-L01
+python 05_PRODUCTION\tools\generer_lecteur.py .
+```
+
+(mêmes options, `--non-valides` compris, que la première génération). Sans
+séquence à jour, l'E1 joue les fichiers un par un, comme avant. « Écouter
+lentement » et le toucher d'une tuile jouent toujours les fichiers un par un.
 
 ## 3. Règles appliquées
 
@@ -178,6 +195,7 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.22 | 2026-11-01 | MOD-H01 : E1 avec t et m d'abord en L01 (DEC-0072), syllabes sans sens (DEC-0073) ; mode test : mot écrit. |
 | 0.23 | 2026-11-01 | MOD-H04 : E1, rappel court des sons -m et -n en L08 / L10 (DEC-0075). |
 | 0.24 | 2026-11-02 | MOD-D01 : voix par usage (DEC-0077) : résumé, tableau des règles (DEC-0045, DEC-0067), page « Les 6 tons » F1 / H3. |
+| 0.25 | 2026-11-02 | MOD-D25 : séquences d'écoute de l'E1, écoute automatique (§ 2). |
 
 ## Liens
 

@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.30
+version: 0.31
 date: 2026-11-02
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -166,6 +166,7 @@ gardée, pas supprimée.
 |---|---|
 | MOD-C01 | Plan de génération de L02 à L13 refait selon DEC-0077 (choix de Christophe : leçons de tons L02, L03, L07, L11 entièrement en F1 + H3, sans débit lent ; lent de F4 = F1, lent natif de H4 0,6, de F1 0,7, de H3 0,6 ; audios existants réutilisés). Résultat : 985 fichiers à créer, 13 016 caractères, environ 6 200 ₫ (dont « Combien de fois ? » en H3 : 644 fichiers, 11 730 caractères, environ 4 900 ₫). Existence vérifiée dans `audios.csv` seulement. `voix.csv` : `listen_sounds` vrai pour F4 et H4 seulement, `listen_tones` vrai pour F1 et H3 seulement. `generer_audio_fpt.py` : table `VOIX_USAGE` / `VOIX_TONS`, pas de débit lent en leçon de tons (DEC-0043) pour toutes les écoutes, `VOIX_REFERENCE_TONS = ['F1', 'H3']`, colonnes `voice_f` / `voice_h` d'`exemples_e1.csv` plus lues. Plan du script modifié vérifié (mêmes totaux), aucun audio généré |
 | MOD-D01 | Lecteur adapté à DEC-0077. `generer_lecteur.py` : tableau `VOIX_PAR_USAGE` (E1 voyelle seule et syllabes sans sens F1 + H4, mots d'exemple F4 + H4, leçons de tons et page « Les 6 tons » F1 + H3, « Combien de fois ? » F1 + H3), modèle d'E4 F4 ; colonnes `voice_f` / `voice_h` d'`exemples_e1.csv` plus lues ; nouvelles données par leçon `voix_combien` et `voix_unique` (F1 en leçon de tons, à la place de la voix modèle F4 : DEC-0045) ; avertissement si une voix prévue est inactive. `lecteur.js` : « Combien de fois ? » sur `l.voix_combien`, phases à une voix des leçons de tons sur `l.voix_unique`. Test sur une copie (Chromium, `--non-valides`, audios absents remplacés par un fichier factice) : page des tons F1 / H3 (52/52 audios et courbes), E1 de L01 voyelle e (seule F1 + H4, mots F4 + H4, syllabe F1 + H4), E4 F4 (lent F1), « Combien de fois ? » F1 / H3, L02 échauffement et E2 en F1 seule ; aucune erreur JavaScript. PROD-LECT 0.24 |
+| MOD-D25 | E1 : séquences d'écoute. Nouveau `tools/concatener_e1.py` (numpy + soundfile de `.venv-asr`) : un MP3 par voix, morceaux collés sans silence ajouté, ordre voyelle seule → syllabes sans sens → mots ; une voix par fichier (choix de Christophe) : femme F1 (voyelle + syllabes) puis F4 (mots), homme H4 (H3 en leçon de tons) ; sortie `04_DONNEES/audio/e1_sequences/` + `sequences_e1.csv` (morceaux, débuts, durée). `generer_lecteur.py` : clé `sequence` dans `decouverte` (seulement si les morceaux sont à jour), tuiles syllabes avant mots, séquences copiées. `lecteur.js` : écoute **automatique** à l'ouverture de l'écran (F puis H), séquence au débit normal, surlignage et « ⚑ Signaler » sur le fichier d'origine ; lent, clic sur une tuile, E2–E5, page des tons inchangés ; leçons de tons et rappels courts inclus. Ordre : `generer_lecteur` → `concatener_e1 --lecon M0-L01` → `generer_lecteur`. Test sur une copie (Chromium, audios factices) : L01 36 séquences (15 sons ; 6 sons ont 2 parties femme), lecture auto F1 → F4 → H4, « Homme » et « lentement » corrects, aucune erreur JavaScript. À faire sur le PC : lancer les 3 commandes, écouter L01 |
 
 ---
 
@@ -252,6 +253,7 @@ gardée, pas supprimée.
 | MOD-D22 | **Écran de l'écrit** : grouper les termes par série (un cadre par série) ; réduire la place des cases « syllabe inventée (jamais écrite) » (3 sur 13 en L01, partie A) | relecture de l'interface, 2026-11-01 | `lecteur.js` (`ecranEcrit`), `lecteur.css` | Basse | à faire |
 | MOD-D23 | **Détails** : en E1, une tuile de mot sans image (🔊 seul) ; « Mes progrès » vide avant E2 (y montrer les sons d'E1 découverts, lien MOD-D11) ; sur PC, écran de la leçon sur deux colonnes (secondaire, le téléphone passe d'abord) | relecture de l'interface, 2026-11-01 | `lecteur.js`, `images_provisoires.csv` | Basse | à faire |
 | MOD-D24 | **Nouvelle case « mot mal prononcé par ce locuteur »** dans le panneau « ⚑ Signaler un son » (et, par cohérence, dans la page de validation des audios, DEC-0065). **Fait** : la liste actuelle (`DEFAUTS` dans `lecteur.js`, 18 cases) contient « son faux », « ton faux ou peu net », « accent non conforme à Hanoï », mais aucune case qui dise que **ce locuteur** prononce mal **ce mot**. **Différence de traitement** : aujourd'hui, tout refus va dans `audios_a_refaire.csv` et l'audio est regénéré **avec la même voix** ; pour ce défaut, une nouvelle génération risque de redonner la même erreur (**hypothèse** : la synthèse est à peu près constante d'un tirage à l'autre). À décider : traitement de ce cas, par exemple (1) noter le couple mot + voix comme « à ne pas utiliser » (nouveau fichier ou colonne dans `04_DONNEES`) et faire jouer ce mot par l'autre voix ; (2) chercher une autre source (autre voix, enregistrement natif) ; (3) essayer d'abord une nouvelle génération, puis (1) si l'erreur revient | demande de Christophe, 2026-11-01 | `lecteur.js` (`DEFAUTS`), `validation_audios.html`, `valider_audios.py`, `generer_audio_fpt.py`, `generer_lecteur.py`, `04_DONNEES` ; DEC-0065, DEC-0069 ; R-AUD-02 (2 voix par mot) | Moyenne | à décider |
+| MOD-D25 | **E1 : audios d'un son enchaînés en une séquence par locuteur** (voyelle seule → syllabes → mots), écoute automatique F puis H | demande de Christophe, 2026-11-02 | `concatener_e1.py` (nouveau), `generer_lecteur.py`, `lecteur.js` | Moyenne | **fait** (2026-11-02) : testé sur une copie ; génération des séquences sur le PC à lancer |
 | MOD-D15 | **Couper le mode test et le mode essai** par défaut avant d'ouvrir à d'autres apprenants | DEC-0047, DEC-0051 ; CTX-IA § 6 | lecteur | Basse | plus tard |
 
 ### E. Contenus et relecture par un locuteur vietnamien
@@ -337,6 +339,7 @@ gardée, pas supprimée.
 | 0.28 | 2026-11-02 | DEC-0077 (stratégie A, multi-voix par usage) : MOD-C17 fait, MOD-C05 fait, MOD-C06 plus pertinent ; MOD-C01 et MOD-D01 impactés (plan à revoir). |
 | 0.29 | 2026-11-02 | MOD-C01 : plan DEC-0077 refait pour L02 à L13 (985 fichiers, 13 016 caractères, environ 6 200 ₫) ; `voix.csv` et `generer_audio_fpt.py` mis à jour ; section 2.7 ajoutée. |
 | 0.30 | 2026-11-02 | MOD-D01 fait : lecteur adapté à DEC-0077 (`generer_lecteur.py`, `lecteur.js`), testé sur une copie ; journal 2.7. |
+| 0.31 | 2026-11-02 | MOD-D25 fait : séquences d'écoute de l'E1 (`concatener_e1.py`, `generer_lecteur.py`, `lecteur.js`), testé sur une copie ; journal 2.7. |
 
 ## Liens
 
