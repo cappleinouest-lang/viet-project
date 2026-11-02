@@ -24,6 +24,13 @@ Où vont les fichiers : 04_DONNEES/audio/<référence>-<voix>-<débit>.mp3
 Chaque fichier créé est ajouté à 04_DONNEES/audios.csv avec validated = false :
 il devra être écouté et validé (R-AUD-01) avant d'être utilisé par le lecteur.
 
+Voix par usage (DEC-0077, 2026-11-02, table VOIX_USAGE ci-dessous) : E2/E3 des leçons de sons et mots
+d'exemple d'E1 : F4 + H4 ; voyelles seules et syllabes sans sens d'E1 : F1 + H4 ; « Combien de fois ? »
+et mots espacés : F1 + H3 ; leçons de tons (toute l'écoute E1–E3) et page « Les 6 tons » : F1 + H3 ;
+E4 : F4. Voix d'écoute E2/E3 : colonnes listen_sounds (F4, H4) / listen_tones (F1, H3) de voix.csv.
+Leçons de tons : jamais de débit lent (DEC-0043). Les colonnes voice_f / voice_h de exemples_e1.csv
+ne sont plus lues. H6 est écartée.
+
 Modèle FPT par voix : colonne provider_model de voix.csv. Depuis DEC-0067 (2026-10-31) : F4 Ban Mai
 et H6 Quang Anh en FPT.TTS-ultra au débit normal ; FPT.TTS-ultra ignore la vitesse, donc le débit
 LENT de ces voix est pris chez la voix indiquée dans la colonne slow_from (F1 Ban Mai FPT.TTS-pro,
@@ -87,7 +94,14 @@ FOURNISSEUR = 'fpt-mkp'                       # valeur de la colonne provider de
 VITESSE_FPT = {'slow': 0.8, 'normal': 1.0}    # valeurs par défaut ; « lent » propre à chaque voix : colonne provider_speed_slow de voix.csv
 VITESSE_PAR_VOIX = {}                         # rempli par plan()
 VOIX_MODELE = 'F4'                            # voix unique du volet production (R-AUD-03, DEC-0067)
-VOIX_REFERENCE_TONS = ['F4', 'H6']            # page « Les 6 tons » : une voix de femme, une d'homme (DEC-0052, DEC-0067)
+VOIX_REFERENCE_TONS = ['F1', 'H3']            # page « Les 6 tons » : une voix de femme, une d'homme (DEC-0052, DEC-0077)
+VOIX_USAGE = {                                # DEC-0077 : voix par type d'activité (leçons de sons)
+    'e1_voyelle': ['F1', 'H4'],               # E1, voyelle seule (DEC-0070)
+    'e1_syllabe': ['F1', 'H4'],               # E1, syllabe sans sens (DEC-0073)
+    'e1_mot': ['F4', 'H4'],                   # E1, mot d'exemple et son classificateur (DEC-0039, DEC-0062)
+    'comptage': ['F1', 'H3'],                 # « Combien de fois ? » et mots espacés (DEC-0054, DEC-0058)
+}
+VOIX_TONS = ['F1', 'H3']                      # leçons de tons : toute l'écoute E1–E3 (DEC-0077)
 DELAI_ENTRE_APPELS = 1.5                      # secondes, pour ne pas surcharger le service
 ATTENTES_SI_LIMITE = [10, 30]                 # secondes d'attente successives si le service répond 429
 DOUBLER = False                               # --doubler : envoyer « mot, mot. » et garder la 2e occurrence
@@ -158,6 +172,14 @@ def plan(donnees, lecon=None):
         col = 'listen_tones' if code_lecon in lecons_tons else 'listen_sounds'
         return [v for v in voix if v.get(col, 'true') == 'true']
 
+    def voix_usage(usage, code_lecon):
+        """DEC-0077 : voix d'un usage ; dans une leçon de tons, toujours VOIX_TONS."""
+        codes = VOIX_TONS if code_lecon in lecons_tons else VOIX_USAGE[usage]
+        return [c for c in codes if c in {v['voice_code'] for v in voix}]
+
+    def debits(code_lecon):
+        return ['normal'] if code_lecon in lecons_tons else list(VITESSE_FPT)    # DEC-0043
+
     def ajouter(ref, ecrit, type_item, code_voix, debit):
         if debit == 'slow':
             code_voix = lent_de.get(code_voix, code_voix)    # DEC-0067 : fichier lent de F1 / H4
@@ -171,7 +193,7 @@ def plan(donnees, lecon=None):
         ref = p['word_code'] or p['written']
         type_item = 'word' if p['word_code'] else ('invented' if p['invented'] == 'true' else 'syllable')
         for v in voix_ecoute(p['lesson_code']):
-            for d in VITESSE_FPT:
+            for d in debits(p['lesson_code']):
                 ajouter(ref, p['written'], type_item, v['voice_code'], d)
     for s in supports:
         if lecon and s['lesson_code'] != lecon:
@@ -187,22 +209,23 @@ def plan(donnees, lecon=None):
         if (lecon and p['lesson_code'] != lecon) or e not in sons or not voyelle_simple(e) or (p['lesson_code'], e) in vues:
             continue
         vues.add((p['lesson_code'], e))
-        for v in voix_ecoute(p['lesson_code']):
-            ajouter('V-' + e, sons[e]['grapheme'], 'voyelle', v['voice_code'], 'normal')
+        for code_voix in voix_usage('e1_voyelle', p['lesson_code']):
+            ajouter('V-' + e, sons[e]['grapheme'], 'voyelle', code_voix, 'normal')
     for x in lire(os.path.join(donnees, 'exemples_e1.csv')):      # DEC-0039
         if lecon and x['lesson_code'] != lecon:
             continue
         if x['word_code']:
             ref, ecrit, type_item = x['word_code'], mots[x['word_code']]['written'], 'word'
+            usage = 'e1_mot'
         elif x.get('syllable'):                                     # DEC-0073 : syllabe sans sens
             ref, ecrit = x['syllable'], x['syllable']
             type_item = 'invented' if x.get('invented') == 'true' else 'syllable'
+            usage = 'e1_syllabe'
         else:
             continue
-        for code_voix in (x['voice_f'], x['voice_h']):
-            if code_voix in actives:
-                for d in VITESSE_FPT:
-                    ajouter(ref, ecrit, type_item, code_voix, d)
+        for code_voix in voix_usage(usage, x['lesson_code']):      # DEC-0077 (voice_f / voice_h non lues)
+            for d in debits(x['lesson_code']):
+                ajouter(ref, ecrit, type_item, code_voix, d)
     if not lecon:                                                  # DEC-0052 : série des 6 tons
         for x in lire(os.path.join(donnees, 'reference_tons.csv')):
             ref = x['word_code'] or x['written']
@@ -213,14 +236,11 @@ def plan(donnees, lecon=None):
     for x in lire(os.path.join(donnees, 'comptage.csv')):           # DEC-0054
         if lecon and x['lesson_code'] != lecon:
             continue
-        if x['kind'] == 'phrase':                                    # DEC-0058 : mots espacés
-            for v in voix_ecoute(x['lesson_code']):
-                ajouter(x['item_code'], phrase_espacee(x, mots), 'sequence', v['voice_code'], 'spaced')
-        for v in voix_ecoute(x['lesson_code']):
-            for d in VITESSE_FPT:
-                if d == 'slow' and x['lesson_code'] in lecons_tons:
-                    continue
-                ajouter(x['item_code'], x['written'], 'sequence', v['voice_code'], d)
+        for code_voix in voix_usage('comptage', x['lesson_code']):  # DEC-0077 : F1 + H3
+            if x['kind'] == 'phrase':                                # DEC-0058 : mots espacés
+                ajouter(x['item_code'], phrase_espacee(x, mots), 'sequence', code_voix, 'spaced')
+            for d in debits(x['lesson_code']):                       # pas de lent en leçon de tons (DEC-0043)
+                ajouter(x['item_code'], x['written'], 'sequence', code_voix, d)
     # Classificateurs en E1 et E4 (DEC-0062) : même règle que generer_lecteur.py.
     import regle_classificateurs as rc
     ctx = rc.charger(donnees)
@@ -229,10 +249,9 @@ def plan(donnees, lecon=None):
             continue
         a = rc.appui(ctx, x['word_code'], x['lesson_code'], x['element'])
         if a:
-            for code_voix in (x['voice_f'], x['voice_h']):
-                if code_voix in actives:
-                    for d in VITESSE_FPT:
-                        ajouter(a[1], a[0], 'sequence', code_voix, d)
+            for code_voix in voix_usage('e1_mot', x['lesson_code']):
+                for d in debits(x['lesson_code']):
+                    ajouter(a[1], a[0], 'sequence', code_voix, d)
     for s in supports:
         if lecon and s['lesson_code'] != lecon:
             continue

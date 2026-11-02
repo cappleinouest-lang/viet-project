@@ -2,7 +2,7 @@
 id: QUAL-SUIVI-MODIF
 titre: Suivi des modifications du projet
 statut: BROUILLON
-version: 0.28
+version: 0.29
 date: 2026-11-02
 resume: >
   Registre vivant : (1) le journal de toutes les modifications faites au
@@ -160,6 +160,12 @@ gardée, pas supprimée.
 | MOD-H02 | Contrôle systématique des 265 mots d'exemple de L02 à L13 : aucun ton pas encore ouvert à sa leçon. Clos sans modification |
 | MOD-H04 | DEC-0075 : rappel court (1 mot, 1 voix, « déjà vu en L01 ») pour -m et -n en L08/L10, au lieu d'une découverte complète. **Mise en œuvre faite** : colonne `e1_rappel` dans `lecons.csv` (L08 : -m et -n ; L10 : -n), `generer_lecteur.py` (1 mot rang 1, voix F4), `lecteur.js` (écran « Rappel », bouton Écouter seul). Reste : régénérer le lecteur et tester dans le navigateur |
 
+### 2.7 Lundi 2 novembre 2026
+
+| Besoin | Résultat |
+|---|---|
+| MOD-C01 | Plan de génération de L02 à L13 refait selon DEC-0077 (choix de Christophe : leçons de tons L02, L03, L07, L11 entièrement en F1 + H3, sans débit lent ; lent de F4 = F1, lent natif de H4 0,6, de F1 0,7, de H3 0,6 ; audios existants réutilisés). Résultat : 985 fichiers à créer, 13 016 caractères, environ 6 200 ₫ (dont « Combien de fois ? » en H3 : 644 fichiers, 11 730 caractères, environ 4 900 ₫). Existence vérifiée dans `audios.csv` seulement. `voix.csv` : `listen_sounds` vrai pour F4 et H4 seulement, `listen_tones` vrai pour F1 et H3 seulement. `generer_audio_fpt.py` : table `VOIX_USAGE` / `VOIX_TONS`, pas de débit lent en leçon de tons (DEC-0043) pour toutes les écoutes, `VOIX_REFERENCE_TONS = ['F1', 'H3']`, colonnes `voice_f` / `voice_h` d'`exemples_e1.csv` plus lues. Plan du script modifié vérifié (mêmes totaux), aucun audio généré |
+
 ---
 
 ## 3. Besoins de modification futurs
@@ -200,7 +206,7 @@ gardée, pas supprimée.
 
 | N° | Besoin | Origine | Touche | Priorité | État |
 |---|---|---|---|---|---|
-| MOD-C01 | **Écouter L01 en F4 / H6 dans le lecteur**, puis générer les autres leçons (environ 1 700 fichiers, 19 000 caractères) | DEC-0067 « Mise en œuvre » | audios | **Haute** | **impacté par DEC-0077** : plan à revoir (répartition F1/F4/H3/H4 par usage, H6 écartée) avant de lancer la génération complète |
+| MOD-C01 | **Écouter L01 en F4 / H6 dans le lecteur**, puis générer les autres leçons (environ 1 700 fichiers, 19 000 caractères) | DEC-0067 « Mise en œuvre » | audios | **Haute** | **plan refait** (2026-11-02, DEC-0077) : L02 à L13, **985 fichiers à créer, 13 016 caractères, environ 6 200 ₫** (F4 240 fichiers / 870 car. ; H3 651 / 11 852 ; H4 59 / 192 ; F1 35 / 102) ; audios F1, H3, H4 existants réutilisés ; `voix.csv` et `generer_audio_fpt.py` mis à jour (section 2.7). **Reste** : lancer la génération, leçon par leçon (`--lecon`) ; L01 et `generer_lecteur.py` encore à mettre d'accord avec DEC-0077 |
 | MOD-C02 | **Vérifier le tarif de FPT.TTS-ultra** avant la génération complète | PROD-AUDIO § 1 bis | coût | **Haute** | **fait** (2026-11-01) : le tarif n'est pas affiché sur la marketplace ; déduit de l'historique des transactions (1 jeton = 1 caractère envoyé, vérifié le 01/11 : 19 caractères → 19 jetons par voix). FPT.TTS-pro et FPT.AI-VITs : environ **0,42 ₫** par caractère (8 ₫ pour 19) ; **FPT.TTS-ultra : environ 1,3 ₫** (13 ₫ pour 10, 4 ₫ pour 3, le 31/10), soit environ 3 fois plus. Débits arrondis au đồng. Estimation pour les autres leçons : de l'ordre de 25 000 ₫ en Ultra. Solde le 01/11 avant génération : 988 058 ₫ |
 | MOD-C03 | **Valider les audios** à l'écoute (R-AUD-01) ; sans cela le lecteur reste en mode d'essai. Le nombre à écouter (3 664 au plan du 31/10) change avec DEC-0067 : à recompter | QUAL-AVANCEMENT § 7 n° 1 ; DEC-0065 | `audios.csv` | **Haute** | à faire |
 | MOD-C04 | **Trier `audios_a_refaire.csv`** : sur 170 refus, **138** concernent des voix devenues inactives au débit concerné (F3 : 95 ; F1 normal : 22 ; H4 normal : 13 ; H3 : 8). Seuls **32 restent utiles** : les lents de H4 (25) et de F1 (7), empruntés par H6 et F4. Ne pas tout regénérer (coût inutile) | calcul du 2026-11-01 sur le fichier | `07_QUALITE/audios_a_refaire.csv`, `generer_audio_fpt.py --liste` | **Haute** | à faire |
@@ -328,6 +334,7 @@ gardée, pas supprimée.
 | 0.26 | 2026-11-01 | MOD-H04 : mise en œuvre dans le lecteur (e1_rappel, generer_lecteur.py, lecteur.js) ; test navigateur à faire. MOD-C16 ajouté ; totaux : 85 besoins. |
 | 0.27 | 2026-11-01 | MOD-C16 corrigé (le défaut est la synthèse système, pas les voix F4 / H6) ; MOD-C17 ajouté (audit approfondi des locuteurs) ; totaux : 86 besoins. |
 | 0.28 | 2026-11-02 | DEC-0077 (stratégie A, multi-voix par usage) : MOD-C17 fait, MOD-C05 fait, MOD-C06 plus pertinent ; MOD-C01 et MOD-D01 impactés (plan à revoir). |
+| 0.29 | 2026-11-02 | MOD-C01 : plan DEC-0077 refait pour L02 à L13 (985 fichiers, 13 016 caractères, environ 6 200 ₫) ; `voix.csv` et `generer_audio_fpt.py` mis à jour ; section 2.7 ajoutée. |
 
 ## Liens
 
