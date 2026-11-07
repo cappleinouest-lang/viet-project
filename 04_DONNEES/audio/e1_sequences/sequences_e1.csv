@@ -1,0 +1,37 @@
+file;lesson_code;element;side;voice;segments;starts_ms;duration_ms
+audio/e1_sequences/SEQ-M0-L01-PH-CO-t-F4.mp3;M0-L01;PH-CO-t;F;F4;audio/W0050-F4-normal.mp3|audio/W0338-F4-normal.mp3|audio/W0342-F4-normal.mp3;0 1100 2278;3378
+audio/e1_sequences/SEQ-M0-L01-PH-CO-t-H4.mp3;M0-L01;PH-CO-t;H;H4;audio/W0050-H4-normal.mp3|audio/W0338-H4-normal.mp3|audio/W0342-H4-normal.mp3;0 798 1558;2265
+audio/e1_sequences/SEQ-M0-L01-PH-FI-m-F4.mp3;M0-L01;PH-FI-m;F;F4;audio/W0063-F4-normal.mp3|audio/W0057-F4-normal.mp3|audio/W0224-F4-normal.mp3;0 1124 2320;3492
+audio/e1_sequences/SEQ-M0-L01-PH-FI-m-H4.mp3;M0-L01;PH-FI-m;H;H4;audio/W0063-H4-normal.mp3|audio/W0057-H4-normal.mp3|audio/W0224-H4-normal.mp3;0 753 1669;2514
+audio/e1_sequences/SEQ-M0-L01-PH-FI-n-F4.mp3;M0-L01;PH-FI-n;F;F4;audio/W0323-F4-normal.mp3|audio/W0048-F4-normal.mp3|audio/W0152-F4-normal.mp3;0 1254 2330;3498
+audio/e1_sequences/SEQ-M0-L01-PH-FI-n-H4.mp3;M0-L01;PH-FI-n;H;H4;audio/W0323-H4-normal.mp3|audio/W0048-H4-normal.mp3|audio/W0152-H4-normal.mp3;0 890 1719;2589
+audio/e1_sequences/SEQ-M0-L01-PH-IN-b-F1.mp3;M0-L01;PH-IN-b;F;F1;audio/S-be-F1-normal.mp3;0;1078
+audio/e1_sequences/SEQ-M0-L01-PH-IN-b-F4.mp3;M0-L01;PH-IN-b;F;F4;audio/W0003-F4-normal.mp3;0;1066
+audio/e1_sequences/SEQ-M0-L01-PH-IN-b-H4.mp3;M0-L01;PH-IN-b;H;H4;audio/S-be-H4-normal.mp3|audio/W0003-H4-normal.mp3;0 881;1721
+audio/e1_sequences/SEQ-M0-L01-PH-IN-d-F4.mp3;M0-L01;PH-IN-d;F;F4;audio/W0017-F4-normal.mp3|audio/W0042-F4-normal.mp3|audio/W0043-F4-normal.mp3;0 1076 2200;3396
+audio/e1_sequences/SEQ-M0-L01-PH-IN-d-H4.mp3;M0-L01;PH-IN-d;H;H4;audio/W0017-H4-normal.mp3|audio/W0042-H4-normal.mp3|audio/W0043-H4-normal.mp3;0 842 1741;2634
+audio/e1_sequences/SEQ-M0-L01-PH-IN-dd-F4.mp3;M0-L01;PH-IN-dd;F;F4;audio/W0062-F4-normal.mp3|audio/W0224-F4-normal.mp3|audio/W0021-F4-normal.mp3;0 1110 2282;3468
+audio/e1_sequences/SEQ-M0-L01-PH-IN-dd-H4.mp3;M0-L01;PH-IN-dd;H;H4;audio/W0062-H4-normal.mp3|audio/W0224-H4-normal.mp3|audio/W0021-H4-normal.mp3;0 748 1592;2352
+audio/e1_sequences/SEQ-M0-L01-PH-IN-l-F4.mp3;M0-L01;PH-IN-l;F;F4;audio/W0032-F4-normal.mp3|audio/W0315-F4-normal.mp3|audio/W0329-F4-normal.mp3;0 1254 2412;3594
+audio/e1_sequences/SEQ-M0-L01-PH-IN-l-H4.mp3;M0-L01;PH-IN-l;H;H4;audio/W0032-H4-normal.mp3|audio/W0315-H4-normal.mp3|audio/W0329-H4-normal.mp3;0 898 1833;2628
+audio/e1_sequences/SEQ-M0-L01-PH-IN-m-F4.mp3;M0-L01;PH-IN-m;F;F4;audio/K-W0318-F4-normal.mp3|audio/W0340-F4-normal.mp3|audio/W0341-F4-normal.mp3;0 1354 2454;3554
+audio/e1_sequences/SEQ-M0-L01-PH-IN-m-H4.mp3;M0-L01;PH-IN-m;H;H4;audio/K-W0318-H4-normal.mp3|audio/W0340-H4-normal.mp3|audio/W0341-H4-normal.mp3;0 922 1799;2694
+audio/e1_sequences/SEQ-M0-L01-PH-IN-n-F4.mp3;M0-L01;PH-IN-n;F;F4;audio/W0152-F4-normal.mp3|audio/W0324-F4-normal.mp3|audio/W0036-F4-normal.mp3;0 1168 2330;3498
+audio/e1_sequences/SEQ-M0-L01-PH-IN-n-H4.mp3;M0-L01;PH-IN-n;H;H4;audio/W0152-H4-normal.mp3|audio/W0324-H4-normal.mp3|audio/W0036-H4-normal.mp3;0 870 1767;2637
+audio/e1_sequences/SEQ-M0-L01-PH-IN-v-F4.mp3;M0-L01;PH-IN-v;F;F4;audio/W0055-F4-normal.mp3|audio/W0053-F4-normal.mp3;0 1186;2488
+audio/e1_sequences/SEQ-M0-L01-PH-IN-v-H4.mp3;M0-L01;PH-IN-v;H;H4;audio/W0055-H4-normal.mp3|audio/W0053-H4-normal.mp3;0 890;1755
+audio/e1_sequences/SEQ-M0-L01-PH-VO-ee-F1.mp3;M0-L01;PH-VO-ee;F;F1;audio/V-PH-VO-ee-F1-normal.mp3;0;927
+audio/e1_sequences/SEQ-M0-L01-PH-VO-ee-F4.mp3;M0-L01;PH-VO-ee;F;F4;audio/W0343-F4-normal.mp3|audio/W0344-F4-normal.mp3;0 1134;2196
+audio/e1_sequences/SEQ-M0-L01-PH-VO-ee-H4.mp3;M0-L01;PH-VO-ee;H;H4;audio/V-PH-VO-ee-H4-normal.mp3|audio/W0343-H4-normal.mp3|audio/W0344-H4-normal.mp3;0 738 1586;2321
+audio/e1_sequences/SEQ-M0-L01-PH-VS-e-F1.mp3;M0-L01;PH-VS-e;F;F1;audio/V-PH-VS-e-F1-normal.mp3|audio/S-te-F1-normal.mp3;0 1055;2063
+audio/e1_sequences/SEQ-M0-L01-PH-VS-e-F4.mp3;M0-L01;PH-VS-e;F;F4;audio/W0340-F4-normal.mp3;0;1100
+audio/e1_sequences/SEQ-M0-L01-PH-VS-e-H4.mp3;M0-L01;PH-VS-e;H;H4;audio/V-PH-VS-e-H4-normal.mp3|audio/S-te-H4-normal.mp3|audio/W0340-H4-normal.mp3;0 787 1552;2430
+audio/e1_sequences/SEQ-M0-L01-PH-VS-o-F1.mp3;M0-L01;PH-VS-o;F;F1;audio/V-PH-VS-o-F1-normal.mp3|audio/S-mo-F1-normal.mp3;0 962;2086
+audio/e1_sequences/SEQ-M0-L01-PH-VS-o-F4.mp3;M0-L01;PH-VS-o;F;F4;audio/W0050-F4-normal.mp3;0;1100
+audio/e1_sequences/SEQ-M0-L01-PH-VS-o-H4.mp3;M0-L01;PH-VS-o;H;H4;audio/V-PH-VS-o-H4-normal.mp3|audio/S-mo-H4-normal.mp3|audio/W0050-H4-normal.mp3;0 835 1740;2538
+audio/e1_sequences/SEQ-M0-L01-PH-VS-oo-F1.mp3;M0-L01;PH-VS-oo;F;F1;audio/V-PH-VS-oo-F1-normal.mp3|audio/S-moo-F1-normal.mp3;0 962;2074
+audio/e1_sequences/SEQ-M0-L01-PH-VS-oo-F4.mp3;M0-L01;PH-VS-oo;F;F4;audio/W0342-F4-normal.mp3;0;1100
+audio/e1_sequences/SEQ-M0-L01-PH-VS-oo-H4.mp3;M0-L01;PH-VS-oo;H;H4;audio/V-PH-VS-oo-H4-normal.mp3|audio/S-moo-H4-normal.mp3|audio/W0342-H4-normal.mp3;0 736 1592;2300
+audio/e1_sequences/SEQ-M0-L01-PH-VS-u-F1.mp3;M0-L01;PH-VS-u;F;F1;audio/V-PH-VS-u-F1-normal.mp3;0;939
+audio/e1_sequences/SEQ-M0-L01-PH-VS-u-F4.mp3;M0-L01;PH-VS-u;F;F4;audio/W0338-F4-normal.mp3|audio/W0341-F4-normal.mp3;0 1178;2278
+audio/e1_sequences/SEQ-M0-L01-PH-VS-u-H4.mp3;M0-L01;PH-VS-u;H;H4;audio/V-PH-VS-u-H4-normal.mp3|audio/W0338-H4-normal.mp3|audio/W0341-H4-normal.mp3;0 800 1560;2455
