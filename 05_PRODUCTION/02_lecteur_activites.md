@@ -2,7 +2,7 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.30
+version: 0.31
 date: 2026-11-07
 resume: >
   Décrit la version d'essai du lecteur d'activités (volet écoute E1 → E3 et
@@ -201,6 +201,7 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.28 | 2026-11-07 | MOD-D21 et bouton « Continuer » de MOD-D18 : avancement par leçon et avancement global sur l'accueil. |
 | 0.29 | 2026-11-07 | MOD-D26 fait : objectif en tête de leçon, encadré « 🎯 Objectif » repliable par étape (phrases fixes dans `lecteur.js`). |
 | 0.30 | 2026-11-07 | MOD-D27 partiel : encadré « 🔊 Comment le dire » en E1 (ouvert par défaut) ; descriptifs des 16 sons de L01 ajoutés dans `reperes_sons.csv` (hypothèse, à relire). |
+| 0.31 | 2026-11-07 | MOD-D16 (frise des sons en E1), MOD-D22 (cadre par série sur l'écrit), MOD-D23 partiel (sons d'E1 dans « Mes progrès », écran leçon élargi sur PC) ; MOD-D27 : 9 derniers descriptifs rédigés. |
 
 ## Liens
 

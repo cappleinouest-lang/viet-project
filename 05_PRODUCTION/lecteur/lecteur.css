@@ -432,3 +432,13 @@ html.grand-texte .ecrit-e4 { font-size: 3rem; }
 .objectif > summary::before { content: '▸ '; display: inline-block; transition: transform 0.15s; }
 .objectif[open] > summary::before { content: '▾ '; }
 .objectif > p { margin: 0 0 8px; font-size: 0.9rem; color: var(--encre); }
+
+/* MOD-D27 : encadré « Comment le dire » sur l'écran E1 : description articulatoire. */
+.chemin { border: 1px solid var(--trait); border-radius: 10px; background: var(--surface); padding: 6px 12px; margin: 8px 0 12px; }
+.chemin > summary { cursor: pointer; font-weight: 600; font-size: 0.95rem; color: var(--accent); padding: 6px 0; list-style: none; }
+.chemin > summary::-webkit-details-marker { display: none; }
+.chemin > summary::before { content: '▾ '; display: inline-block; }
+.chemin:not([open]) > summary::before { content: '▸ '; }
+.chemin .ligne-chemin { margin: 4px 0; font-size: 0.92rem; line-height: 1.4; }
+.chemin .chemin-label { font-weight: 600; color: var(--encre-douce); }
+.chemin .chemin-note { color: var(--encre-douce); margin: 6px 0 0; font-style: italic; }

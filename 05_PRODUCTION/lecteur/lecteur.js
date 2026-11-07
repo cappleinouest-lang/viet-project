@@ -1091,6 +1091,24 @@
     var carte = el('div', { class: 'carte-son' }, contenuTerme({ symbole: d.symbole, image: '', sens: '' }, 'decouverte'));
     app.appendChild(carte);
 
+    // MOD-D27 : « Comment le dire » — descriptif du son (reperes_sons.csv : body_part, change, check, certainty).
+    // Encadré ouvert par défaut, placé après la carte du son et avant les mots d'exemple ; absent en « rappel court ».
+    if (!d.rappel && d.symbole && d.symbole.chemin) {
+      var ch = d.symbole.chemin;
+      var corps = [];
+      if (ch.partie) corps.push(el('p', { class: 'ligne-chemin' }, [el('span', { class: 'chemin-label', text: '🗣️ Partie : ' }), el('span', { text: ch.partie })]));
+      if (ch.changement) corps.push(el('p', { class: 'ligne-chemin' }, [el('span', { class: 'chemin-label', text: '✨ Comment : ' }), el('span', { text: ch.changement })]));
+      if (ch.verification) corps.push(el('p', { class: 'ligne-chemin' }, [el('span', { class: 'chemin-label', text: '⚠ À vérifier : ' }), el('span', { text: ch.verification })]));
+      if (ch.certitude === 'hypothese') corps.push(el('p', { class: 'petit chemin-note', text: '(descriptif à confirmer par un locuteur du Nord)' }));
+      if (corps.length) {
+        var det = el('details', { class: 'chemin' });
+        det.setAttribute('open', 'open');
+        det.appendChild(el('summary', { text: '🔊 Comment le dire' }));
+        corps.forEach(function (x) { det.appendChild(x); });
+        app.appendChild(det);
+      }
+    }
+
     // dire(m) : prononce un mot avec la voix choisie (ou femme puis homme), à la vitesse choisie.
     function dire(m, caseMot) {
       var v = m.voix;

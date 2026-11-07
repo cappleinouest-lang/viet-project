@@ -2,7 +2,7 @@
 id: PROD-AF-LECT
 titre: Analyse fonctionnelle du lecteur d'activités
 statut: BROUILLON
-version: 0.10
+version: 0.11
 date: 2026-11-07
 resume: >
   Décrit ce que le lecteur d'activités doit faire, pour qui et sous quelles
@@ -168,6 +168,7 @@ Sur chaque écran d'étape (E1, échauffement, E2, E3, « Combien de fois ? », 
 | Élément | Comportement |
 |---|---|
 | Unité | Un écran par **son** (ou **ton**) des séries de la partie, dans l'ordre d'apparition ; en tête de la première partie, les sons « d'abord » de la leçon (L01 : **t** puis **m**, avec une ligne « Avant les voyelles : une consonne simple… », DEC-0072). Pour les sons déjà vus (L08 : **-m** et **-n** ; L10 : **-n**), un écran de **rappel court** (RG-21, DEC-0075). |
+| Frise des sons (MOD-D16) | Sous la consigne, pastilles des symboles de tous les sons de la partie : vu ✓ (vert clair), en cours (vert plein), à venir (grisé). Toucher un son déjà vu y revient. Absente sur un rappel court. |
 | En-tête | « Son k sur N · consonne en début de mot / en fin de mot / voyelle » (DEC-0042). |
 | Carte du son | Symbole, catégorie (= ≈ ★), marque « début ▸ » ou « ◂ fin » pour une consonne, mot repère, indice d'écoute (DEC-0038, DEC-0046). |
 | Voyelle seule | Pour une **voyelle simple** (a, ă, â, e, ê, i, o, ô, ơ, u, ư) d'une leçon de sons : tuile « 🔈 Le son seul » avant les mots, jouée en premier par « Écouter », réécoutable, **toujours au débit normal** ; absente si son audio n'est pas validé (hors mode d'essai) (DEC-0070). |
@@ -212,15 +213,13 @@ Sur chaque écran d'étape (E1, échauffement, E2, E3, « Combien de fois ? », 
 
 ### 5.6 Fin d'E3 · L'écrit
 
-Toutes les séries de la partie, chaque terme avec image, **écrit** et sens ;
-une syllabe inventée reste 🔊 « syllabe inventée (jamais écrite) »
-(R-LEX-06). Bouton « Valider la partie A » ou « Valider l'écoute de la
-leçon » : enregistre la date de validation et ouvre la suite.
+Toutes les séries de la partie, **chaque série dans un cadre** (« Série 1, 2… », MOD-D22), avec pour chaque terme image, **écrit** et sens ; une syllabe inventée reste 🔊 « syllabe inventée (jamais écrite) » (R-LEX-06), en tuile étroite (classe `tuile-invente`). Bouton « Valider la partie A » ou « Valider l'écoute de la leçon » : enregistre la date de validation et ouvre la suite.
 
 ### 5.7 Mes progrès
 
 | Section | Contenu |
 |---|---|
+| Avant E2 (MOD-D23) | Si aucune réponse n'a encore été donnée mais que des sons ont été vus en E1, affiche les sons déjà découverts (pastilles avec ✓). |
 | Par jour | 14 derniers jours d'activité : réponses, temps (somme des écarts de moins de 2 min entre deux réponses), réussite. |
 | Par série | Réussite au débit normal (au débit lent s'il n'y en a pas), les plus difficiles d'abord ; barre rouge sous le seuil. |
 | Confusions | Les 6 plus fréquentes : « /o/ entendu, /ɔ/ choisi : n fois ». |
@@ -447,3 +446,4 @@ automatiquement).
 | 0.8 | 2026-11-07 | MOD-D21 et bouton « Continuer » de MOD-D18 (§ 5.1) : avancement global, bouton d'action, avancement et barre par leçon. |
 | 0.9 | 2026-11-07 | MOD-D26 : objectif de la leçon (§ 5.2) et objectifs des étapes repliables (§ 5.2 bis). |
 | 0.10 | 2026-11-07 | MOD-D27 partiel : encadré « Comment le dire » sur l'écran E1 (§ 5.3), descriptifs des 16 sons de L01 remplis dans `reperes_sons.csv`. |
+| 0.11 | 2026-11-07 | MOD-D16 (§ 5.3 : frise des sons en E1), MOD-D22 (§ 5.6 : cadre par série), MOD-D23 (§ 5.7 : sons vus avant E2). |
