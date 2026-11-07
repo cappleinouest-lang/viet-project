@@ -704,36 +704,158 @@
     vider();
     btnRetour.hidden = true;
     titreBarre.textContent = 'Vietnamien · Module 0';
+    // MOD-D21 : avancement global de l'écoute (leçons dont l'écoute est validée) et dernière séance.
+    var leconsAvecSeries = D.lecons.filter(function (x) { return x.series.length > 0; });
+    var valideesEcoute = leconsAvecSeries.filter(function (x) { var e = prog.lecons[x.code]; return e && e.ecouteValideeLe; }).length;
+    var ts = derniereSeance();
+    var sousTitre = valideesEcoute + ' / ' + leconsAvecSeries.length + ' leçons · écoute validée';
+    if (ts) sousTitre += ' · dernière séance le ' + jourFr(jour(ts));
+    var jGlob = el('div', { class: 'jauge' }, [el('span')]);
+    jGlob.firstChild.style.width = Math.round(valideesEcoute / leconsAvecSeries.length * 100) + '%';
     app.appendChild(el('div', { class: 'consigne' }, [
       el('span', { class: 'etiquette', text: 'Volet écoute' }),
       el('h1', { text: 'Les sons et les tons' }),
+      el('p', { class: 'petit', text: sousTitre }),
+      jGlob,
       el('p', { class: 'petit', text: 'Chaque leçon s’ouvre quand l’écoute de la précédente est validée. 20 à 30 minutes par jour suffisent.' }),
       toutOuvert() ? el('p', { class: 'mode-essai', text: 'Mode essai : toutes les leçons et étapes sont ouvertes (Réglages pour retrouver les verrous).' }) : null
     ]));
+    // MOD-D18 : bouton « Continuer : L01 · E2 Distinguer » : raccourci vers la prochaine étape à faire.
+    var next = prochaineAction();
+    if (next) {
+      app.appendChild(el('div', { class: 'actions bouton-continuer' }, [
+        el('button', { class: 'bouton', type: 'button',
+          text: 'Continuer : L' + String(next.lecon.numero).padStart(2, '0') + (next.prochaine.multiParties ? next.prochaine.partie : '') + ' · ' + next.prochaine.nom,
+          onclick: function () { ouvrirProchaine(next.lecon.code, next.prochaine); } })]));
+    }
     var liste = el('div', { class: 'lecons' });
     D.lecons.forEach(function (l, i) {
-      var etat = prog.lecons[l.code];
       var ouverte = leconOuverte(i) && l.series.length > 0;
+      var b = l.series.length ? bilanLecon(l) : null;
+      // MOD-D21 : état de la leçon : validée (date), en cours (étape + %), ouverte, fermée, à venir.
       var pastille;
-      if (etat && etat.ecouteValideeLe) pastille = el('span', { class: 'pastille ok', text: 'Écoute validée' });
+      if (b && b.valideeLe) pastille = el('span', { class: 'pastille ok', text: '✓ Validée le ' + jourFr(b.valideeLe) });
       else if (!l.series.length) pastille = el('span', { class: 'pastille ferme', text: 'À venir' });
       else if (!ouverte) pastille = el('span', { class: 'pastille ferme', text: 'Fermée' });
-      else pastille = el('span', { class: 'pastille', text: etat ? 'En cours' : 'Ouverte' });
-      var detail = l.series.length + ' séries' + (l.parties.length > 1 ? ' en ' + l.parties.length + ' parties' : '') + ' · seuil ' + pourcent(l.seuil);
-      liste.appendChild(el('button', {
-        class: 'lecon', type: 'button', disabled: !ouverte,
-        onclick: function () { ecranLecon(l.code); }
-      }, [
+      else if (b.commencee) pastille = el('span', { class: 'pastille', text: 'En cours · ' + pourcent(b.pct) });
+      else pastille = el('span', { class: 'pastille', text: 'Ouverte' });
+      var detail = l.series.length ? l.series.length + ' séries' + (l.parties.length > 1 ? ' en ' + l.parties.length + ' parties' : '') : 'À venir';
+      var contenu = [
         el('span', { class: 'num', text: 'L' + String(l.numero).padStart(2, '0') }),
         el('span', { class: 'titre' }, [el('span', { text: l.titre }), el('br'), el('span', { class: 'petit', text: detail })]),
         pastille
-      ]));
+      ];
+      liste.appendChild(el('button', {
+        class: 'lecon' + (b && b.commencee && !b.valideeLe ? ' en-cours' : ''), type: 'button', disabled: !ouverte,
+        onclick: function () { ecranLecon(l.code); }
+      }, contenu));
+      if (b && b.commencee && !b.valideeLe) {
+        var jL = el('div', { class: 'jauge jauge-lecon' }, [el('span')]);
+        jL.firstChild.style.width = Math.round(b.pct * 100) + '%';
+        liste.lastChild.appendChild(jL);
+      }
     });
     app.appendChild(liste);
     app.appendChild(el('div', { class: 'actions' }, [
       el('button', { class: 'bouton second', type: 'button', text: '🎵 Les 6 tons', onclick: function () { ecranTons(ecranAccueil); } }),
       el('button', { class: 'bouton second', type: 'button', text: '⚙ Réglages', onclick: ecranReglages })]));
     pied.textContent = 'Données générées le ' + D.genere_le + '. Progression enregistrée dans ce navigateur, sur cet appareil.';
+  }
+
+  // MOD-D21 : bilan compact d'une leçon pour l'accueil et pour le bouton « Continuer ».
+  // Renvoie { fait, total, pct, valideeLe, commencee, prochaine: {partie, cle, nom} ou null }.
+  // Étapes comptées par partie : E1, E2, E3, Combien (si présent), Écrit.
+  // L'écoute de la leçon validée implique toutes les étapes faites (pct = 100).
+  function bilanLecon(l) {
+    var etat = prog.lecons[l.code];
+    var fait = 0, total = 0, prochaine = null, commencee = false;
+    var valideeLe = etat && etat.ecouteValideeLe || null;
+    l.parties.forEach(function (pa, k) {
+      var ep = etatPartie(l.code, pa.code);
+      var partieOuverte = k === 0 || toutOuvert() || partieTerminee(l.code, l.parties[k - 1]);
+      var e1Fait = e1Termine(ep, pa);
+      var aCombien = itemsCombien(l, pa.code).length > 0;
+      var combienFait = !aCombien || (ep.combien && ep.combien.validee);
+      var liste = [
+        { cle: 'e1', nom: 'E1 · Découvrir', fait: e1Fait, ouvert: partieOuverte },
+        { cle: 'e2', nom: 'E2 · Distinguer', fait: !!ep.e2.validee, ouvert: partieOuverte && e1Fait },
+        { cle: 'e3', nom: 'E3 · Opposer', fait: !!ep.e3.validee, ouvert: partieOuverte && ep.e2.validee }
+      ];
+      if (aCombien) liste.push({ cle: 'combien', nom: 'Combien de fois ?', fait: !!(ep.combien && ep.combien.validee), ouvert: partieOuverte && ep.e3.validee });
+      liste.push({ cle: 'ecrit', nom: 'L’écrit', fait: !!ep.ecrit, ouvert: partieOuverte && ep.e3.validee && combienFait });
+      liste.forEach(function (x) {
+        total++; if (x.fait) fait++;
+        if (!prochaine && x.ouvert && !x.fait) prochaine = { partie: pa.code, cle: x.cle, nom: x.nom, multiParties: l.parties.length > 1 };
+      });
+      if (ep.e1.vues.length || ep.e2.hist.length || ep.e3.hist.length || ep.ecrit || (ep.combien && ep.combien.hist.length)) commencee = true;
+    });
+    if (valideeLe) { fait = total; prochaine = null; }
+    return { fait: fait, total: total, pct: total ? fait / total : 0, valideeLe: valideeLe, commencee: commencee, prochaine: prochaine };
+  }
+  // MOD-D21 : trouve la première leçon ouverte dont l'écoute n'est pas validée, et sa prochaine étape.
+  function prochaineAction() {
+    for (var i = 0; i < D.lecons.length; i++) {
+      var l = D.lecons[i];
+      if (!leconOuverte(i) || !l.series.length) continue;
+      var b = bilanLecon(l);
+      if (b.valideeLe) continue;
+      if (b.prochaine) return { lecon: l, prochaine: b.prochaine };
+    }
+    return null;
+  }
+  // MOD-D21 : date de la dernière séance (max des t des historiques E2, E3, Combien).
+  function derniereSeance() {
+    var tmax = 0;
+    Object.keys(prog.lecons || {}).forEach(function (code) {
+      var e = prog.lecons[code];
+      Object.keys(e.parties || {}).forEach(function (pc) {
+        var p = e.parties[pc];
+        ['e2', 'e3', 'combien'].forEach(function (cle) {
+          if (p[cle] && p[cle].hist) p[cle].hist.forEach(function (h) { if (h.t > tmax) tmax = h.t; });
+        });
+      });
+    });
+    return tmax || null;
+  }
+  // MOD-D21 : ouvre directement la prochaine étape d'une leçon (pour le bouton « Continuer »).
+  function ouvrirProchaine(code, pr) {
+    if (!pr) { ecranLecon(code); return; }
+    if (pr.cle === 'e1') ecranE1(code, pr.partie, 0);
+    else if (pr.cle === 'e2') {
+      var ep = etatPartie(code, pr.partie);
+      if (!ep.e2.echauffe && !ep.e2.hist.length) ecranPareil(code, pr.partie);
+      else ecranQuiz(code, pr.partie, 'e2');
+    }
+    else if (pr.cle === 'e3') ecranQuiz(code, pr.partie, 'e3');
+    else if (pr.cle === 'combien') ecranCombien(code, pr.partie);
+    else if (pr.cle === 'ecrit') ecranEcrit(code, pr.partie);
+    else ecranLecon(code);
+  }
+
+  // MOD-D26 : objectifs pédagogiques.
+  // Phrases fixes par étape (encadré « 🎯 Objectif » repliable, sous le titre).
+  var OBJECTIFS_ETAPE = {
+    e1: 'Installer l’oreille : écouter chaque son plusieurs fois, dans différents mots, sans répondre.',
+    e1_rappel: 'Revoir ce son déjà étudié, avant de passer aux sons nouveaux de la leçon.',
+    pareil: 'Entraîner l’oreille à repérer la différence : deux mots proches, pareils ou différents ? Non noté.',
+    e2: 'Distinguer : entre deux mots proches, reconnaître lequel vous avez entendu. Le son étudié est le seul qui change.',
+    e3: 'Opposer : même exercice sur toute la série (3 ou 4 mots), pour affiner la discrimination.',
+    combien: 'Compter : combien de fois le son étudié apparaît dans une suite de mots ou une phrase.',
+    ecrit: 'Faire le lien entre ce que vous avez entendu et son écriture. Pas d’exercice d’écriture : seulement voir et relier.',
+    e4: 'Reproduire : écouter le modèle, vous enregistrer, comparer les courbes mélodiques, vous noter.'
+  };
+  // Phrase de leçon : « À la fin de cette leçon, vous saurez reconnaître à l'écoute : <titre>. »
+  function objectifLecon(l) {
+    if (l.recyclage) return 'À la fin de cette leçon, vous saurez enchaîner les sons et les tons déjà étudiés.';
+    return 'À la fin de cette leçon, vous saurez reconnaître à l’écoute : ' + l.titre + '.';
+  }
+  // Encadré « 🎯 Objectif » repliable (balises natives <details> / <summary>).
+  function blocObjectif(texte, deplieParDefaut) {
+    var d = el('details', { class: 'objectif' });
+    if (deplieParDefaut) d.setAttribute('open', 'open');
+    d.appendChild(el('summary', { text: '🎯 Objectif' }));
+    d.appendChild(el('p', { text: texte }));
+    return d;
   }
 
   /* ---------- 7. Écran : une leçon ---------- */
@@ -755,6 +877,7 @@
     app.appendChild(el('div', { class: 'consigne' }, [
       el('span', { class: 'etiquette', text: 'Leçon ' + l.numero + (l.tons ? ' · tons' : ' · sons') }),
       el('h1', { text: l.titre }),
+      el('p', { class: 'objectif-lecon', text: objectifLecon(l) }),   // MOD-D26
       l.parties.length > 1 ? el('p', { class: 'petit', text: 'Cette leçon se fait en ' + l.parties.length + ' parties, l’une après l’autre. Elle est validée quand toutes le sont.' }) : null
     ]));
 
@@ -777,15 +900,18 @@
         ]));
       }
       if (reduite) { app.appendChild(etapes); return; }
-      // Bloc E1 : jauge = sons vus / sons de la partie.
+      // MOD-D18 : les étapes de la partie sont décrites une fois (defs), puis affichées ainsi :
+      // une frise compacte ; l'étape EN COURS (la première ouverte et pas faite) en grand bloc ;
+      // les étapes faites en une ligne ; les étapes pas encore ouvertes regroupées dans « Ensuite : … ».
+      var defs = [];
       var e1Fait = e1Termine(etat, pa);
       var nbEl = elementsDe(pa).length || 1;
-      etapes.appendChild(blocEtape('E1 · Découvrir', 'Écoutez chaque ' + (l.tons ? 'ton' : 'son') + ' dans plusieurs mots, sans répondre.',
-        e1Vus(etat, pa) + ' / ' + elementsDe(pa).length + (l.tons ? ' tons' : ' sons'), e1Fait ? 1 : e1Vus(etat, pa) / nbEl,
-        e1Fait ? 'Réécouter' : 'Commencer', partieOuverte, function () { ecranE1(code, pa.code, 0); }));
+      defs.push({ court: 'E1', fait: e1Fait, ouvert: partieOuverte, nom: 'E1 · Découvrir',
+        args: ['E1 · Découvrir', 'Écoutez chaque ' + (l.tons ? 'ton' : 'son') + ' dans plusieurs mots, sans répondre.',
+          e1Vus(etat, pa) + ' / ' + elementsDe(pa).length + (l.tons ? ' tons' : ' sons'), e1Fait ? 1 : e1Vus(etat, pa) / nbEl,
+          e1Fait ? 'Réécouter' : 'Commencer', partieOuverte, function () { ecranE1(code, pa.code, 0); }] });
 
-      // Blocs E2 et E3 : E2 s'ouvre quand E1 est faite, E3 quand E2 est validée.
-      // La jauge approche 1 quand le taux s'approche du seuil sur 20 réponses.
+      // E2 s'ouvre quand E1 est faite, E3 quand E2 est validée.
       [['e2', 'E2 · Distinguer', 'Lequel avez-vous entendu ? Deux choix.'], ['e3', 'E3 · Opposer', 'Lequel avez-vous entendu ? Toute la série.']].forEach(function (x, j) {
         var e = etat[x[0]];
         var m = mesure(e, e.debit);
@@ -793,31 +919,55 @@
         var texte = e.validee ? 'Validée' : (e.hist.length ? majuscule(nomPhase(l, e.debit)) + ' · ' : '') + resteVerrou(l, e, series, ['série', 'séries']);   // MOD-D20
         // E2 : échauffement « Pareil ou différent ? » non noté avant le premier « Lequel ? » (DEC-0041)
         var echauffer = j === 0 && !e.echauffe && !e.hist.length;
-        var bloc = blocEtape(x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
-          e.validee ? 'Refaire' : (echauffer || !e.hist.length) ? 'Commencer' : 'Continuer', ouvert,   // MOD-D20 : « Continuer » seulement après une réponse
-          function () { if (echauffer) ecranPareil(code, pa.code); else ecranQuiz(code, pa.code, x[0]); });
-        if (j === 0 && ouvert && !echauffer) {
-          bloc.querySelector('.actions').appendChild(el('button', { class: 'bouton second', type: 'button', text: 'Pareil ou différent ?',
-            onclick: function () { ecranPareil(code, pa.code); } }));
-        }
-        etapes.appendChild(bloc);
+        defs.push({ court: j === 0 ? 'E2' : 'E3', fait: !!e.validee, ouvert: ouvert, nom: x[1], pareil: j === 0 && ouvert && !echauffer,
+          args: [x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
+            e.validee ? 'Refaire' : (echauffer || !e.hist.length) ? 'Commencer' : 'Continuer', ouvert,
+            function () { if (echauffer) ecranPareil(code, pa.code); else ecranQuiz(code, pa.code, x[0]); }] });
       });
 
-      // Bloc « Combien de fois ? » (DEC-0054) : ouvert quand E3 est validée ; compte pour le verrou.
+      // « Combien de fois ? » (DEC-0054) : ouvert quand E3 est validée ; compte pour le verrou.
       var aCombien = itemsCombien(l, pa.code).length > 0;
       var combienFait = !aCombien || (etat.combien && etat.combien.validee);
       if (aCombien) {
         var ec = etatCombien(code, pa.code), cc = ciblesCombien(l, pa.code), mc = mesure(ec, ec.debit);
-        etapes.appendChild(blocEtape('Fin d’E3 · Combien de fois ?', 'Une suite de mots : combien de fois entendez-vous le son ou le ton ?',
-          ec.validee ? 'Validée' : (ec.hist.length ? majuscule(nomPhase(l, ec.debit)) + ' · ' : '') + resteVerrou(l, ec, cc, ['son', 'sons']),   // MOD-D20
-          ec.validee ? 1 : Math.min(1, mc.taux * Math.min(1, mc.n / P.fenetre_score) / l.seuil),
-          ec.validee ? 'Refaire' : ec.hist.length ? 'Continuer' : 'Commencer',
-          partieOuverte && (toutOuvert() || etat.e3.validee), function () { ecranCombien(code, pa.code); }));
+        var ouvC = partieOuverte && (toutOuvert() || etat.e3.validee);
+        defs.push({ court: 'Combien', fait: !!ec.validee, ouvert: ouvC, nom: 'Combien de fois ?',
+          args: ['Fin d’E3 · Combien de fois ?', 'Une suite de mots : combien de fois entendez-vous le son ou le ton ?',
+            ec.validee ? 'Validée' : (ec.hist.length ? majuscule(nomPhase(l, ec.debit)) + ' · ' : '') + resteVerrou(l, ec, cc, ['son', 'sons']),   // MOD-D20
+            ec.validee ? 1 : Math.min(1, mc.taux * Math.min(1, mc.n / P.fenetre_score) / l.seuil),
+            ec.validee ? 'Refaire' : ec.hist.length ? 'Continuer' : 'Commencer', ouvC, function () { ecranCombien(code, pa.code); }] });
       }
-      // Bloc de l'écrit : ouvert quand E3 et « Combien de fois ? » sont validés.
-      etapes.appendChild(blocEtape('Fin d’E3 · L’écrit', 'Découvrez comment s’écrivent les mots entendus.',
-        etat.ecrit ? 'Vu' : aCombien ? 'Après « Combien de fois ? »' : 'Après la validation d’E3', etat.ecrit ? 1 : 0,
-        'Voir l’écrit', partieOuverte && (toutOuvert() || (etat.e3.validee && combienFait)), function () { ecranEcrit(code, pa.code); }));
+      // L'écrit : ouvert quand E3 et « Combien de fois ? » sont validés.
+      var ouvEcrit = partieOuverte && (toutOuvert() || (etat.e3.validee && combienFait));
+      defs.push({ court: 'Écrit', fait: !!etat.ecrit, ouvert: ouvEcrit, nom: 'L’écrit',
+        args: ['Fin d’E3 · L’écrit', 'Découvrez comment s’écrivent les mots entendus.',
+          etat.ecrit ? 'Vu' : aCombien ? 'Après « Combien de fois ? »' : 'Après la validation d’E3', etat.ecrit ? 1 : 0,
+          etat.ecrit ? 'Revoir l’écrit' : 'Voir l’écrit', ouvEcrit, function () { ecranEcrit(code, pa.code); }] });
+
+      var courant = -1;
+      // Une seule étape « en cours » pour toute la leçon : pas dans la partie B tant que A n'est pas terminée (mode essai).
+      var partieEnCours = k === 0 || partieTerminee(code, l.parties[k - 1]);
+      defs.forEach(function (d, i) { if (partieEnCours && courant < 0 && d.ouvert && !d.fait) courant = i; });
+      if (partieOuverte) {
+        etapes.appendChild(el('ol', { class: 'frise', 'aria-label': 'Étapes de la partie' }, defs.map(function (d, i) {
+          return el('li', { class: i === courant ? 'courant' : d.fait ? 'fait' : 'avenir',
+            'aria-current': i === courant ? 'step' : null, text: (d.fait ? '✓ ' : '') + d.court });
+        })));
+      }
+      var ensuite = [], ouvrables = [];
+      defs.forEach(function (d, i) {
+        if (i === courant) {
+          var bloc = blocEtape.apply(null, d.args);
+          if (d.pareil) bloc.querySelector('.actions').appendChild(el('button', { class: 'bouton second', type: 'button', text: 'Pareil ou différent ?',
+            onclick: function () { ecranPareil(code, pa.code); } }));
+          etapes.appendChild(bloc);
+        } else if (d.fait) etapes.appendChild(ligneEtape('✓ ' + d.nom, d.args[4], true, d.args[6]));
+        else if (d.ouvert) ouvrables.push(d);   // mode essai : étape ouverte hors ordre
+        else ensuite.push(d.nom);
+      });
+      if (ouvrables.length) etapes.appendChild(el('div', { class: 'etape-ligne aller' }, [el('span', { class: 'etape-ligne-titre', text: 'Aller à :' })]
+        .concat(ouvrables.map(function (d) { return el('button', { class: 'bouton second', type: 'button', text: d.court, onclick: d.args[6] }); }))));
+      if (ensuite.length) etapes.appendChild(el('p', { class: 'petit ensuite', text: 'Ensuite : ' + ensuite.join(' → ') }));
       app.appendChild(etapes);
     });
 
@@ -881,6 +1031,11 @@
       el('div', { class: 'actions' }, [el('button', { class: 'bouton', type: 'button', text: ouvert ? libelle : 'Fermée', disabled: !ouvert, onclick: action })])
     ]);
   }
+  // MOD-D18 : étape réduite à une ligne (étape faite, ou ouverte mais pas en cours).
+  function ligneEtape(titre, libelle, ouvert, action) {
+    return el('div', { class: 'etape-ligne' }, [el('span', { class: 'etape-ligne-titre', text: titre }),
+      el('button', { class: 'bouton discret', type: 'button', text: libelle, disabled: !ouvert, onclick: action })]);
+  }
   // Retrouve une partie de leçon par son code.
   function partieDe(l, pc) { return l.parties.filter(function (p) { return p.code === pc; })[0]; }
 
@@ -924,6 +1079,7 @@
         (placeDe(d.symbole) && !l.tons ? ' · ' + placeDe(d.symbole).long : '') +
         (d.rappel ? ' · déjà vu en L01' : '') }),   // DEC-0075
       el('h1', { text: d.rappel ? 'Rappel : écoutez ce son une fois' : 'Écoutez, sans répondre' }),
+      blocObjectif(OBJECTIFS_ETAPE[d.rappel ? 'e1_rappel' : 'e1'], false),   // MOD-D26
       el('p', { class: 'petit', text: d.rappel ? 'Vous avez déjà étudié ce son en L01. Un seul mot, pour s’en souvenir avant de passer aux sons nouveaux de la leçon.'
         : l.tons ? 'Le même ton dans plusieurs mots, à vitesse normale (le ralenti déforme la mélodie). Choisissez la voix ; touchez un mot pour le réentendre.'
         : 'Le même son dans plusieurs mots. Choisissez la voix et la vitesse ; touchez un mot pour le réentendre.' }),
@@ -1074,6 +1230,7 @@
       app.appendChild(el('div', { class: 'consigne' }, [
         el('span', { class: 'etiquette', text: 'Échauffement · paire ' + (k + 1) + ' sur ' + reponses.length + ' · non noté' }),
         el('h1', { text: 'Pareil ou différent ?' }),
+        blocObjectif(OBJECTIFS_ETAPE.pareil, false),   // MOD-D26
         el('p', { class: 'consigne-place', text: (placeDe(s.termes[0].symbole) || PLACES.voyelle).consigne }),
         el('p', { class: 'petit', text: l.tons ? 'Deux mots, la même voix. La mélodie est-elle la même ?' : 'Deux mots, deux voix. Ce son est-il le même dans les deux mots ?' })
       ]));
@@ -1193,6 +1350,7 @@
       app.appendChild(blocVerrou(l, e, series, ['série', 'séries']));   // MOD-D20
       var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(cible, voix, son); } });
       app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: 'Lequel avez-vous entendu ?' }),
+        blocObjectif(OBJECTIFS_ETAPE[cle], false),   // MOD-D26
         el('p', { class: 'consigne-place', text: (placeDe(s.termes[0].symbole) || PLACES.voyelle).consigne })]));
       app.appendChild(ecoute);
       var mode = debit === 'slow' ? 'lent' : 'normal';
@@ -1316,7 +1474,7 @@
       var debit = e.debit, son = debitSon(l, debit), m = mesure(e, debit);
       app.appendChild(blocVerrou(l, e, cibles, ['son', 'sons']));   // MOD-D20
       // Ce qu'il faut compter : le symbole (avec repère en phase 1), sans aucun écrit vietnamien.
-      app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: consigneCombien(x.symbole) })]));
+      app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: consigneCombien(x.symbole) }), blocObjectif(OBJECTIFS_ETAPE.combien, false)]));   // MOD-D26
       app.appendChild(el('div', { class: 'carte-son' }, contenuTerme({ symbole: x.symbole, image: '', sens: '' }, debit === 'slow' ? 'lent' : 'normal')));
       // Mode test (DEC-0047) : l'info sur le son (fichier, locuteur, débit) est affichée DÈS L'ÉCOUTE,
       // sous le bouton : contrairement à E2/E3, elle ne trahit pas la réponse (le nombre).
@@ -1411,6 +1569,7 @@
     app.appendChild(el('div', { class: 'consigne' }, [
       el('span', { class: 'etiquette', text: 'Fin d’E3' + (nomPartie(l, pa) ? ' · ' + nomPartie(l, pa) : '') }),
       el('h1', { text: 'Voici comment ils s’écrivent' }),
+      blocObjectif(OBJECTIFS_ETAPE.ecrit, false),   // MOD-D26
       el('p', { class: 'petit', text: 'Touchez une case pour réentendre. Rien à retenir par cœur : l’écrit se travaillera en E4–E5.' })
     ]));
     seriesDe(l, pa).forEach(function (s) {
@@ -1493,6 +1652,7 @@
       el('span', { class: 'etiquette', text: (m.avec_classificateur ? 'Avec son classificateur · ' : '') + 'Mot ' + (index + 1) + ' sur ' + l.production.length +
         ' · modèle ' + (debit === 'slow' ? 'lent (passage 1)' : 'normal (passage 2)') }),
       el('h1', { text: 'Écoutez, répétez, comparez' }),
+      blocObjectif(OBJECTIFS_ETAPE.e4, false),   // MOD-D26
       el('p', { class: 'petit', text: 'Écoutez le modèle, enregistrez-vous, réécoutez-vous à côté du modèle, puis notez-vous honnêtement.' })
     ]));
 

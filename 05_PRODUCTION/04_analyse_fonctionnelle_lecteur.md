@@ -2,7 +2,7 @@
 id: PROD-AF-LECT
 titre: Analyse fonctionnelle du lecteur d'activités
 statut: BROUILLON
-version: 0.7
+version: 0.10
 date: 2026-11-07
 resume: >
   Décrit ce que le lecteur d'activités doit faire, pour qui et sous quelles
@@ -140,21 +140,28 @@ Flexibilité : **F0** impératif, **F1** peu négociable, **F2** négociable,
 
 | Élément | Comportement |
 |---|---|
-| Liste | Une ligne par leçon : numéro, famille de sons, nombre de séries et de parties, seuil. |
-| États | « Ouverte », « En cours », « Écoute validée », « Fermée », « À venir » (leçon sans série). |
+| En tête (MOD-D21) | Avancement global de l'écoute : « N / N leçons · écoute validée » et date de la dernière séance, avec barre. |
+| Bouton « Continuer » (MOD-D18) | Sous l'en-tête : « Continuer : L01A · E2 · Distinguer » (nom de la prochaine étape à faire, avec la partie si la leçon en a plusieurs) ; ouvre directement cette étape. Absent si l'écoute de toutes les leçons est validée. |
+| Liste | Une ligne par leçon : numéro, famille de sons, nombre de séries et de parties. |
+| États (MOD-D21) | Pastille : « ✓ Validée le JJ/MM », « En cours · N % », « Ouverte », « Fermée » ou « À venir » (leçon sans série). Pour une leçon en cours, une barre de progression s'affiche sous la ligne (étapes validées / étapes totales, l'écoute validée vaut 100 %). |
 | Ouverture | L01 toujours ouverte ; la leçon N+1 s'ouvre quand l'écoute de N est validée (R-VOL-02). |
-| Accès | Bouton « Réglages ». Pied de page : date de génération des données. |
+| Accès | Boutons « 🎵 Les 6 tons » et « ⚙ Réglages ». Pied de page : date de génération des données. |
 
 ### 5.2 Leçon
 
 | Élément | Comportement |
 |---|---|
+| Objectif (MOD-D26) | Sous le titre, phrase en vert « À la fin de cette leçon, vous saurez reconnaître à l'écoute : <titre>. » (recyclage : « …enchaîner les sons et les tons déjà étudiés »). |
 | Parties | Une ou deux parties (L01 : A voyelles, B consonnes et finales, DEC-0037). La partie B s'ouvre quand l'écrit de A est vu. Une partie terminée se réduit à une ligne « Validée », avec « Afficher ». |
 | Étapes | Pour chaque partie : **E1 · Découvrir** (x / N sons), **E2 · Distinguer** (phase, justes sur les dernières, séries réussies 2 fois), **E3 · Opposer**, **Fin d'E3 · L'écrit**. Chaque étape a sa jauge et son bouton. |
 | Présentation | Une **frise** compacte en tête de chaque partie (✓ E1 → E2 → E3 → Combien → Écrit : faite, en cours, à venir). Une seule étape **en cours** (la première ouverte et pas faite) est affichée en grand bloc avec son bouton ; une étape faite tient sur une ligne (avec « Réécouter », « Refaire » ou « Revoir l'écrit ») ; les étapes pas encore ouvertes sont regroupées dans « Ensuite : … » ; en mode essai, les étapes ouvertes hors ordre sont sur une ligne « Aller à : … ». La partie B n'a pas d'étape en cours tant que la partie A n'est pas terminée (MOD-D18). |
 | Ouverture | E1 dès la partie ouverte ; E2 quand E1 est faite ; E3 quand E2 est validée ; l'écrit quand E3 est validée. |
 | E2 | « Commencer » lance d'abord l'échauffement ; ensuite « Continuer » et un bouton « Pareil ou différent ? » pour le refaire. |
 | Autres | « Mes progrès dans cette leçon » ; « Recommencer cette leçon » (efface la progression de la leçon, après confirmation). |
+
+### 5.2 bis Objectifs d'étape (MOD-D26)
+
+Sur chaque écran d'étape (E1, échauffement, E2, E3, « Combien de fois ? », l'écrit, E4), sous le titre, un encadré « 🎯 Objectif » repliable (`<details>`), replié par défaut, contient une phrase fixe décrivant l'objectif pédagogique de l'étape. Les phrases sont dans `lecteur.js` (table `OBJECTIFS_ETAPE`), pas dans les données.
 
 ### 5.3 E1 · Découvrir (DEC-0039)
 
@@ -167,6 +174,7 @@ Flexibilité : **F0** impératif, **F1** peu négociable, **F2** négociable,
 | Mots | 1 à 3 tuiles (image ou 🔊, sens en français ; syllabe sans sens : 🔊 et « syllabe », ou « syllabe inventée », DEC-0073) ; **aucun mot écrit** en vietnamien (R-ECR-01) ; lettres du son étudié affichées (DEC-0063). |
 | Voix | Choix « Femme et homme » (par défaut), « Femme » (F4), « Homme » (H6). |
 | Écoute | « ▶ Écouter » (débit normal) et « 🐢 Écouter lentement » ; toucher un mot le redit avec la voix et la dernière vitesse choisies. Leçons de tons : pas d'écoute lente (DEC-0043). |
+| Comment le dire (MOD-D27) | Après la carte du son et avant les mots, encadré « 🔊 Comment le dire » (ouvert par défaut, balise `<details>`) : partie du corps (`body_part`), mouvement (`change`), à vérifier (`check`) ; mention « descriptif à confirmer par un locuteur du Nord » si `certainty = hypothese`. Les champs viennent de `reperes_sons.csv` (via `symbole.chemin` dans `donnees.js`). Absent sur un écran de rappel court (RG-21). |
 | Fin | « Son suivant » s'active après une écoute complète des mots du son. |
 
 ### 5.4 Échauffement « Pareil ou différent ? » (DEC-0041)
@@ -436,3 +444,6 @@ automatiquement).
 | 0.5 | 2026-11-01 | MOD-H04 : rappel court des sons -m et -n en L08 / L10 (RG-21, DEC-0075). |
 | 0.6 | 2026-11-07 | MOD-D19, MOD-D20 : bouton Signaler dans la barre du haut (§ 5.10) ; carte du verrou en E2–E3 (§ 5.5) ; bouton d'E3 « Commencer » avant toute réponse (§ 5.2). |
 | 0.7 | 2026-11-07 | MOD-D18 (leçon) : frise des étapes, étape en cours, étapes faites en une ligne, « Ensuite » et « Aller à » (§ 5.2). |
+| 0.8 | 2026-11-07 | MOD-D21 et bouton « Continuer » de MOD-D18 (§ 5.1) : avancement global, bouton d'action, avancement et barre par leçon. |
+| 0.9 | 2026-11-07 | MOD-D26 : objectif de la leçon (§ 5.2) et objectifs des étapes repliables (§ 5.2 bis). |
+| 0.10 | 2026-11-07 | MOD-D27 partiel : encadré « Comment le dire » sur l'écran E1 (§ 5.3), descriptifs des 16 sons de L01 remplis dans `reperes_sons.csv`. |
