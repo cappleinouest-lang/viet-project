@@ -2,87 +2,216 @@ word_code;emoji;note
 W0003;3️⃣;ba = trois
 W0004;🪑;bàn = table (pas d'emoji « table »)
 W0005;👶;
+W0006;😢;buồn = triste
+W0007;☕;cà phê = café
 W0009;🍊;
+W0010;👨;cha = père
+W0011;🦵;chân = jambe
+W0013;💸;chi = dépenser
 W0015;🧒;
+W0016;🏢;công ty = entreprise
 W0017;✋;da = peau
+W0018;📏;dài = long
 W0019;🤕;
 W0022;📦;
 W0023;🐔;
+W0024;👧;gái = fille
 W0025;2️⃣;
 W0026;🌸;
+W0027;🖨️;in = imprimer
 W0029;🍃;
 W0032;⬆️;
+W0033;👩;má = maman (Sud)
+W0035;🛒;mua = acheter
 W0036;5️⃣;
 W0038;🏠;
+W0040;🚗;ô tô = voiture
 W0041;👴;
+W0043;🥬;rau = légumes
 W0046;👂;
 W0047;🤚;
+W0049;❤️;tim = cœur
 W0050;🐘;to = grand
+W0051;🍵;trà = thé
+W0054;🎫;vé = billet
 W0055;😄;
+W0056;🔭;xa = loin
 W0057;👀;
 W0060;👨;
 W0061;🎁;
 W0062;🚶;
+W0063;🧒;em = petit frère/sœur
 W0064;🙋;
+W0065;🍰;bánh = gâteau
 W0066;🐟;
+W0070;🚙;xe = véhicule
 W0071;🤝;
 W0073;🔨;
 W0074;🍽️;
 W0075;👕;
 W0076;🏷️;
+W0077;🏥;bệnh viện = hôpital
+W0078;🍳;bếp = cuisine
+W0079;4️⃣;bốn = quatre
+W0080;🍜;bún = vermicelles
+W0081;🖊️;bút = stylo
+W0085;🪽;cánh = aile
+W0086;👶;cháu = petit-enfant
+W0087;💀;chết = mourir
+W0088;👩‍🦰;chị = grande sœur
+W0089;9️⃣;chín = neuf
+W0090;🐕;chó = chien
+W0092;🍌;chuối = banane
+W0093;💰;đắt = cher
 W0094;🟫;
 W0095;🗣️;đầu = tête
 W0097;✨;
+W0099;🍽️;đồ ăn = nourriture
+W0100;🥤;đồ uống = boisson
 W0101;📖;
+W0102;🚪;đóng = fermer
+W0103;🧭;đông = est
+W0104;🧍;đứng = debout
 W0106;💲;
 W0107;🧓;
+W0108;😠;giận = en colère
 W0109;⏱️;
+W0111;💨;gió = vent
+W0113;📞;gọi = appeler
 W0115;👥;
 W0117;🎓;
+W0119;📅;hôm nay = aujourd’hui
 W0120;📅;
 W0123;🧶;
+W0126;😭;khóc = pleurer
+W0129;👓;kính = lunettes
+W0131;👷;làm việc = travailler
+W0132;🥶;lạnh = froid
+W0134;🛤️;lối = chemin
+W0136;👁️;mắt = œil
+W0137;🩸;máu = sang
 W0138;👩;
 W0139;🐈;
+W0140;😩;mệt = fatigué
 W0142;1️⃣;
+W0143;🌧️;mưa = pluie
 W0144;👃;mùi = odeur
 W0145;🧂;
 W0146;🔟;
+W0149;☀️;nắng = soleil
+W0151;🍳;nấu = cuisiner
+W0153;📆;ngày = jour
+W0154;🗓️;ngày mai = demain
 W0156;🏖️;
+W0157;🤨;nghiêm = sérieux
+W0158;😋;ngon = délicieux
+W0159;⚡;nhanh = rapide
 W0162;👉;
 W0163;💬;
+W0164;🥵;nóng = chaud
+W0166;🌶️;ớt = piment
+W0168;🛏️;phòng = chambre
 W0171;☕;
+W0172;👖;quần = pantalon
+W0174;🦷;răng = dent
+W0176;🧼;rửa = laver
 W0177;🍶;
 W0178;📚;
+W0179;🧽;sạch = propre
+W0180;🌅;sáng = matin
+W0182;6️⃣;sáu = six
+W0183;🏬;siêu thị = supermarché
 W0184;😨;
+W0186;🏞️;sông = rivière
+W0190;8️⃣;tám = huit
+W0194;📆;tháng = mois
+W0195;🏙️;thành phố = ville
+W0197;💊;thuốc = médicament
 W0199;🌶️;tiêu = poivre (pas d'emoji « poivre »)
 W0200;💇;
+W0201;🌙;tối = soir
+W0203;💳;trả tiền = payer
+W0204;🍎;trái = fruit
+W0207;🛍️;túi = sac
+W0208;🌿;tươi = frais
+W0210;👛;ví = portefeuille
 W0212;👰;
+W0214;🌳;vườn = jardin
+W0215;🟩;xanh = vert/bleu
+W0216;🚲;xe đạp = vélo
+W0217;🛵;xe máy = moto
+W0218;🥰;xinh = joli
 W0220;🍚;
+W0221;🪑;ghế = chaise
 W0222;💧;
+W0223;🏪;chợ = marché
+W0224;🌃;đêm = nuit
 W0226;❓;
 W0227;💪;
 W0228;🧑;
 W0231;🥩;
+W0232;🧑;trẻ = jeune
+W0233;🌤️;trời = ciel
 W0234;🗓️;
 W0235;✍️;
+W0236;🤢;xấu = laid
+W0239;🚪;cửa = porte
+W0242;🕛;trưa = midi
 W0243;🥤;
 W0244;🩺;
+W0246;7️⃣;bảy = sept
+W0247;🏖️;biển = mer
+W0248;🐢;chậm = lent
+W0249;🌇;chiều = après-midi
+W0251;🎮;chơi = jouer
+W0252;🖼️;chưng = exposer
+W0256;😄;cười = rire
+W0257;🥺;dễ thương = mignon
 W0258;📱;
 W0259;👎;
+W0261;🧳;du lịch = voyage
+W0263;🛣️;đường = route
+W0265;🙅;ghét = détester
+W0268;👟;giày = chaussure
+W0270;🕒;hôm kia = avant-hier
+W0271;🏨;khách sạn = hôtel
+W0272;🚫;kiêng = s’abstenir
+W0275;✈️;máy bay = avion
+W0276;💻;máy tính = ordinateur
 W0277;🔓;
 W0279;👃;mũi = nez
 W0281;🤸;
 W0282;👂;nghe = écouter
+W0285;😴;ngủ = dormir
+W0287;🤏;nhỏ = petit
+W0289;⛰️;núi = montagne
 W0291;🍜;
 W0292;🌾;
+W0294;🥛;sữa = lait
+W0295;🚆;tàu hỏa = train
+W0297;🌦️;thời tiết = météo
+W0298;💬;trả lời = répondre
+W0299;🍉;trái cây = fruits
+W0300;💯;trăm = cent
+W0301;🥚;trứng = œuf
+W0303;🏫;trường = école
 W0305;❤️;
+W0307;🛌;giường = lit
+W0308;👄;miệng = bouche
 W0309;🧢;
+W0310;📐;ngắn = court
+W0311;🔢;nghìn = mille
+W0312;🧘;ngồi = assis
 W0313;🤧;
 W0315;🟦;
 W0318;👻;
 W0321;🔋;
+W0324;🥢;nem = nem
 W0326;🧳;
 W0327;🧸;
+W0330;👃;ngửi = sentir
 W0335;🥣;
 W0336;✉️;
 W0337;4️⃣;
+W0340;🌰;me = tamarin
+W0342;🖌️;tô = colorier

@@ -2,8 +2,8 @@
 id: REG-DEC
 titre: Journal des décisions
 statut: VALIDE
-version: 1.71
-date: 2026-11-01
+version: 1.72
+date: 2026-11-07
 resume: >
   Trace chaque arbitrage du projet : la question posée, les options, la
   décision et sa raison. Une décision ne se modifie pas : on en prend une
@@ -1929,6 +1929,44 @@ qui indique « remplace DEC-NNNN ».
   des voix par type d'activité à coder), MOD-C01 et MOD-D01 (plan de
   génération à revoir avec cette répartition), MOD-C05 et MOD-C06
   (tranchés par ce résultat).
+
+### DEC-0078 — MOD-D27 : règle de contenu des descriptifs de sons
+
+- **Date** : 2026-11-07
+- **Question** (MOD-D27) : quelles règles pour rédiger les descriptifs
+  articulatoires qui apparaissent dans l'encadré « Comment le dire » en
+  E1 (`reperes_sons.csv`, colonnes `body_part`, `change`, `check`,
+  `certainty`) ?
+- **Décision** (choix de Christophe, 2026-11-07) :
+  - **Format** : trois champs libres, courts.
+    - `body_part` : partie du corps principale (lèvres, langue, gorge…),
+      quelques mots ou vide pour une diphtongue.
+    - `change` : la production du son en 1 ou 2 phrases, avec une
+      analogie au français quand c'est possible.
+    - `check` : l'erreur typique à éviter, 1 phrase, souvent vide.
+  - **Ton** : accessible à un débutant francophone adulte, non
+    spécialisé. Pas de vocabulaire de phonéticien (voisée, fricative,
+    occlusive) sauf si la description se comprend sans.
+  - **Analogie au français** en priorité quand le son existe en
+    français ou est très proche ; renvoyer à la lettre vietnamienne qui
+    l'écrit si elle est différente (ex. : « écrit "x" »).
+  - **Statut de certitude** (`certainty`) :
+    - `hypothese` par défaut pour tout descriptif rédigé par l'IA.
+    - `fiable` quand relu et confirmé par un locuteur du Nord (MOD-E01).
+    - Dans le lecteur, un descriptif `hypothese` affiche la mention
+      « descriptif à confirmer par un locuteur du Nord ».
+  - **Analogie déjà faite** dans `listening_cue` (format court « comme
+    le X de Y ») ne se répète pas dans `change` ; les deux se
+    complètent.
+- **Raison** : garder des descriptifs utiles pour l'apprenant sans
+  prétendre à une description linguistique complète ; marquer
+  clairement ce qui est vérifié de ce qui ne l'est pas.
+- **Impacte** : `04_DONNEES/reperes_sons.csv` (25 descriptifs
+  `hypothese` rédigés le 2026-11-07), `lecteur.js` (encadré
+  « Comment le dire »), `generer_lecteur.py` (transmission du
+  `chemin`), PROD-LECT, PROD-AF-LECT. **À suivre** : MOD-E01
+  (relecture par un locuteur du Nord) ; schémas articulatoires
+  simplifiés par famille (lot à part, MOD-D27).
 
 ## Liens
 
