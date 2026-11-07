@@ -2,8 +2,8 @@
 id: PROD-AF-LECT
 titre: Analyse fonctionnelle du lecteur d'activités
 statut: BROUILLON
-version: 0.5
-date: 2026-11-01
+version: 0.7
+date: 2026-11-07
 resume: >
   Décrit ce que le lecteur d'activités doit faire, pour qui et sous quelles
   contraintes (volet écoute E1 → E3 du Module 0, avec « Combien de fois ? » ;
@@ -151,6 +151,7 @@ Flexibilité : **F0** impératif, **F1** peu négociable, **F2** négociable,
 |---|---|
 | Parties | Une ou deux parties (L01 : A voyelles, B consonnes et finales, DEC-0037). La partie B s'ouvre quand l'écrit de A est vu. Une partie terminée se réduit à une ligne « Validée », avec « Afficher ». |
 | Étapes | Pour chaque partie : **E1 · Découvrir** (x / N sons), **E2 · Distinguer** (phase, justes sur les dernières, séries réussies 2 fois), **E3 · Opposer**, **Fin d'E3 · L'écrit**. Chaque étape a sa jauge et son bouton. |
+| Présentation | Une **frise** compacte en tête de chaque partie (✓ E1 → E2 → E3 → Combien → Écrit : faite, en cours, à venir). Une seule étape **en cours** (la première ouverte et pas faite) est affichée en grand bloc avec son bouton ; une étape faite tient sur une ligne (avec « Réécouter », « Refaire » ou « Revoir l'écrit ») ; les étapes pas encore ouvertes sont regroupées dans « Ensuite : … » ; en mode essai, les étapes ouvertes hors ordre sont sur une ligne « Aller à : … ». La partie B n'a pas d'étape en cours tant que la partie A n'est pas terminée (MOD-D18). |
 | Ouverture | E1 dès la partie ouverte ; E2 quand E1 est faite ; E3 quand E2 est validée ; l'écrit quand E3 est validée. |
 | E2 | « Commencer » lance d'abord l'échauffement ; ensuite « Continuer » et un bouton « Pareil ou différent ? » pour le refaire. |
 | Autres | « Mes progrès dans cette leçon » ; « Recommencer cette leçon » (efface la progression de la leçon, après confirmation). |
@@ -189,7 +190,7 @@ Flexibilité : **F0** impératif, **F1** peu négociable, **F2** négociable,
 | Audio | phase 1 : débit lent ; phase 2 : débit normal. Tons : toujours normal (DEC-0043) | idem |
 | Voix | au hasard parmi les voix d'écoute de la leçon (F4 et H6, DEC-0067), jamais deux fois de suite la même. Tons, phase 1 : la voix modèle (F4) seule (DEC-0045) | idem |
 | Réponse | « Juste » ; ou « C'était l'autre. Écoutez les deux » (bonne réponse, puis réponse donnée) ; « Réécouter » toujours possible, sans pénalité | idem |
-| En-tête | phase (lent / normal, ou images / symboles), justes sur les 20 dernières, séries réussies 2 fois | idem |
+| En-tête | une carte (MOD-D20) : phase (lent / normal, ou images / symboles), justes sur les 20 dernières, barre vers le verrou et phrase « Encore au moins N bonnes réponses… » (puis « N séries à réussir 2 fois ») ; « Pas encore commencé » avant toute réponse | idem |
 | Messages | passage de phase ; « Étape validée ! » avec retour à la leçon | idem |
 
 ### 5.5 bis « Combien de fois ? » (fin d'E3, DEC-0054, DEC-0056 à DEC-0058)
@@ -242,8 +243,8 @@ désactivable dans les réglages.
 
 ### 5.10 Signaler un son (DEC-0069)
 
-En mode test, un bouton **« ⚑ Signaler un son »** reste en bas de l'écran
-dans tous les exercices. Il ouvre un panneau : les 8 derniers sons joués
+En mode test, un bouton **« ⚑ Signaler un son »** reste dans la barre du haut
+(⚑ seul sur téléphone), dans tous les exercices (MOD-D19). Il ouvre un panneau : les 8 derniers sons joués
 (réécoutables), une case par défaut possible (début tronqué, fin coupée, ton
 faux ou peu net, accent non conforme à Hanoï, trop numérique, volume…) et
 une remarque. Les signalements restent sur l'appareil jusqu'à « Exporter les
@@ -433,3 +434,5 @@ automatiquement).
 | 0.3 | 2026-11-01 | MOD-B04 : voix F4 / H6 et débit lent emprunté (DEC-0067) dans les acteurs, § 5.3 à 5.5, § 5.9 (exemple `W0057-H6-normal.mp3`), RG-11 ; ajouts : voyelle seule (§ 5.3, RG-17, DEC-0070), « Combien de fois ? » (§ 5.5 bis, RG-18), signalement d'un son (§ 5.10, RG-19, DEC-0069), E4 (§ 5.11), « Les 6 tons » (§ 5.12), mode essai (§ 5.8), RG-16 ; périmètre (§ 1, § 9), données (§ 7.1), écarts EC-02, EC-05, EC-06, traçabilité. |
 | 0.4 | 2026-11-01 | MOD-H01 : E1 avec sons « d'abord » (§ 5.3, RG-20, DEC-0072), syllabes sans sens (DEC-0073), mot écrit en mode test (§ 5.9), données (§ 7.1). |
 | 0.5 | 2026-11-01 | MOD-H04 : rappel court des sons -m et -n en L08 / L10 (RG-21, DEC-0075). |
+| 0.6 | 2026-11-07 | MOD-D19, MOD-D20 : bouton Signaler dans la barre du haut (§ 5.10) ; carte du verrou en E2–E3 (§ 5.5) ; bouton d'E3 « Commencer » avant toute réponse (§ 5.2). |
+| 0.7 | 2026-11-07 | MOD-D18 (leçon) : frise des étapes, étape en cours, étapes faites en une ligne, « Ensuite » et « Aller à » (§ 5.2). |

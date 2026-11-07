@@ -397,12 +397,17 @@
       voix: codeVoix, debit: debit, ecran: titreBarre.textContent, t: Date.now() });
     derniersSons = derniersSons.slice(0, 8);
   }
-  var btnSignal = el('button', { class: 'btn-signal', type: 'button', text: '⚑ Signaler un son', onclick: function () { ouvrirSignal(); } });
-  document.body.appendChild(btnSignal);
+  // MOD-D19 : le bouton est dans la barre du haut (il ne masque plus le contenu) : ⚑ seul sur téléphone,
+  // « ⚑ Signaler un son » sur écran large.
+  var btnSignal = el('button', { class: 'btn-signal', type: 'button', 'aria-label': 'Signaler un son', title: 'Signaler un son', onclick: function () { ouvrirSignal(); } });
+  document.querySelector('.barre').appendChild(btnSignal);
   function majBoutonSignal() {
     var n = lireSignalements().filter(function (x) { return !x.exporte; }).length;
     btnSignal.hidden = !reglages().infoTest;
-    btnSignal.textContent = '⚑ Signaler un son' + (n ? ' (' + n + ' à exporter)' : '');
+    btnSignal.innerHTML = '';
+    btnSignal.appendChild(el('span', { text: '⚑' }));
+    btnSignal.appendChild(el('span', { class: 'btn-signal-texte', text: ' Signaler un son' }));
+    if (n) btnSignal.appendChild(el('span', { class: 'btn-signal-nb', text: ' (' + n + ')', title: n + ' à exporter' }));
   }
   function fermerSignal() { var f = document.querySelector('.signal-fond'); if (f) f.remove(); }
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') fermerSignal(); });
@@ -648,6 +653,44 @@
     return null;
   }
 
+  // MOD-D20 : ce qui reste à faire pour franchir le verrou d'une étape, en une phrase claire.
+  // noms = ['série', 'séries'] (ou ['son', 'sons'] pour « Combien de fois ? »).
+  function resteVerrou(l, e, series, noms) {
+    if (e.validee) return 'Validée';
+    if (!e.hist.length) return 'Pas encore commencé';
+    var phase = e.debit, m = mesure(e, phase);
+    var oks = e.hist.filter(function (x) { return x.d === phase; }).slice(-P.fenetre_score).map(function (x) { return x.ok; });
+    var k = 0;   // plus petit nombre de bonnes réponses de suite qui atteindrait le seuil sur les 20 dernières
+    for (; k <= 60; k++) {
+      var f = oks.concat(new Array(k).fill(true)).slice(-P.fenetre_score);
+      if (f.length >= P.fenetre_score && f.filter(Boolean).length / f.length >= l.seuil) break;
+    }
+    var parts = [];
+    if (k > 0) parts.push('Encore au moins ' + k + ' bonne' + (k > 1 ? 's' : '') + ' réponse' + (k > 1 ? 's' : ''));
+    if (phase === 'normal') {
+      var r = series.length - seriesCouvertes(series, e);
+      if (r > 0) parts.push(r + ' ' + (r > 1 ? noms[1] : noms[0]) + ' à réussir 2 fois');
+      else if (k === 0 && m.voix < P.min_voix) parts.push('encore une réponse avec une autre voix');
+    }
+    if (!parts.length) return 'Presque : continuez';
+    var texte = parts.join(' · ');
+    return texte.charAt(0).toUpperCase() + texte.slice(1) + (phase === 'slow' ? (l.tons ? ' pour passer aux symboles seuls' : ' pour passer au débit normal') : ' pour valider');
+  }
+  function majuscule(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
+  // MOD-D20 : remplace les trois cases de chiffres par une barre et une phrase.
+  function blocVerrou(l, e, series, noms) {
+    var m = mesure(e, e.debit);
+    var part = e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil);
+    var j = el('div', { class: 'jauge' }, [el('span')]);
+    j.firstChild.style.width = Math.round(part * 100) + '%';
+    return el('div', { class: 'verrou' }, [
+      el('div', { class: 'etape-tete' }, [el('b', { text: majuscule(nomPhase(l, e.debit)) }),
+        el('span', { class: 'petit', text: m.justes + ' justes sur ' + m.n + ' (objectif ' + pourcent(l.seuil) + ')' })]),
+      j,
+      el('p', { class: 'petit', text: resteVerrou(l, e, series, noms) })
+    ]);
+  }
+
   /* ---------- 6. Écran : accueil (liste des leçons) ---------- */
   // La 1re leçon est toujours ouverte ; la suivante quand l'écoute de la précédente est validée (R-VOL-02).
   function leconOuverte(i) {
@@ -747,13 +790,11 @@
         var e = etat[x[0]];
         var m = mesure(e, e.debit);
         var ouvert = partieOuverte && (toutOuvert() || (j === 0 ? e1Fait : etat.e2.validee));
-        var texte = e.validee ? 'Validée' :
-          nomPhase(l, e.debit).replace(/^./, function (c) { return c.toUpperCase(); }) + ' · ' + m.justes + ' justes sur les ' + m.n + ' dernières' +
-          (e.debit === 'normal' ? ' · séries réussies 2 fois : ' + seriesCouvertes(series, e) + ' / ' + series.length : '');
+        var texte = e.validee ? 'Validée' : (e.hist.length ? majuscule(nomPhase(l, e.debit)) + ' · ' : '') + resteVerrou(l, e, series, ['série', 'séries']);   // MOD-D20
         // E2 : échauffement « Pareil ou différent ? » non noté avant le premier « Lequel ? » (DEC-0041)
         var echauffer = j === 0 && !e.echauffe && !e.hist.length;
         var bloc = blocEtape(x[1], x[2], texte, e.validee ? 1 : Math.min(1, m.taux * Math.min(1, m.n / P.fenetre_score) / l.seuil),
-          e.validee ? 'Refaire' : echauffer ? 'Commencer' : 'Continuer', ouvert,
+          e.validee ? 'Refaire' : (echauffer || !e.hist.length) ? 'Commencer' : 'Continuer', ouvert,   // MOD-D20 : « Continuer » seulement après une réponse
           function () { if (echauffer) ecranPareil(code, pa.code); else ecranQuiz(code, pa.code, x[0]); });
         if (j === 0 && ouvert && !echauffer) {
           bloc.querySelector('.actions').appendChild(el('button', { class: 'bouton second', type: 'button', text: 'Pareil ou différent ?',
@@ -768,8 +809,7 @@
       if (aCombien) {
         var ec = etatCombien(code, pa.code), cc = ciblesCombien(l, pa.code), mc = mesure(ec, ec.debit);
         etapes.appendChild(blocEtape('Fin d’E3 · Combien de fois ?', 'Une suite de mots : combien de fois entendez-vous le son ou le ton ?',
-          ec.validee ? 'Validée' : nomPhase(l, ec.debit).replace(/^./, function (c) { return c.toUpperCase(); }) + ' · ' + mc.justes + ' justes sur les ' + mc.n + ' dernières' +
-            (ec.debit === 'normal' ? ' · sons réussis 2 fois : ' + seriesCouvertes(cc, ec) + ' / ' + cc.length : ''),
+          ec.validee ? 'Validée' : (ec.hist.length ? majuscule(nomPhase(l, ec.debit)) + ' · ' : '') + resteVerrou(l, ec, cc, ['son', 'sons']),   // MOD-D20
           ec.validee ? 1 : Math.min(1, mc.taux * Math.min(1, mc.n / P.fenetre_score) / l.seuil),
           ec.validee ? 'Refaire' : ec.hist.length ? 'Continuer' : 'Commencer',
           partieOuverte && (toutOuvert() || etat.e3.validee), function () { ecranCombien(code, pa.code); }));
@@ -1150,11 +1190,7 @@
       var debit = e.debit;            // phase du verrou (lent puis normal)
       var son = debitSon(l, debit);   // débit de l'audio : toujours normal pour les tons (DEC-0043)
       var m = mesure(e, debit);
-      app.appendChild(el('div', { class: 'mesures' }, [
-        el('div', { class: 'mesure' }, [el('b', { text: l.tons ? (debit === 'slow' ? 'Images' : 'Symboles') : (debit === 'slow' ? 'Lent' : 'Normal') }), el('span', { text: l.tons ? 'phase' : 'débit' })]),
-        el('div', { class: 'mesure' }, [el('b', { text: m.justes + ' / ' + m.n }), el('span', { text: 'justes · objectif ' + pourcent(l.seuil) + ' sur ' + P.fenetre_score })]),
-        el('div', { class: 'mesure' }, [el('b', { text: debit === 'normal' ? seriesCouvertes(series, e) + ' / ' + series.length : '—' }), el('span', { text: 'séries réussies 2 fois' })])
-      ]));
+      app.appendChild(blocVerrou(l, e, series, ['série', 'séries']));   // MOD-D20
       var ecoute = el('button', { class: 'ecoute', type: 'button', text: '▶ Réécouter', onclick: function () { jouer(cible, voix, son); } });
       app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: 'Lequel avez-vous entendu ?' }),
         el('p', { class: 'consigne-place', text: (placeDe(s.termes[0].symbole) || PLACES.voyelle).consigne })]));
@@ -1278,11 +1314,7 @@
       btnRetour.onclick = function () { arreterSon(); ecranLecon(code); };
       titreBarre.textContent = titreEcran(l, pa, 'Combien de fois ?');
       var debit = e.debit, son = debitSon(l, debit), m = mesure(e, debit);
-      app.appendChild(el('div', { class: 'mesures' }, [
-        el('div', { class: 'mesure' }, [el('b', { text: l.tons ? (debit === 'slow' ? 'Repère' : 'Symbole') : (debit === 'slow' ? 'Lent' : 'Normal') }), el('span', { text: l.tons ? 'phase' : 'débit' })]),
-        el('div', { class: 'mesure' }, [el('b', { text: m.justes + ' / ' + m.n }), el('span', { text: 'justes · objectif ' + pourcent(l.seuil) + ' sur ' + P.fenetre_score })]),
-        el('div', { class: 'mesure' }, [el('b', { text: debit === 'normal' ? seriesCouvertes(cibles, e) + ' / ' + cibles.length : '—' }), el('span', { text: 'sons réussis 2 fois' })])
-      ]));
+      app.appendChild(blocVerrou(l, e, cibles, ['son', 'sons']));   // MOD-D20
       // Ce qu'il faut compter : le symbole (avec repère en phase 1), sans aucun écrit vietnamien.
       app.appendChild(el('div', { class: 'consigne' }, [el('h1', { text: consigneCombien(x.symbole) })]));
       app.appendChild(el('div', { class: 'carte-son' }, contenuTerme({ symbole: x.symbole, image: '', sens: '' }, debit === 'slow' ? 'lent' : 'normal')));

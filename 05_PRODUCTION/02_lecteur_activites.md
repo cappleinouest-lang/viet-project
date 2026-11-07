@@ -2,8 +2,8 @@
 id: PROD-LECT
 titre: Lecteur d'activités — version d'essai
 statut: BROUILLON
-version: 0.25
-date: 2026-11-02
+version: 0.27
+date: 2026-11-07
 resume: >
   Décrit la version d'essai du lecteur d'activités (volet écoute E1 → E3 et
   « Combien de fois ? », E4 du volet production, page « Les 6 tons ») :
@@ -196,6 +196,8 @@ choisi ; les réponses données avant cette version n'ont pas ces détails.
 | 0.23 | 2026-11-01 | MOD-H04 : E1, rappel court des sons -m et -n en L08 / L10 (DEC-0075). |
 | 0.24 | 2026-11-02 | MOD-D01 : voix par usage (DEC-0077) : résumé, tableau des règles (DEC-0045, DEC-0067), page « Les 6 tons » F1 / H3. |
 | 0.25 | 2026-11-02 | MOD-D25 : séquences d'écoute de l'E1, écoute automatique (§ 2). |
+| 0.26 | 2026-11-07 | MOD-D19, MOD-D20 : bouton Signaler dans la barre du haut ; carte de progression du verrou en E2–E3 et « Combien de fois ? » ; bouton d'E3 « Commencer » avant toute réponse. |
+| 0.27 | 2026-11-07 | MOD-D18 (leçon) : écran de la leçon avec frise des étapes, une seule étape en cours, étapes faites en une ligne, « Ensuite » et « Aller à » (mode essai). |
 
 ## Liens
 
